@@ -1,0 +1,107 @@
+[
+  {
+    "id": "quadratic-formula",
+    "tier": "easy",
+    "input": "x equals negative b plus or minus the square root of b squared minus four a c, all over two a",
+    "reference": "x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}",
+    "source": "https://en.wikipedia.org/wiki/Quadratic_formula"
+  },
+  {
+    "id": "eulers-identity",
+    "tier": "easy",
+    "input": "e to the power of i pi, plus one, equals zero",
+    "reference": "e^{i \\pi} + 1 = 0",
+    "source": "https://en.wikipedia.org/wiki/Euler%27s_identity"
+  },
+  {
+    "id": "pythagorean-theorem",
+    "tier": "easy",
+    "input": "a squared plus b squared equals c squared",
+    "reference": "a^2 + b^2 = c^2",
+    "source": "https://en.wikipedia.org/wiki/Pythagorean_theorem"
+  },
+  {
+    "id": "circle-area",
+    "tier": "easy",
+    "input": "the area A equals pi times r to the power of 2",
+    "reference": "A = \\pi r^2",
+    "source": "https://en.wikipedia.org/wiki/Area_of_a_circle"
+  },
+  {
+    "id": "gaussian-integral",
+    "tier": "medium",
+    "input": "the integral from minus infinity to infinity of e to the minus x squared dx equals the square root of pi",
+    "reference": "\\int_{-\\infty}^\\infty e^{-x^2}\\,dx = \\sqrt{\\pi}",
+    "source": "https://en.wikipedia.org/wiki/Gaussian_integral"
+  },
+  {
+    "id": "basel-problem",
+    "tier": "medium",
+    "input": "the sum from n equals one to infinity of one over n squared equals pi squared over six",
+    "reference": "\\sum_{n=1}^{\\infty}\\frac{1}{n^2} = \\frac{\\pi^2}{6}",
+    "source": "https://en.wikipedia.org/wiki/Basel_problem"
+  },
+  {
+    "id": "binomial-theorem",
+    "tier": "medium",
+    "input": "the quantity x plus y, raised to the n, equals the sum from k equals zero to n of n choose k, times x to the power of n minus k, times y to the k",
+    "reference": "(x+y)^n = \\sum_{k=0}^n {\\binom{n}{k}}x^{n-k}y^k",
+    "source": "https://en.wikipedia.org/wiki/Binomial_theorem"
+  },
+  {
+    "id": "bayes-theorem",
+    "tier": "medium",
+    "input": "the probability of A given B equals the probability of B given A times the probability of A, all divided by the probability of B",
+    "reference": "P(A\\vert B) = \\frac{P(B \\vert A) P(A)}{P(B)}",
+    "source": "https://en.wikipedia.org/wiki/Bayes%27_theorem"
+  },
+  {
+    "id": "schrodinger-time-dependent",
+    "tier": "hard",
+    "input": "i times h-bar times the derivative with respect to t of ket Psi of t, equals the Hamiltonian operator H hat applied to ket Psi of t",
+    "reference": "i \\hbar \\frac{d}{d t}\\vert\\Psi(t)\\rangle = \\hat H\\vert\\Psi(t)\\rangle",
+    "source": "https://en.wikipedia.org/wiki/Schr%C3%B6dinger_equation"
+  },
+  {
+    "id": "cauchy-integral-formula",
+    "tier": "hard",
+    "input": "f of a equals one over two pi i, times the closed contour integral over gamma of f of z divided by z minus a, d z",
+    "reference": "f(a) = \\frac{1}{2\\pi i} \\oint_\\gamma \\frac{f(z)}{z-a}\\,dz",
+    "source": "https://en.wikipedia.org/wiki/Cauchy%27s_integral_formula"
+  },
+  {
+    "id": "riemann-zeta-functional-equation",
+    "tier": "hard",
+    "input": "zeta of s equals two to the power of s, times pi to the power of s minus one, times sine of pi s over two, times the gamma function of one minus s, times zeta of one minus s",
+    "reference": "\\zeta(s) = 2^s \\pi^{s-1}\\ \\sin\\left( \\frac{\\pi s}{2} \\right)\\ \\Gamma(1-s)\\ \\zeta(1-s)",
+    "source": "https://en.wikipedia.org/wiki/Riemann_zeta_function"
+  },
+  {
+    "id": "einstein-field-equations",
+    "tier": "hard",
+    "input": "G mu nu plus capital lambda times g mu nu equals kappa times T mu nu",
+    "reference": "G_{\\mu \\nu} + \\Lambda g_{\\mu \\nu} = \\kappa T_{\\mu \\nu}",
+    "source": "https://en.wikipedia.org/wiki/Einstein_field_equations"
+  },
+  {
+    "id": "mechanics-homework-passage",
+    "tier": "multiline",
+    "input": "A block is pushed across a frictionless table. Newton's second law tells us that the vector F equals m times the vector a, so the net force is the mass times the acceleration. The speed comes from v equals d s by d t, the derivative of position with respect to time. Once we know the speed, the kinetic energy of the block is E sub k equals one half m v squared.",
+    "reference": "A block is pushed across a frictionless table. Newton's second law tells us that \\( \\mathbf{F} = m\\mathbf{a} \\), so the net force is the mass times the acceleration. The speed comes from \\( v = \\frac{\\mathrm{d}s}{\\mathrm{d}t} \\), the derivative of position with respect to time. Once we know the speed, the kinetic energy of the block is \\( E_\\text{k} = \\frac{1}{2} mv^2 \\).",
+    "source": "https://en.wikipedia.org/wiki/Newton%27s_laws_of_motion, https://en.wikipedia.org/wiki/Kinetic_energy"
+  },
+  {
+    "id": "euler-formula-passage",
+    "tier": "multiline",
+    "input": "Euler's formula states that e to the i x equals cosine of x plus i times sine of x for any real number x. If we substitute x equals pi, the right-hand side collapses to negative one, and we obtain the celebrated identity e to the i pi plus one equals zero, which ties together five fundamental constants in a single equation.",
+    "reference": "Euler's formula states that \\( e^{ix} = \\cos x + i\\sin x \\) for any real number x. If we substitute x equals pi, the right-hand side collapses to negative one, and we obtain the celebrated identity \\[ e^{i \\pi} + 1 = 0 \\] which ties together five fundamental constants in a single equation.",
+    "source": "https://en.wikipedia.org/wiki/Euler%27s_identity"
+  },
+  {
+    "id": "analysis-classics-passage",
+    "tier": "multiline",
+    "input": "Two classic results come up again and again in analysis. First, the Basel problem: the sum from n equals one to infinity of one over n squared equals pi squared over six. Second, the Gaussian integral: the integral from minus infinity to infinity of e to the minus x squared d x equals the square root of pi. Both answers involve pi even though neither problem mentions a circle.",
+    "reference": "Two classic results come up again and again in analysis. First, the Basel problem: \\[ \\sum_{n=1}^{\\infty}\\frac{1}{n^2} = \\frac{\\pi^2}{6} \\] Second, the Gaussian integral: \\[ \\int_{-\\infty}^\\infty e^{-x^2}\\,dx = \\sqrt{\\pi} \\] Both answers involve pi even though neither problem mentions a circle.",
+    "source": "https://en.wikipedia.org/wiki/Basel_problem, https://en.wikipedia.org/wiki/Gaussian_integral"
+  }
+]

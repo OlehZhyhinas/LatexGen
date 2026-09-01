@@ -1,0 +1,16 @@
+services:
+  latexgen:
+    build: .
+    ports:
+      - "8013:8000"
+    environment:
+      # Ollama running on the host machine (Docker Desktop resolves host.docker.internal).
+      OLLAMA_URL: http://host.docker.internal:11434
+      # Tiny model is plenty for text->LaTeX transcription; swap for a bigger
+      # installed model (e.g. qwen3.8:27b-q8_0) if quality disappoints.
+      OLLAMA_MODEL: qwen3:1.7b
+      # Refinement edits need a stronger instruction-follower.
+      OLLAMA_REFINE_MODEL: qwen3.8:27b-q8_0
+    extra_hosts:
+      # Needed on Linux; harmless on Docker Desktop (mac/win).
+      - "host.docker.internal:host-gateway"

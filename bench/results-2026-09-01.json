@@ -1,0 +1,1085 @@
+[
+ {
+  "approach": "specialist",
+  "item": "quadratic-formula",
+  "tier": "easy",
+  "ms": 736,
+  "output": "$$x=\\frac{-b\\pm\\sqrt{b^{2}-4ac}}{2a}$$",
+  "correct": true,
+  "why": "Mathematically equivalent to reference."
+ },
+ {
+  "approach": "specialist",
+  "item": "eulers-identity",
+  "tier": "easy",
+  "ms": 789,
+  "output": "$$e^{i\\pi}+1=0$$",
+  "correct": true,
+  "why": "Mathematically equivalent to reference."
+ },
+ {
+  "approach": "specialist",
+  "item": "pythagorean-theorem",
+  "tier": "easy",
+  "ms": 1042,
+  "output": "$$a^{2}+b^{2}=c^{2}$$",
+  "correct": true,
+  "why": "Mathematically equivalent notation"
+ },
+ {
+  "approach": "specialist",
+  "item": "circle-area",
+  "tier": "easy",
+  "ms": 706,
+  "output": "$$A=\\pi r^{2}$$",
+  "correct": true,
+  "why": "Mathematically equivalent notation"
+ },
+ {
+  "approach": "specialist",
+  "item": "gaussian-integral",
+  "tier": "medium",
+  "ms": 1672,
+  "output": "$$\\int_{-\\infty}^{\\infty}e^{-x^{2}}\\,dx=\\sqrt{\\pi}$$",
+  "correct": true,
+  "why": "Mathematically equivalent notation"
+ },
+ {
+  "approach": "specialist",
+  "item": "basel-problem",
+  "tier": "medium",
+  "ms": 2050,
+  "output": "$$\\sum_{n=1}^{\\infty}\\frac{1}{n^{2}}=\\frac{\\pi^{2}}{6}$$",
+  "correct": true,
+  "why": "Mathematically equivalent notation"
+ },
+ {
+  "approach": "specialist",
+  "item": "binomial-theorem",
+  "tier": "medium",
+  "ms": 1874,
+  "output": "$$(x+y)^{n}=\\sum_{k=0}^{n}\\binom{n}{k}x^{n-k}y^{k}$$",
+  "correct": true,
+  "why": "Mathematically equivalent notation"
+ },
+ {
+  "approach": "specialist",
+  "item": "bayes-theorem",
+  "tier": "medium",
+  "ms": 1400,
+  "output": "$$P(A|B)=\\frac{P(B|A)P(A)}{P(B)}$$",
+  "correct": true,
+  "why": "Mathematically equivalent notation"
+ },
+ {
+  "approach": "specialist",
+  "item": "schrodinger-time-dependent",
+  "tier": "hard",
+  "ms": 1562,
+  "output": "$$i\\hbar\\frac{d}{dt}\\Psi(t)=\\hat{H}\\Psi(t),$$",
+  "correct": false,
+  "why": "Missing ket notation \\vert ... \\rangle"
+ },
+ {
+  "approach": "specialist",
+  "item": "cauchy-integral-formula",
+  "tier": "hard",
+  "ms": 1712,
+  "output": "$$f(a)=\\frac{1}{2\\pi i}\\oint_{\\gamma}\\frac{f(z)}{z-a}\\,dz$$",
+  "correct": true,
+  "why": "Mathematically equivalent notation"
+ },
+ {
+  "approach": "specialist",
+  "item": "riemann-zeta-functional-equation",
+  "tier": "hard",
+  "ms": 2490,
+  "output": "$$\\zeta(s)=2^{s}\\pi^{s-1}\\sin\\left(\\frac{\\pi s}{2}\\right)\\Gamma(1-s)\\zeta(1-s)$$",
+  "correct": true,
+  "why": "Mathematically equivalent to reference"
+ },
+ {
+  "approach": "specialist",
+  "item": "einstein-field-equations",
+  "tier": "hard",
+  "ms": 1308,
+  "output": "$$G_{\\mu\\nu}+\\lambda g_{\\mu\\nu}=\\kappa T_{\\mu\\nu}$$",
+  "correct": false,
+  "why": "Candidate uses lowercase lambda instead of capital Lambda."
+ },
+ {
+  "approach": "direct:SmolLM2-360M",
+  "item": "quadratic-formula",
+  "tier": "easy",
+  "ms": 499,
+  "output": "<math>\n\\begin{align*}\nx &= -b + \\frac{\\sqrt{b^2 - 4ac}}{2a}\n\\end{align*}",
+  "correct": false,
+  "why": "Missing minus case and incorrect fraction structure"
+ },
+ {
+  "approach": "pipeline:SmolLM2-360M+spec",
+  "item": "quadratic-formula",
+  "tier": "easy",
+  "ms": 286,
+  "output": "",
+  "spans": 0,
+  "correct": false,
+  "why": "empty output"
+ },
+ {
+  "approach": "direct:SmolLM2-360M",
+  "item": "eulers-identity",
+  "tier": "easy",
+  "ms": 36,
+  "output": "0",
+  "correct": false,
+  "why": "Candidate is empty/zero, missing the equation."
+ },
+ {
+  "approach": "pipeline:SmolLM2-360M+spec",
+  "item": "eulers-identity",
+  "tier": "easy",
+  "ms": 31,
+  "output": "",
+  "spans": 0,
+  "correct": false,
+  "why": "empty output"
+ },
+ {
+  "approach": "direct:SmolLM2-360M",
+  "item": "pythagorean-theorem",
+  "tier": "easy",
+  "ms": 114,
+  "output": "a^2 + b^2 = c^2",
+  "correct": true,
+  "why": "Exact match"
+ },
+ {
+  "approach": "pipeline:SmolLM2-360M+spec",
+  "item": "pythagorean-theorem",
+  "tier": "easy",
+  "ms": 96,
+  "output": "",
+  "spans": 0,
+  "correct": false,
+  "why": "empty output"
+ },
+ {
+  "approach": "direct:SmolLM2-360M",
+  "item": "circle-area",
+  "tier": "easy",
+  "ms": 134,
+  "output": "<math>A = \\pi r^2</math>",
+  "correct": true,
+  "why": "Mathematically equivalent expression"
+ },
+ {
+  "approach": "pipeline:SmolLM2-360M+spec",
+  "item": "circle-area",
+  "tier": "easy",
+  "ms": 106,
+  "output": "",
+  "spans": 0,
+  "correct": false,
+  "why": "empty output"
+ },
+ {
+  "approach": "direct:SmolLM2-360M",
+  "item": "gaussian-integral",
+  "tier": "medium",
+  "ms": 378,
+  "output": "\\begin{align}\n\\int_{-\\infty}^\\infty & \\left[e^{-x^2}\\right]_{-\\infty}^\\infty & = \\sqrt{\\pi}\n\\end{align}",
+  "correct": false,
+  "why": "Candidate incorrectly adds evaluation limits to the integrand."
+ },
+ {
+  "approach": "pipeline:SmolLM2-360M+spec",
+  "item": "gaussian-integral",
+  "tier": "medium",
+  "ms": 57,
+  "output": "",
+  "spans": 0,
+  "correct": false,
+  "why": "empty output"
+ },
+ {
+  "approach": "direct:SmolLM2-360M",
+  "item": "basel-problem",
+  "tier": "medium",
+  "ms": 133,
+  "output": "1 / (1 + 1/n)^2 = pi^2 / 6",
+  "correct": false,
+  "why": "Candidate is missing the summation symbol and limits."
+ },
+ {
+  "approach": "pipeline:SmolLM2-360M+spec",
+  "item": "basel-problem",
+  "tier": "medium",
+  "ms": 6681,
+  "output": "",
+  "spans": 0,
+  "correct": false,
+  "why": "empty output"
+ },
+ {
+  "approach": "direct:SmolLM2-360M",
+  "item": "binomial-theorem",
+  "tier": "medium",
+  "ms": 6349,
+  "output": "\\begin{align*}\n\\sum_{k=0}^n \\left(n\\right) \\left( \\begin{array}{c} {k} \\end{array} \\right) \\left( x \\right)^{n-k} \\left( y \\right)^{k} & \\text{ \\[ \\displaystyle \\sum \\left( \\begin{array}{c} {k} \\end{array} \\right) \\left( x \\right)^{n-k} \\left( y \\right)^{k} \\text{ \\[ \\displaystyle \\sum \\left( \\begin{array}{c} {k} \\end{array} \\right) \\left( x \\right)^{n-k} \\left( y \\right)^{k} \\text{ \\[ \\displaystyle \\sum \\left( \\begin{array}{c} {k} \\end{array} \\right) \\left( x \\right)^{n-k} \\left( y \\right)^{k} \\text{ \\[ \\displaystyle \\sum \\left( \\begin{array}{c} {k} \\end{array} \\right) \\left( x \\right)^{n-k} \\left( y \\right)^{k} \\text{ \\[ \\displaystyle \\sum \\left( \\begin{array}{c} {k} \\end{array} \\right) \\left( x \\right)^{n-k} \\left( y \\right)^{k} \\text{ \\[ \\displaystyle \\sum \\left( \\begin{array}{c} {k} \\end{array} \\right) \\left( x \\right)^{n-k} \\left( y \\right)^{k} \\text{ \\[ \\displaystyle \\sum \\left( \\begin{array}{c} {k} \\end{array} \\right) \\left( x \\right)^{n-k} \\left( y \\right)^{k} \\text{ \\[ \\displaystyle \\sum \\left( \\begin{array}{c} {k} \\end{array} \\right) \\left( x \\right)^{n-k} \\left( y \\right)^{k} \\text{ \\[ \\displaystyle \\sum \\left( \\begin{array}{c} {k} \\end{array} \\right) \\left( x \\right)^{n-k} \\left( y \\right)^{k} \\text{ \\[ \\displaystyle \\sum \\left( \\begin{array}{c} {k} \\end{array} \\right) \\left( x \\right)^{n-k} \\left( y \\right)^{k} \\text{ \\[ \\displaystyle \\sum \\left( \\begin{array}{c} {k} \\end{array} \\right) \\left( x \\right)^{n-k} \\left( y \\right)^{k} \\text{ \\[ \\displaystyle \\sum \\left( \\begin{array}{c} {k} \\end{array} \\right) \\left( x \\right)^{n-k} \\left( y \\right)^{k} \\text{ \\[ \\displaystyle \\sum \\left( \\begin{array}{c} {k} \\end{array} \\right) \\left( x \\right)^{n-k} \\left( y \\right)^{k} \\text",
+  "correct": false,
+  "why": "Candidate is malformed, repetitive, and missing the left-hand side."
+ },
+ {
+  "approach": "pipeline:SmolLM2-360M+spec",
+  "item": "binomial-theorem",
+  "tier": "medium",
+  "ms": 6550,
+  "output": "",
+  "spans": 0,
+  "correct": false,
+  "why": "empty output"
+ },
+ {
+  "approach": "direct:SmolLM2-360M",
+  "item": "bayes-theorem",
+  "tier": "medium",
+  "ms": 203,
+  "output": "The probability of A given B is the probability of B given A times the probability of A, all divided by the probability of B.",
+  "correct": false,
+  "why": "Candidate is plain text, not LaTeX."
+ },
+ {
+  "approach": "pipeline:SmolLM2-360M+spec",
+  "item": "bayes-theorem",
+  "tier": "medium",
+  "ms": 198,
+  "output": "",
+  "spans": 0,
+  "correct": false,
+  "why": "empty output"
+ },
+ {
+  "approach": "direct:SmolLM2-360M",
+  "item": "schrodinger-time-dependent",
+  "tier": "hard",
+  "ms": 525,
+  "output": "\\begin{align}\ni \\times \\hat{h} \\left( \\frac{ \\partial }{ \\partial t} \\right) \\ket{psi}(t) &= \\hat{H} \\left( \\ket{psi}(t) \\right)\n\\end{align}",
+  "correct": false,
+  "why": "Uses \\hat{h} instead of \\hbar and \\partial instead of d."
+ },
+ {
+  "approach": "pipeline:SmolLM2-360M+spec",
+  "item": "schrodinger-time-dependent",
+  "tier": "hard",
+  "ms": 180,
+  "output": "",
+  "spans": 0,
+  "correct": false,
+  "why": "empty output"
+ },
+ {
+  "approach": "direct:SmolLM2-360M",
+  "item": "cauchy-integral-formula",
+  "tier": "hard",
+  "ms": 6851,
+  "output": "\\begin{align}\nf(z) &= \\frac{1}{2\\pi i} \\oint_{\\gamma} \\frac{f(z)}{z - a} dz \\\\\n&= \\frac{1}{2\\pi i} \\oint_{\\gamma} \\frac{f(z)}{z - a} \\left ( \\frac{d}{z} \\right )_{z = a} \\\\\n&= \\frac{1}{2\\pi i} \\oint_{\\gamma} \\frac{f(z)}{z - a} \\left ( \\frac{d}{z} \\right )_{z = a} \\\\\n&= \\frac{1}{2\\pi i} \\oint_{\\gamma} \\frac{f(z)}{z - a} \\left ( \\frac{d}{z} \\right )_{z = a} \\\\\n&= \\frac{1}{2\\pi i} \\oint_{\\gamma} \\frac{f(z)}{z - a} \\left ( \\frac{d}{z} \\right )_{z = a} \\\\\n&= \\frac{1}{2\\pi i} \\oint_{\\gamma} \\frac{f(z)}{z - a} \\left ( \\frac{d}{z} \\right )_{z = a} \\\\\n&= \\frac{1}{2\\pi i} \\oint_{\\gamma} \\frac{f(z)}{z - a} \\left ( \\frac{d}{z} \\right )_{z = a} \\\\\n&= \\frac{1}{2\\pi i} \\oint_{\\gamma} \\frac{f(z)}{z - a} \\left ( \\frac{d}{z} \\right )_{z = a} \\\\\n&= \\frac{1}{2\\pi i} \\oint_{\\gamma} \\frac{f(z)}{z - a} \\left ( \\frac{d}{z} \\right )_{z = a} \\\\\n&= \\frac{1}{2\\pi i} \\oint_{\\gamma} \\frac{f(z)}{z - a} \\left ( \\frac{d}{z} \\right )_{z = a} \\\\\n&= \\frac{1}{2\\pi i} \\oint_{\\gamma} \\frac{f(z)}{z - a} \\left ( \\frac{d}{z} \\right )_{z = a} \\\\\n&= \\frac{1}{2\\pi i} \\oint_{\\gamma} \\frac{f(z)}{z - a} \\left ( \\frac{d}{z} \\right )_{z = a} \\\\\n&= \\frac{1}{2\\pi i} \\oint_{\\gamma} \\frac{f(z)}{z - a} \\left ( \\frac{d}{z} \\right )_{z = a} \\\\\n&= \\frac{1}{2\\pi i} \\oint_{\\gamma} \\frac{f(z)}{z - a} \\left ( \\frac{d}{z} \\right )_{z = a} \\\\\n&= \\frac{1}{2\\pi i} \\oint_{\\gamma} \\frac{f(z)}{z - a} \\left ( \\frac{d}{z} \\right )_{z = a} \\\\\n&= \\frac{1}{2\\pi i} \\oint",
+  "correct": false,
+  "why": "Candidate uses f(z) instead of f(a) and adds nonsensical terms."
+ },
+ {
+  "approach": "pipeline:SmolLM2-360M+spec",
+  "item": "cauchy-integral-formula",
+  "tier": "hard",
+  "ms": 6744,
+  "output": "",
+  "spans": 0,
+  "correct": false,
+  "why": "empty output"
+ },
+ {
+  "approach": "direct:SmolLM2-360M",
+  "item": "riemann-zeta-functional-equation",
+  "tier": "hard",
+  "ms": 6677,
+  "output": "$$\\gamma_1(s) = 2^{\\gamma_1(s)} \\left(\\pi\\right)^\\gamma_1(s) - \\sin\\left(\\gamma_1(s)\\right) \\left(\\frac{\\gamma_1(s)}{\\gamma_1(s)-1}\\right) \\left(\\gamma_1(s)\\right)^{\\gamma_1(s)-1} \\left(\\frac{\\gamma_1(s)}{\\gamma_1(s)-1}\\right) \\left(\\gamma_1(s)\\right)^{\\gamma_1(s)-1} \\left(\\frac{\\gamma_1(s)}{\\gamma_1(s)-1}\\right) \\left(\\frac{\\gamma_1(s)}{\\gamma_1(s)-1}\\right) \\left(\\frac{\\gamma_1(s)}{\\gamma_1(s)-1}\\right) \\left(\\frac{\\gamma_1(s)}{\\gamma_1(s)-1}\\right) \\left(\\frac{\\gamma_1(s)}{\\gamma_1(s)-1}\\right) \\left(\\frac{\\gamma_1(s)}{\\gamma_1(s)-1}\\right) \\left(\\frac{\\gamma_1(s)}{\\gamma_1(s)-1}\\right) \\left(\\frac{\\gamma_1(s)}{\\gamma_1(s)-1}\\right) \\left(\\frac{\\gamma_1(s)}{\\gamma_1(s)-1}\\right) \\left(\\frac{\\gamma_1(s)}{\\gamma_1(s)-1}\\right) \\left(\\frac{\\gamma_1(s)}{\\gamma_1(s)-1}\\right) \\left(\\frac{\\gamma_1(s)}{\\gamma_1(s)-1}\\right) \\left(\\frac{\\gamma_1(s)}{\\gamma_1(s)-1}\\right) \\left(\\frac{\\gamma_1(s)}{\\gamma_1(s)-1}\\right) \\left(\\frac{\\gamma_1(s)}{\\gamma_1(s)-1}\\right) \\left(\\frac{\\gamma_1(s)}{\\gamma_1(s)-1}\\right) \\left(\\frac{\\gamma_1(s)}{\\gamma_1(s)-1}\\right) \\left(\\frac{\\gamma_1(s)}{\\gamma_1(s)-1}\\right) \\left(\\frac{\\gamma_1(s)}{\\gamma_1(s)-1}\\right) \\left(\\frac{\\gamma_1(s)}{\\gamma_1(s)-1}\\right) \\left(\\frac{\\gamma_1(s)}{\\gamma_1(s)-1}\\right) \\left(\\frac{\\gamma_1(s)}{\\gamma_1(s)-1}\\right) \\left(\\frac{\\gamma_1(s)}{\\gamma_1(s)-1}\\right) \\left(\\frac{\\gamma_1(s)}{\\gamma_1(s)-1}\\right) \\left(\\frac{\\gamma_1(s)}{\\gamma_1(s)-1}\\right) \\left(\\frac{\\gamma_1(s)}{\\gamma_1(s)-1}\\right) \\left(\\frac{\\gamma_1(s)}{\\gamma_1(s)-1}\\right) \\left(\\frac{\\gamma_1(s)}{\\gamma_1(s)-1}\\right) \\left(\\frac{\\gamma_1(",
+  "correct": false,
+  "why": "Candidate is completely wrong and mangled."
+ },
+ {
+  "approach": "pipeline:SmolLM2-360M+spec",
+  "item": "riemann-zeta-functional-equation",
+  "tier": "hard",
+  "ms": 266,
+  "output": "",
+  "spans": 0,
+  "correct": false,
+  "why": "empty output"
+ },
+ {
+  "approach": "direct:SmolLM2-360M",
+  "item": "einstein-field-equations",
+  "tier": "hard",
+  "ms": 355,
+  "output": "\\begin{align}\n\\mu_m \\nu + \\lambda \\times \\mathbf{g} \\times \\nu &= \\kappa \\times T \\nu\n\\end{align}",
+  "correct": false,
+  "why": "Mangled subscripts and incorrect variable names."
+ },
+ {
+  "approach": "pipeline:SmolLM2-360M+spec",
+  "item": "einstein-field-equations",
+  "tier": "hard",
+  "ms": 138,
+  "output": "",
+  "spans": 0,
+  "correct": false,
+  "why": "empty output"
+ },
+ {
+  "approach": "direct:SmolLM2-360M",
+  "item": "mechanics-homework-passage",
+  "tier": "multiline",
+  "ms": 1048,
+  "output": "\\begin{align*}\n\\text{Block is pushed across a frictionless table.}\n\\label{block:pushed}\n\\text{Newton's second law tells us that the vector F equals m times the vector a, so the net force is the mass times the acceleration.}\n\\label{force:netforce}\n\\text{The speed comes from v equals d s by d t, the derivative of position with respect to time.}\n\\label{speed:derivative}\n\\text{Once we know the speed, the kinetic energy of the block is E sub k equals one half m v squared.}\n\\end{align*}",
+  "correct": false,
+  "why": "Math not converted to LaTeX notation"
+ },
+ {
+  "approach": "pipeline:SmolLM2-360M+spec",
+  "item": "mechanics-homework-passage",
+  "tier": "multiline",
+  "ms": 576,
+  "output": "",
+  "spans": 0,
+  "correct": false,
+  "why": "empty output"
+ },
+ {
+  "approach": "direct:SmolLM2-360M",
+  "item": "euler-formula-passage",
+  "tier": "multiline",
+  "ms": 6366,
+  "output": "\\begin{align*}\ne &\\to \\cos x + i \\sin x \\\\\n\\left[ \\begin{array}{c}\n\\displaystyle \\sin x \\\\\n\\displaystyle \\cos x \\\\\n\\displaystyle \\sin x \\\\\n\\displaystyle \\cos x \\\\\n\\displaystyle \\sin x \\\\\n\\displaystyle \\cos x \\\\\n\\displaystyle \\sin x \\\\\n\\displaystyle \\cos x \\\\\n\\displaystyle \\sin x \\\\\n\\displaystyle \\cos x \\\\\n\\displaystyle \\sin x \\\\\n\\displaystyle \\cos x \\\\\n\\displaystyle \\sin x \\\\\n\\displaystyle \\cos x \\\\\n\\displaystyle \\sin x \\\\\n\\displaystyle \\cos x \\\\\n\\displaystyle \\sin x \\\\\n\\displaystyle \\cos x \\\\\n\\displaystyle \\sin x \\\\\n\\displaystyle \\cos x \\\\\n\\displaystyle \\sin x \\\\\n\\displaystyle \\cos x \\\\\n\\displaystyle \\sin x \\\\\n\\displaystyle \\cos x \\\\\n\\displaystyle \\sin x \\\\\n\\displaystyle \\cos x \\\\\n\\displaystyle \\sin x \\\\\n\\displaystyle \\cos x \\\\\n\\displaystyle \\sin x \\\\\n\\displaystyle \\cos x \\\\\n\\displaystyle \\sin x \\\\\n\\displaystyle \\cos x \\\\\n\\displaystyle \\sin x \\\\\n\\displaystyle \\cos x \\\\\n\\displaystyle \\sin x \\\\\n\\displaystyle \\cos x \\\\\n\\displaystyle \\sin x \\\\\n\\displaystyle \\cos x \\\\\n\\displaystyle \\sin x \\\\\n\\displaystyle \\cos x \\\\\n\\displaystyle \\sin x \\\\\n\\displaystyle \\cos x \\\\\n\\displaystyle \\sin x \\\\\n\\displaystyle \\cos x \\\\\n\\displaystyle \\sin x \\\\\n\\displaystyle \\cos x \\\\\n\\displaystyle \\sin x \\\\\n\\displaystyle \\cos x \\\\\n\\displaystyle \\sin x \\\\\n\\displaystyle \\cos x \\\\\n\\displaystyle \\sin x \\\\\n\\displaystyle \\cos x \\\\\n\\displaystyle \\sin x \\\\\n\\displaystyle \\cos x \\\\\n\\displaystyle \\sin x \\\\\n\\displaystyle \\cos x \\\\\n\\displaystyle \\sin x \\\\\n\\displaystyle \\cos x \\\\\n\\displaystyle \\sin x \\\\\n\\displaystyle \\cos x \\\\\n\\displaystyle \\sin x \\\\\n\\displaystyle \\cos x \\\\\n\\displaystyle \\sin x \\\\\n\\displaystyle \\cos x \\\\\n\\displaystyle \\sin x \\\\\n\\displaystyle \\cos x \\\\\n\\displaystyle \\sin x \\\\\n\\displaystyle \\cos x \\\\\n\\displaystyle \\sin x \\\\\n\\displaystyle \\cos x \\\\\n\\displaystyle \\sin x \\\\\n\\displaystyle \\cos x \\\\\n\\displaystyle \\sin x \\\\\n\\displaystyle \\cos x \\\\\n\\displaystyle \\sin x \\\\\n\\displaystyle \\cos x \\\\\n\\displaystyle \\sin x \\\\\n\\displaystyle \\cos x \\\\\n\\displaystyle \\sin x \\\\\n\\displaystyle \\cos x \\\\\n\\displaystyle \\sin x \\\\\n\\displaystyle \\cos x \\\\\n\\displaystyle \\sin x \\\\\n\\displaystyle \\cos x \\\\\n\\displaystyle \\sin x \\\\\n\\displaystyle \\cos x \\\\\n\\displaystyle \\sin x \\\\\n\\displaystyle \\cos x \\\\\n\\displaystyle \\sin x \\\\\n\\displaystyle \\cos x \\\\\n\\displaystyle \\sin x",
+  "correct": false,
+  "why": "Candidate is nonsensical and completely wrong."
+ },
+ {
+  "approach": "pipeline:SmolLM2-360M+spec",
+  "item": "euler-formula-passage",
+  "tier": "multiline",
+  "ms": 696,
+  "output": "",
+  "spans": 0,
+  "correct": false,
+  "why": "empty output"
+ },
+ {
+  "approach": "direct:SmolLM2-360M",
+  "item": "analysis-classics-passage",
+  "tier": "multiline",
+  "ms": 7247,
+  "output": "\\begin{align*}\n\\sum_{n=1}^\\infty \\frac{1}{n^2} &\\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\qquad \\q",
+  "correct": false,
+  "why": "Candidate is truncated and missing the second equation and prose."
+ },
+ {
+  "approach": "pipeline:SmolLM2-360M+spec",
+  "item": "analysis-classics-passage",
+  "tier": "multiline",
+  "ms": 7129,
+  "output": "",
+  "spans": 0,
+  "correct": false,
+  "why": "empty output"
+ },
+ {
+  "approach": "direct:Qwen3-0.6B",
+  "item": "quadratic-formula",
+  "tier": "easy",
+  "ms": 360,
+  "output": "$$\nx = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}\n$$",
+  "correct": true,
+  "why": "Mathematically equivalent; display math delimiters are acceptable."
+ },
+ {
+  "approach": "pipeline:Qwen3-0.6B+spec",
+  "item": "quadratic-formula",
+  "tier": "easy",
+  "ms": 2638,
+  "output": "x = \\(-\\frac{b\\pm\\sqrt{b^{2}-4ac}}{2a}\\)",
+  "spans": 1,
+  "correct": true,
+  "why": "Mathematically equivalent expressions"
+ },
+ {
+  "approach": "direct:Qwen3-0.6B",
+  "item": "eulers-identity",
+  "tier": "easy",
+  "ms": 403,
+  "output": "$$\ne^{\\pi i} + 1 = 0\n$$",
+  "correct": true,
+  "why": "Mathematically equivalent; order of i and pi does not change value."
+ },
+ {
+  "approach": "pipeline:Qwen3-0.6B+spec",
+  "item": "eulers-identity",
+  "tier": "easy",
+  "ms": 102,
+  "output": "",
+  "spans": 0,
+  "correct": false,
+  "why": "empty output"
+ },
+ {
+  "approach": "direct:Qwen3-0.6B",
+  "item": "pythagorean-theorem",
+  "tier": "easy",
+  "ms": 171,
+  "output": "$$\na^2 + b^2 = c^2\n$$",
+  "correct": true,
+  "why": "Mathematically equivalent; display math delimiters are acceptable."
+ },
+ {
+  "approach": "pipeline:Qwen3-0.6B+spec",
+  "item": "pythagorean-theorem",
+  "tier": "easy",
+  "ms": 926,
+  "output": "\\(a\\cdot o+b\\cdot o=c\\cdot o\\)",
+  "spans": 1,
+  "correct": false,
+  "why": "Candidate uses 'o' instead of '2' for exponents."
+ },
+ {
+  "approach": "direct:Qwen3-0.6B",
+  "item": "circle-area",
+  "tier": "easy",
+  "ms": 141,
+  "output": "$$\nA = \\pi r^2\n$$",
+  "correct": true,
+  "why": "Mathematically equivalent; display math delimiters are acceptable."
+ },
+ {
+  "approach": "pipeline:Qwen3-0.6B+spec",
+  "item": "circle-area",
+  "tier": "easy",
+  "ms": 575,
+  "output": "the area A equals \\(\\text{r_{}}\\)",
+  "spans": 1,
+  "correct": false,
+  "why": "Candidate drops pi and square, mangles r."
+ },
+ {
+  "approach": "direct:Qwen3-0.6B",
+  "item": "gaussian-integral",
+  "tier": "medium",
+  "ms": 1131,
+  "output": "$$\n\\int_{-\\infty}^{\\infty} e^{-x^2} \\, dx = \\sqrt{\\pi}\n$$\n\n$$\n\\text{and} \\quad \\int_{-\\infty}^{\\infty} e^{-x^2} \\, dx = \\sqrt{\\pi}\n$$\n\n$$\n\\text{so} \\quad \\int_{-\\infty}^{\\infty} e^{-x^2} \\, dx = \\sqrt{\\pi}\n$$",
+  "correct": false,
+  "why": "Candidate adds redundant, non-equivalent prose and repeated equations."
+ },
+ {
+  "approach": "pipeline:Qwen3-0.6B+spec",
+  "item": "gaussian-integral",
+  "tier": "medium",
+  "ms": 306,
+  "output": "",
+  "spans": 0,
+  "correct": false,
+  "why": "empty output"
+ },
+ {
+  "approach": "direct:Qwen3-0.6B",
+  "item": "basel-problem",
+  "tier": "medium",
+  "ms": 380,
+  "output": "$$\n\\sum_{n=1}^{\\infty} \\frac{1}{n^2} = \\frac{\\pi^2}{6}\n$$",
+  "correct": true,
+  "why": "Mathematically equivalent; display math delimiters are acceptable."
+ },
+ {
+  "approach": "pipeline:Qwen3-0.6B+spec",
+  "item": "basel-problem",
+  "tier": "medium",
+  "ms": 1125,
+  "output": "the sum from n equals one to infinity of one over n squared equals \\(\\theta\\sim\\text{Unif}(0,1/6)\\)",
+  "spans": 1,
+  "correct": false,
+  "why": "Candidate contains unrelated text and incorrect math symbols."
+ },
+ {
+  "approach": "direct:Qwen3-0.6B",
+  "item": "binomial-theorem",
+  "tier": "medium",
+  "ms": 1082,
+  "output": "$$\nx + y \\binom{n}{k} \\binom{n}{k} \\text{ is } \\sum_{k=0}^{n} \\binom{n}{k} \\text{ for } n \\text{ being a positive integer.}\n$$\n\n$$\nx + y \\binom{n}{k} \\binom{n}{k} \\text{ is } \\sum_{k=0}^{n} \\binom{n}{k} \\text{ for } n \\text{ being a positive integer.}\n$$",
+  "correct": false,
+  "why": "Candidate completely mangles the binomial theorem formula."
+ },
+ {
+  "approach": "pipeline:Qwen3-0.6B+spec",
+  "item": "binomial-theorem",
+  "tier": "medium",
+  "ms": 373,
+  "output": "",
+  "spans": 0,
+  "correct": false,
+  "why": "empty output"
+ },
+ {
+  "approach": "direct:Qwen3-0.6B",
+  "item": "bayes-theorem",
+  "tier": "medium",
+  "ms": 372,
+  "output": "$$\n\\frac{P(A \\mid B)}{P(B \\mid A)} = \\frac{P(A \\mid B) \\cdot P(B \\mid A)}{P(B)}\n$$",
+  "correct": false,
+  "why": "Candidate equation is mathematically incorrect and differs from reference."
+ },
+ {
+  "approach": "pipeline:Qwen3-0.6B+spec",
+  "item": "bayes-theorem",
+  "tier": "medium",
+  "ms": 286,
+  "output": "",
+  "spans": 0,
+  "correct": false,
+  "why": "empty output"
+ },
+ {
+  "approach": "direct:Qwen3-0.6B",
+  "item": "schrodinger-time-dependent",
+  "tier": "hard",
+  "ms": 327,
+  "output": "$$\ni \\hbar \\frac{d}{dt} \\ket{\\psi(t)} = \\hat{H} \\ket{\\psi(t)}\n$$",
+  "correct": true,
+  "why": "Mathematically equivalent; notation differences are acceptable."
+ },
+ {
+  "approach": "pipeline:Qwen3-0.6B+spec",
+  "item": "schrodinger-time-dependent",
+  "tier": "hard",
+  "ms": 186,
+  "output": "",
+  "spans": 0,
+  "correct": false,
+  "why": "empty output"
+ },
+ {
+  "approach": "direct:Qwen3-0.6B",
+  "item": "cauchy-integral-formula",
+  "tier": "hard",
+  "ms": 539,
+  "output": "$$\n\\left[ \\frac{f(z)}{z - a} \\right]_{\\gamma} = \\frac{f(0)}{z - a} \\quad \\text{for } z \\in \\gamma \\text{ and } z \\ne a\n$$",
+  "correct": false,
+  "why": "Candidate completely misinterprets the integral and function definitions."
+ },
+ {
+  "approach": "pipeline:Qwen3-0.6B+spec",
+  "item": "cauchy-integral-formula",
+  "tier": "hard",
+  "ms": 323,
+  "output": "",
+  "spans": 0,
+  "correct": false,
+  "why": "empty output"
+ },
+ {
+  "approach": "direct:Qwen3-0.6B",
+  "item": "riemann-zeta-functional-equation",
+  "tier": "hard",
+  "ms": 433,
+  "output": "$$\n\\left[ \\zeta(s) = 2^s \\pi^s \\sin\\left(\\frac{\\pi s}{2}\\right) \\Gamma(1 - s) \\right]\n$$",
+  "correct": false,
+  "why": "Missing \\zeta(1-s) term and incorrect \\pi exponent"
+ },
+ {
+  "approach": "pipeline:Qwen3-0.6B+spec",
+  "item": "riemann-zeta-functional-equation",
+  "tier": "hard",
+  "ms": 361,
+  "output": "",
+  "spans": 0,
+  "correct": false,
+  "why": "empty output"
+ },
+ {
+  "approach": "direct:Qwen3-0.6B",
+  "item": "einstein-field-equations",
+  "tier": "hard",
+  "ms": 293,
+  "output": "$$\nG \\mu^\\nu + \\lambda \\cdot G \\mu^\\nu = \\kappa T \\mu^\\nu\n$$",
+  "correct": false,
+  "why": "Mangled subscripts and incorrect variable names (G instead of g)."
+ },
+ {
+  "approach": "pipeline:Qwen3-0.6B+spec",
+  "item": "einstein-field-equations",
+  "tier": "hard",
+  "ms": 8411,
+  "output": "",
+  "spans": 0,
+  "correct": false,
+  "why": "empty output"
+ },
+ {
+  "approach": "direct:Qwen3-0.6B",
+  "item": "mechanics-homework-passage",
+  "tier": "multiline",
+  "ms": 609,
+  "output": "$$\nF = m \\vec{a}, \\quad \\text{so} \\quad \\text{net force} = m \\vec{a}, \\quad \\text{and} \\quad \\text{kinetic energy} = \\frac{1}{2} m v^2\n$$",
+  "correct": false,
+  "why": "Drops prose and derivative equation; mangles vector notation."
+ },
+ {
+  "approach": "pipeline:Qwen3-0.6B+spec",
+  "item": "mechanics-homework-passage",
+  "tier": "multiline",
+  "ms": 761,
+  "output": "",
+  "spans": 0,
+  "correct": false,
+  "why": "empty output"
+ },
+ {
+  "approach": "direct:Qwen3-0.6B",
+  "item": "euler-formula-passage",
+  "tier": "multiline",
+  "ms": 338,
+  "output": "$$\ne^{i\\pi} + 1 = 0\n$$\n\n$$\n\\text{which ties together five fundamental constants in a single equation.}\n$$",
+  "correct": false,
+  "why": "Drops most of the prose and the first formula."
+ },
+ {
+  "approach": "pipeline:Qwen3-0.6B+spec",
+  "item": "euler-formula-passage",
+  "tier": "multiline",
+  "ms": 634,
+  "output": "",
+  "spans": 0,
+  "correct": false,
+  "why": "empty output"
+ },
+ {
+  "approach": "direct:Qwen3-0.6B",
+  "item": "analysis-classics-passage",
+  "tier": "multiline",
+  "ms": 786,
+  "output": "$$\n\\begin{align*}\n&\\left[\\sum_{n=1}^{\\infty} \\frac{1}{n^2} \\right] &= \\frac{\\pi^2}{6} \\\\\n&\\left[\\int_{-\\infty}^{\\infty} e^{-x^2} \\, dx \\right] &= \\sqrt{\\pi}\n\\end{align*}\n$$",
+  "correct": false,
+  "why": "Missing prose text surrounding the equations"
+ },
+ {
+  "approach": "pipeline:Qwen3-0.6B+spec",
+  "item": "analysis-classics-passage",
+  "tier": "multiline",
+  "ms": 717,
+  "output": "",
+  "spans": 0,
+  "correct": false,
+  "why": "empty output"
+ },
+ {
+  "approach": "direct:Qwen3-1.7B",
+  "item": "quadratic-formula",
+  "tier": "easy",
+  "ms": 422,
+  "output": "$$ x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a} $$",
+  "correct": true,
+  "why": "Mathematically equivalent; display math delimiters are acceptable."
+ },
+ {
+  "approach": "direct:Qwen3-1.7B",
+  "item": "eulers-identity",
+  "tier": "easy",
+  "ms": 246,
+  "output": "$ e^{i\\pi} + 1 = 0 $",
+  "correct": true,
+  "why": "Mathematically equivalent to reference."
+ },
+ {
+  "approach": "direct:Qwen3-1.7B",
+  "item": "pythagorean-theorem",
+  "tier": "easy",
+  "ms": 216,
+  "output": "$$ a^2 + b^2 = c^2 $$",
+  "correct": true,
+  "why": "Mathematically equivalent; display math delimiters are acceptable."
+ },
+ {
+  "approach": "direct:Qwen3-1.7B",
+  "item": "circle-area",
+  "tier": "easy",
+  "ms": 171,
+  "output": "$$ A = \\pi r^2 $$",
+  "correct": true,
+  "why": "Mathematically equivalent; display math delimiters are acceptable."
+ },
+ {
+  "approach": "direct:Qwen3-1.7B",
+  "item": "gaussian-integral",
+  "tier": "medium",
+  "ms": 428,
+  "output": "$$\n\\int_{-\\infty}^{\\infty} e^{-x^2} dx = \\sqrt{\\pi}\n$$",
+  "correct": true,
+  "why": "Mathematically equivalent; notation differences are acceptable."
+ },
+ {
+  "approach": "direct:Qwen3-1.7B",
+  "item": "basel-problem",
+  "tier": "medium",
+  "ms": 501,
+  "output": "$$\n\\sum_{n=1}^{\\infty} \\frac{1}{n^2} = \\frac{\\pi^2}{6}\n$$",
+  "correct": true,
+  "why": "Mathematically equivalent; display math delimiters are acceptable."
+ },
+ {
+  "approach": "direct:Qwen3-1.7B",
+  "item": "binomial-theorem",
+  "tier": "medium",
+  "ms": 533,
+  "output": "$$\r\n(x + y)^n = \\sum_{k=0}^{n} \\binom{n}{k} x^{n-k} y^k\r\n$$",
+  "correct": true,
+  "why": "Mathematically equivalent to reference."
+ },
+ {
+  "approach": "direct:Qwen3-1.7B",
+  "item": "bayes-theorem",
+  "tier": "medium",
+  "ms": 406,
+  "output": "$$\nP(A \\given B) = \\frac{P(B \\given A) \\cdot P(A)}{P(B)}\n$$",
+  "correct": true,
+  "why": "Mathematically equivalent; \\given is a valid alias for \\vert."
+ },
+ {
+  "approach": "direct:Qwen3-1.7B",
+  "item": "schrodinger-time-dependent",
+  "tier": "hard",
+  "ms": 476,
+  "output": "$$ i \\hbar \\frac{d}{dt} \\Psi(t) = \\hat{H} \\Psi(t) $$",
+  "correct": false,
+  "why": "Missing ket notation \\vert ... \\rangle"
+ },
+ {
+  "approach": "direct:Qwen3-1.7B",
+  "item": "cauchy-integral-formula",
+  "tier": "hard",
+  "ms": 513,
+  "output": "$$ f(a) = \\frac{1}{2\\pi i} \\oint_{\\gamma} \\frac{f(z)}{z - a} \\, dz $$",
+  "correct": true,
+  "why": "Mathematically equivalent notation"
+ },
+ {
+  "approach": "direct:Qwen3-1.7B",
+  "item": "riemann-zeta-functional-equation",
+  "tier": "hard",
+  "ms": 797,
+  "output": "$$\n\\zeta(s) = 2^{s} \\cdot \\pi^{s - 1} \\cdot \\sin\\left(\\frac{\\pi s}{2}\\right) \\cdot \\Gamma(1 - s) \\cdot \\zeta(1 - s)\n$$",
+  "correct": true,
+  "why": "Mathematically equivalent; notation differences are acceptable."
+ },
+ {
+  "approach": "direct:Qwen3-1.7B",
+  "item": "einstein-field-equations",
+  "tier": "hard",
+  "ms": 479,
+  "output": "$$ G_{\\mu\\nu} + \\lambda g_{\\mu\\nu} = \\kappa T_{\\mu\\nu} $$",
+  "correct": false,
+  "why": "Lambda is lowercase in candidate, uppercase in reference."
+ },
+ {
+  "approach": "direct:Qwen3-1.7B",
+  "item": "mechanics-homework-passage",
+  "tier": "multiline",
+  "ms": 321,
+  "output": "$$ E_k = \\frac{1}{2} m v^2 $$",
+  "correct": false,
+  "why": "Candidate drops most of the text and math equations."
+ },
+ {
+  "approach": "direct:Qwen3-1.7B",
+  "item": "euler-formula-passage",
+  "tier": "multiline",
+  "ms": 482,
+  "output": "$$ e^{i x} = \\cos x + i \\sin x $$\n\n$$ e^{i \\pi} + 1 = 0 $$",
+  "correct": false,
+  "why": "Drops all prose text from the input."
+ },
+ {
+  "approach": "direct:Qwen3-1.7B",
+  "item": "analysis-classics-passage",
+  "tier": "multiline",
+  "ms": 894,
+  "output": "$$\n\\sum_{n=1}^{\\infty} \\frac{1}{n^2} = \\frac{\\pi^2}{6}\n$$\n\n$$\n\\int_{-\\infty}^{\\infty} e^{-x^2} \\, dx = \\sqrt{\\pi}\n$$",
+  "correct": false,
+  "why": "Missing surrounding prose text"
+ },
+ {
+  "approach": "direct:Llama-3.2-3B",
+  "item": "quadratic-formula",
+  "tier": "easy",
+  "ms": 1023,
+  "output": "\\[\nx = -b \\pm \\sqrt{b^2 - 4ac} \\, \\frac{1}{2a}\n\\]",
+  "correct": false,
+  "why": "Missing fraction bar for the entire numerator."
+ },
+ {
+  "approach": "direct:Llama-3.2-3B",
+  "item": "eulers-identity",
+  "tier": "easy",
+  "ms": 488,
+  "output": "\\begin{equation}\ne^i\\pi + 1 = 0\n\\end{equation}",
+  "correct": false,
+  "why": "Missing braces in exponent, changes meaning to (e^i)\\pi"
+ },
+ {
+  "approach": "direct:Llama-3.2-3B",
+  "item": "pythagorean-theorem",
+  "tier": "easy",
+  "ms": 385,
+  "output": "\\[\na^2 + b^2 = c^2\n\\]",
+  "correct": true,
+  "why": "Mathematically equivalent; display math delimiters are acceptable."
+ },
+ {
+  "approach": "direct:Llama-3.2-3B",
+  "item": "circle-area",
+  "tier": "easy",
+  "ms": 345,
+  "output": "\\[\nA = \\pi r^2\n\\]",
+  "correct": true,
+  "why": "Mathematically equivalent; display math delimiters are acceptable."
+ },
+ {
+  "approach": "direct:Llama-3.2-3B",
+  "item": "gaussian-integral",
+  "tier": "medium",
+  "ms": 536,
+  "output": "\\int_{-\\infty}^{\\infty} e^{-x^2} \\, dx = \\sqrt{\\pi}",
+  "correct": true,
+  "why": "Mathematically equivalent notation"
+ },
+ {
+  "approach": "direct:Llama-3.2-3B",
+  "item": "basel-problem",
+  "tier": "medium",
+  "ms": 645,
+  "output": "\\[\n\\sum_{n=1}^{\\infty} \\frac{1}{n^2} = \\frac{\\pi^2}{6}\n\\]",
+  "correct": true,
+  "why": "Mathematically equivalent; display math delimiters are acceptable."
+ },
+ {
+  "approach": "direct:Llama-3.2-3B",
+  "item": "binomial-theorem",
+  "tier": "medium",
+  "ms": 922,
+  "output": "\\begin{align*}\n\\sum_{k=0}^{n} \\binom{n}{k} x^{n-k} y^k &= (x+y)^n \\\\\n&= \\left(x+y\\right)^n\n\\end{align*}",
+  "correct": false,
+  "why": "Candidate adds redundant and incorrect second line."
+ },
+ {
+  "approach": "direct:Llama-3.2-3B",
+  "item": "bayes-theorem",
+  "tier": "medium",
+  "ms": 760,
+  "output": "\\frac{\\text{Probability of A}}{\\text{Probability of B}} = \\frac{\\text{Probability of B given A} \\times \\text{Probability of A}}{\\text{Probability of B}}",
+  "correct": false,
+  "why": "Left side is P(A)/P(B), not P(A|B)."
+ },
+ {
+  "approach": "direct:Llama-3.2-3B",
+  "item": "schrodinger-time-dependent",
+  "tier": "hard",
+  "ms": 1228,
+  "output": "\\begin{align*}\ni\\hbar\\frac{d}{dt}\\psi^*(t)&=\\hat{H}\\psi^*(t)\\\\\n\\Rightarrow\\qquad i\\hbar\\frac{\\partial}{\\partial t}\\psi^*(t)&=\\hat{H}\\psi^*(t)\n\\end{align*}",
+  "correct": false,
+  "why": "Candidate uses psi* instead of ket Psi and adds extra line."
+ },
+ {
+  "approach": "direct:Llama-3.2-3B",
+  "item": "cauchy-integral-formula",
+  "tier": "hard",
+  "ms": 2525,
+  "output": "\\begin{align*}\n\\int_{\\gamma} \\frac{f(z)}{z-a} \\, dz &= 2\\pi i \\int_{\\mathbb{C}} \\frac{f(z)}{z-a} \\, dz \\\\\n&= \\int_{\\mathbb{C}} \\frac{f(z)}{z-a} \\, dz + \\int_{\\gamma} \\frac{f(z)}{z-a} \\, dz \\\\\n&= 2\\pi i f(a) + \\int_{\\gamma} \\frac{f(z)}{z-a} \\, dz\n\\end{align*}",
+  "correct": false,
+  "why": "Candidate contains incorrect mathematical derivation and extra terms."
+ },
+ {
+  "approach": "direct:Llama-3.2-3B",
+  "item": "riemann-zeta-functional-equation",
+  "tier": "hard",
+  "ms": 1151,
+  "output": "\\begin{align*}\n\\zeta(s) &= 2^s \\pi^{s-1} \\sin \\left(\\frac{\\pi s}{2}\\right) \\Gamma(1-s) \\zeta(1-s) \\\\\n\\end{align*}",
+  "correct": true,
+  "why": "Mathematically equivalent; align environment is acceptable notation difference."
+ },
+ {
+  "approach": "direct:Llama-3.2-3B",
+  "item": "einstein-field-equations",
+  "tier": "hard",
+  "ms": 612,
+  "output": "\\begin{equation}\nG_{\\mu\\nu} = \\kappa T_{\\mu\\nu}\n\\end{equation}",
+  "correct": false,
+  "why": "Missing Lambda term in candidate equation"
+ },
+ {
+  "approach": "direct:Llama-3.2-3B",
+  "item": "mechanics-homework-passage",
+  "tier": "multiline",
+  "ms": 1757,
+  "output": "\\documentclass{article}\n\\begin{document}\n\nA block is pushed across a frictionless table. Newton's second law tells us that the vector F equals m times the vector a, so the net force is the mass times the acceleration. The speed comes from v equals d s by d t, the derivative of position with respect to time. Once we know the speed, the kinetic energy of the block is E sub k equals one half m v squared.\n\n\\end{document}",
+  "correct": false,
+  "why": "Candidate fails to convert math expressions to LaTeX."
+ },
+ {
+  "approach": "direct:Llama-3.2-3B",
+  "item": "euler-formula-passage",
+  "tier": "multiline",
+  "ms": 433,
+  "output": "\\[ e^{i\\pi} + 1 = 0 \\]",
+  "correct": false,
+  "why": "Candidate drops the prose and the first formula."
+ },
+ {
+  "approach": "direct:Llama-3.2-3B",
+  "item": "analysis-classics-passage",
+  "tier": "multiline",
+  "ms": 1869,
+  "output": "\\documentclass{article}\n\\begin{document}\n\nThe Basel problem is a classic result in analysis, which states that the sum from $n=1$ to $\\infty$ of $\\frac{1}{n^2}$ equals $\\frac{\\pi^2}{6}$.\n\nThe Gaussian integral is another fundamental result in analysis, which states that the integral from $-\\infty$ to $\\infty$ of $e^{-x^2} dx$ equals $\\sqrt{\\pi}$.\n\n\\end{document}",
+  "correct": false,
+  "why": "Drops introductory and concluding prose sentences."
+ },
+ {
+  "approach": "direct:Qwen3-4B",
+  "item": "quadratic-formula",
+  "tier": "easy",
+  "ms": 1175,
+  "output": "x equals negative $ b $ plus or minus the square root of $ b^2 - 4ac $, all over $ 2a $.",
+  "correct": false,
+  "why": "Candidate uses prose instead of LaTeX math notation."
+ },
+ {
+  "approach": "direct:Qwen3-4B",
+  "item": "eulers-identity",
+  "tier": "easy",
+  "ms": 473,
+  "output": "$$e^{i\\pi} + 1 = 0$$",
+  "correct": true,
+  "why": "Mathematically equivalent expression"
+ },
+ {
+  "approach": "direct:Qwen3-4B",
+  "item": "pythagorean-theorem",
+  "tier": "easy",
+  "ms": 393,
+  "output": "a^2 + b^2 = c^2",
+  "correct": true,
+  "why": "Exact match"
+ },
+ {
+  "approach": "direct:Qwen3-4B",
+  "item": "circle-area",
+  "tier": "easy",
+  "ms": 446,
+  "output": "The area $ A $ equals $ \\pi r^2 $.",
+  "correct": true,
+  "why": "Mathematically equivalent and preserves prose meaning."
+ },
+ {
+  "approach": "direct:Qwen3-4B",
+  "item": "gaussian-integral",
+  "tier": "medium",
+  "ms": 1417,
+  "output": "The integral from minus infinity to infinity of $ e^{-x^2} $ dx equals the square root of $ \\pi $. $$\\int_{-\\infty}^{\\infty} e^{-x^2} \\, dx = \\sqrt{\\pi}$$",
+  "correct": true,
+  "why": "Math is equivalent and prose is preserved."
+ },
+ {
+  "approach": "direct:Qwen3-4B",
+  "item": "basel-problem",
+  "tier": "medium",
+  "ms": 906,
+  "output": "The sum from $ n = 1 $ to infinity of $ \\frac{1}{n^2} $ equals $ \\frac{\\pi^2}{6} $.",
+  "correct": false,
+  "why": "Candidate uses prose instead of LaTeX summation notation."
+ },
+ {
+  "approach": "direct:Qwen3-4B",
+  "item": "binomial-theorem",
+  "tier": "medium",
+  "ms": 2450,
+  "output": "The quantity $ x + y $, raised to the $ n $, equals the sum from $ k = 0 $ to $ n $ of $ \\binom{n}{k} $, times $ x $ to the power of $ n - k $, times $ y $ to the $ k $. This is expressed as:\n\n$$\n(x + y)^n = \\sum_{k=0}^{n} \\binom{n}{k} x^{n - k} y^{k}\n$$",
+  "correct": true,
+  "why": "Mathematical expression is identical to reference."
+ },
+ {
+  "approach": "direct:Qwen3-4B",
+  "item": "bayes-theorem",
+  "tier": "medium",
+  "ms": 1562,
+  "output": "The probability of A given B equals the probability of B given A times the probability of A, all divided by the probability of B.  \n$$\nP(A|B) = \\frac{P(B|A) \\cdot P(A)}{P(B)}\n$$",
+  "correct": true,
+  "why": "Mathematically equivalent; prose matches input."
+ },
+ {
+  "approach": "direct:Qwen3-4B",
+  "item": "schrodinger-time-dependent",
+  "tier": "hard",
+  "ms": 926,
+  "output": "$$i\\hbar \\frac{d}{dt}|\\Psi(t)\\rangle = \\hat{H}|\\Psi(t)\\rangle$$",
+  "correct": true,
+  "why": "Mathematically equivalent notation and structure."
+ },
+ {
+  "approach": "direct:Qwen3-4B",
+  "item": "cauchy-integral-formula",
+  "tier": "hard",
+  "ms": 1690,
+  "output": "f of a equals one over two pi i, times the closed contour integral over gamma of f of z divided by z minus a, dz is written as:\n\n$$\nf(a) = \\frac{1}{2\\pi i} \\oint_{\\gamma} \\frac{f(z)}{z - a} \\, dz\n$$",
+  "correct": true,
+  "why": "Mathematically equivalent to reference"
+ },
+ {
+  "approach": "direct:Qwen3-4B",
+  "item": "riemann-zeta-functional-equation",
+  "tier": "hard",
+  "ms": 1359,
+  "output": "$$\n\\zeta(s) = 2^s \\pi^{s-1} \\sin\\left(\\frac{\\pi s}{2}\\right) \\Gamma(1 - s) \\zeta(1 - s)\n$$",
+  "correct": true,
+  "why": "Mathematically equivalent; notation differences are acceptable."
+ },
+ {
+  "approach": "direct:Qwen3-4B",
+  "item": "einstein-field-equations",
+  "tier": "hard",
+  "ms": 864,
+  "output": "$$G_{\\mu \\nu} + \\Lambda g_{\\mu \\nu} = \\kappa T_{\\mu \\nu}$$",
+  "correct": true,
+  "why": "Mathematically equivalent; only display style differs."
+ },
+ {
+  "approach": "direct:Qwen3-4B",
+  "item": "mechanics-homework-passage",
+  "tier": "multiline",
+  "ms": 2674,
+  "output": "A block is pushed across a frictionless table. Newton's second law tells us that the vector $ F $ equals $ m $ times the vector $ a $, so the net force is the mass times the acceleration. The speed comes from $ v = \\frac{ds}{dt} $, the derivative of position with respect to time. Once we know the speed, the kinetic energy of the block is $ E_k = \\frac{1}{2} m v^2 $.",
+  "correct": true,
+  "why": "Mathematically equivalent; notation differences are acceptable."
+ },
+ {
+  "approach": "direct:Qwen3-4B",
+  "item": "euler-formula-passage",
+  "tier": "multiline",
+  "ms": 2619,
+  "output": "Euler's formula states that $ e^{i x} = \\cos{x} + i \\times \\sin{x} $ for any real number $ x $. If we substitute $ x = \\pi $, the right-hand side collapses to negative one, and we obtain the celebrated identity $ e^{i \\pi} + 1 = 0 $, which ties together five fundamental constants in a single equation.",
+  "correct": true,
+  "why": "Mathematically equivalent; notation differences are acceptable."
+ },
+ {
+  "approach": "direct:Qwen3-4B",
+  "item": "analysis-classics-passage",
+  "tier": "multiline",
+  "ms": 3497,
+  "output": "Two classic results come up again and again in analysis. First, the Basel problem: the sum from $ n = 1 $ to $ \\infty $ of $ \\frac{1}{n^2} $ equals $ \\frac{\\pi^2}{6} $. Second, the Gaussian integral: the integral from $ -\\infty $ to $ \\infty $ of $ e^{-x^2} \\, dx $ equals $ \\sqrt{\\pi} $. Both answers involve $ \\pi $ even though neither problem mentions a circle.",
+  "correct": false,
+  "why": "Candidate uses inline text for sums/integrals instead of display math."
+ }
+]

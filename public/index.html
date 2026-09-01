@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LatexGen</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <header>
+    <h1>LatexGen <span class="tag">local</span></h1>
+    <div class="engine-picker">
+      <label class="radio">
+        <input type="radio" name="engine" value="browser" checked />
+        Browser model <span class="hint">(WebLLM, runs on your GPU via WebGPU)</span>
+      </label>
+      <label class="radio">
+        <input type="radio" name="engine" value="server" />
+        Server model <span class="hint" id="server-hint">(Ollama)</span>
+      </label>
+    </div>
+  </header>
+
+  <section id="browser-model-bar">
+    <div class="dd" id="model-dd">
+      <button id="dd-btn" type="button">Select a model <span class="dd-caret">▾</span></button>
+      <div id="dd-menu" role="listbox" hidden></div>
+    </div>
+    <button id="load-btn">Load model</button>
+    <div id="load-status">not loaded</div>
+    <div id="load-progress"><div id="load-progress-fill"></div></div>
+  </section>
+
+  <main>
+    <div class="pane">
+      <div class="pane-title">Input</div>
+      <textarea id="input" maxlength="6000"
+        placeholder="Type math in plain language, e.g.&#10;&#10;the integral from 0 to infinity of e to the minus x squared dx equals square root of pi over 2"></textarea>
+      <div class="row">
+        <button id="convert-btn" class="primary">Convert</button>
+        <span id="convert-status"></span>
+        <span id="char-count">0 / 6,000</span>
+      </div>
+    </div>
+
+    <div class="pane">
+      <div class="pane-title">LaTeX <button id="copy-btn" title="copy">copy</button></div>
+      <pre id="output-code"></pre>
+      <div id="checks"></div>
+      <div class="pane-title">Preview</div>
+      <div id="preview"></div>
+      <div class="pane-title">Refine</div>
+      <div id="chat-log"></div>
+      <div class="row">
+        <input id="chat-input" type="text" maxlength="2000"
+          placeholder='e.g. "T of V should be T(V), a function applied to V"' disabled />
+        <button id="chat-send" disabled>Send</button>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    Prototype: tiny in-browser model (WebLLM) with a local Ollama fallback. Nothing leaves your machine.
+  </footer>
+
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>
