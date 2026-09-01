@@ -12,6 +12,13 @@ Rules:
 - For prose mixed with math, keep the prose as plain text and wrap math in \\( ... \\).
 - Use standard LaTeX/amsmath commands only.`;
 
+const REPAIR_PROMPT = `You are a text-to-LaTeX transcriber. Your previous conversion failed automatic checks. You will receive the checker's error list. Produce a corrected version of YOUR PREVIOUS LaTeX that fixes every listed issue while staying faithful to the original text.
+
+Rules:
+- Output ONLY the corrected LaTeX. No explanations, no markdown code fences.
+- "syntax:" issues mean the LaTeX does not parse — fix delimiters, braces, or commands.
+- "missing:" issues mean something from the original text was dropped — add it.`;
+
 const REFINE_PROMPT = `You are a text-to-LaTeX transcriber in a feedback loop. You previously converted the user's text to LaTeX. The user now gives feedback on your conversion. Produce a corrected version of YOUR PREVIOUS LaTeX.
 
 Rules:
@@ -89,17 +96,33 @@ async function convertImage(fileOrBlob) {
     } finally {
       URL.revokeObjectURL(url);
     }
-    const latex = (out[0]?.generated_text ?? "").trim();
+    let latex = (out[0]?.generated_text ?? "").trim();
     if (!latex) throw new Error("no text recognized in image");
     outputCode.textContent = latex;
     renderPreview(latex);
-    const validation = validateLatex("", latex);
     // Fidelity vs. input text is meaningless for images — only syntax counts.
-    const syntaxIssues = validation.issues.filter((i) => i.startsWith("syntax"));
-    showChecks(
-      { ok: syntaxIssues.length === 0, issues: syntaxIssues },
-      "(from image — processed locally, image never uploaded)"
-    );
+    const syntaxOnly = (l) => validateLatex("(image)", l).issues.filter((i) => i.startsWith("syntax"));
+    let syntaxIssues = syntaxOnly(latex);
+    let note = "(from image — processed locally, image never uploaded)";
+    if (syntaxIssues.length && engine) {
+      // OCR produced broken LaTeX — let the browser LLM repair it with the errors.
+      label.textContent = "OCR output failed syntax checks — repairing locally…";
+      try {
+        const repaired = await repairBrowser(
+          "(transcribed from an image of rendered math)", latex, syntaxIssues,
+          (partial) => { outputCode.textContent = partial; }
+        );
+        const issues2 = syntaxOnly(repaired.latex);
+        if (issues2.length === 0) {
+          latex = repaired.latex;
+          syntaxIssues = issues2;
+          note = "(from image — OCR self-corrected locally, image never uploaded)";
+          outputCode.textContent = latex;
+          renderPreview(latex);
+        }
+      } catch { /* keep OCR output */ }
+    }
+    showChecks({ ok: syntaxIssues.length === 0, issues: syntaxIssues }, note);
     currentLatex = latex;
     currentInput = "(image)";
     chatLog.innerHTML = "";
@@ -468,6 +491,21 @@ const convertBrowser = (text, onDelta) =>
     onDelta
   );
 
+// One validator-guided repair attempt: give the model its own output plus
+// the exact check failures. Cheap (local), and the only fix path when no
+// server escalation exists.
+const repairBrowser = (text, badLatex, issues, onDelta) =>
+  streamBrowserChat(
+    [
+      { role: "system", content: REPAIR_PROMPT },
+      { role: "user", content: `Convert to LaTeX:\n${text}` },
+      { role: "assistant", content: badLatex },
+      { role: "user", content: `Checks failed:\n- ${issues.join("\n- ")}\nOutput the corrected LaTeX.` },
+    ],
+    onDelta
+  );
+window.__repairBrowser = repairBrowser; // debugging hook
+
 const convertServer = (text, onDelta) =>
   streamServerChat("/api/convert", { text, complex: !specialistEligible(text) }, onDelta);
 
@@ -540,6 +578,19 @@ convertBtn.addEventListener("click", async () => {
     } else if (engineChoice === "browser") {
       result = await convertBrowser(text, liveOutput);
       validation = validateLatex(text, result.latex);
+      if (!validation.ok) {
+        // Retry once on-device: hand the model its output + the check errors.
+        convertStatus.textContent = `checks failed (${validation.issues[0]}…) — retrying with error feedback…`;
+        try {
+          const repaired = await repairBrowser(text, result.latex, validation.issues, liveOutput);
+          const v2 = validateLatex(text, repaired.latex);
+          if (v2.ok) {
+            result = { ...repaired, model: `${repaired.model} (self-corrected)` };
+            validation = v2;
+            note = "(self-corrected after failed checks)";
+          }
+        } catch { /* repair failed — fall through to escalation */ }
+      }
       if (!validation.ok && serverAvailable) {
         // Browser model came up short — escalate to the server model.
         convertStatus.textContent = `browser model failed checks (${validation.issues[0]}…) — escalating to server…`;
