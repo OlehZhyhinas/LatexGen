@@ -168,6 +168,11 @@ textarea {
   word-break: break-word;
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 13px;
+  cursor: text;
+}
+#output-code:focus {
+  outline: none;
+  border-color: var(--accent);
 }
 
 #image-drop {

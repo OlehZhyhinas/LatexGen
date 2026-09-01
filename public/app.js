@@ -767,6 +767,28 @@ $("copy-btn").addEventListener("click", () => {
   navigator.clipboard.writeText(outputCode.textContent);
 });
 
+// ---- direct manual editing of the LaTeX box ----
+// No LLM involved: re-render the preview and re-run checks live as the user
+// types (debounced). The edited version becomes the current LaTeX, so copy
+// and the refine chat both operate on it.
+let editDebounce = null;
+outputCode.addEventListener("input", () => {
+  if (convertBtn.disabled) return; // a conversion is streaming into the box
+  clearTimeout(editDebounce);
+  editDebounce = setTimeout(() => {
+    const latex = outputCode.textContent;
+    currentLatex = latex;
+    currentInput ??= "(manually entered LaTeX)";
+    if (!latex.trim()) { checksEl.textContent = ""; preview.innerHTML = ""; return; }
+    renderPreview(latex);
+    // Fidelity against the original text is meaningless once the user is
+    // hand-editing toward what THEY want — check syntax only.
+    const issues = checkSyntax(latex);
+    showChecks({ ok: issues.length === 0, issues }, "(manually edited)");
+    setChatEnabled(true);
+  }, 300);
+});
+
 // Cmd/Ctrl+Enter converts
 $("input").addEventListener("keydown", (e) => {
   if ((e.metaKey || e.ctrlKey) && e.key === "Enter") convertBtn.click();
