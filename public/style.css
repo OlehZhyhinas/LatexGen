@@ -180,6 +180,19 @@ textarea {
 }
 #image-drop.dragover { border-color: var(--accent); color: var(--text); }
 #image-drop.busy { border-color: var(--accent-2); }
+#image-progress {
+  margin-top: 8px;
+  height: 6px;
+  background: #0f1115;
+  border-radius: 3px;
+  overflow: hidden;
+}
+#image-progress-fill {
+  width: 0;
+  height: 100%;
+  background: var(--accent-2);
+  transition: width 0.2s;
+}
 
 .checks { font-size: 12px; padding: 2px 0; }
 .checks.ok { color: var(--accent-2); }

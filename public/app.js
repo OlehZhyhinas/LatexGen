@@ -70,9 +70,30 @@ let texify = null;
 let texifyLoading = null;
 function loadTexify() {
   texifyLoading ??= (async () => {
-    const p = await pipeline("image-to-text", "texify", { dtype: "q8" });
-    texify = p;
-    return p;
+    const bar = $("image-progress");
+    const fill = $("image-progress-fill");
+    const label = $("image-drop-label");
+    bar.hidden = false;
+    // Aggregate per-file download progress into one bar.
+    const files = new Map();
+    const onProgress = (p) => {
+      if (p.status !== "progress" || !p.total) return;
+      files.set(p.file, { loaded: p.loaded, total: p.total });
+      let loaded = 0, total = 0;
+      for (const f of files.values()) { loaded += f.loaded; total += f.total; }
+      fill.style.width = `${Math.round((loaded / total) * 100)}%`;
+      label.textContent =
+        `loading image model: ${(loaded / 2 ** 20).toFixed(0)} / ${(total / 2 ** 20).toFixed(0)} MB (one time — cached after this)`;
+    };
+    try {
+      const p = await pipeline("image-to-text", "texify", { dtype: "q8", progress_callback: onProgress });
+      fill.style.width = "100%";
+      texify = p;
+      return p;
+    } finally {
+      bar.hidden = true;
+      fill.style.width = "0";
+    }
   })();
   return texifyLoading;
 }
@@ -105,21 +126,22 @@ async function convertImage(fileOrBlob) {
     let syntaxIssues = syntaxOnly(latex);
     let note = "(from image — processed locally, image never uploaded)";
     if (syntaxIssues.length && engine) {
-      // OCR produced broken LaTeX — let the browser LLM repair it with the errors.
-      label.textContent = "OCR output failed syntax checks — repairing locally…";
+      // OCR produced broken LaTeX — repair loop with the browser LLM.
       try {
-        const repaired = await repairBrowser(
+        const r = await repairLoop(
           "(transcribed from an image of rendered math)", latex, syntaxIssues,
-          (partial) => { outputCode.textContent = partial; }
+          (l) => ({ ok: syntaxOnly(l).length === 0, issues: syntaxOnly(l) }),
+          (partial) => { outputCode.textContent = partial; },
+          (attempt, issues) => {
+            label.textContent = `OCR repair attempt ${attempt}/${MAX_REPAIR_ATTEMPTS} — ${issues[0]}…`;
+            showChecks({ ok: false, issues }, "");
+          }
         );
-        const issues2 = syntaxOnly(repaired.latex);
-        if (issues2.length === 0) {
-          latex = repaired.latex;
-          syntaxIssues = issues2;
-          note = "(from image — OCR self-corrected locally, image never uploaded)";
-          outputCode.textContent = latex;
-          renderPreview(latex);
-        }
+        latex = r.latex;
+        syntaxIssues = r.ok ? [] : r.issues;
+        if (r.ok) note = `(from image — OCR self-corrected ×${r.attempts} locally, image never uploaded)`;
+        outputCode.textContent = latex;
+        renderPreview(latex);
       } catch { /* keep OCR output */ }
     }
     showChecks({ ok: syntaxIssues.length === 0, issues: syntaxIssues }, note);
@@ -506,6 +528,29 @@ const repairBrowser = (text, badLatex, issues, onDelta) =>
   );
 window.__repairBrowser = repairBrowser; // debugging hook
 
+// Validator-guided repair loop: up to 5 turns, but only while each attempt
+// produces a DIFFERENT error than the last — the same error twice means the
+// model is stuck, so stop rather than burn turns. Every attempt streams into
+// the output box and reports via onAttempt so the user sees it trying.
+const MAX_REPAIR_ATTEMPTS = 5;
+async function repairLoop(contextText, latex, issues, validateFn, onDelta, onAttempt) {
+  let prevSig = issues.join("|");
+  let current = latex;
+  for (let attempt = 1; attempt <= MAX_REPAIR_ATTEMPTS; attempt++) {
+    onAttempt?.(attempt, issues);
+    const repaired = await repairBrowser(contextText, current, issues, onDelta);
+    const v = validateFn(repaired.latex);
+    if (v.ok) return { ok: true, latex: repaired.latex, attempts: attempt };
+    const sig = v.issues.join("|");
+    if (sig === prevSig) return { ok: false, latex: repaired.latex, attempts: attempt, issues: v.issues, stuck: true };
+    prevSig = sig;
+    current = repaired.latex;
+    issues = v.issues;
+  }
+  return { ok: false, latex: current, attempts: MAX_REPAIR_ATTEMPTS, issues };
+}
+window.__repairLoop = repairLoop; // debugging hook
+
 const convertServer = (text, onDelta) =>
   streamServerChat("/api/convert", { text, complex: !specialistEligible(text) }, onDelta);
 
@@ -579,15 +624,23 @@ convertBtn.addEventListener("click", async () => {
       result = await convertBrowser(text, liveOutput);
       validation = validateLatex(text, result.latex);
       if (!validation.ok) {
-        // Retry once on-device: hand the model its output + the check errors.
-        convertStatus.textContent = `checks failed (${validation.issues[0]}…) — retrying with error feedback…`;
         try {
-          const repaired = await repairBrowser(text, result.latex, validation.issues, liveOutput);
-          const v2 = validateLatex(text, repaired.latex);
-          if (v2.ok) {
-            result = { ...repaired, model: `${repaired.model} (self-corrected)` };
-            validation = v2;
-            note = "(self-corrected after failed checks)";
+          const r = await repairLoop(
+            text, result.latex, validation.issues,
+            (l) => validateLatex(text, l),
+            liveOutput,
+            (attempt, issues) => {
+              convertStatus.textContent = `repair attempt ${attempt}/${MAX_REPAIR_ATTEMPTS} — ${issues[0]}…`;
+              showChecks({ ok: false, issues }, "");
+            }
+          );
+          result = { ...result, latex: r.latex };
+          if (r.ok) {
+            result.model += ` (self-corrected ×${r.attempts})`;
+            validation = { ok: true, issues: [] };
+            note = `(self-corrected after ${r.attempts} attempt${r.attempts > 1 ? "s" : ""})`;
+          } else {
+            validation = { ok: false, issues: r.issues };
           }
         } catch { /* repair failed — fall through to escalation */ }
       }
