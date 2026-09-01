@@ -55,6 +55,90 @@ let specialist = null;
   }
 })();
 
+// ---- image -> LaTeX: Texify (Donut-style OCR) via transformers.js ----
+// Fully client-side: the image is decoded, preprocessed, and OCR'd in the
+// tab. It never leaves the browser — there is deliberately no image upload
+// path to any server, and no escalation tier for images.
+let texify = null;
+let texifyLoading = null;
+function loadTexify() {
+  texifyLoading ??= (async () => {
+    const p = await pipeline("image-to-text", "texify", { dtype: "q8" });
+    texify = p;
+    return p;
+  })();
+  return texifyLoading;
+}
+
+async function convertImage(fileOrBlob) {
+  const drop = $("image-drop");
+  const label = $("image-drop-label");
+  drop.classList.add("busy");
+  convertStatus.textContent = "";
+  const started = performance.now();
+  try {
+    if (!texify) {
+      label.textContent = "loading image model (~300 MB, first time only)…";
+      await loadTexify();
+    }
+    label.textContent = "reading equation from image…";
+    const url = URL.createObjectURL(fileOrBlob);
+    let out;
+    try {
+      out = await texify(url, { max_new_tokens: 384 });
+    } finally {
+      URL.revokeObjectURL(url);
+    }
+    const latex = (out[0]?.generated_text ?? "").trim();
+    if (!latex) throw new Error("no text recognized in image");
+    outputCode.textContent = latex;
+    renderPreview(latex);
+    const validation = validateLatex("", latex);
+    // Fidelity vs. input text is meaningless for images — only syntax counts.
+    const syntaxIssues = validation.issues.filter((i) => i.startsWith("syntax"));
+    showChecks(
+      { ok: syntaxIssues.length === 0, issues: syntaxIssues },
+      "(from image — processed locally, image never uploaded)"
+    );
+    currentLatex = latex;
+    currentInput = "(image)";
+    chatLog.innerHTML = "";
+    setChatEnabled(true);
+    const secs = ((performance.now() - started) / 1000).toFixed(1);
+    convertStatus.textContent = `${secs}s · Texify · local OCR`;
+  } catch (err) {
+    convertStatus.textContent = `image conversion failed: ${err.message || err}`;
+  } finally {
+    drop.classList.remove("busy");
+    label.innerHTML = "…or drop / paste / <u>choose</u> an image of an equation — processed entirely in your browser, never uploaded";
+  }
+}
+
+window.__convertImage = convertImage; // debugging hook
+
+// drop zone + paste + file picker
+{
+  const drop = $("image-drop");
+  const fileInput = $("image-file");
+  drop.addEventListener("click", () => fileInput.click());
+  fileInput.addEventListener("change", () => {
+    if (fileInput.files[0]) convertImage(fileInput.files[0]);
+    fileInput.value = "";
+  });
+  drop.addEventListener("dragover", (e) => { e.preventDefault(); drop.classList.add("dragover"); });
+  drop.addEventListener("dragleave", () => drop.classList.remove("dragover"));
+  drop.addEventListener("drop", (e) => {
+    e.preventDefault();
+    drop.classList.remove("dragover");
+    const f = e.dataTransfer.files?.[0];
+    if (f && f.type.startsWith("image/")) convertImage(f);
+  });
+  document.addEventListener("paste", (e) => {
+    const item = [...(e.clipboardData?.items ?? [])].find((i) => i.type.startsWith("image/"));
+    if (item) convertImage(item.getAsFile());
+  });
+}
+
 // Trained on single short equations (MathBridge: 5-80 char targets) — gate
 // on capability, not guesses about content.
 function specialistEligible(text) {

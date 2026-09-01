@@ -1,1 +1,2 @@
 public/models/intellitex/onnx/*.onnx filter=lfs diff=lfs merge=lfs -text
+public/models/texify/onnx/*.onnx filter=lfs diff=lfs merge=lfs -text
