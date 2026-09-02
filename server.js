@@ -44,6 +44,8 @@ Rules:
 - For prose mixed with math, keep the prose as plain text and wrap math in \\( ... \\).
 - Use standard LaTeX/amsmath commands only.`;
 
+const JUDGE_PROMPT = `You verify text-to-LaTeX conversions. Given the user's plain-English input and the produced LaTeX, decide whether the LaTeX expresses exactly what the text describes (same operations, grouping, exponents, limits, variables). Reply with ONLY a JSON object: {"ok": true/false, "reason": "<max 12 words>"}`;
+
 const REFINE_PROMPT = `You are a text-to-LaTeX transcriber in a feedback loop. You previously converted the user's text to LaTeX. The user now gives feedback on your conversion. Produce a corrected version of YOUR PREVIOUS LaTeX.
 
 Rules:
@@ -215,6 +217,27 @@ const server = createServer(async (req, res) => {
     if (req.method === "DELETE" && req.url === "/api/bench") {
       benchRows.length = 0;
       res.writeHead(204); res.end();
+      return;
+    }
+
+    // Strict mode: a second model judges whether the LaTeX matches the input.
+    if (req.method === "POST" && req.url === "/api/judge") {
+      const { text, latex } = JSON.parse(await readBody(req));
+      if (!text || !latex) { res.writeHead(400, { "content-type": "application/json" }); res.end(JSON.stringify({ error: "text and latex required" })); return; }
+      const route = await routeFor("refine");
+      if (!route) { res.writeHead(503, { "content-type": "application/json" }); res.end(JSON.stringify({ error: "no backend" })); return; }
+      const isMlx = route.kind === "mlx";
+      const r = await fetch(isMlx ? `${MLX_URL}/v1/chat/completions` : `${OLLAMA_URL}/api/chat`, {
+        method: "POST", headers: { "content-type": "application/json" },
+        body: JSON.stringify(isMlx
+          ? { model: route.model, stream: false, temperature: 0, max_tokens: 80, chat_template_kwargs: { enable_thinking: false }, messages: [{ role: "system", content: JUDGE_PROMPT }, { role: "user", content: `INPUT:\n${text}\n\nLATEX:\n${latex}` }] }
+          : { model: route.model, stream: false, think: false, keep_alive: -1, options: { temperature: 0, num_predict: 80 }, messages: [{ role: "system", content: JUDGE_PROMPT }, { role: "user", content: `INPUT:\n${text}\n\nLATEX:\n${latex}` }] }),
+        signal: AbortSignal.timeout(60_000),
+      });
+      const data = await r.json();
+      const content = isMlx ? (data.choices?.[0]?.message?.content ?? "") : (data.message?.content ?? "");
+      res.writeHead(200, { "content-type": "application/json" });
+      res.end(content.slice(content.indexOf("{"), content.lastIndexOf("}") + 1) || JSON.stringify({ ok: true, reason: "" }));
       return;
     }
 

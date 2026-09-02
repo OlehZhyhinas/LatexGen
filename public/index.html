@@ -17,9 +17,12 @@
       <span class="chip ok" id="privacy-chip"><i></i>Runs in your browser · nothing uploaded</span>
     </div>
     <nav class="nav">
-      <a href="https://github.com/OlehZhyhinas/LatexGen#architecture-a-benchmark-driven-escalation-ladder" target="_blank" rel="noopener">How it works</a>
-      <a href="https://github.com/OlehZhyhinas/LatexGen#the-payoff-matrix-that-shaped-the-routing" target="_blank" rel="noopener">Benchmarks</a>
+      <a href="#how">How it works</a>
+      <a href="/benchmarks.html">Benchmarks</a>
       <a href="https://github.com/OlehZhyhinas/LatexGen" target="_blank" rel="noopener">GitHub</a>
+      <button id="history-btn" class="icon-btn" title="History" aria-label="History" aria-expanded="false">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v5h5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
       <button id="settings-btn" class="icon-btn" title="Model settings" aria-label="Model settings" aria-expanded="false">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" stroke="currentColor" stroke-width="2"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
       </button>
@@ -53,6 +56,24 @@
       <div id="load-status" class="hint">not loaded</div>
       <div id="load-progress"><div id="load-progress-fill"></div></div>
     </div>
+    <div class="settings-group">
+      <div class="settings-label">Verification and downloads</div>
+      <label class="check"><input type="checkbox" id="llm-enabled" /> <span>On-device language model <span class="hint">handles complex and multi-line input locally · 1.4–6 GB one-time download</span></span></label>
+      <label class="check"><input type="checkbox" id="strict-mode" /> <span>Strict mode <span class="hint">slower: a model double-checks the LaTeX says what you typed</span></span></label>
+    </div>
+  </aside>
+
+  <aside id="history" class="settings history" hidden>
+    <div class="settings-head">
+      <strong>History</strong>
+      <span class="row gap-sm">
+        <button id="history-filter" class="btn ghost" aria-pressed="false">Starred only</button>
+        <button id="history-clear" class="btn ghost">Clear</button>
+        <button id="history-close" class="icon-btn" aria-label="Close">✕</button>
+      </span>
+    </div>
+    <div id="history-list" class="history-list"></div>
+    <p class="hint">Stored only in this browser.</p>
   </aside>
 
   <main class="column">
@@ -87,10 +108,20 @@
       <div class="row between wrap">
         <div class="row gap wrap status-row">
           <strong class="title">Result</strong>
-          <div id="checks" class="chips"></div>
-          <span id="convert-status" class="chip info"></span>
+          <div id="checks" class="chips" role="status" aria-live="polite"></div>
+          <span id="convert-status" class="chip info" role="status" aria-live="polite"></span>
         </div>
-        <button id="copy-btn" class="btn secondary">Copy LaTeX</button>
+        <div class="copy-group">
+          <button id="copy-btn" class="btn secondary">Copy LaTeX</button>
+          <button id="copy-menu-btn" class="btn secondary caret" aria-label="More copy options" aria-haspopup="menu" aria-expanded="false">▾</button>
+          <div id="copy-menu" class="menu" role="menu" hidden>
+            <button data-copy="display" role="menuitem">Copy as display math <span class="hint">\[ … \]</span></button>
+            <button data-copy="inline" role="menuitem">Copy as inline math <span class="hint">\( … \)</span></button>
+            <button data-copy="mathml" role="menuitem">Copy as MathML <span class="hint">pastes as an equation into Word and Google Docs</span></button>
+            <button data-copy="png" role="menuitem">Copy as PNG image</button>
+            <button data-copy="overleaf" role="menuitem">Open in Overleaf ↗</button>
+          </div>
+        </div>
       </div>
 
       <div class="columns">
@@ -115,7 +146,47 @@
         <button id="chat-send" class="btn secondary" disabled>Send</button>
       </div>
     </section>
+
+    <section class="card prose" id="how">
+      <h2>How it works</h2>
+      <p>LatexGen converts plain-English math and equation screenshots into LaTeX <strong>inside your browser</strong>. There is no upload step: the models are downloaded once, cached, and run on your own device. That is why it is free without limits, and why it keeps working offline.</p>
+      <ol>
+        <li><strong>A specialist model answers first.</strong> A 220M-parameter model fine-tuned only for text-to-LaTeX handles single equations in well under a second, on any device, no GPU needed.</li>
+        <li><strong>Every result is checked.</strong> The LaTeX must parse, and the numbers and concepts you typed must actually appear in it. Failures trigger up to five self-repair attempts with the exact error fed back to the model.</li>
+        <li><strong>Harder input climbs a ladder.</strong> Prose passages and multi-line input go to an on-device language model when your machine can run one, or to an optional server model. Screenshots use two on-device OCR models chosen by benchmark.</li>
+      </ol>
+      <h2>Why it is free</h2>
+      <p>Paid converters forward your text to a rented cloud model and meter it: typically <strong>$9–19 a month for a few hundred conversions</strong>, with 10 free ones to hook you. Your laptop already has the compute. LatexGen just uses it, so there is nothing to meter and nothing to charge for.</p>
+      <div class="wrap-x"><table class="compare">
+        <thead><tr><th></th><th>LatexGen</th><th>Typical paid converter</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Price</th><td>Free, unlimited</td><td>$9–19 / month, 200–750 credits</td></tr>
+          <tr><th scope="row">Where your math goes</th><td>Stays on your device</td><td>Uploaded to a third-party API</td></tr>
+          <tr><th scope="row">Output checking</th><td>Parsed and matched against your input, self-repairing</td><td>None</td></tr>
+          <tr><th scope="row">Screenshot to LaTeX</th><td>On-device OCR, image never leaves the tab</td><td>Uploaded, 3 credits each</td></tr>
+          <tr><th scope="row">Works offline</th><td>Yes, after the first load</td><td>No</td></tr>
+          <tr><th scope="row">Source</th><td><a href="https://github.com/OlehZhyhinas/LatexGen">Open, with published benchmarks</a></td><td>Closed</td></tr>
+        </tbody>
+      </table></div>
+      <h2>Questions</h2>
+      <p><strong>Does it really not upload anything?</strong> Text and images are processed in the tab. Open your browser's network panel while converting: the only requests are for model files. The one exception is the optional server model, which is off by default and clearly labelled when it is used.</p>
+      <p><strong>How big is the download?</strong> Quick mode is about 340 MB of models, downloaded once. Full mode adds an on-device language model sized to your machine (1.4–6 GB), fetched in the background while you work.</p>
+      <p><strong>Which models?</strong> IntelliTeX for text, Texo and Texify for images, Qwen3 models via WebLLM for complex input. The <a href="/benchmarks.html">benchmarks page</a> shows how each was chosen.</p>
+    </section>
   </main>
+
+  <div id="consent" class="modal-backdrop" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="consent-title">
+      <h2 id="consent-title">Runs on your device</h2>
+      <p>LatexGen converts math with AI models that run inside this browser tab. Nothing you type or paste is uploaded. Choose how much to download (one time, then cached):</p>
+      <div class="consent-options">
+        <button class="consent-opt" data-consent="quick"><strong>Quick</strong><span>Specialist models only · ~340 MB · works on any device · single equations and screenshots</span></button>
+        <button class="consent-opt primary" data-consent="full"><strong>Full</strong><span>Adds an on-device language model for complex and multi-line input · 1.4–6 GB depending on your device · downloads in the background</span></button>
+      </div>
+      <p class="hint">Change this any time in settings (⚙).</p>
+    </div>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
 
   <footer class="foot">
     <span>Free, unlimited, and private: your text and images are processed on this device. Nothing is uploaded.</span>

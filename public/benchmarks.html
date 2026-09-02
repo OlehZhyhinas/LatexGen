@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>LatexGen benchmarks — which on-device models actually convert math to LaTeX</title>
+<meta name="description" content="Accuracy and latency of in-browser models on text-to-LaTeX and image-to-LaTeX, judged against Wikipedia-referenced equations. The data behind LatexGen's routing." />
+<link rel="stylesheet" href="/vendor/fonts/geist/geist.css" />
+<link rel="stylesheet" href="/style.css" />
+<style>
+  .prose { max-width: 860px; margin: 0 auto; padding: 32px 16px 64px; }
+  .prose h1 { font-size: 28px; margin: 0 0 8px; }
+  .prose h2 { font-size: 20px; margin: 40px 0 8px; }
+  .prose p, .prose li { font-size: 15px; color: var(--text); }
+  .prose .lead { font-size: 17px; color: var(--muted); }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md); overflow: hidden; }
+  caption { text-align: left; font-weight: 600; padding: 12px 14px; background: var(--surface-2); }
+  th, td { padding: 10px 14px; text-align: left; border-top: 1px solid var(--border); white-space: nowrap; }
+  th[scope=row] { font-weight: 500; white-space: normal; }
+  td.good { color: var(--success); font-weight: 600; }
+  td.bad { color: var(--muted); }
+  .lat { color: var(--muted); font-weight: 400; font-size: 12px; }
+  .wrap-x { overflow-x: auto; }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="/"><span class="logo-mark" aria-hidden="true">Σ</span><span class="wordmark">LatexGen</span></a>
+  <nav class="nav"><a href="/#how">How it works</a><a href="/benchmarks.html">Benchmarks</a><a href="https://github.com/OlehZhyhinas/LatexGen" target="_blank" rel="noopener">GitHub</a></nav>
+</header>
+<main class="prose">
+  <h1>Benchmarks</h1>
+  <p class="lead">Every routing decision in LatexGen comes from these numbers, not from model marketing. Each cell is accuracy on the tier (median latency), judged by a local 27B model against reference LaTeX taken from Wikipedia.</p>
+
+  <h2>Text → LaTeX (15 items)</h2>
+  <p>Inputs are plain-English math as a student would type it. Tiers: <b>easy</b> (quadratic formula, Euler's identity…), <b>medium</b> (Gaussian integral, binomial theorem…), <b>hard</b> (Schrödinger, Cauchy integral formula, zeta functional equation…), <b>multiline</b> (prose passages with several embedded equations).</p>
+  <div class="wrap-x"><table><caption>Accuracy @ median latency, in-browser models on an Apple M-series laptop</caption><thead><tr><th>approach</th><th>easy</th><th>medium</th><th>hard</th><th>multiline</th></tr></thead><tbody>
+<tr><th scope=row>Qwen3 4B (WebGPU)</th>
+<td class=good>75% <span class=lat>@ 0.5s</span></td>
+<td class=good>75% <span class=lat>@ 1.5s</span></td>
+<td class=good>100% <span class=lat>@ 1.1s</span></td>
+<td>67% <span class=lat>@ 2.7s</span></td>
+</tr>
+<tr><th scope=row>IntelliTeX specialist (220M, in-browser CPU)</th>
+<td class=good>100% <span class=lat>@ 0.8s</span></td>
+<td class=good>100% <span class=lat>@ 1.8s</span></td>
+<td>50% <span class=lat>@ 1.6s</span></td>
+<td>—</td>
+</tr>
+<tr><th scope=row>Qwen3 1.7B (WebGPU)</th>
+<td class=good>100% <span class=lat>@ 0.2s</span></td>
+<td class=good>100% <span class=lat>@ 0.5s</span></td>
+<td>50% <span class=lat>@ 0.5s</span></td>
+<td class=bad>0% <span class=lat>@ 0.5s</span></td>
+</tr>
+<tr><th scope=row>Qwen3 0.6B (WebGPU)</th>
+<td class=good>100% <span class=lat>@ 0.3s</span></td>
+<td class=bad>25% <span class=lat>@ 0.7s</span></td>
+<td class=bad>25% <span class=lat>@ 0.4s</span></td>
+<td class=bad>0% <span class=lat>@ 0.6s</span></td>
+</tr>
+<tr><th scope=row>Llama 3.2 3B (WebGPU)</th>
+<td>50% <span class=lat>@ 0.4s</span></td>
+<td>50% <span class=lat>@ 0.7s</span></td>
+<td class=bad>25% <span class=lat>@ 1.2s</span></td>
+<td class=bad>0% <span class=lat>@ 1.8s</span></td>
+</tr>
+<tr><th scope=row>SmolLM2 360M (WebGPU)</th>
+<td>50% <span class=lat>@ 0.1s</span></td>
+<td class=bad>0% <span class=lat>@ 0.3s</span></td>
+<td class=bad>0% <span class=lat>@ 3.6s</span></td>
+<td class=bad>0% <span class=lat>@ 6.4s</span></td>
+</tr>
+<tr><th scope=row>Qwen3 0.6B segmenter → specialist</th>
+<td class=bad>25% <span class=lat>@ 0.8s</span></td>
+<td class=bad>0% <span class=lat>@ 0.3s</span></td>
+<td class=bad>0% <span class=lat>@ 0.3s</span></td>
+<td class=bad>0% <span class=lat>@ 0.7s</span></td>
+</tr>
+<tr><th scope=row>SmolLM2 segmenter → specialist</th>
+<td class=bad>0% <span class=lat>@ 0.1s</span></td>
+<td class=bad>0% <span class=lat>@ 3.4s</span></td>
+<td class=bad>0% <span class=lat>@ 0.2s</span></td>
+<td class=bad>0% <span class=lat>@ 0.7s</span></td>
+</tr>
+</tbody></table></div>
+  <p>What it decided: the 220M specialist goes first for single equations (it is 100% on easy and medium at a fraction of the cost); prose passages skip browser models below 4B-class; the “tiny model segments, specialist converts” idea was dropped, because small models fail at instruction-following long before they fail at math.</p>
+
+  <h2>Image → LaTeX (18 rendered images)</h2>
+  <p>Equations rendered with KaTeX in headless Chrome, plus prose paragraphs with inline math and two hostile renders (12px font, dark mode). Both models run entirely in the browser.</p>
+  <div class="wrap-x"><table><caption>Texo vs Texify — accuracy @ median latency</caption><thead><tr><th>approach</th><th>easy</th><th>medium</th><th>hard</th><th>mixed</th><th>degraded</th></tr></thead><tbody>
+<tr><th scope=row>Texify (305 MB)</th>
+<td>50% <span class=lat>@ 8.8s</span></td>
+<td class=good>100% <span class=lat>@ 3.5s</span></td>
+<td class=good>100% <span class=lat>@ 4.1s</span></td>
+<td class=good>100% <span class=lat>@ 4.0s</span></td>
+<td class=bad>0% <span class=lat>@ 8.8s</span></td>
+</tr>
+<tr><th scope=row>Texo (77 MB)</th>
+<td class=good>100% <span class=lat>@ 0.6s</span></td>
+<td class=good>75% <span class=lat>@ 0.8s</span></td>
+<td class=good>80% <span class=lat>@ 0.7s</span></td>
+<td>67% <span class=lat>@ 0.7s</span></td>
+<td>50% <span class=lat>@ 0.6s</span></td>
+</tr>
+</tbody></table></div>
+  <p>Texo's two misses on medium/degraded were the KaTeX-only alias <code>\infin</code>, which the app now canonicalizes to <code>\infty</code>; Texify's misses on easy images were a degenerate repeat-until-token-cap loop, which the app now collapses. Result: Texo reads first (fast, tiny, robust to small fonts and dark backgrounds); Texify takes over for prose and matrices.</p>
+
+  <h2>Reproduce it</h2>
+  <p>Everything is in the repository: the eval sets, the in-browser harnesses (<code>public/bench.html</code>, <code>public/bench-images.html</code>), the renderer for the image set, and the judge scripts. Run them against a new model and send the numbers.</p>
+</main>
+<footer class="foot"><span>Free, unlimited, and private: your text and images are processed on this device. Nothing is uploaded.</span></footer>
+</body>
+</html>

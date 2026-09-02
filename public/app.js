@@ -51,7 +51,7 @@ let loadedModel = null;
 // through to the general model exactly like the normal escalation ladder.
 const SPECIALIST_PREFIX = "Convert natural-language math into a STRICT LaTeX equation\n";
 let specialist = null;
-(async () => {
+const specialistReady = (async () => {
   try {
     tjsEnv.allowRemoteModels = false;
     tjsEnv.allowLocalModels = true;
@@ -277,6 +277,7 @@ async function convertImage(fileOrBlob, forceModel = null) {
     showChecks({ ok: syntaxIssues.length === 0, issues: syntaxIssues }, note);
     currentLatex = latex;
     currentInput = "(image)";
+    recordHistory("(image)", latex);
     chatLog.innerHTML = "";
     setChatEnabled(true);
     const other = used === "texo" ? "texify" : "texo";
@@ -422,7 +423,13 @@ async function buildModelPicker() {
   const best = modelRows.find((r) => r.canRun);
   if (best) {
     selectModel(best.id);
-    startModelLadder(best);
+    if (llmEnabled()) {
+      startModelLadder(best);
+    } else {
+      loadBtn.hidden = false;
+      loadStatus.textContent = "On-device language model is off (specialist only). Turn it on in settings.";
+      $("model-status").textContent = "On-device model: specialist only";
+    }
   } else {
     ddBtn.textContent = "No browser model fits this device";
     ddBtn.disabled = true;
@@ -508,7 +515,7 @@ ddBtn.addEventListener("click", () => { ddMenu.hidden = !ddMenu.hidden; });
 document.addEventListener("click", (e) => {
   if (!$("model-dd").contains(e.target)) ddMenu.hidden = true;
 });
-buildModelPicker();
+specialistReady.then(buildModelPicker);
 
 // ---- WebGPU availability ----
 if (!navigator.gpu) {
@@ -747,8 +754,32 @@ convertBtn.addEventListener("click", async () => {
     const liveOutput = (partial) => { outputCode.textContent = partial; };
     outputCode.textContent = "";
 
+    // Batch: several lines, each a single equation -> one specialist call per
+    // line (a structural split on the user's own newlines, not a heuristic).
+    let batchNote = "";
+    const lines = text.split(/\n+/).map((l) => l.trim()).filter(Boolean);
+    if (specialist && lines.length >= 2 && lines.every(specialistEligible)) {
+      const outs = [];
+      let allOk = true;
+      for (const [i, line] of lines.entries()) {
+        convertStatus.textContent = `converting line ${i + 1}/${lines.length}…`;
+        const r = await convertSpecialist(line);
+        const v = validateLatex(line, r.latex);
+        if (!v.ok) { allOk = false; break; }
+        outs.push(r.latex);
+        outputCode.textContent = outs.join("\n\n");
+      }
+      if (allOk) {
+        result = { latex: outs.join("\n\n"), model: `IntelliTeX · specialist × ${lines.length}` };
+        validation = { ok: true, issues: [] };
+        batchNote = `(${lines.length} equations, one per line)`;
+      } else {
+        outputCode.textContent = "";
+      }
+    }
+
     // Tier 0: the local specialist, when the input is in its wheelhouse.
-    if (specialist && specialistEligible(text)) {
+    if (!result && specialist && specialistEligible(text)) {
       try {
         const r0 = await convertSpecialist(text);
         const v0 = validateLatex(text, r0.latex);
@@ -760,7 +791,7 @@ convertBtn.addEventListener("click", async () => {
       } catch { /* specialist failed — fall through to the general model */ }
     }
 
-    let note = "";
+    let note = batchNote;
     // Benchmark-driven routing: prose/multiline inputs score 0% on browser
     // models below 4B-class, so don't waste a hop on them.
     const loadedRow = modelRows.find((r) => r.id === loadedModel);
@@ -811,11 +842,26 @@ convertBtn.addEventListener("click", async () => {
       validation = validateLatex(text, result.latex);
     }
 
+    if (validation.ok && strictMode() && !batchNote) {
+      convertStatus.textContent = "strict mode: double-checking…";
+      const j = await strictJudge(text, result.latex);
+      if (!j.ok) {
+        validation = { ok: false, issues: [`judge: ${j.reason}`] };
+        if (engine) {
+          const r = await repairLoop(text, result.latex, validation.issues, (l) => validateLatex(text, l), liveOutput,
+            (attempt, issues) => { convertStatus.textContent = `repair attempt ${attempt}/${MAX_REPAIR_ATTEMPTS} — ${issues[0]}…`; });
+          if (r.ok) { result = { ...result, latex: r.latex }; validation = { ok: true, issues: [] }; note = "(strict mode: corrected after a second opinion)"; }
+        }
+      } else {
+        note = note || "(strict mode: verified by a second model)";
+      }
+    }
     outputCode.textContent = result.latex;
     renderPreview(result.latex);
     showChecks(validation, note);
     currentLatex = result.latex;
     currentInput = text;
+    recordHistory(text, result.latex);
     chatLog.innerHTML = "";
     setChatEnabled(true);
     const secs = ((performance.now() - started) / 1000).toFixed(1);
@@ -898,6 +944,7 @@ async function sendRefinement() {
     }
 
     currentLatex = result.latex;
+    recordHistory(currentInput, result.latex);
     addMsg("model", result.latex);
     outputCode.textContent = result.latex;
     renderPreview(result.latex);
@@ -916,9 +963,7 @@ chatInput.addEventListener("keydown", (e) => {
   if (e.key === "Enter") sendRefinement();
 });
 
-$("copy-btn").addEventListener("click", () => {
-  navigator.clipboard.writeText(outputCode.textContent);
-});
+// (copy handling lives in the copy-formats module below)
 
 // ---- direct manual editing of the LaTeX box ----
 // No LLM involved: re-render the preview and re-run checks live as the user
@@ -981,4 +1026,203 @@ $("input").addEventListener("input", () => {
   document.addEventListener("click", (e) => {
     if (!settings.hidden && !settings.contains(e.target) && !settingsBtn.contains(e.target) && e.target !== $("change-model")) openSettings(false);
   });
+}
+
+
+// =====================================================================
+// Feature batch: settings/consent, strict-mode judge, history/favorites,
+// copy formats, toast.
+// =====================================================================
+
+// ---- settings persisted in localStorage ----
+const PREFS_KEY = "latexgen.prefs";
+function prefs() { try { return JSON.parse(localStorage.getItem(PREFS_KEY) || "{}"); } catch { return {}; } }
+function setPref(k, v) { const p = prefs(); p[k] = v; try { localStorage.setItem(PREFS_KEY, JSON.stringify(p)); } catch {} }
+function llmEnabled() { return prefs().consent === "full"; }
+function strictMode() { return !!prefs().strict; }
+
+function toast(msg, ms = 1800) {
+  const t = $("toast");
+  t.textContent = msg; t.hidden = false;
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => { t.hidden = true; }, ms);
+}
+
+// ---- first-visit consent ----
+{
+  const consent = $("consent");
+  if (!prefs().consent) consent.hidden = false;
+  for (const btn of consent.querySelectorAll(".consent-opt")) {
+    btn.addEventListener("click", () => {
+      setPref("consent", btn.dataset.consent);
+      consent.hidden = true;
+      $("llm-enabled").checked = llmEnabled();
+      if (llmEnabled() && !engine) {
+        const best = modelRows.find((r) => r.canRun);
+        if (best) { loadBtn.hidden = true; startModelLadder(best); }
+      }
+    });
+  }
+  const llmBox = $("llm-enabled");
+  llmBox.checked = llmEnabled();
+  llmBox.addEventListener("change", () => {
+    setPref("consent", llmBox.checked ? "full" : "quick");
+    if (llmBox.checked && !engine) {
+      const best = modelRows.find((r) => r.canRun);
+      if (best) { loadBtn.hidden = true; startModelLadder(best); }
+    }
+  });
+  const strictBox = $("strict-mode");
+  strictBox.checked = strictMode();
+  strictBox.addEventListener("change", () => setPref("strict", strictBox.checked));
+}
+
+// ---- strict mode: a second model judges input/LaTeX fidelity ----
+const JUDGE_PROMPT = `You verify text-to-LaTeX conversions. Given the user's plain-English input and the produced LaTeX, decide whether the LaTeX expresses exactly what the text describes (same operations, grouping, exponents, limits, variables). Reply with ONLY a JSON object: {"ok": true/false, "reason": "<max 12 words>"}`;
+async function strictJudge(text, latex) {
+  const parse = (s) => {
+    try { const j = JSON.parse(s.slice(s.indexOf("{"), s.lastIndexOf("}") + 1)); return { ok: !!j.ok, reason: String(j.reason || "") }; }
+    catch { return { ok: true, reason: "" }; } // unparseable verdict never blocks the user
+  };
+  try {
+    if (serverAvailable) {
+      const r = await fetch("/api/judge", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ text, latex }) });
+      if (r.ok) return parse(await r.text());
+    }
+    if (engine) {
+      const reply = await engine.chat.completions.create({
+        messages: [{ role: "system", content: JUDGE_PROMPT }, { role: "user", content: `INPUT:\n${text}\n\nLATEX:\n${latex}` }],
+        temperature: 0, max_tokens: 80, extra_body: { enable_thinking: false },
+      });
+      return parse(reply.choices[0].message.content);
+    }
+  } catch { /* judge unavailable */ }
+  return { ok: true, reason: "" };
+}
+
+// ---- history and favorites (this browser only) ----
+const HISTORY_KEY = "latexgen.history";
+const HISTORY_MAX = 100;
+function loadHistory() { try { return JSON.parse(localStorage.getItem(HISTORY_KEY) || "[]"); } catch { return []; } }
+function saveHistory(items) { try { localStorage.setItem(HISTORY_KEY, JSON.stringify(items.slice(0, HISTORY_MAX))); } catch {} }
+function recordHistory(input, latex) {
+  if (!latex || !latex.trim()) return;
+  const items = loadHistory();
+  const dup = items.findIndex((h) => h.latex === latex);
+  if (dup !== -1) { const [h] = items.splice(dup, 1); h.ts = Date.now(); items.unshift(h); saveHistory(items); renderHistory(); return; }
+  items.unshift({ id: `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`, ts: Date.now(), input, latex, fav: false });
+  saveHistory(items);
+  renderHistory();
+}
+let historyStarredOnly = false;
+function renderHistory() {
+  const list = $("history-list");
+  if (!list) return;
+  const items = loadHistory().filter((h) => !historyStarredOnly || h.fav);
+  list.innerHTML = "";
+  if (!items.length) {
+    const e = document.createElement("div"); e.className = "history-empty";
+    e.textContent = historyStarredOnly ? "No starred conversions yet." : "Conversions you make will show up here.";
+    list.appendChild(e); return;
+  }
+  for (const h of items) {
+    const row = document.createElement("div"); row.className = "hist"; row.tabIndex = 0; row.setAttribute("role", "button");
+    const star = document.createElement("button"); star.className = `star${h.fav ? " on" : ""}`; star.textContent = h.fav ? "★" : "☆";
+    star.title = h.fav ? "Unstar" : "Star"; star.setAttribute("aria-label", star.title);
+    star.addEventListener("click", (e) => { e.stopPropagation(); const all = loadHistory(); const t = all.find((x) => x.id === h.id); if (t) { t.fav = !t.fav; saveHistory(all); renderHistory(); } });
+    const body = document.createElement("div"); body.className = "body";
+    const code = document.createElement("code"); code.textContent = h.latex;
+    const meta = document.createElement("div"); meta.className = "meta";
+    meta.textContent = `${new Date(h.ts).toLocaleString([], { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" })} · ${h.input === "(image)" ? "from image" : h.input}`;
+    body.appendChild(code); body.appendChild(meta);
+    row.appendChild(star); row.appendChild(body);
+    const restore = () => {
+      outputCode.textContent = h.latex; renderPreview(h.latex);
+      currentLatex = h.latex; currentInput = h.input;
+      if (h.input !== "(image)") { $("input").value = h.input; $("input").dispatchEvent(new Event("input")); }
+      const issues = checkSyntax(h.latex);
+      showChecks({ ok: issues.length === 0, issues }, "(restored from history)");
+      setChatEnabled(true); $("history").hidden = true;
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+    row.addEventListener("click", restore);
+    row.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); restore(); } });
+    list.appendChild(row);
+  }
+}
+{
+  const drawer = $("history"), btn = $("history-btn");
+  const open = (o) => { drawer.hidden = !o; btn.setAttribute("aria-expanded", String(o)); if (o) { $("settings").hidden = true; renderHistory(); } };
+  btn.addEventListener("click", () => open(drawer.hidden));
+  $("history-close").addEventListener("click", () => open(false));
+  $("history-filter").addEventListener("click", (e) => { historyStarredOnly = !historyStarredOnly; e.currentTarget.setAttribute("aria-pressed", String(historyStarredOnly)); e.currentTarget.textContent = historyStarredOnly ? "Show all" : "Starred only"; renderHistory(); });
+  $("history-clear").addEventListener("click", () => { if (confirm("Clear all history in this browser?")) { saveHistory([]); renderHistory(); } });
+  document.addEventListener("click", (e) => { if (!drawer.hidden && !drawer.contains(e.target) && !btn.contains(e.target)) open(false); });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") open(false); });
+}
+
+// ---- copy formats ----
+// Single-segment outputs can be re-wrapped; anything else is copied as-is.
+function mathBody(latex) {
+  const segs = extractSegmentsForCopy(latex);
+  return segs.length === 1 && segs[0].isWhole ? segs[0].body : null;
+}
+function extractSegmentsForCopy(latex) {
+  const t = latex.trim();
+  const m = t.match(/^(?:\$\$([\s\S]+)\$\$|\\\[([\s\S]+)\\\]|\\\(([\s\S]+)\\\)|\$([^$]+)\$)$/);
+  if (m) return [{ body: (m[1] ?? m[2] ?? m[3] ?? m[4]).trim(), isWhole: true }];
+  if (!/\$|\\\[|\\\(/.test(t)) return [{ body: t, isWhole: true }]; // bare math
+  return [{ body: t, isWhole: false }];
+}
+async function writeClipboard(items, label) {
+  try {
+    if (typeof ClipboardItem !== "undefined" && items.some((i) => i.type !== "text/plain")) {
+      await navigator.clipboard.write([new ClipboardItem(Object.fromEntries(items.map((i) => [i.type, i.blob ?? new Blob([i.text], { type: i.type })])))]);
+    } else {
+      await navigator.clipboard.writeText(items.find((i) => i.type === "text/plain")?.text ?? "");
+    }
+    toast(`Copied ${label}`);
+  } catch (err) {
+    toast(`Copy failed: ${err.message || err}`, 3000);
+  }
+}
+async function copyAs(kind) {
+  const latex = outputCode.textContent.trim();
+  if (!latex) { toast("Nothing to copy yet"); return; }
+  const body = mathBody(latex);
+  if (kind === "display") return writeClipboard([{ type: "text/plain", text: body != null ? `\\[\n${body}\n\\]` : latex }], "display math");
+  if (kind === "inline") return writeClipboard([{ type: "text/plain", text: body != null ? `\\(${body}\\)` : latex }], "inline math");
+  if (kind === "mathml") {
+    const src = body ?? latex;
+    let mathml;
+    try { mathml = katex.renderToString(src, { output: "mathml", throwOnError: false, displayMode: true }).match(/<math[\s\S]*<\/math>/)?.[0]; } catch {}
+    if (!mathml) { toast("Could not build MathML for this LaTeX", 3000); return; }
+    return writeClipboard([{ type: "text/html", text: mathml }, { type: "text/plain", text: mathml }], "MathML");
+  }
+  if (kind === "png") {
+    try {
+      const blob = await htmlToImage.toBlob(preview, { backgroundColor: "#ffffff", pixelRatio: 2, style: { padding: "16px" } });
+      await writeClipboard([{ type: "image/png", blob }, { type: "text/plain", text: latex }], "PNG");
+    } catch (err) { toast(`PNG export failed: ${err.message || err}`, 3000); }
+    return;
+  }
+  if (kind === "overleaf") {
+    const doc = `\\documentclass{article}\n\\usepackage{amsmath,amssymb}\n\\begin{document}\n${body != null ? `\\[\n${body}\n\\]` : latex}\n\\end{document}\n`;
+    const form = document.createElement("form");
+    form.method = "POST"; form.action = "https://www.overleaf.com/docs"; form.target = "_blank";
+    const inp = document.createElement("input"); inp.type = "hidden"; inp.name = "snip"; inp.value = doc;
+    form.appendChild(inp); document.body.appendChild(form); form.submit(); form.remove();
+    toast("Opening in Overleaf…");
+  }
+}
+{
+  const menu = $("copy-menu"), menuBtn = $("copy-menu-btn");
+  $("copy-btn").addEventListener("click", () => {
+    const latex = outputCode.textContent.trim();
+    if (!latex) { toast("Nothing to copy yet"); return; }
+    writeClipboard([{ type: "text/plain", text: latex }], "LaTeX");
+  });
+  menuBtn.addEventListener("click", () => { menu.hidden = !menu.hidden; menuBtn.setAttribute("aria-expanded", String(!menu.hidden)); });
+  for (const b of menu.querySelectorAll("[data-copy]")) b.addEventListener("click", () => { menu.hidden = true; menuBtn.setAttribute("aria-expanded", "false"); copyAs(b.dataset.copy); });
+  document.addEventListener("click", (e) => { if (!menu.hidden && !menu.contains(e.target) && e.target !== menuBtn) { menu.hidden = true; menuBtn.setAttribute("aria-expanded", "false"); } });
 }

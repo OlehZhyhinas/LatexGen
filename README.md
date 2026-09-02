@@ -48,6 +48,29 @@ segmenter-pipeline idea were dropped (tiny models fail at *instruction
 following*, not math). Rerun the benchmark with `public/bench.html` +
 `bench/judge.py`.
 
+## What the app does beyond converting
+
+- **Batch lines:** paste several equations, one per line, and each is converted
+  by the specialist separately (a structural split on your newlines, not a
+  heuristic); the result is one block per line.
+- **Copy formats:** LaTeX as-is, display (`\[ \]`), inline (`\( \)`), MathML
+  (pastes as a live equation into Word and Google Docs), PNG, or open in
+  Overleaf.
+- **History and favorites** in this browser only (localStorage), restorable
+  with one click.
+- **Strict mode** (settings): a second model judges whether the LaTeX says
+  what you typed and triggers the repair loop if not. Catches grouping
+  errors the heuristic checks cannot.
+- **First-visit choice:** Quick (specialists only, ~340 MB) or Full (adds the
+  on-device language model); changeable in settings. Downloads are
+  prioritized so the specialist is ready before anything else starts.
+- **No third-party requests:** every library and font is vendored under
+  `public/vendor/` and served from the app's own origin; only model weights
+  for the optional WebLLM tier come from HuggingFace. WebLLM runs in a Web
+  Worker so the UI never freezes during multi-GB loads.
+- `public/benchmarks.html` is a static, crawlable page of the benchmark
+  results, regenerated with `python3 bench/build-benchmarks-page.py`.
+
 ## Local run (self-hosted, fully offline-capable)
 
 Requires Docker and [Ollama](https://ollama.com) on the host.
@@ -102,14 +125,18 @@ the 264MB specialist download per new user — is the variable part).
 
 ```
 public/            frontend (vanilla JS, no build step)
-  app.js           routing ladder, model picker, refine chat, streaming
+  app.js           routing ladder, model picker, refine chat, streaming, history, copy formats
+  webllm-worker.js WebLLM engine host (Web Worker)
+  vendor/          pinned local copies of WebLLM, transformers.js + ONNX runtime, KaTeX, fonts
+  benchmarks.html  static benchmark results page (generated)
   validator.js     KaTeX syntax + input-fidelity checks
   models/          ONNX weights via git-lfs: IntelliTeX (264MB), Texo (77MB), Texify (305MB)
   bench.html/.js   in-browser text benchmark harness
   bench-images.*   in-browser image-OCR benchmark harness + rendered eval images
 server.js          zero-dependency Node proxy (Ollama/MLX routing, NDJSON)
 deploy/            AWS: deploy.sh + Lambda escalation proxy
-bench/             eval dataset, LLM judge, 2026-09-01 results
+bench/             eval datasets, judges, image renderer, results, benchmarks-page generator
+tests/             validator unit tests (npm test); CI in .github/workflows
 scripts/           MLX runner, specialist ONNX conversion
 ```
 

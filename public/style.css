@@ -243,3 +243,48 @@ kbd { font: inherit; font-size: 11px; padding: 0 4px; border: 1px solid var(--bo
 #convert-status:empty { display: none; }
 [hidden] { display: none !important; }
 @media (max-width: 900px) { #result-card > .row > .btn { width: 100%; } }
+
+/* ---- feature batch: copy menu, history, consent, toast, landing, a11y ---- */
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.copy-group { position: relative; display: inline-flex; }
+.copy-group .btn.secondary { border-radius: var(--r-md) 0 0 var(--r-md); }
+.copy-group .btn.caret { border-radius: 0 var(--r-md) var(--r-md) 0; padding: 10px 12px; border-left: 1px solid var(--border); }
+.menu {
+  position: absolute; right: 0; top: calc(100% + 6px); z-index: 15; min-width: 300px;
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12); overflow: hidden; display: flex; flex-direction: column;
+}
+.menu button { text-align: left; background: none; border: 0; padding: 10px 14px; font-size: 13px; display: flex; flex-direction: column; gap: 2px; }
+.menu button:hover { background: var(--surface-2); }
+.menu button .hint { font-size: 11px; }
+.check { display: flex; gap: 8px; align-items: flex-start; font-size: 14px; cursor: pointer; }
+.check .hint { display: block; }
+.history .history-list { display: flex; flex-direction: column; gap: 8px; max-height: 60vh; overflow-y: auto; }
+.hist { display: flex; gap: 10px; align-items: flex-start; padding: 10px; border: 1px solid var(--border); border-radius: var(--r-md); cursor: pointer; background: var(--surface-2); }
+.hist:hover { border-color: var(--accent); }
+.hist .body { flex: 1; min-width: 0; }
+.hist code { display: block; font-family: var(--mono); font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.hist .meta { font-size: 11px; color: var(--muted); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.hist .star { background: none; border: 0; font-size: 16px; color: var(--muted); padding: 0 2px; }
+.hist .star.on { color: var(--warn); }
+.history-empty { color: var(--muted); font-size: 13px; padding: 8px 0; }
+.modal-backdrop { position: fixed; inset: 0; background: rgba(15,17,21,0.55); display: flex; align-items: center; justify-content: center; z-index: 50; padding: 16px; }
+.modal { background: var(--surface); border-radius: var(--r-lg); padding: 28px; max-width: 560px; width: 100%; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 24px 64px rgba(0,0,0,0.3); }
+.modal h2 { margin: 0; font-size: 20px; }
+.modal p { margin: 0; font-size: 14px; }
+.consent-options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.consent-opt { display: flex; flex-direction: column; gap: 6px; text-align: left; padding: 14px; border-radius: var(--r-md); border: 1px solid var(--border); background: var(--surface-2); font-size: 13px; color: var(--text); }
+.consent-opt span { color: var(--muted); font-size: 12px; }
+.consent-opt.primary { border-color: var(--accent); background: var(--accent-soft); }
+.consent-opt:hover { border-color: var(--accent); }
+.toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); z-index: 60; background: var(--text); color: var(--bg); padding: 10px 16px; border-radius: var(--r-pill); font-size: 13px; font-weight: 500; box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+.prose h2 { font-size: 18px; margin: 8px 0 0; }
+.prose p, .prose li { font-size: 15px; line-height: 1.6; margin: 0; }
+.prose ol { margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 8px; }
+.prose a { color: var(--accent); }
+.wrap-x { overflow-x: auto; }
+table.compare { width: 100%; border-collapse: collapse; font-size: 14px; }
+table.compare th, table.compare td { text-align: left; padding: 10px 12px; border-top: 1px solid var(--border); vertical-align: top; }
+table.compare thead th { border-top: 0; color: var(--muted); font-weight: 500; font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; }
+table.compare td:nth-child(2) { font-weight: 600; }
+@media (max-width: 900px) { .consent-options { grid-template-columns: 1fr; } .menu { min-width: 260px; } }
