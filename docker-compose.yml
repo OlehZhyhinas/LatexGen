@@ -9,8 +9,9 @@ services:
       # Tiny model is plenty for text->LaTeX transcription; swap for a bigger
       # installed model (e.g. qwen3.8:27b-q8_0) if quality disappoints.
       OLLAMA_MODEL: qwen3:1.7b
-      # Refinement edits need a stronger instruction-follower.
-      OLLAMA_REFINE_MODEL: qwen3.8:27b-q8_0
+      # Refinement, prose and strict-mode judging. 8B is 4-5x faster than the 27B
+      # and handles explicit instructions; swap in a bigger model if quality disappoints.
+      OLLAMA_REFINE_MODEL: qwen3:8b
     extra_hosts:
       # Needed on Linux; harmless on Docker Desktop (mac/win).
       - "host.docker.internal:host-gateway"

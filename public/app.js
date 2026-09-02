@@ -57,6 +57,7 @@ const specialistReady = (async () => {
     tjsEnv.allowLocalModels = true;
     tjsEnv.localModelPath = "/models/";
     tjsEnv.backends.onnx.wasm.wasmPaths = "/vendor/ort/";
+    tjsEnv.backends.onnx.wasm.numThreads = 1; // multi-threaded ORT hung on load; 1 thread = ~0.9s/conversion
     const p = await pipeline("text2text-generation", "intellitex", { dtype: "q8" });
     await p(`${SPECIALIST_PREFIX}x squared`, { max_new_tokens: 16 }); // warm-up
     specialist = p;
@@ -681,10 +682,18 @@ window.__repairBrowser = repairBrowser; // debugging hook
 // model is stuck, so stop rather than burn turns. Every attempt streams into
 // the output box and reports via onAttempt so the user sees it trying.
 const MAX_REPAIR_ATTEMPTS = 5;
-async function repairLoop(contextText, latex, issues, validateFn, onDelta, onAttempt) {
+const REPAIR_BUDGET_MS = 8000;
+async function repairLoop(contextText, latex, issues, validateFn, onDelta, onAttempt, opts = {}) {
   let prevSig = issues.join("|");
   let current = latex;
-  for (let attempt = 1; attempt <= MAX_REPAIR_ATTEMPTS; attempt++) {
+  const started = performance.now();
+  // A reachable server answers in ~0.5-1s; more than one on-device repair
+  // attempt is slower than just escalating.
+  const maxAttempts = opts.maxAttempts ?? (serverAvailable ? 1 : MAX_REPAIR_ATTEMPTS);
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    if (attempt > 1 && performance.now() - started > REPAIR_BUDGET_MS) {
+      return { ok: false, latex: current, attempts: attempt - 1, issues, budget: true };
+    }
     onAttempt?.(attempt, issues);
     const repaired = await repairBrowser(contextText, current, issues, onDelta);
     const v = validateFn(repaired.latex);
@@ -695,7 +704,7 @@ async function repairLoop(contextText, latex, issues, validateFn, onDelta, onAtt
     current = repaired.latex;
     issues = v.issues;
   }
-  return { ok: false, latex: current, attempts: MAX_REPAIR_ATTEMPTS, issues };
+  return { ok: false, latex: current, attempts: maxAttempts, issues };
 }
 window.__repairLoop = repairLoop; // debugging hook
 
@@ -805,6 +814,13 @@ convertBtn.addEventListener("click", async () => {
       result = await convertServer(text, liveOutput);
       validation = validateLatex(text, result.latex);
       note = "(routed to server — loaded browser model is too small for prose passages)";
+    } else if (engineChoice === "browser" && !engine && serverAvailable) {
+      // No on-device LLM loaded (Quick mode) and the specialist declined:
+      // go straight to the server instead of failing.
+      convertStatus.textContent = "no on-device model loaded — using server model…";
+      result = await convertServer(text, liveOutput);
+      validation = validateLatex(text, result.latex);
+      note = "(routed to server — no on-device language model loaded)";
     } else if (engineChoice === "browser") {
       result = await convertBrowser(text, liveOutput);
       validation = validateLatex(text, result.latex);
@@ -815,7 +831,7 @@ convertBtn.addEventListener("click", async () => {
             (l) => validateLatex(text, l),
             liveOutput,
             (attempt, issues) => {
-              convertStatus.textContent = `repair attempt ${attempt}/${MAX_REPAIR_ATTEMPTS} — ${issues[0]}…`;
+              convertStatus.textContent = `repair attempt ${attempt}${serverAvailable ? "" : `/${MAX_REPAIR_ATTEMPTS}`} — ${issues[0]}…`;
               showChecks({ ok: false, issues }, "");
             }
           );
@@ -843,26 +859,14 @@ convertBtn.addEventListener("click", async () => {
       validation = validateLatex(text, result.latex);
     }
 
-    if (validation.ok && strictMode() && !batchNote) {
-      convertStatus.textContent = "strict mode: double-checking…";
-      const j = await strictJudge(text, result.latex);
-      if (!j.ok) {
-        validation = { ok: false, issues: [`judge: ${j.reason}`] };
-        if (engine) {
-          const r = await repairLoop(text, result.latex, validation.issues, (l) => validateLatex(text, l), liveOutput,
-            (attempt, issues) => { convertStatus.textContent = `repair attempt ${attempt}/${MAX_REPAIR_ATTEMPTS} — ${issues[0]}…`; });
-          if (r.ok) { result = { ...result, latex: r.latex }; validation = { ok: true, issues: [] }; note = "(strict mode: corrected after a second opinion)"; }
-        }
-      } else {
-        note = note || "(strict mode: verified by a second model)";
-      }
-    }
+    const strictPending = validation.ok && strictMode() && !batchNote;
     outputCode.textContent = result.latex;
     renderPreview(result.latex);
     showChecks(validation, note);
     currentLatex = result.latex;
     currentInput = text;
     recordHistory(text, result.latex);
+    if (strictPending) backgroundJudge(text, result.latex);
     chatLog.innerHTML = "";
     setChatEnabled(true);
     const secs = ((performance.now() - started) / 1000).toFixed(1);
@@ -927,7 +931,9 @@ async function sendRefinement() {
   const pending = addMsg("note", "revising…");
   try {
     const liveOutput = (partial) => { pending.textContent = partial; };
-    let result = engineChoice === "browser"
+    const useBrowser = engineChoice === "browser" && !!engine;
+    if (!useBrowser && !serverAvailable) throw new Error("No model available to refine with: load an on-device model in settings.");
+    let result = useBrowser
       ? await refineBrowser(instruction, liveOutput)
       : await refineServer(instruction, liveOutput);
 
@@ -1358,4 +1364,46 @@ async function setVisualEdit(on) {
   });
   // keep the button state in sync when the user edits the raw source
   outputCode.addEventListener("input", () => setTimeout(syncVisualEdit, 350));
+}
+
+
+// ---- strict mode, non-blocking: the result is already on screen; a second
+// model checks it in the background and offers a fix if it disagrees.
+async function backgroundJudge(text, latex) {
+  const pending = document.createElement("span");
+  pending.className = "info"; pending.innerHTML = "<i></i>second opinion…";
+  checksEl.appendChild(pending);
+  const j = await strictJudge(text, latex);
+  if (outputCode.textContent.trim() !== latex.trim()) { pending.remove(); return; } // user moved on
+  pending.remove();
+  if (j.ok) {
+    const ok = document.createElement("span"); ok.className = "ok"; ok.innerHTML = "<i></i>verified by a second model";
+    checksEl.appendChild(ok);
+    return;
+  }
+  const warn = document.createElement("span"); warn.className = "warn"; warn.innerHTML = `<i></i>second opinion: ${j.reason || "disagrees"}`;
+  checksEl.appendChild(warn);
+  if (!engine && !serverAvailable) return;
+  const fix = document.createElement("button"); fix.className = "btn ghost"; fix.textContent = "Apply suggested fix";
+  fix.addEventListener("click", async () => {
+    fix.disabled = true; fix.textContent = "fixing…";
+    try {
+      let fixed = null;
+      if (engine) {
+        const r = await repairLoop(text, latex, [`judge: ${j.reason}`], (l) => validateLatex(text, l),
+          (p) => { outputCode.textContent = p; }, null, { maxAttempts: 2 });
+        if (r.ok) fixed = r.latex;
+      }
+      if (!fixed && serverAvailable) {
+        const r = await streamServerChat("/api/refine", { original: text, latex, instruction: `A reviewer says: ${j.reason}. Fix exactly that.` }, (p) => { outputCode.textContent = p; });
+        fixed = r.latex;
+      }
+      if (fixed) {
+        outputCode.textContent = fixed; renderPreview(fixed); currentLatex = fixed;
+        showChecks(validateLatex(text, fixed), "(corrected after a second opinion)");
+        recordHistory(text, fixed);
+      } else { fix.textContent = "could not fix automatically"; }
+    } catch (e) { fix.textContent = `fix failed: ${String(e.message || e).slice(0, 40)}`; }
+  });
+  checksEl.appendChild(fix);
 }
