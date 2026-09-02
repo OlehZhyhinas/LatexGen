@@ -29,9 +29,16 @@ echo "==> syncing static site"
 aws s3 sync "$DIR/public/" "s3://$BUCKET/" --delete \
   --exclude "bench*" \
   --cache-control "public,max-age=300"
-# model weights are immutable — long cache
-aws s3 cp "s3://$BUCKET/models/" "s3://$BUCKET/models/" --recursive \
-  --metadata-directive REPLACE --cache-control "public,max-age=31536000,immutable" >/dev/null
+# model weights and vendored libraries are immutable — long cache
+for prefix in models vendor; do
+  aws s3 cp "s3://$BUCKET/$prefix/" "s3://$BUCKET/$prefix/" --recursive \
+    --metadata-directive REPLACE --cache-control "public,max-age=31536000,immutable" >/dev/null
+done
+# S3 guesses content types poorly for these; WebAssembly streaming needs application/wasm
+aws s3 cp "s3://$BUCKET/vendor/" "s3://$BUCKET/vendor/" --recursive --exclude "*" --include "*.wasm" \
+  --metadata-directive REPLACE --content-type application/wasm --cache-control "public,max-age=31536000,immutable" >/dev/null
+aws s3 cp "s3://$BUCKET/vendor/" "s3://$BUCKET/vendor/" --recursive --exclude "*" --include "*.mjs" \
+  --metadata-directive REPLACE --content-type "text/javascript; charset=utf-8" --cache-control "public,max-age=31536000,immutable" >/dev/null
 
 # ---- 2. Lambda ----
 ROLE_NAME="$APP-lambda-role"

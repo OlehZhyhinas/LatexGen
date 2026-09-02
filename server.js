@@ -24,9 +24,16 @@ const PUBLIC_DIR = join(fileURLToPath(new URL(".", import.meta.url)), "public");
 const MIME = {
   ".html": "text/html; charset=utf-8",
   ".js": "text/javascript; charset=utf-8",
+  ".mjs": "text/javascript; charset=utf-8",
   ".css": "text/css; charset=utf-8",
   ".svg": "image/svg+xml",
   ".json": "application/json",
+  ".wasm": "application/wasm",
+  ".woff2": "font/woff2",
+  ".woff": "font/woff",
+  ".ttf": "font/ttf",
+  ".png": "image/png",
+  ".webmanifest": "application/manifest+json",
 };
 
 const SYSTEM_PROMPT = `You are a text-to-LaTeX transcriber. Convert the user's input (plain-language math, equations, or prose with math) into LaTeX.

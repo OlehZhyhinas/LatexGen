@@ -5,9 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>LatexGen — text and screenshots to LaTeX, in your browser</title>
   <meta name="description" content="Convert plain-English math or equation screenshots to validated LaTeX. Free, unlimited, private: models run in your browser, nothing is uploaded." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+  <link rel="stylesheet" href="/vendor/fonts/geist/geist.css" />
+  <link rel="stylesheet" href="/vendor/katex/katex.min.css" />
   <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
@@ -123,8 +122,9 @@
     <span class="row gap-sm"><span id="model-status">On-device model: loading…</span><button id="change-model" class="link">Change</button></span>
   </footer>
 
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+  <script defer src="/vendor/katex/katex.min.js"></script>
+  <script defer src="/vendor/katex/contrib/auto-render.min.js"></script>
+  <script defer src="/vendor/html-to-image/html-to-image.js"></script>
   <script type="module" src="/app.js"></script>
 </body>
 </html>

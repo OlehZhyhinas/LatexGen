@@ -1,7 +1,7 @@
-import * as webllm from "https://esm.run/@mlc-ai/web-llm";
+import * as webllm from "/vendor/webllm/index.js";
 import {
   pipeline, env as tjsEnv, VisionEncoderDecoderModel, PreTrainedTokenizer, Tensor, cat,
-} from "https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.2.0";
+} from "/vendor/transformers/transformers.min.js";
 import { validateLatex, checkSyntax } from "/validator.js";
 
 window.__validate = validateLatex; // debugging hook
@@ -56,6 +56,7 @@ let specialist = null;
     tjsEnv.allowRemoteModels = false;
     tjsEnv.allowLocalModels = true;
     tjsEnv.localModelPath = "/models/";
+    tjsEnv.backends.onnx.wasm.wasmPaths = "/vendor/ort/";
     const p = await pipeline("text2text-generation", "intellitex", { dtype: "q8" });
     await p(`${SPECIALIST_PREFIX}x squared`, { max_new_tokens: 16 }); // warm-up
     specialist = p;
@@ -442,7 +443,8 @@ async function warmUp(eng) {
 }
 
 async function loadEngine(modelId, onProgress) {
-  const eng = await webllm.CreateMLCEngine(
+  const eng = await webllm.CreateWebWorkerMLCEngine(
+    new Worker("/webllm-worker.js", { type: "module" }),
     modelId,
     { initProgressCallback: onProgress },
     // Our prompts are tiny; a small context window cuts prefill time and
