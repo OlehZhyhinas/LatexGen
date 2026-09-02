@@ -35,6 +35,34 @@ let loadedModel = null;
 // inputs try it first, the validator gates the result, anything else falls
 // through to the general model exactly like the normal escalation ladder.
 const SPECIALIST_PREFIX = "Convert natural-language math into a STRICT LaTeX equation\n";
+// Runtime selection, from the Level-A benchmark (this machine, warm):
+//   IntelliTeX  CPU int8 1.28s  ->  WebGPU int4 0.45s   (identical outputs)
+//   Texify      CPU int8 8.0s   ->  WebGPU int4 0.81s   (fp16 on GPU produced garbage)
+//   Texo        CPU fp32 0.77s  ==  GPU 0.78s           (overhead-bound; stays on CPU)
+//   int4 on CPU is 10x SLOWER than int8 (no fast WASM kernel) — GPU only.
+// A failed WebGPU session poisons the runtime for the page, so the choice is
+// remembered per model and the CPU config is used on the next load instead.
+const RUNTIME_PREF_KEY = "latexgen.runtime";
+function runtimePrefs() { try { return JSON.parse(localStorage.getItem(RUNTIME_PREF_KEY) || "{}"); } catch { return {}; } }
+function rememberRuntime(model, ok) { try { const p = runtimePrefs(); p[model] = ok ? "webgpu" : "wasm"; localStorage.setItem(RUNTIME_PREF_KEY, JSON.stringify(p)); } catch { /* ignore */ } }
+function pickRuntime(model) {
+  const gpuConfig = { device: "webgpu", dtype: "q4" }, cpuConfig = { device: "wasm", dtype: "q8" };
+  if (!navigator.gpu) return cpuConfig;
+  return runtimePrefs()[model] === "wasm" ? cpuConfig : gpuConfig;
+}
+async function loadWithRuntime(model, factory) {
+  const cfg = pickRuntime(model);
+  try {
+    const m = await factory(cfg);
+    if (cfg.device === "webgpu") rememberRuntime(model, true);
+    return { model: m, cfg };
+  } catch (err) {
+    if (cfg.device === "webgpu") { rememberRuntime(model, false); console.warn(`${model}: WebGPU failed, CPU on next load`, err); }
+    throw err;
+  }
+}
+window.__runtimeUsed = {}; // debugging hook
+
 let specialist = null;
 const specialistReady = (async () => {
   try {
@@ -43,7 +71,8 @@ const specialistReady = (async () => {
     tjsEnv.localModelPath = "/models/";
     tjsEnv.backends.onnx.wasm.wasmPaths = "/vendor/ort/";
     tjsEnv.backends.onnx.wasm.numThreads = 1; // multi-threaded ORT hung on load; 1 thread = ~0.9s/conversion
-    const p = await pipeline("text2text-generation", "intellitex", { dtype: "q8" });
+    const { model: p, cfg } = await loadWithRuntime("intellitex", (c) => pipeline("text2text-generation", "intellitex", c));
+    window.__runtimeUsed.intellitex = cfg;
     await p(`${SPECIALIST_PREFIX}x squared`, { max_new_tokens: 16 }); // warm-up
     specialist = p;
   } catch (err) {
@@ -172,8 +201,10 @@ function texoProseSignal(raw) {
 // Texify sometimes degenerates into one line repeated to the token cap on
 // very sparse images — collapse exact repeats.
 function dedupeRepeats(s) {
-  const parts = s.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean);
-  return [...new Set(parts)].join("\n\n");
+  const parts = [...new Set(s.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean))];
+  // also drop a trailing paragraph that merely repeats a fragment of an earlier one
+  while (parts.length > 1 && parts.slice(0, -1).some((earlier) => earlier.includes(parts[parts.length - 1]))) parts.pop();
+  return parts.join("\n\n");
 }
 
 function loadOcr(key) {
@@ -181,7 +212,8 @@ function loadOcr(key) {
     const ui = ocrProgressUI(key);
     try {
       if (key === "texify") {
-        const p = await pipeline("image-to-text", "texify", { dtype: "q8", progress_callback: ui.onProgress });
+        const { model: p, cfg } = await loadWithRuntime("texify", (c) => pipeline("image-to-text", "texify", { ...c, progress_callback: ui.onProgress }));
+        window.__runtimeUsed.texify = cfg;
         ocrModels.texify = async (blob) => {
           const url = URL.createObjectURL(blob);
           try {
