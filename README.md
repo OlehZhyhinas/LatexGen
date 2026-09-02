@@ -83,6 +83,24 @@ following*, not math). Rerun the benchmark with `public/bench.html` +
 - `public/benchmarks.html` is a static, crawlable page of the benchmark
   results, regenerated with `python3 bench/build-benchmarks-page.py`.
 
+## In-browser runtime (Level A results)
+
+Every (model × device × dtype) the runtime offers was measured with
+`bench-runtime.html` (one config per page load, because a failed session
+poisons the ONNX runtime for the rest of the page). Warm, on an M5 Pro:
+
+| Model | CPU int8 | WebGPU int4 | Notes |
+|---|---|---|---|
+| IntelliTeX (text specialist) | 1.28s | **0.45s** | identical outputs; fp16 on GPU corrupted a formula |
+| Texify (image tier 1) | 8.0s | **0.81s** | fp16 on GPU produced garbage; int4 correct |
+| Texo (image tier 0) | 0.77s fp32 | 0.78s | overhead-bound; stays on CPU fp32 |
+
+int4 on the CPU is ~10x *slower* than int8 (no fast WASM kernel), so int4 is
+GPU-only. The app picks WebGPU int4 when `navigator.gpu` exists, remembers a
+failed WebGPU session per model in localStorage, and uses CPU int8 on the next
+load. The int4 weights are build artifacts (`scripts/build-model-variants.sh`),
+not committed, to stay under the LFS quota.
+
 ## Local run (self-hosted, fully offline-capable)
 
 Requires Docker and [Ollama](https://ollama.com) on the host.
