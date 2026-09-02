@@ -441,10 +441,6 @@ $("input").addEventListener("keydown", (e) => { if ((e.metaKey || e.ctrlKey) && 
   });
 }
 
-// ---- deep link: ?consent=quick|full skips the first-visit choice (kiosks, docs) ----
-const deepLink = new URLSearchParams(location.search);
-if (!prefs().consent && ["quick", "full"].includes(deepLink.get("consent"))) setPref("consent", deepLink.get("consent"));
-
 // ---- first-visit consent + settings toggles ----
 {
   const consent = $("consent");

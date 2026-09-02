@@ -35,7 +35,7 @@ Type *"the integral from 0 to infinity of e to the minus x squared"* and get ren
 
 Open the site, type or paste, press Convert (or Cmd+Enter). Drop or paste an image for OCR. Edit the LaTeX directly, or tell the Refine box what to change in plain words. Copy as LaTeX, display or inline math, MathML (pastes as a live equation into Word and Google Docs), PNG, or open in Overleaf. Install it as an app to keep working offline.
 
-Deep links: `#l=<latex>` opens a shared result; `?consent=quick` skips the first-visit choice.
+Share a result with a link: the LaTeX travels in the URL fragment (`#l=...`) and renders directly, without touching a server.
 
 ## Run it yourself
 
