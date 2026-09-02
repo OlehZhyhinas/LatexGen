@@ -287,7 +287,7 @@ async function convertImage(fileOrBlob, forceModel = null) {
     convertStatus.textContent = `image conversion failed: ${err.message || err}`;
   } finally {
     drop.classList.remove("busy");
-    label.innerHTML = "…or drop / paste / <u>choose</u> an image of an equation — processed entirely in your browser, never uploaded";
+    label.innerHTML = "Drop / paste / <u>choose</u> an image of an equation — processed entirely in your browser, never uploaded";
   }
 }
 
@@ -458,6 +458,9 @@ function activate(eng, modelId, statusText) {
   engine = eng;
   loadedModel = modelId;
   loadStatus.textContent = statusText;
+  const row = modelRows.find((r) => r.id === modelId);
+  const ms = $("model-status");
+  if (ms) ms.textContent = `On-device model: ${row?.name ?? modelId}${row && modelRows.find((r) => r.canRun) === row ? " (auto-selected for this device)" : ""}`;
   if (old && old !== eng) old.unload().catch(() => {});
 }
 
@@ -707,14 +710,26 @@ function renderPreview(latex) {
 
 const checksEl = $("checks");
 
+// Validation results render as status chips (design: trust signals, not a
+// log line). A note becomes a muted info chip.
 function showChecks(validation, note) {
+  checksEl.innerHTML = "";
+  const chip = (cls, label) => {
+    const s = document.createElement("span");
+    s.className = cls;
+    const dot = document.createElement("i");
+    s.appendChild(dot);
+    s.appendChild(document.createTextNode(label));
+    checksEl.appendChild(s);
+  };
   if (validation.ok) {
-    checksEl.className = "checks ok";
-    checksEl.textContent = note ? `✓ checks passed ${note}` : "✓ syntax valid · matches input";
+    chip("ok", "Syntax valid");
+    if (currentInput !== "(image)" && !String(note).includes("image")) chip("ok", "Matches your input");
   } else {
-    checksEl.className = "checks warn";
-    checksEl.textContent = `⚠ ${validation.issues.join(" · ")}`;
+    for (const issue of validation.issues.slice(0, 4)) chip("warn", issue.replace(/^(syntax|missing):\s*/, (m) => m));
+    if (validation.issues.length > 4) chip("warn", `+${validation.issues.length - 4} more`);
   }
+  if (note) chip("info", note.replace(/^\(|\)$/g, ""));
 }
 
 convertBtn.addEventListener("click", async () => {
@@ -938,3 +953,30 @@ $("input").addEventListener("input", () => {
   charCount.textContent = `${len.toLocaleString()} / ${INPUT_LIMIT.toLocaleString()}`;
   charCount.classList.toggle("near-limit", len >= INPUT_LIMIT * 0.9);
 });
+
+// ---- redesign chrome: segmented Text/Image, settings drawer, upload button ----
+{
+  const inputCard = $("input-card");
+  for (const seg of document.querySelectorAll(".seg")) {
+    seg.addEventListener("click", () => {
+      document.querySelectorAll(".seg").forEach((s) => s.classList.toggle("active", s === seg));
+      inputCard.dataset.mode = seg.dataset.mode;
+      if (seg.dataset.mode === "text") $("input").focus();
+    });
+  }
+  $("upload-btn").addEventListener("click", () => $("image-file").click());
+
+  const settings = $("settings");
+  const settingsBtn = $("settings-btn");
+  const openSettings = (open) => {
+    settings.hidden = !open;
+    settingsBtn.setAttribute("aria-expanded", String(open));
+  };
+  settingsBtn.addEventListener("click", () => openSettings(settings.hidden));
+  $("settings-close").addEventListener("click", () => openSettings(false));
+  $("change-model").addEventListener("click", () => { openSettings(true); ddMenu.hidden = false; });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") openSettings(false); });
+  document.addEventListener("click", (e) => {
+    if (!settings.hidden && !settings.contains(e.target) && !settingsBtn.contains(e.target) && e.target !== $("change-model")) openSettings(false);
+  });
+}

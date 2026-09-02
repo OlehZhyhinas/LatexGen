@@ -3,73 +3,124 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>LatexGen</title>
+  <title>LatexGen — text and screenshots to LaTeX, in your browser</title>
+  <meta name="description" content="Convert plain-English math or equation screenshots to validated LaTeX. Free, unlimited, private: models run in your browser, nothing is uploaded." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
   <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
-  <header>
-    <h1>LatexGen <span class="tag">local</span></h1>
-    <div class="engine-picker">
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo-mark" aria-hidden="true">Σ</span>
+      <span class="wordmark">LatexGen</span>
+      <span class="chip ok" id="privacy-chip"><i></i>Runs in your browser · nothing uploaded</span>
+    </div>
+    <nav class="nav">
+      <a href="https://github.com/OlehZhyhinas/LatexGen#architecture-a-benchmark-driven-escalation-ladder" target="_blank" rel="noopener">How it works</a>
+      <a href="https://github.com/OlehZhyhinas/LatexGen#the-payoff-matrix-that-shaped-the-routing" target="_blank" rel="noopener">Benchmarks</a>
+      <a href="https://github.com/OlehZhyhinas/LatexGen" target="_blank" rel="noopener">GitHub</a>
+      <button id="settings-btn" class="icon-btn" title="Model settings" aria-label="Model settings" aria-expanded="false">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" stroke="currentColor" stroke-width="2"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+      </button>
+    </nav>
+  </header>
+
+  <!-- Settings drawer: engine choice + model picker. Hidden from the main flow. -->
+  <aside id="settings" class="settings" hidden>
+    <div class="settings-head">
+      <strong>Model settings</strong>
+      <button id="settings-close" class="icon-btn" aria-label="Close">✕</button>
+    </div>
+    <div class="settings-group">
+      <div class="settings-label">Where conversions run</div>
       <label class="radio">
         <input type="radio" name="engine" value="browser" checked />
-        Browser model <span class="hint">(WebLLM, runs on your GPU via WebGPU)</span>
+        <span>In this browser <span class="hint">(WebGPU · private · free)</span></span>
       </label>
       <label class="radio">
         <input type="radio" name="engine" value="server" />
-        Server model <span class="hint" id="server-hint">(Ollama)</span>
+        <span>Server model <span class="hint" id="server-hint">(checking…)</span></span>
       </label>
     </div>
-  </header>
-
-  <section id="browser-model-bar">
-    <div class="dd" id="model-dd">
-      <button id="dd-btn" type="button">Select a model <span class="dd-caret">▾</span></button>
-      <div id="dd-menu" role="listbox" hidden></div>
-    </div>
-    <button id="load-btn">Load model</button>
-    <div id="load-status">not loaded</div>
-    <div id="load-progress"><div id="load-progress-fill"></div></div>
-  </section>
-
-  <main>
-    <div class="pane">
-      <div class="pane-title">Input</div>
-      <textarea id="input" maxlength="6000"
-        placeholder="Type math in plain language, e.g.&#10;&#10;the integral from 0 to infinity of e to the minus x squared dx equals square root of pi over 2"></textarea>
-      <div class="row">
-        <button id="convert-btn" class="primary">Convert</button>
-        <span id="convert-status"></span>
-        <span id="char-count">0 / 6,000</span>
+    <div class="settings-group">
+      <div class="settings-label">On-device model</div>
+      <div class="dd" id="model-dd">
+        <button id="dd-btn" type="button">Select a model <span class="dd-caret">▾</span></button>
+        <div id="dd-menu" role="listbox" hidden></div>
       </div>
+      <button id="load-btn" class="btn secondary" hidden>Load model</button>
+      <div id="load-status" class="hint">not loaded</div>
+      <div id="load-progress"><div id="load-progress-fill"></div></div>
+    </div>
+  </aside>
+
+  <main class="column">
+    <section class="card" id="input-card" data-mode="text">
+      <div class="row between">
+        <div class="segmented" role="tablist">
+          <button class="seg active" data-mode="text" role="tab">Text</button>
+          <button class="seg" data-mode="image" role="tab">Image</button>
+        </div>
+        <span class="hint hide-mobile">Type or paste math in plain English — or drop a screenshot anywhere</span>
+      </div>
+
+      <textarea id="input" class="input-area" maxlength="6000"
+        placeholder="e.g. the integral from 0 to infinity of e to the minus x squared dx equals square root of pi over 2"></textarea>
+
       <div id="image-drop">
         <input type="file" id="image-file" accept="image/*" hidden />
-        <span id="image-drop-label">…or drop / paste / <u>choose</u> an image of an equation —
-          processed entirely in your browser, never uploaded</span>
+        <span id="image-drop-label">Drop / paste / <u>choose</u> an image of an equation — processed entirely in your browser, never uploaded</span>
         <div id="image-progress" hidden><div id="image-progress-fill"></div></div>
       </div>
-    </div>
 
-    <div class="pane">
-      <div class="pane-title">LaTeX <button id="copy-btn" title="copy">copy</button>
-        <span class="hint">editable — type directly to fix small things</span></div>
-      <pre id="output-code" contenteditable="plaintext-only" spellcheck="false"></pre>
-      <div id="checks"></div>
-      <button id="ocr-alt-btn" hidden title="Re-read the same image with the other OCR model">read image with other model</button>
-      <div class="pane-title">Preview</div>
-      <div id="preview"></div>
-      <div class="pane-title">Refine</div>
-      <div id="chat-log"></div>
-      <div class="row">
-        <input id="chat-input" type="text" maxlength="2000"
-          placeholder='e.g. "T of V should be T(V), a function applied to V"' disabled />
-        <button id="chat-send" disabled>Send</button>
+      <div class="row between actions">
+        <span class="hint"><kbd>⌘</kbd>+<kbd>Enter</kbd> to convert <span class="dot">·</span> <span id="char-count">0 / 6,000</span></span>
+        <div class="row gap">
+          <button id="upload-btn" class="btn secondary">Upload image</button>
+          <button id="convert-btn" class="btn primary">Convert</button>
+        </div>
       </div>
-    </div>
+    </section>
+
+    <section class="card" id="result-card">
+      <div class="row between wrap">
+        <div class="row gap wrap status-row">
+          <strong class="title">Result</strong>
+          <div id="checks" class="chips"></div>
+          <span id="convert-status" class="chip info"></span>
+        </div>
+        <button id="copy-btn" class="btn secondary">Copy LaTeX</button>
+      </div>
+
+      <div class="columns">
+        <div class="panel paper">
+          <span class="panel-label">Preview</span>
+          <div id="preview"></div>
+        </div>
+        <div class="panel code">
+          <span class="panel-label">LaTeX · editable — click to fix small things</span>
+          <pre id="output-code" contenteditable="plaintext-only" spellcheck="false"></pre>
+          <button id="ocr-alt-btn" class="btn ghost" hidden>read image with other model</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="card refine">
+      <div id="chat-log"></div>
+      <div class="row gap refine-bar">
+        <svg class="chat-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 12a8 8 0 0 1-8 8H7l-4 3V12a8 8 0 0 1 8-8h2a8 8 0 0 1 8 8Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+        <input id="chat-input" type="text" maxlength="2000"
+          placeholder='Fix something? Say it in plain words — e.g. “T of V should be T(V)” or “use a matrix”' disabled />
+        <button id="chat-send" class="btn secondary" disabled>Send</button>
+      </div>
+    </section>
   </main>
 
-  <footer>
-    Prototype: tiny in-browser model (WebLLM) with a local Ollama fallback. Nothing leaves your machine.
+  <footer class="foot">
+    <span>Free, unlimited, and private: your text and images are processed on this device. Nothing is uploaded.</span>
+    <span class="row gap-sm"><span id="model-status">On-device model: loading…</span><button id="change-model" class="link">Change</button></span>
   </footer>
 
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
