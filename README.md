@@ -11,7 +11,7 @@ Every conversion walks a ladder of increasingly capable (and expensive)
 tiers, and only climbs when the previous tier's output fails validation:
 
 1. **Specialist (in-browser, ~0.2–0.8s)** — [IntelliTeX](https://huggingface.co/duanxianpi/IntelliTex)
-   (CodeT5+ 220M, MIT), int8-quantized ONNX via transformers.js. Handles
+   (CodeT5+ 220M), int8-quantized ONNX via transformers.js. Handles
    single equations up to ~220 chars. No GPU needed — runs on CPU/WASM, so
    phones and Firefox get this tier too.
 2. **General browser LLM (WebGPU)** — WebLLM running a Qwen3-family model.
@@ -113,19 +113,18 @@ bench/             eval dataset, LLM judge, 2026-09-01 results
 scripts/           MLX runner, specialist ONNX conversion
 ```
 
-## Licenses / credits
+## Credits
 
-- [IntelliTeX](https://huggingface.co/duanxianpi/IntelliTex) (MIT) — the
-  tier-0 specialist, trained on
-  [MathBridge](https://huggingface.co/datasets/Kyudan/MathBridge) (MIT).
-- [Texo / FormulaNet](https://github.com/alephpi/Texo) (**AGPL-3.0**, code and
-  weights) — image OCR tier 0; preprocessing ported from
-  [Texo-web](https://github.com/alephpi/Texo-web).
+- [IntelliTeX](https://huggingface.co/duanxianpi/IntelliTex) — the tier-0
+  specialist, trained on
+  [MathBridge](https://huggingface.co/datasets/Kyudan/MathBridge).
+- [Texo / FormulaNet](https://github.com/alephpi/Texo) — image OCR tier 0;
+  preprocessing ported from [Texo-web](https://github.com/alephpi/Texo-web).
 - [Texify](https://github.com/VikParuchuri/texify) via
   [Xenova/texify](https://huggingface.co/Xenova/texify) ONNX — image OCR tier 1.
-- [WebLLM](https://github.com/mlc-ai/web-llm) (Apache-2.0),
-  [transformers.js](https://github.com/huggingface/transformers.js)
-  (Apache-2.0), [KaTeX](https://katex.org) (MIT).
+- [WebLLM](https://github.com/mlc-ai/web-llm),
+  [transformers.js](https://github.com/huggingface/transformers.js),
+  [KaTeX](https://katex.org).
 
 ## Image → LaTeX (fully client-side)
 
@@ -148,6 +147,3 @@ checks or when it spelled out prose (Texo has no text mode, so words inside
 `\mathrm{}` are a reliable signal the image is a passage). A "read image with
 the other model" button covers wrong-but-valid readings (e.g. matrices, Texo's
 weak spot). Texify is only downloaded when actually needed.
-
-**License note:** Texo's code and weights are AGPL-3.0. Shipping them makes
-this project AGPL-3.0-compatible; choose the repo license accordingly.
