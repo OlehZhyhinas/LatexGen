@@ -86,22 +86,39 @@ following*, not math). Rerun the benchmark with `public/bench.html` +
 ## Tab API: use an open tab from curl, Postman, Shortcuts, Zapier
 
 A browser tab cannot accept connections, so LatexGen turns the problem around:
-with **Tab API** enabled in settings, the tab long-polls the server for jobs
-and answers them with the models it already has loaded. Each tab gets a stable,
-unguessable address (128-bit token in localStorage; *regenerate* revokes it):
+with **Tab API** enabled (the plug icon in the header), the tab long-polls the
+server for jobs and answers them with the models it already has loaded. Each
+tab has a stable, unguessable address (128-bit token in localStorage;
+*regenerate* revokes it). The API drawer shows the address, live status,
+running jobs, and a request log.
+
+Jobs run on the same headless pipeline the buttons use (`public/pipeline.js`),
+so the API is one-to-one with the UI — and they run **in the background,
+concurrently** (up to 3 at once), without touching what the user sees. ONNX
+inference lives in a Web Worker (`onnx-worker.js`), WebLLM in another, so the
+page never freezes for either the user or the API.
 
 ```bash
-curl -X POST https://<host>/api/tab/<id>/convert \
-  -H 'content-type: application/json' \
+B=https://<host>/api/tab/<id>
+curl -X POST $B/convert -H 'content-type: application/json' \
   -d '{"text": "the sum from n equals 1 to infinity of 1 over n squared"}'
-# -> {"latex":"$$\\sum_{n=1}^{\\infty}\\frac{1}{n^{2}}$$","ok":true,"issues":[],"model":"IntelliTeX · specialist","ms":412}
+# {"latex":"$$\\sum_{n=1}^{\\infty}\\frac{1}{n^{2}}$$","ok":true,"issues":[],"model":"IntelliTeX · specialist","ms":412,...}
 ```
 
-Also `{"imageBase64": "..."}` for screenshots and `POST .../refine` with
-`{"latex", "instruction"}`. The relay forwards bytes only — no inference on the
-server — and holds each request open for up to 25s. Requests visibly run
-through the tab's UI. In-memory relay (`server.js`); the AWS build needs a
-small table-backed equivalent on the Lambda.
+| Endpoint | Body | Mirrors |
+|---|---|---|
+| `POST /convert` | `{"text"}` — options `format` (`latex`\|`display`\|`inline`\|`mathml`\|`png`), `strict: true` (waits for the second-opinion judge, returned as `judge`), `engine` (`browser`\|`server`) | Convert button, incl. batch lines, escalation, repair |
+| `POST /convert` | `{"imageBase64", "mime", "ocr": "auto"\|"texo"\|"texify"}` | Image drop / paste, "read with other model" |
+| `POST /convert` or `/check` | `{"latex"}` | Check LaTeX tab (validate + repair) |
+| `POST /refine` | `{"latex", "instruction", "original"}` | Refine chat |
+| `POST /format` | `{"latex", "format"}` | Copy menu formats |
+| `POST /status` | `{}` | Settings drawer: models loaded, runtime, speed, server |
+| `POST /history` | `{}` | History drawer |
+
+Every response carries the validator verdict (`ok`, `issues`), which tier
+answered (`model`), the routing note, and timing. The relay forwards bytes
+only (no inference on the server) and holds each request up to 25s. In-memory
+relay in `server.js`; the AWS build needs a small table-backed equivalent.
 
 ## In-browser runtime (Level A results)
 
@@ -175,7 +192,10 @@ the 264MB specialist download per new user — is the variable part).
 
 ```
 public/            frontend (vanilla JS, no build step)
-  app.js           routing ladder, model picker, refine chat, streaming, history, copy formats
+  app.js           UI wiring only: drawers, picker, ladder, Tab API client + drawer
+  pipeline.js      headless conversion ladder shared by the UI and the Tab API
+  models.js        main-thread client for onnx-worker.js (runtime selection, progress)
+  onnx-worker.js   IntelliTeX / Texo / Texify inference off the main thread
   webllm-worker.js WebLLM engine host (Web Worker)
   vendor/          pinned local copies of WebLLM, transformers.js + ONNX runtime, KaTeX, fonts
   benchmarks.html  static benchmark results page (generated)

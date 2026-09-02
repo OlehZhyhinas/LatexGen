@@ -24,6 +24,10 @@
       <a href="#how">How it works</a>
       <a href="/benchmarks.html">Benchmarks</a>
       <a href="https://github.com/OlehZhyhinas/LatexGen" target="_blank" rel="noopener">GitHub</a>
+      <button id="api-btn" class="icon-btn" title="Tab API" aria-label="Tab API" aria-expanded="false">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 3v4M15 3v4M7 7h10v4a5 5 0 0 1-10 0V7ZM12 16v5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span id="api-badge" class="badge" hidden></span>
+      </button>
       <button id="history-btn" class="icon-btn" title="History" aria-label="History" aria-expanded="false">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v5h5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
       </button>
@@ -50,16 +54,6 @@
         <span>Server model <span class="hint" id="server-hint">(checking…)</span></span>
       </label>
     </div>
-    <div class="settings-group" id="tabapi-group">
-      <div class="settings-label">Tab API</div>
-      <label class="radio"><input type="checkbox" id="tabapi-toggle" />
-        <span>Let other apps send this tab conversions <span class="hint">(curl, Postman, Shortcuts, Zapier). Nothing runs outside this tab; requests are relayed to it and answered with the models loaded here.</span></span></label>
-      <div id="tabapi-details" hidden>
-        <div class="row gap-sm"><code id="tabapi-url" class="tabapi-url"></code><button id="tabapi-copy" class="btn ghost">copy</button><button id="tabapi-regen" class="btn ghost" title="Invalidate the current address">regenerate</button></div>
-        <pre id="tabapi-example" class="tabapi-example"></pre>
-        <div class="hint" id="tabapi-status">idle</div>
-      </div>
-    </div>
     <div class="settings-group">
       <div class="settings-label">On-device model</div>
       <div class="dd" id="model-dd">
@@ -74,6 +68,25 @@
       <div class="settings-label">Verification and downloads</div>
       <label class="check"><input type="checkbox" id="llm-enabled" /> <span>On-device language model <span class="hint">handles complex and multi-line input locally · 1.4–6 GB one-time download</span></span></label>
       <label class="check"><input type="checkbox" id="strict-mode" /> <span>Strict mode <span class="hint">slower: a model double-checks the LaTeX says what you typed</span></span></label>
+    </div>
+  </aside>
+
+  <aside id="api" class="settings api" hidden>
+    <div class="settings-head">
+      <strong>Tab API</strong>
+      <button id="api-close" class="icon-btn" aria-label="Close">✕</button>
+    </div>
+    <label class="check"><input type="checkbox" id="tabapi-toggle" />
+      <span>Let other apps send this tab work <span class="hint">curl, Postman, Shortcuts, Zapier. Nothing runs outside this tab: requests are relayed to it and answered with the models loaded here, in the background — the page stays usable.</span></span></label>
+    <div id="tabapi-details" hidden>
+      <div class="settings-label">Address</div>
+      <div class="row gap-sm"><code id="tabapi-url" class="tabapi-url"></code><button id="tabapi-copy" class="btn ghost">copy</button><button id="tabapi-regen" class="btn ghost" title="Invalidate the current address">regenerate</button></div>
+      <details class="api-help"><summary>Request reference</summary><pre id="tabapi-example" class="tabapi-example"></pre></details>
+      <div class="settings-label">Status</div>
+      <div class="row gap-sm api-status"><span id="tabapi-dot" class="dot-ind"></span><span id="tabapi-status" class="hint">idle</span></div>
+      <div id="api-running" class="api-running"></div>
+      <div class="row between"><div class="settings-label">Requests</div><button id="api-log-clear" class="btn ghost">clear</button></div>
+      <div id="api-log" class="api-log"><div class="history-empty">No requests yet.</div></div>
     </div>
   </aside>
 

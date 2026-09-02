@@ -231,7 +231,7 @@ const server = createServer(async (req, res) => {
     // --- Tab API: external client -> tab ---
     // POST /api/tab/<id>/convert {text} | {imageBase64, mime} | {latex, instruction}
     let m;
-    if (req.method === "POST" && (m = req.url.match(/^\/api\/tab\/([a-f0-9]{32})\/(convert|refine)$/))) {
+    if (req.method === "POST" && (m = req.url.match(/^\/api\/tab\/([a-f0-9]{32})\/(convert|refine|check|format|status|history)$/))) {
       const [, tabId, kind] = m;
       const tab = tabs.get(tabId);
       if (!tab || Date.now() - tab.lastSeen > 45_000) {
@@ -245,8 +245,11 @@ const server = createServer(async (req, res) => {
       }
       let body;
       try { body = JSON.parse(await readBody(req)); } catch { res.writeHead(400, { "content-type": "application/json" }); res.end(JSON.stringify({ error: "invalid json" })); return; }
-      if (kind === "convert" && !body.text && !body.imageBase64) { res.writeHead(400, { "content-type": "application/json" }); res.end(JSON.stringify({ error: "text or imageBase64 required" })); return; }
-      if (kind === "refine" && (!body.latex || !body.instruction)) { res.writeHead(400, { "content-type": "application/json" }); res.end(JSON.stringify({ error: "latex and instruction required" })); return; }
+      const bad = (msg) => { res.writeHead(400, { "content-type": "application/json" }); res.end(JSON.stringify({ error: msg })); };
+      if (kind === "convert" && !body.text && !body.imageBase64 && !body.latex) return bad("text, imageBase64 or latex required");
+      if (kind === "refine" && (!body.latex || !body.instruction)) return bad("latex and instruction required");
+      if (kind === "check" && !body.latex) return bad("latex required");
+      if (kind === "format" && (!body.latex || !body.format)) return bad("latex and format required");
       if ((body.text ?? "").length > 6000 || (body.imageBase64 ?? "").length > 8_000_000) { res.writeHead(413, { "content-type": "application/json" }); res.end(JSON.stringify({ error: "payload too large" })); return; }
       const jobId = Math.random().toString(16).slice(2) + Date.now().toString(16);
       const answer = new Promise((resolve) => {
