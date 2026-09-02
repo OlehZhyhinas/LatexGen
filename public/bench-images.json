@@ -1,0 +1,128 @@
+[
+ {
+  "id": "pythagorean",
+  "tier": "easy",
+  "kind": "eq",
+  "reference": "x^2 + y^2 = r^2",
+  "image": "/bench-images/pythagorean.png"
+ },
+ {
+  "id": "quadratic",
+  "tier": "easy",
+  "kind": "eq",
+  "reference": "x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}",
+  "image": "/bench-images/quadratic.png"
+ },
+ {
+  "id": "euler",
+  "tier": "easy",
+  "kind": "eq",
+  "reference": "e^{i\\pi} + 1 = 0",
+  "image": "/bench-images/euler.png"
+ },
+ {
+  "id": "circle-area",
+  "tier": "easy",
+  "kind": "eq",
+  "reference": "A = \\pi r^2",
+  "image": "/bench-images/circle-area.png"
+ },
+ {
+  "id": "gaussian",
+  "tier": "medium",
+  "kind": "eq",
+  "reference": "\\int_{-\\infty}^{\\infty} e^{-x^2}\\,dx = \\sqrt{\\pi}",
+  "image": "/bench-images/gaussian.png"
+ },
+ {
+  "id": "basel",
+  "tier": "medium",
+  "kind": "eq",
+  "reference": "\\sum_{n=1}^{\\infty} \\frac{1}{n^2} = \\frac{\\pi^2}{6}",
+  "image": "/bench-images/basel.png"
+ },
+ {
+  "id": "binomial",
+  "tier": "medium",
+  "kind": "eq",
+  "reference": "(x+y)^n = \\sum_{k=0}^{n} \\binom{n}{k} x^{k} y^{n-k}",
+  "image": "/bench-images/binomial.png"
+ },
+ {
+  "id": "derivative",
+  "tier": "medium",
+  "kind": "eq",
+  "reference": "f'(x) = \\lim_{h \\to 0} \\frac{f(x+h) - f(x)}{h}",
+  "image": "/bench-images/derivative.png"
+ },
+ {
+  "id": "det2x2",
+  "tier": "hard",
+  "kind": "eq",
+  "reference": "\\det\\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix} = ad - bc",
+  "image": "/bench-images/det2x2.png"
+ },
+ {
+  "id": "schrodinger",
+  "tier": "hard",
+  "kind": "eq",
+  "reference": "i\\hbar \\frac{\\partial}{\\partial t}\\Psi(\\mathbf{r},t) = \\left[-\\frac{\\hbar^2}{2m}\\nabla^2 + V(\\mathbf{r},t)\\right]\\Psi(\\mathbf{r},t)",
+  "image": "/bench-images/schrodinger.png"
+ },
+ {
+  "id": "cauchy",
+  "tier": "hard",
+  "kind": "eq",
+  "reference": "f(a) = \\frac{1}{2\\pi i} \\oint_\\gamma \\frac{f(z)}{z-a}\\,dz",
+  "image": "/bench-images/cauchy.png"
+ },
+ {
+  "id": "zeta",
+  "tier": "hard",
+  "kind": "eq",
+  "reference": "\\zeta(s) = 2^s \\pi^{s-1} \\sin\\left(\\frac{\\pi s}{2}\\right) \\Gamma(1-s)\\, \\zeta(1-s)",
+  "image": "/bench-images/zeta.png"
+ },
+ {
+  "id": "maxwell",
+  "tier": "hard",
+  "kind": "eq",
+  "reference": "\\begin{aligned} \\nabla \\cdot \\mathbf{E} &= \\frac{\\rho}{\\varepsilon_0} \\\\ \\nabla \\times \\mathbf{B} &= \\mu_0 \\mathbf{J} + \\mu_0 \\varepsilon_0 \\frac{\\partial \\mathbf{E}}{\\partial t} \\end{aligned}",
+  "image": "/bench-images/maxwell.png"
+ },
+ {
+  "id": "newton-text",
+  "tier": "mixed",
+  "kind": "text",
+  "reference": "Newton's second law states that \\(F = ma\\). The kinetic energy of the body is \\(K = \\tfrac{1}{2} m v^2\\).",
+  "image": "/bench-images/newton-text.png"
+ },
+ {
+  "id": "epsilon-delta-text",
+  "tier": "mixed",
+  "kind": "text",
+  "reference": "For all \\(\\varepsilon > 0\\) there exists \\(\\delta > 0\\) such that \\(|x - a| < \\delta\\) implies \\(|f(x) - L| < \\varepsilon\\).",
+  "image": "/bench-images/epsilon-delta-text.png"
+ },
+ {
+  "id": "gaussian-text",
+  "tier": "mixed",
+  "kind": "text",
+  "reference": "The Gaussian integral \\(\\int_{-\\infty}^{\\infty} e^{-x^2}\\,dx = \\sqrt{\\pi}\\) follows from polar coordinates, where \\(dA = r\\,dr\\,d\\theta\\).",
+  "image": "/bench-images/gaussian-text.png"
+ },
+ {
+  "id": "quadratic-tiny",
+  "tier": "degraded",
+  "kind": "eq-tiny",
+  "reference": "x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}",
+  "image": "/bench-images/quadratic-tiny.png"
+ },
+ {
+  "id": "basel-dark",
+  "tier": "degraded",
+  "kind": "eq-dark",
+  "reference": "\\sum_{n=1}^{\\infty} \\frac{1}{n^2} = \\frac{\\pi^2}{6}",
+  "image": "/bench-images/basel-dark.png"
+ }
+]

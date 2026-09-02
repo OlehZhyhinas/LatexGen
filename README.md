@@ -104,8 +104,9 @@ the 264MB specialist download per new user — is the variable part).
 public/            frontend (vanilla JS, no build step)
   app.js           routing ladder, model picker, refine chat, streaming
   validator.js     KaTeX syntax + input-fidelity checks
-  models/          IntelliTeX int8 ONNX weights (git-lfs, ~264MB)
-  bench.html/.js   in-browser benchmark harness
+  models/          ONNX weights via git-lfs: IntelliTeX (264MB), Texo (77MB), Texify (305MB)
+  bench.html/.js   in-browser text benchmark harness
+  bench-images.*   in-browser image-OCR benchmark harness + rendered eval images
 server.js          zero-dependency Node proxy (Ollama/MLX routing, NDJSON)
 deploy/            AWS: deploy.sh + Lambda escalation proxy
 bench/             eval dataset, LLM judge, 2026-09-01 results
@@ -117,6 +118,36 @@ scripts/           MLX runner, specialist ONNX conversion
 - [IntelliTeX](https://huggingface.co/duanxianpi/IntelliTex) (MIT) — the
   tier-0 specialist, trained on
   [MathBridge](https://huggingface.co/datasets/Kyudan/MathBridge) (MIT).
+- [Texo / FormulaNet](https://github.com/alephpi/Texo) (**AGPL-3.0**, code and
+  weights) — image OCR tier 0; preprocessing ported from
+  [Texo-web](https://github.com/alephpi/Texo-web).
+- [Texify](https://github.com/VikParuchuri/texify) via
+  [Xenova/texify](https://huggingface.co/Xenova/texify) ONNX — image OCR tier 1.
 - [WebLLM](https://github.com/mlc-ai/web-llm) (Apache-2.0),
   [transformers.js](https://github.com/huggingface/transformers.js)
   (Apache-2.0), [KaTeX](https://katex.org) (MIT).
+
+## Image → LaTeX (fully client-side)
+
+Drop, paste, or pick an image of rendered math. The image is decoded and OCR'd
+inside the tab and never leaves the browser (there is no upload path at all).
+Two models form a ladder, chosen by an 18-image benchmark
+(`bench/render-images.py`, `public/bench-images.html`, `bench/judge-images.py`,
+results in `bench/results-images-2026-09.json`):
+
+| model | size | easy | medium | hard | prose+math | tiny/dark | median latency |
+|---|---|---|---|---|---|---|---|
+| Texo (tier 0) | 77 MB | 100% | 75%* | 80% | 67% | 50%* | 0.7 s |
+| Texify (tier 1) | 305 MB | 50%† | 100% | 100% | 100% | 0% | 3.5–4 s |
+
+\* both misses are the KaTeX-only alias `\infin`, which the app now canonicalizes to `\infty` (→ 100%).
+† Texify repeats one line to the token cap on very sparse images; the app now collapses exact repeats.
+
+Texo runs first. The app escalates to Texify when Texo's output fails syntax
+checks or when it spelled out prose (Texo has no text mode, so words inside
+`\mathrm{}` are a reliable signal the image is a passage). A "read image with
+the other model" button covers wrong-but-valid readings (e.g. matrices, Texo's
+weak spot). Texify is only downloaded when actually needed.
+
+**License note:** Texo's code and weights are AGPL-3.0. Shipping them makes
+this project AGPL-3.0-compatible; choose the repo license accordingly.

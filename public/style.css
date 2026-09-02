@@ -199,6 +199,8 @@ textarea {
   transition: width 0.2s;
 }
 
+#ocr-alt-btn { align-self: flex-start; font-size: 12px; padding: 3px 10px; }
+
 .checks { font-size: 12px; padding: 2px 0; }
 .checks.ok { color: var(--accent-2); }
 .checks.warn { color: #e6b450; }

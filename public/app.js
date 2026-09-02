@@ -1,5 +1,7 @@
 import * as webllm from "https://esm.run/@mlc-ai/web-llm";
-import { pipeline, env as tjsEnv } from "https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.2.0";
+import {
+  pipeline, env as tjsEnv, VisionEncoderDecoderModel, PreTrainedTokenizer, Tensor, cat,
+} from "https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.2.0";
 import { validateLatex, checkSyntax } from "/validator.js";
 
 window.__validate = validateLatex; // debugging hook
@@ -62,69 +64,196 @@ let specialist = null;
   }
 })();
 
-// ---- image -> LaTeX: Texify (Donut-style OCR) via transformers.js ----
+// ---- image -> LaTeX: two in-browser OCR models, benchmarked into a ladder ----
 // Fully client-side: the image is decoded, preprocessed, and OCR'd in the
-// tab. It never leaves the browser — there is deliberately no image upload
-// path to any server, and no escalation tier for images.
-let texify = null;
-let texifyLoading = null;
-function loadTexify() {
-  texifyLoading ??= (async () => {
-    const bar = $("image-progress");
-    const fill = $("image-progress-fill");
-    const label = $("image-drop-label");
-    bar.hidden = false;
-    // Aggregate per-file download progress into one bar.
-    const files = new Map();
-    const onProgress = (p) => {
-      if (p.status !== "progress" || !p.total) return;
-      files.set(p.file, { loaded: p.loaded, total: p.total });
-      let loaded = 0, total = 0;
-      for (const f of files.values()) { loaded += f.loaded; total += f.total; }
-      fill.style.width = `${Math.round((loaded / total) * 100)}%`;
-      label.textContent =
-        `loading image model: ${(loaded / 2 ** 20).toFixed(0)} / ${(total / 2 ** 20).toFixed(0)} MB (one time — cached after this)`;
-    };
-    try {
-      const p = await pipeline("image-to-text", "texify", { dtype: "q8", progress_callback: onProgress });
-      fill.style.width = "100%";
-      texify = p;
-      return p;
-    } finally {
-      bar.hidden = true;
-      fill.style.width = "0";
-    }
-  })();
-  return texifyLoading;
+// tab. It never leaves the browser — there is no image upload path at all.
+//
+// Tier 0: Texo (FormulaNet, 20M params, ~77MB). Our 18-image benchmark:
+//   100% easy, 100% medium after alias canonicalization, ~0.7s/image, robust
+//   to tiny fonts and dark backgrounds. No text mode (prose comes back spelled
+//   letter-by-letter inside \mathrm) and it mangles matrices.
+// Tier 1: Texify (~305MB int8). 100% on hard equations and prose-with-math,
+//   but 3-5s/image and it degenerates into repeated lines on very simple
+//   images. Loaded lazily — most users never download it.
+const IMAGE_MODELS = {
+  texo: { name: "Texo", sizeMB: 77 },
+  texify: { name: "Texify", sizeMB: 305 },
+};
+const ocrLoaders = {}; // key -> loading promise
+const ocrModels = {};  // key -> async (blob) => latex string
+
+function ocrProgressUI(key) {
+  const bar = $("image-progress"), fill = $("image-progress-fill"), label = $("image-drop-label");
+  bar.hidden = false;
+  const files = new Map();
+  const onProgress = (p) => {
+    if (p.status !== "progress" || !p.total) return;
+    files.set(p.file, { loaded: p.loaded, total: p.total });
+    let loaded = 0, total = 0;
+    for (const f of files.values()) { loaded += f.loaded; total += f.total; }
+    fill.style.width = `${Math.round((loaded / total) * 100)}%`;
+    label.textContent =
+      `loading ${IMAGE_MODELS[key].name} (image model): ${(loaded / 2 ** 20).toFixed(0)} / ${(total / 2 ** 20).toFixed(0)} MB (one time — cached after this)`;
+  };
+  return { onProgress, done: () => { bar.hidden = true; fill.style.width = "0"; } };
 }
 
-async function convertImage(fileOrBlob) {
-  const drop = $("image-drop");
-  const label = $("image-drop-label");
-  drop.classList.add("busy");
-  convertStatus.textContent = "";
-  const started = performance.now();
-  try {
-    if (!texify) {
-      label.textContent = "loading image model (~300 MB, first time only)…";
-      await loadTexify();
+// Texo preprocessing, ported from Texo-web: grayscale -> invert if dark
+// background -> crop to ink bbox -> letterbox into 384x384 on black ->
+// normalize with UniMERNet mean/std.
+const TEXO_MEAN = 0.7931, TEXO_STD = 0.1738, TEXO_SIZE = 384;
+async function texoPreprocess(blob) {
+  const bmp = await createImageBitmap(blob);
+  const c = new OffscreenCanvas(bmp.width, bmp.height);
+  const ctx = c.getContext("2d");
+  ctx.fillStyle = "white"; ctx.fillRect(0, 0, c.width, c.height);
+  ctx.drawImage(bmp, 0, 0);
+  const { data, width, height } = ctx.getImageData(0, 0, c.width, c.height);
+  const gray = new Uint8ClampedArray(width * height);
+  for (let i = 0, p = 0; i < gray.length; i++, p += 4) {
+    gray[i] = 0.299 * data[p] + 0.587 * data[p + 1] + 0.114 * data[p + 2];
+  }
+  let dark = 0;
+  for (const v of gray) if (v < 200) dark++;
+  if (dark >= gray.length - dark) for (let i = 0; i < gray.length; i++) gray[i] = 255 - gray[i];
+  let min = 255, max = 0;
+  for (const v of gray) { if (v < min) min = v; if (v > max) max = v; }
+  let x0 = width, y0 = height, x1 = -1, y1 = -1;
+  if (max > min) {
+    for (let y = 0; y < height; y++) for (let x = 0; x < width; x++) {
+      const n = ((gray[y * width + x] - min) / (max - min)) * 255;
+      if (n < 200) { if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; }
     }
-    label.textContent = "reading equation from image…";
-    const url = URL.createObjectURL(fileOrBlob);
-    let out;
+  }
+  if (x1 < x0 || y1 < y0) { x0 = 0; y0 = 0; x1 = width - 1; y1 = height - 1; }
+  const cw = Math.max(1, x1 - x0), ch = Math.max(1, y1 - y0);
+  const gImg = new ImageData(width, height);
+  for (let i = 0, p = 0; i < gray.length; i++, p += 4) {
+    gImg.data[p] = gImg.data[p + 1] = gImg.data[p + 2] = gray[i]; gImg.data[p + 3] = 255;
+  }
+  const gc = new OffscreenCanvas(width, height);
+  gc.getContext("2d").putImageData(gImg, 0, 0);
+  const scale = TEXO_SIZE / Math.min(ch, cw);
+  let nw = Math.round(cw * scale), nh = Math.round(ch * scale);
+  if (nw > TEXO_SIZE || nh > TEXO_SIZE) {
+    const r = Math.min(TEXO_SIZE / nw, TEXO_SIZE / nh);
+    nw = Math.round(nw * r); nh = Math.round(nh * r);
+  }
+  const out = new OffscreenCanvas(TEXO_SIZE, TEXO_SIZE);
+  const octx = out.getContext("2d");
+  octx.fillStyle = "black"; octx.fillRect(0, 0, TEXO_SIZE, TEXO_SIZE);
+  octx.drawImage(gc, x0, y0, cw, ch, Math.floor((TEXO_SIZE - nw) / 2), Math.floor((TEXO_SIZE - nh) / 2), nw, nh);
+  const od = octx.getImageData(0, 0, TEXO_SIZE, TEXO_SIZE).data;
+  const arr = new Float32Array(TEXO_SIZE * TEXO_SIZE);
+  for (let i = 0, p = 0; i < arr.length; i++, p += 4) arr[i] = (od[p] / 255 - TEXO_MEAN) / TEXO_STD;
+  return arr;
+}
+
+// Texo emits KaTeX/MathJax-only aliases (\infin, \rarr, ...) and token-spaced
+// output ("x ^ { 2 }"). Map aliases to standard LaTeX so exports compile —
+// a fixed alias table, not a guess about content — and tidy the spacing.
+const KATEX_ALIASES = {
+  infin: "infty", rarr: "rightarrow", larr: "leftarrow", lrarr: "leftrightarrow",
+  Rarr: "Rightarrow", Larr: "Leftarrow", Lrarr: "Leftrightarrow", plusmn: "pm",
+  empty: "emptyset", isin: "in", sub: "subset", sube: "subseteq", supe: "supseteq",
+  sdot: "cdot", lang: "langle", rang: "rangle", real: "Re", image: "Im",
+  alef: "aleph", thetasym: "vartheta",
+};
+function canonicalizeTexo(s) {
+  let out = s.replace(/\\([A-Za-z]+)/g, (m, cmd) => (cmd in KATEX_ALIASES ? `\\${KATEX_ALIASES[cmd]}` : m));
+  // spelled-out words inside \mathrm / \operatorname: "l i m" -> "lim"
+  out = out.replace(/\\(mathrm|operatorname\*?)\s*\{([^{}]*)\}/g, (m, cmd, body) =>
+    `\\${cmd}{${body.split("~").map((w) => w.replace(/\s+/g, "")).join(" ")}}`);
+  out = out.replace(/\s+/g, " ")
+    .replace(/ ([\^_{}()\[\],;])/g, "$1")
+    .replace(/([\^_{(\[]) /g, "$1")
+    .replace(/~/g, "\\,");
+  return out.trim();
+}
+
+// Texo has no text mode: prose in the image comes back as words spelled out
+// inside \mathrm/\operatorname. Several such words means the image is a text
+// passage — Texify's domain. (Operator names like "lim"/"det" are 1-2 words.)
+function texoProseSignal(raw) {
+  const segs = raw.match(/\\(?:mathrm|operatorname\*?)\s*\{[^{}]*\}/g) || [];
+  const words = segs.flatMap((seg) =>
+    seg.replace(/\\(?:mathrm|operatorname\*?)\s*\{|\}/g, "").split("~")
+      .map((w) => w.replace(/\s+/g, "")).filter((w) => w.length >= 3));
+  return words.length >= 3;
+}
+
+// Texify sometimes degenerates into one line repeated to the token cap on
+// very sparse images — collapse exact repeats.
+function dedupeRepeats(s) {
+  const parts = s.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean);
+  return [...new Set(parts)].join("\n\n");
+}
+
+function loadOcr(key) {
+  ocrLoaders[key] ??= (async () => {
+    const ui = ocrProgressUI(key);
     try {
-      out = await texify(url, { max_new_tokens: 384 });
-    } finally {
-      URL.revokeObjectURL(url);
+      if (key === "texify") {
+        const p = await pipeline("image-to-text", "texify", { dtype: "q8", progress_callback: ui.onProgress });
+        ocrModels.texify = async (blob) => {
+          const url = URL.createObjectURL(blob);
+          try {
+            const out = await p(url, { max_new_tokens: 384 });
+            return dedupeRepeats((out[0]?.generated_text ?? "").trim());
+          } finally { URL.revokeObjectURL(url); }
+        };
+      } else {
+        const model = await VisionEncoderDecoderModel.from_pretrained("texo", { dtype: "fp32", progress_callback: ui.onProgress });
+        const tokenizer = await PreTrainedTokenizer.from_pretrained("texo");
+        ocrModels.texo = async (blob) => {
+          const arr = await texoPreprocess(blob);
+          const t = new Tensor("float32", arr, [1, 1, TEXO_SIZE, TEXO_SIZE]);
+          const outputs = await model.generate({ inputs: cat([t, t, t], 1), max_new_tokens: 512 });
+          return tokenizer.batch_decode(outputs, { skip_special_tokens: true })[0].trim();
+        };
+      }
+    } finally { ui.done(); }
+  })();
+  return ocrLoaders[key];
+}
+
+let lastImageBlob = null, lastImageModel = null;
+
+async function convertImage(fileOrBlob, forceModel = null) {
+  const drop = $("image-drop"), label = $("image-drop-label"), altBtn = $("ocr-alt-btn");
+  drop.classList.add("busy");
+  altBtn.hidden = true;
+  convertStatus.textContent = "";
+  lastImageBlob = fileOrBlob;
+  const started = performance.now();
+  // Fidelity vs. input text is meaningless for images — only syntax counts.
+  const syntaxOnly = (l) => validateLatex("(image)", l).issues.filter((i) => i.startsWith("syntax"));
+  try {
+    let used = forceModel ?? "texo";
+    let latex = "", escalatedWhy = "";
+    if (used === "texo") {
+      await loadOcr("texo");
+      label.textContent = "reading equation from image (Texo)…";
+      const raw = await ocrModels.texo(fileOrBlob);
+      latex = canonicalizeTexo(raw);
+      if (!forceModel) {
+        if (texoProseSignal(raw)) escalatedWhy = "image contains prose";
+        else if (!latex || syntaxOnly(latex).length) escalatedWhy = "output failed syntax checks";
+        if (escalatedWhy) used = "texify";
+      }
     }
-    let latex = (out[0]?.generated_text ?? "").trim();
+    if (used === "texify") {
+      if (escalatedWhy) label.textContent = `${escalatedWhy} — switching to Texify…`;
+      await loadOcr("texify");
+      label.textContent = "reading image (Texify)…";
+      latex = await ocrModels.texify(fileOrBlob);
+    }
     if (!latex) throw new Error("no text recognized in image");
+    lastImageModel = used;
     outputCode.textContent = latex;
     renderPreview(latex);
-    // Fidelity vs. input text is meaningless for images — only syntax counts.
-    const syntaxOnly = (l) => validateLatex("(image)", l).issues.filter((i) => i.startsWith("syntax"));
     let syntaxIssues = syntaxOnly(latex);
-    let note = "(from image — processed locally, image never uploaded)";
+    let note = `(from image via ${IMAGE_MODELS[used].name}${escalatedWhy ? `, escalated: ${escalatedWhy}` : ""} — processed locally, image never uploaded)`;
     if (syntaxIssues.length && engine) {
       // OCR produced broken LaTeX — repair loop with the browser LLM.
       try {
@@ -139,7 +268,7 @@ async function convertImage(fileOrBlob) {
         );
         latex = r.latex;
         syntaxIssues = r.ok ? [] : r.issues;
-        if (r.ok) note = `(from image — OCR self-corrected ×${r.attempts} locally, image never uploaded)`;
+        if (r.ok) note = `(from image via ${IMAGE_MODELS[used].name} — OCR self-corrected ×${r.attempts} locally, image never uploaded)`;
         outputCode.textContent = latex;
         renderPreview(latex);
       } catch { /* keep OCR output */ }
@@ -149,8 +278,11 @@ async function convertImage(fileOrBlob) {
     currentInput = "(image)";
     chatLog.innerHTML = "";
     setChatEnabled(true);
+    const other = used === "texo" ? "texify" : "texo";
+    altBtn.textContent = `looks wrong? read image with ${IMAGE_MODELS[other].name} instead`;
+    altBtn.hidden = false;
     const secs = ((performance.now() - started) / 1000).toFixed(1);
-    convertStatus.textContent = `${secs}s · Texify · local OCR`;
+    convertStatus.textContent = `${secs}s · ${IMAGE_MODELS[used].name} · local OCR`;
   } catch (err) {
     convertStatus.textContent = `image conversion failed: ${err.message || err}`;
   } finally {
@@ -158,6 +290,10 @@ async function convertImage(fileOrBlob) {
     label.innerHTML = "…or drop / paste / <u>choose</u> an image of an equation — processed entirely in your browser, never uploaded";
   }
 }
+
+$("ocr-alt-btn").addEventListener("click", () => {
+  if (lastImageBlob) convertImage(lastImageBlob, lastImageModel === "texo" ? "texify" : "texo");
+});
 
 window.__convertImage = convertImage; // debugging hook
 

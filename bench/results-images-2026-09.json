@@ -1,0 +1,368 @@
+{
+ "loads": {
+  "texify": 5767,
+  "texo": 1053
+ },
+ "rows": [
+  {
+   "approach": "texify",
+   "item": "pythagorean",
+   "tier": "easy",
+   "output": "$x^{2}+y^{2}=r^{2}$\n\n$x^{2}+y^{2}=r^{2}$\n\n$x^{2}+y^{2}=r^{2}$\n\n$x^{2}+y^{2}=r^{2}$\n\n$x^{2}+y^{2}=r^{2}$\n\n$x^{2}+y^{2}=r^{2}$\n\n$x^{2}+y^{2}=r^{2}$\n\n$x^{2}+y^{2}=r^{2}$\n\n$x^{2}+y^{2}=r^{2}$\n\n$x^{2}+y^{2}=r^{2}$\n\n$x^{2}+y^{2}=r^{2}$\n\n$x^{2}+y^{2}=r^{2}$\n\n$x^{2}+y^{2}=r^{2}$\n\n$x^{2}+y^{2}=r^{2}$\n\n$x^{2}+y^{2}=r^{2}$\n\n$x^{2}+y^{2}=r^{2}$\n\n$x^{2}+y^{2}=r^{2}$\n\n$x^{2}+y^{2}=r^{2}$\n\n$x^{2",
+   "ms": 16539,
+   "err": "",
+   "correct": false,
+   "why": "Candidate is garbled and truncated."
+  },
+  {
+   "approach": "texify",
+   "item": "quadratic",
+   "tier": "easy",
+   "output": "$$x=\\frac{-b\\pm\\sqrt{b^{2}-4ac}}{2a}$$",
+   "ms": 3247,
+   "err": "",
+   "correct": true,
+   "why": "Mathematically identical; only formatting differences."
+  },
+  {
+   "approach": "texify",
+   "item": "euler",
+   "tier": "easy",
+   "output": "$$e^{i\\pi}+1=0$$",
+   "ms": 2722,
+   "err": "",
+   "correct": true,
+   "why": "Mathematically identical expression."
+  },
+  {
+   "approach": "texify",
+   "item": "circle-area",
+   "tier": "easy",
+   "output": "$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r",
+   "ms": 14346,
+   "err": "",
+   "correct": false,
+   "why": "Garbled output with repeated lines and truncation"
+  },
+  {
+   "approach": "texify",
+   "item": "gaussian",
+   "tier": "medium",
+   "output": "$$\\int_{-\\infty}^{\\infty}e^{-x^{2}}\\,dx=\\sqrt{\\pi}$$",
+   "ms": 3367,
+   "err": "",
+   "correct": true,
+   "why": "Mathematically identical expression"
+  },
+  {
+   "approach": "texify",
+   "item": "basel",
+   "tier": "medium",
+   "output": "$$\\sum_{n=1}^{\\infty}\\frac{1}{n^{2}}=\\frac{\\pi^{2}}{6}$$",
+   "ms": 3504,
+   "err": "",
+   "correct": true,
+   "why": "Mathematically identical expression with equivalent notation."
+  },
+  {
+   "approach": "texify",
+   "item": "binomial",
+   "tier": "medium",
+   "output": "$$(x+y)^{n}=\\sum_{k=0}^{n}\\binom{n}{k}x^{k}y^{n-k}$$",
+   "ms": 3671,
+   "err": "",
+   "correct": true,
+   "why": "Mathematically identical binomial theorem expression."
+  },
+  {
+   "approach": "texify",
+   "item": "derivative",
+   "tier": "medium",
+   "output": "$$f^{\\prime}(x)=\\lim_{h\\to0}\\frac{f(x+h)-f(x)}{h}$$",
+   "ms": 3450,
+   "err": "",
+   "correct": true,
+   "why": "Mathematically identical expression with equivalent notation."
+  },
+  {
+   "approach": "texify",
+   "item": "det2x2",
+   "tier": "hard",
+   "output": "$$\\det\\begin{pmatrix}a&b\\\\ c&d\\end{pmatrix}=ad-bc$$",
+   "ms": 3027,
+   "err": "",
+   "correct": true,
+   "why": "Mathematically identical expression"
+  },
+  {
+   "approach": "texify",
+   "item": "schrodinger",
+   "tier": "hard",
+   "output": "$$i\\hbar{\\frac{\\partial}{\\partial t}}\\Psi(\\mathbf{r},t)=\\left[-{\\frac{\\hbar^{2}}{2m}}\\nabla^{2}+V(\\mathbf{r},t)\\right]\\Psi(\\mathbf{r},t)$$",
+   "ms": 4658,
+   "err": "",
+   "correct": true,
+   "why": "Mathematically identical; only formatting differences."
+  },
+  {
+   "approach": "texify",
+   "item": "cauchy",
+   "tier": "hard",
+   "output": "$$f(a)=\\frac{1}{2\\pi i}\\oint_{\\gamma}\\frac{f(z)}{z-a}\\,dz$$",
+   "ms": 3585,
+   "err": "",
+   "correct": true,
+   "why": "Mathematically identical expression with equivalent notation."
+  },
+  {
+   "approach": "texify",
+   "item": "zeta",
+   "tier": "hard",
+   "output": "$$\\zeta(s)=2^{s}\\pi^{s-1}\\sin\\left({\\frac{\\pi s}{2}}\\right)\\Gamma(1-s)\\,\\zeta(1-s)$$",
+   "ms": 4112,
+   "err": "",
+   "correct": true,
+   "why": "Mathematically identical expressions"
+  },
+  {
+   "approach": "texify",
+   "item": "maxwell",
+   "tier": "hard",
+   "output": "$$\\nabla\\cdot\\mathbf{E}=\\frac{\\rho}{\\varepsilon_{0}}$$ $$\\nabla\\times\\mathbf{B}=\\mu_{0}\\mathbf{J}+\\mu_{0}\\varepsilon_{0}\\frac{\\partial\\mathbf{E}}{\\partial t}$$",
+   "ms": 4768,
+   "err": "",
+   "correct": true,
+   "why": "Mathematically equivalent expressions despite formatting differences."
+  },
+  {
+   "approach": "texify",
+   "item": "newton-text",
+   "tier": "mixed",
+   "output": "Newton's second law states that $F=ma.$ The kinetic energy of the body is $K=\\frac{1}{2}mv^2.$",
+   "ms": 3399,
+   "err": "",
+   "correct": true,
+   "why": "Mathematically equivalent expressions and preserved prose meaning."
+  },
+  {
+   "approach": "texify",
+   "item": "epsilon-delta-text",
+   "tier": "mixed",
+   "output": "For all $\\varepsilon>0$ there exists $\\delta>0$ such that $|x-a|<\\delta$ implies $|f(x)-L|<\\varepsilon$.",
+   "ms": 3981,
+   "err": "",
+   "correct": true,
+   "why": "Mathematically identical expression and prose."
+  },
+  {
+   "approach": "texify",
+   "item": "gaussian-text",
+   "tier": "mixed",
+   "output": "The Gaussian integral $\\int_{-\\infty}^{\\infty}e^{-x^{2}}\\,dx=\\sqrt{\\pi}$ follows from polar coordinates, where $dA=r\\;dr\\;d\\theta$.",
+   "ms": 4141,
+   "err": "",
+   "correct": true,
+   "why": "Mathematically identical; only minor spacing and delimiter differences."
+  },
+  {
+   "approach": "texify",
+   "item": "quadratic-tiny",
+   "tier": "degraded",
+   "output": "$$\\kappa=\\frac{-3+\\sqrt{W-4\\kappa c}}{2\\kappa}$$",
+   "ms": 3271,
+   "err": "",
+   "correct": false,
+   "why": "Variables and coefficients are completely different."
+  },
+  {
+   "approach": "texify",
+   "item": "basel-dark",
+   "tier": "degraded",
+   "output": "$\\sum_{i=1}^{n}\\sum_{j=1}^{n}\\sum_{k=1}^{n}\\sum_{k=1}^{n}\\sum_{k=1}^{n}\\sum_{k=1}^{n}\\sum_{k=1}^{n}\\sum_{k=1}^{n}\\sum_{k=1}^{n}\\sum_{k=1}^{n}\\sum_{k=1}^{n}\\sum_{k=1}^{n}\\sum_{k=1}^{n}\\sum_{k=1}^{n}\\sum_{k=1}^{n}\\sum_{k=1}^{n}\\sum_{k=1}^{n}\\sum_{k=1}^{n}\\sum_{k=1}^{n}\\sum_{k=1}^{n}\\sum_{k=1}^{n}\\sum_{k=1}^{n}\\sum_{k=1}^{n}\\sum_{k=1}^{n}\\sum_{k=1}^{n}\\sum_{k=1}^{n}\\sum_{k=1}^{n}\\sum_{k=1}^{n}\\sum_{k=1}^{n}\\sum_{k=1}^{n}\\sum_{k=1}^{n}\\sum_{k=1}^{",
+   "ms": 14326,
+   "err": "",
+   "correct": false,
+   "why": "Candidate is a garbled, repeated summation, not the reference expression."
+  },
+  {
+   "approach": "texo",
+   "item": "pythagorean",
+   "tier": "easy",
+   "output": "x ^ { 2 } + y ^ { 2 } = r ^ { 2 }",
+   "ms": 664,
+   "err": "",
+   "correct": true,
+   "why": "Identical mathematical expression with minor spacing differences."
+  },
+  {
+   "approach": "texo",
+   "item": "quadratic",
+   "tier": "easy",
+   "output": "x = { \\frac { - b \\pm { \\sqrt { b ^ { 2 } - 4 a c } } } { 2 a } }",
+   "ms": 674,
+   "err": "",
+   "correct": true,
+   "why": "Mathematically identical expression with minor spacing differences."
+  },
+  {
+   "approach": "texo",
+   "item": "euler",
+   "tier": "easy",
+   "output": "e ^ { i \\pi } + 1 = 0",
+   "ms": 599,
+   "err": "",
+   "correct": true,
+   "why": "Identical mathematical expression with minor spacing differences."
+  },
+  {
+   "approach": "texo",
+   "item": "circle-area",
+   "tier": "easy",
+   "output": "A = \\pi r ^ { 2 }",
+   "ms": 584,
+   "err": "",
+   "correct": true,
+   "why": "Identical mathematical expression with minor spacing differences."
+  },
+  {
+   "approach": "texo",
+   "item": "gaussian",
+   "tier": "medium",
+   "output": "\\int _ { - \\infin } ^ { \\infin } e ^ { - x ^ { 2 } } ~ d x = { \\sqrt { \\pi } }",
+   "ms": 614,
+   "err": "",
+   "correct": true,
+   "why": "Mathematically equivalent despite spacing and brace differences."
+  },
+  {
+   "approach": "texo",
+   "item": "basel",
+   "tier": "medium",
+   "output": "\\sum _ { n = 1 } ^ { \\infin } { \\frac { 1 } { n ^ { 2 } } } = { \\frac { \\pi ^ { 2 } } { 6 } }",
+   "ms": 873,
+   "err": "",
+   "correct": false,
+   "why": "Candidate contains typo \\infin instead of \\infty."
+  },
+  {
+   "approach": "texo",
+   "item": "binomial",
+   "tier": "medium",
+   "output": "( x + y ) ^ { n } = \\sum _ { k = 0 } ^ { n } { \\binom { n } { k } } x ^ { k } y ^ { n - k }",
+   "ms": 711,
+   "err": "",
+   "correct": true,
+   "why": "Mathematically identical expression with only spacing differences."
+  },
+  {
+   "approach": "texo",
+   "item": "derivative",
+   "tier": "medium",
+   "output": "f ^ { \\prime } ( x ) = \\operatorname* { l i m } _ { h \\rarr 0 } { \\frac { f ( x + h ) - f ( x ) } { h } }",
+   "ms": 1014,
+   "err": "",
+   "correct": true,
+   "why": "Mathematically equivalent notation and structure."
+  },
+  {
+   "approach": "texo",
+   "item": "det2x2",
+   "tier": "hard",
+   "output": "\\operatorname* { d e t } { \\binom { a } { c } } ~ d ~ = a d - b c",
+   "ms": 811,
+   "err": "",
+   "correct": false,
+   "why": "Matrix structure is completely mangled and incorrect."
+  },
+  {
+   "approach": "texo",
+   "item": "schrodinger",
+   "tier": "hard",
+   "output": "i \\hbar { \\frac { \\partial } { \\partial t } } \\Psi ( \\mathbf { r }, t ) = \\left [ - { \\frac { \\hbar ^ { 2 } } { 2 m } } \\nabla ^ { 2 } + V ( \\mathbf { r }, t ) \\right ] \\Psi ( \\mathbf { r }, t )",
+   "ms": 745,
+   "err": "",
+   "correct": true,
+   "why": "Mathematically identical; only spacing and brace differences."
+  },
+  {
+   "approach": "texo",
+   "item": "cauchy",
+   "tier": "hard",
+   "output": "f ( a ) = { \\frac { 1 } { 2 \\pi i } } \\oint _ { \\gamma } { \\frac { f ( z ) } { z - a } } ~ d z",
+   "ms": 706,
+   "err": "",
+   "correct": true,
+   "why": "Mathematically identical expression with minor spacing differences."
+  },
+  {
+   "approach": "texo",
+   "item": "zeta",
+   "tier": "hard",
+   "output": "\\zeta ( s ) = 2 ^ { s } \\pi ^ { s - 1 } \\sin \\left ( \\frac { \\pi s } { 2 } \\right ) \\Gamma ( 1 - s ) ~ \\zeta ( 1 - s )",
+   "ms": 725,
+   "err": "",
+   "correct": true,
+   "why": "Mathematically identical; only spacing differences."
+  },
+  {
+   "approach": "texo",
+   "item": "maxwell",
+   "tier": "hard",
+   "output": "\\begin{array} { l } { \\nabla \\cdot \\mathbf { E } = { \\frac { \\rho } { \\varepsilon _ { 0 } } } } \\\\ { \\nabla \\times \\mathbf { B } = \\mu _ { 0 } \\mathbf { J } + \\mu _ { 0 } \\varepsilon _ { 0 } { \\frac { \\partial \\mathbf { E } } { \\partial t } } } \\end{array}",
+   "ms": 693,
+   "err": "",
+   "correct": true,
+   "why": "Mathematically equivalent; array vs aligned is a notation difference."
+  },
+  {
+   "approach": "texo",
+   "item": "newton-text",
+   "tier": "mixed",
+   "output": "\\begin{array} { l } { \\mathrm { N e w t o n! s ~ s e c o n d ~ l a w ~ s t a t e s ~ t h a t ~ } F = m a. ~ \\mathrm { T h e ~ k i n e t i c ~ e n e r g y ~ o f ~ t h e ~ b o d y ~ i s } } \\\\ { K = \\frac { 1 } { 2 } m v ^ { 2 }. } \\end{array}",
+   "ms": 707,
+   "err": "",
+   "correct": true,
+   "why": "Math and prose content are identical despite formatting differences."
+  },
+  {
+   "approach": "texo",
+   "item": "epsilon-delta-text",
+   "tier": "mixed",
+   "output": "\\operatorname { F o r ~ a l l } \\varepsilon ~ > ~ 0 \\operatorname { t h e r e } \\operatorname { e x i s t s } ~ \\delta > 0 \\operatorname { s u c h } \\operatorname { t h a t } \\left | x - a \\right | < \\delta \\operatorname { i m p l i e s } \\left | f ( x ) - L \\right | < \\varepsilon.",
+   "ms": 684,
+   "err": "",
+   "correct": true,
+   "why": "Mathematically equivalent expression and meaning preserved."
+  },
+  {
+   "approach": "texo",
+   "item": "gaussian-text",
+   "tier": "mixed",
+   "output": "\\begin{array} { r l } & { \\mathrm { T h e ~ G a u s s i a n ~ i n t e g r a l } \\int _ { - \\infin } ^ { \\infin } e ^ { - x ^ { 2 } } ~ d x = \\sqrt { \\pi } ~ \\mathrm { f o l l o w s ~ f r o m ~ p o l a r ~ c o o r d i n a t e s }, } \\\\ & { \\mathrm { w h e r e } ~ d A = r ~ d r ^ { * } ~ d \\theta. } \\end{array}",
+   "ms": 855,
+   "err": "",
+   "correct": false,
+   "why": "Mangled text and math notation (dr*)"
+  },
+  {
+   "approach": "texo",
+   "item": "quadratic-tiny",
+   "tier": "degraded",
+   "output": "x = { \\frac { - b \\pm { \\sqrt { b ^ { 2 } - 4 a c } } } { 2 a } }",
+   "ms": 574,
+   "err": "",
+   "correct": true,
+   "why": "Mathematically identical expression with minor spacing differences."
+  },
+  {
+   "approach": "texo",
+   "item": "basel-dark",
+   "tier": "degraded",
+   "output": "\\sum _ { n = 1 } ^ { \\infin } { \\frac { 1 } { n ^ { 2 } } } = { \\frac { \\pi ^ { 2 } } { 6 } }",
+   "ms": 632,
+   "err": "",
+   "correct": false,
+   "why": "Candidate contains typo \\infin instead of \\infty."
+  }
+ ]
+}
