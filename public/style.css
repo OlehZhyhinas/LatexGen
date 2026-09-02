@@ -288,3 +288,16 @@ table.compare th, table.compare td { text-align: left; padding: 10px 12px; borde
 table.compare thead th { border-top: 0; color: var(--muted); font-weight: 500; font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; }
 table.compare td:nth-child(2) { font-weight: 600; }
 @media (max-width: 900px) { .consent-options { grid-template-columns: 1fr; } .menu { min-width: 260px; } }
+
+/* ---- PWA / visual editor / check-latex mode ---- */
+.panel-action { position: absolute; top: 6px; right: 8px; }
+math-field {
+  width: 100%; min-height: 72px; font-size: 22px;
+  border: 1px solid var(--border); border-radius: var(--r-sm);
+  padding: 10px 12px; background: var(--paper); color: #111;
+  --caret-color: var(--accent); --selection-background-color: rgba(47,111,235,0.2);
+}
+math-field::part(virtual-keyboard-toggle) { display: none; }
+#input-card[data-mode="latex"] #image-drop { display: none; }
+#input-card[data-mode="latex"] .input-area { font-family: var(--mono); font-size: 15px; }
+#input-card[data-mode="latex"] #upload-btn { display: none; }

@@ -733,7 +733,7 @@ function showChecks(validation, note) {
   };
   if (validation.ok) {
     chip("ok", "Syntax valid");
-    if (currentInput !== "(image)" && !String(note).includes("image")) chip("ok", "Matches your input");
+    if (!String(currentInput).startsWith("(") && !String(note).includes("image")) chip("ok", "Matches your input");
   } else {
     for (const issue of validation.issues.slice(0, 4)) chip("warn", issue.replace(/^(syntax|missing):\s*/, (m) => m));
     if (validation.issues.length > 4) chip("warn", `+${validation.issues.length - 4} more`);
@@ -744,6 +744,7 @@ function showChecks(validation, note) {
 convertBtn.addEventListener("click", async () => {
   const text = $("input").value.trim();
   if (!text) return;
+  if ($("input-card").dataset.mode === "latex") { await checkLatexMode(text); return; }
   const engineChoice = document.querySelector('input[name="engine"]:checked').value;
   convertBtn.disabled = true;
   convertStatus.textContent = "converting…";
@@ -1008,7 +1009,12 @@ $("input").addEventListener("input", () => {
     seg.addEventListener("click", () => {
       document.querySelectorAll(".seg").forEach((s) => s.classList.toggle("active", s === seg));
       inputCard.dataset.mode = seg.dataset.mode;
-      if (seg.dataset.mode === "text") $("input").focus();
+      const latexMode = seg.dataset.mode === "latex";
+      convertBtn.textContent = latexMode ? "Check" : "Convert";
+      $("input").placeholder = latexMode
+        ? "Paste LaTeX to check, e.g. \\frac{a}{b^2 + c"
+        : "e.g. the integral from 0 to infinity of e to the minus x squared dx equals square root of pi over 2";
+      if (seg.dataset.mode !== "image") $("input").focus();
     });
   }
   $("upload-btn").addEventListener("click", () => $("image-file").click());
@@ -1109,10 +1115,11 @@ function recordHistory(input, latex) {
   if (!latex || !latex.trim()) return;
   const items = loadHistory();
   const dup = items.findIndex((h) => h.latex === latex);
-  if (dup !== -1) { const [h] = items.splice(dup, 1); h.ts = Date.now(); items.unshift(h); saveHistory(items); renderHistory(); return; }
+  if (dup !== -1) { const [h] = items.splice(dup, 1); h.ts = Date.now(); items.unshift(h); saveHistory(items); renderHistory(); syncVisualEdit(); return; }
   items.unshift({ id: `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`, ts: Date.now(), input, latex, fav: false });
   saveHistory(items);
   renderHistory();
+  syncVisualEdit();
 }
 let historyStarredOnly = false;
 function renderHistory() {
@@ -1139,7 +1146,7 @@ function renderHistory() {
     const restore = () => {
       outputCode.textContent = h.latex; renderPreview(h.latex);
       currentLatex = h.latex; currentInput = h.input;
-      if (h.input !== "(image)") { $("input").value = h.input; $("input").dispatchEvent(new Event("input")); }
+      if (!String(h.input).startsWith("(")) { $("input").value = h.input; $("input").dispatchEvent(new Event("input")); }
       const issues = checkSyntax(h.latex);
       showChecks({ ok: issues.length === 0, issues }, "(restored from history)");
       setChatEnabled(true); $("history").hidden = true;
@@ -1206,6 +1213,10 @@ async function copyAs(kind) {
     } catch (err) { toast(`PNG export failed: ${err.message || err}`, 3000); }
     return;
   }
+  if (kind === "share") {
+    const url = `${location.origin}${location.pathname}#l=${encodeURIComponent(latex)}`;
+    return writeClipboard([{ type: "text/plain", text: url }], "share link");
+  }
   if (kind === "overleaf") {
     const doc = `\\documentclass{article}\n\\usepackage{amsmath,amssymb}\n\\begin{document}\n${body != null ? `\\[\n${body}\n\\]` : latex}\n\\end{document}\n`;
     const form = document.createElement("form");
@@ -1225,4 +1236,126 @@ async function copyAs(kind) {
   menuBtn.addEventListener("click", () => { menu.hidden = !menu.hidden; menuBtn.setAttribute("aria-expanded", String(!menu.hidden)); });
   for (const b of menu.querySelectorAll("[data-copy]")) b.addEventListener("click", () => { menu.hidden = true; menuBtn.setAttribute("aria-expanded", "false"); copyAs(b.dataset.copy); });
   document.addEventListener("click", (e) => { if (!menu.hidden && !menu.contains(e.target) && e.target !== menuBtn) { menu.hidden = true; menuBtn.setAttribute("aria-expanded", "false"); } });
+}
+
+
+// =====================================================================
+// PWA, shared links, Check-LaTeX mode, MathLive visual editor
+// =====================================================================
+
+// ---- installable + offline ----
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => navigator.serviceWorker.register("/sw.js").catch((e) => console.warn("sw:", e)));
+}
+
+// ---- open a shared link: the LaTeX lives in the URL fragment (never sent to a server) ----
+{
+  const m = location.hash.match(/^#l=(.+)$/);
+  if (m) {
+    try {
+      const latex = decodeURIComponent(m[1]);
+      outputCode.textContent = latex;
+      renderPreview(latex);
+      const issues = checkSyntax(latex);
+      currentLatex = latex; currentInput = "(shared link)";
+      showChecks({ ok: issues.length === 0, issues }, "(opened from a shared link)");
+      setChatEnabled(true);
+      history.replaceState(null, "", location.pathname);
+      setTimeout(() => syncVisualEdit(), 0);
+    } catch { /* malformed fragment: ignore */ }
+  }
+}
+
+// ---- Check-LaTeX mode: parse, render, and repair user-supplied LaTeX ----
+async function checkLatexMode(latex) {
+  convertBtn.disabled = true;
+  checksEl.innerHTML = "";
+  convertStatus.textContent = "checking…";
+  try {
+    let issues = checkSyntax(latex);
+    let out = latex;
+    let note = "(checked — nothing converted, just verified)";
+    outputCode.textContent = latex;
+    renderPreview(latex);
+    if (issues.length && engine) {
+      const syntaxOnly = (l) => ({ ok: checkSyntax(l).length === 0, issues: checkSyntax(l) });
+      const r = await repairLoop(
+        "(user-supplied LaTeX; keep its mathematical meaning)", latex, issues, syntaxOnly,
+        (partial) => { outputCode.textContent = partial; },
+        (attempt, iss) => { convertStatus.textContent = `repair attempt ${attempt}/${MAX_REPAIR_ATTEMPTS} — ${iss[0]}…`; showChecks({ ok: false, issues: iss }, ""); }
+      );
+      out = r.latex;
+      issues = r.ok ? [] : r.issues;
+      if (r.ok) note = `(fixed after ${r.attempts} repair attempt${r.attempts > 1 ? "s" : ""} — compare with what you pasted)`;
+      outputCode.textContent = out;
+      renderPreview(out);
+    }
+    currentLatex = out; currentInput = "(latex check)";
+    showChecks({ ok: issues.length === 0, issues }, note);
+    chatLog.innerHTML = ""; setChatEnabled(true);
+    recordHistory("(latex check)", out);
+    convertStatus.textContent = issues.length ? "issues found" : "valid LaTeX";
+  } finally {
+    convertBtn.disabled = false;
+  }
+}
+
+// ---- MathLive: edit the rendered equation directly; LaTeX follows ----
+let mathliveReady = null;
+function loadMathlive() {
+  mathliveReady ??= import("/vendor/mathlive/mathlive.min.mjs").then((mod) => {
+    mod.MathfieldElement.fontsDirectory = "/vendor/mathlive/fonts";
+    mod.MathfieldElement.soundsDirectory = null;
+    return mod;
+  });
+  return mathliveReady;
+}
+function delimitersOf(latex) {
+  const t = latex.trim();
+  if (/^\$\$[\s\S]*\$\$$/.test(t)) return ["$$", "$$"];
+  if (/^\\\[[\s\S]*\\\]$/.test(t)) return ["\\[", "\\]"];
+  if (/^\\\([\s\S]*\\\)$/.test(t)) return ["\\(", "\\)"];
+  if (/^\$[^$]*\$$/.test(t)) return ["$", "$"];
+  return ["", ""];
+}
+function syncVisualEdit() {
+  const btn = $("visual-edit-btn");
+  const body = mathBody(outputCode.textContent.trim());
+  btn.hidden = body == null; // only single-equation outputs are visually editable
+  if (body == null && !$("math-field").hidden) setVisualEdit(false);
+}
+async function setVisualEdit(on) {
+  const btn = $("visual-edit-btn"), mf = $("math-field");
+  if (on) {
+    await loadMathlive();
+    const latex = outputCode.textContent.trim();
+    mf.value = mathBody(latex) ?? latex;
+    mf._delims = delimitersOf(latex);
+    mf.hidden = false; outputCode.hidden = true;
+    btn.textContent = "</> LaTeX source"; btn.setAttribute("aria-pressed", "true");
+    mf.focus();
+  } else {
+    mf.hidden = true; outputCode.hidden = false;
+    btn.textContent = "✎ Visual editor"; btn.setAttribute("aria-pressed", "false");
+  }
+}
+{
+  const btn = $("visual-edit-btn"), mf = $("math-field");
+  btn.addEventListener("click", () => setVisualEdit(mf.hidden));
+  let t = null;
+  mf.addEventListener("input", () => {
+    clearTimeout(t);
+    t = setTimeout(() => {
+      const [l, r] = mf._delims ?? ["", ""];
+      const body = mf.value;
+      const latex = l === "$$" || l === "\\[" ? `${l}\n${body}\n${r}` : `${l}${body}${r}`;
+      outputCode.textContent = latex;
+      currentLatex = latex;
+      renderPreview(latex);
+      const issues = checkSyntax(latex);
+      showChecks({ ok: issues.length === 0, issues }, "(edited visually)");
+    }, 250);
+  });
+  // keep the button state in sync when the user edits the raw source
+  outputCode.addEventListener("input", () => setTimeout(syncVisualEdit, 350));
 }

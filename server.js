@@ -295,7 +295,13 @@ const server = createServer(async (req, res) => {
       }
       try {
         const content = await readFile(file);
-        res.writeHead(200, { "content-type": MIME[extname(file)] || "application/octet-stream" });
+        // Vendored libraries and model weights never change under a path;
+        // the app shell must always revalidate so deploys show up immediately.
+        const immutable = path.startsWith("/vendor/") || path.startsWith("/models/") || path.startsWith("/icons/");
+        res.writeHead(200, {
+          "content-type": MIME[extname(file)] || "application/octet-stream",
+          "cache-control": immutable ? "public, max-age=31536000, immutable" : "no-cache",
+        });
         res.end(content);
         return;
       } catch {

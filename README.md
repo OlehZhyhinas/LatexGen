@@ -68,6 +68,18 @@ following*, not math). Rerun the benchmark with `public/bench.html` +
   `public/vendor/` and served from the app's own origin; only model weights
   for the optional WebLLM tier come from HuggingFace. WebLLM runs in a Web
   Worker so the UI never freezes during multi-GB loads.
+- **Installable, offline PWA:** `manifest.webmanifest` + `sw.js` cache the app
+  shell and vendored libraries; with models already cached it works with the
+  network off. Model weights are cached by the libraries themselves, not
+  double-cached by the worker.
+- **Visual equation editor:** the "✎ Visual editor" toggle on the LaTeX panel
+  opens the result in [MathLive](https://cortexjs.io/mathlive/) for WYSIWYG
+  editing; the LaTeX, preview, and checks follow every edit.
+- **Share links with no server:** "Copy share link" puts the LaTeX in the URL
+  fragment (`/#l=…`), which never leaves the browser; opening the link renders
+  it.
+- **Check LaTeX mode:** paste existing LaTeX to parse, render, and (with an
+  on-device model loaded) repair it.
 - `public/benchmarks.html` is a static, crawlable page of the benchmark
   results, regenerated with `python3 bench/build-benchmarks-page.py`.
 
@@ -129,6 +141,7 @@ public/            frontend (vanilla JS, no build step)
   webllm-worker.js WebLLM engine host (Web Worker)
   vendor/          pinned local copies of WebLLM, transformers.js + ONNX runtime, KaTeX, fonts
   benchmarks.html  static benchmark results page (generated)
+  sw.js, manifest  PWA: offline app shell, install metadata, icons/
   validator.js     KaTeX syntax + input-fidelity checks
   models/          ONNX weights via git-lfs: IntelliTeX (264MB), Texo (77MB), Texify (305MB)
   bench.html/.js   in-browser text benchmark harness

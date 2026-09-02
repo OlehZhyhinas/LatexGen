@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>LatexGen — text and screenshots to LaTeX, in your browser</title>
   <meta name="description" content="Convert plain-English math or equation screenshots to validated LaTeX. Free, unlimited, private: models run in your browser, nothing is uploaded." />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <meta name="theme-color" content="#2F6FEB" />
+  <link rel="icon" href="/icons/icon-192.png" type="image/png" />
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
   <link rel="stylesheet" href="/vendor/fonts/geist/geist.css" />
   <link rel="stylesheet" href="/vendor/katex/katex.min.css" />
   <link rel="stylesheet" href="/style.css" />
@@ -82,6 +86,7 @@
         <div class="segmented" role="tablist">
           <button class="seg active" data-mode="text" role="tab">Text</button>
           <button class="seg" data-mode="image" role="tab">Image</button>
+          <button class="seg" data-mode="latex" role="tab">Check LaTeX</button>
         </div>
         <span class="hint hide-mobile">Type or paste math in plain English — or drop a screenshot anywhere</span>
       </div>
@@ -120,6 +125,7 @@
             <button data-copy="mathml" role="menuitem">Copy as MathML <span class="hint">pastes as an equation into Word and Google Docs</span></button>
             <button data-copy="png" role="menuitem">Copy as PNG image</button>
             <button data-copy="overleaf" role="menuitem">Open in Overleaf ↗</button>
+            <button data-copy="share" role="menuitem">Copy share link <span class="hint">the equation travels inside the link itself, no server</span></button>
           </div>
         </div>
       </div>
@@ -131,7 +137,9 @@
         </div>
         <div class="panel code">
           <span class="panel-label">LaTeX · editable — click to fix small things</span>
+          <button id="visual-edit-btn" class="btn ghost panel-action" aria-pressed="false" hidden>✎ Visual editor</button>
           <pre id="output-code" contenteditable="plaintext-only" spellcheck="false"></pre>
+          <math-field id="math-field" hidden></math-field>
           <button id="ocr-alt-btn" class="btn ghost" hidden>read image with other model</button>
         </div>
       </div>
@@ -171,6 +179,7 @@
       <h2>Questions</h2>
       <p><strong>Does it really not upload anything?</strong> Text and images are processed in the tab. Open your browser's network panel while converting: the only requests are for model files. The one exception is the optional server model, which is off by default and clearly labelled when it is used.</p>
       <p><strong>How big is the download?</strong> Quick mode is about 340 MB of models, downloaded once. Full mode adds an on-device language model sized to your machine (1.4–6 GB), fetched in the background while you work.</p>
+      <p><strong>Can it check LaTeX I already have?</strong> Yes. Switch the input to <em>Check LaTeX</em>, paste your code, and it is parsed, rendered, and repaired if it does not compile.</p>
       <p><strong>Which models?</strong> IntelliTeX for text, Texo and Texify for images, Qwen3 models via WebLLM for complex input. The <a href="/benchmarks.html">benchmarks page</a> shows how each was chosen.</p>
     </section>
   </main>
