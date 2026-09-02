@@ -186,6 +186,32 @@ function warmModels() {
 
 const benchRows = [];
 
+// ---- Tab API relay ----
+// A browser tab can't accept connections, so it long-polls here for jobs and
+// posts results back; external clients POST a job and wait for the answer.
+// The relay forwards bytes only — all inference happens in the tab. State is
+// in-memory (one process); ids are unguessable capability tokens.
+const TAB_ID_RE = /^[a-f0-9]{32}$/;
+const tabs = new Map();      // tabId -> { queue: [job], waiter: res|null, lastSeen }
+const results = new Map();   // jobId -> { resolve, timer }
+const JOB_TIMEOUT_MS = 25_000, POLL_TIMEOUT_MS = 30_000, MAX_QUEUE = 8;
+function tabState(id) {
+  if (!tabs.has(id)) tabs.set(id, { queue: [], waiter: null, lastSeen: 0 });
+  return tabs.get(id);
+}
+function deliver(tab) {
+  if (tab.waiter && tab.queue.length) {
+    const job = tab.queue.shift();
+    const res = tab.waiter; tab.waiter = null;
+    res.writeHead(200, { "content-type": "application/json" });
+    res.end(JSON.stringify(job));
+  }
+}
+setInterval(() => { // drop tabs not seen for 5 minutes
+  const cutoff = Date.now() - 300_000;
+  for (const [id, t] of tabs) if (t.lastSeen < cutoff && !t.waiter) tabs.delete(id);
+}, 60_000).unref();
+
 const server = createServer(async (req, res) => {
   try {
     if (req.method === "GET" && req.url === "/api/health") {
@@ -199,6 +225,58 @@ const server = createServer(async (req, res) => {
         // kept for older clients
         ollama: { reachable: ollama, model: OLLAMA_MODEL, url: OLLAMA_URL },
       }));
+      return;
+    }
+
+    // --- Tab API: external client -> tab ---
+    // POST /api/tab/<id>/convert {text} | {imageBase64, mime} | {latex, instruction}
+    let m;
+    if (req.method === "POST" && (m = req.url.match(/^\/api\/tab\/([a-f0-9]{32})\/(convert|refine)$/))) {
+      const [, tabId, kind] = m;
+      const tab = tabs.get(tabId);
+      if (!tab || Date.now() - tab.lastSeen > 45_000) {
+        res.writeHead(404, { "content-type": "application/json" });
+        res.end(JSON.stringify({ error: "no tab is listening on this id — open LatexGen with the Tab API enabled" }));
+        return;
+      }
+      if (tab.queue.length >= MAX_QUEUE) {
+        res.writeHead(429, { "content-type": "application/json" });
+        res.end(JSON.stringify({ error: "tab is busy (queue full)" })); return;
+      }
+      let body;
+      try { body = JSON.parse(await readBody(req)); } catch { res.writeHead(400, { "content-type": "application/json" }); res.end(JSON.stringify({ error: "invalid json" })); return; }
+      if (kind === "convert" && !body.text && !body.imageBase64) { res.writeHead(400, { "content-type": "application/json" }); res.end(JSON.stringify({ error: "text or imageBase64 required" })); return; }
+      if (kind === "refine" && (!body.latex || !body.instruction)) { res.writeHead(400, { "content-type": "application/json" }); res.end(JSON.stringify({ error: "latex and instruction required" })); return; }
+      if ((body.text ?? "").length > 6000 || (body.imageBase64 ?? "").length > 8_000_000) { res.writeHead(413, { "content-type": "application/json" }); res.end(JSON.stringify({ error: "payload too large" })); return; }
+      const jobId = Math.random().toString(16).slice(2) + Date.now().toString(16);
+      const answer = new Promise((resolve) => {
+        const timer = setTimeout(() => { results.delete(jobId); resolve({ error: "tab did not answer in time" }); }, JOB_TIMEOUT_MS);
+        results.set(jobId, { resolve, timer });
+      });
+      tab.queue.push({ jobId, kind, ...body });
+      deliver(tab);
+      const out = await answer;
+      res.writeHead(out.error ? 504 : 200, { "content-type": "application/json" });
+      res.end(JSON.stringify(out));
+      return;
+    }
+    // --- Tab API: tab side ---
+    if (req.method === "GET" && (m = req.url.match(/^\/api\/relay\/([a-f0-9]{32})\/next$/))) {
+      const tab = tabState(m[1]);
+      tab.lastSeen = Date.now();
+      if (tab.waiter) { try { tab.waiter.writeHead(204); tab.waiter.end(); } catch { /* ignore */ } }
+      tab.waiter = res;
+      const t = setTimeout(() => { if (tab.waiter === res) { tab.waiter = null; res.writeHead(204); res.end(); } }, POLL_TIMEOUT_MS);
+      res.on("close", () => { clearTimeout(t); if (tab.waiter === res) tab.waiter = null; });
+      deliver(tab);
+      return;
+    }
+    if (req.method === "POST" && (m = req.url.match(/^\/api\/relay\/([a-f0-9]{32})\/result\/([a-f0-9]+)$/))) {
+      const entry = results.get(m[2]);
+      const body = JSON.parse(await readBody(req));
+      if (entry) { clearTimeout(entry.timer); results.delete(m[2]); entry.resolve(body); }
+      tabState(m[1]).lastSeen = Date.now();
+      res.writeHead(204); res.end();
       return;
     }
 

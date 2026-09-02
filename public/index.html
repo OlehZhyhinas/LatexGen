@@ -50,6 +50,16 @@
         <span>Server model <span class="hint" id="server-hint">(checking…)</span></span>
       </label>
     </div>
+    <div class="settings-group" id="tabapi-group">
+      <div class="settings-label">Tab API</div>
+      <label class="radio"><input type="checkbox" id="tabapi-toggle" />
+        <span>Let other apps send this tab conversions <span class="hint">(curl, Postman, Shortcuts, Zapier). Nothing runs outside this tab; requests are relayed to it and answered with the models loaded here.</span></span></label>
+      <div id="tabapi-details" hidden>
+        <div class="row gap-sm"><code id="tabapi-url" class="tabapi-url"></code><button id="tabapi-copy" class="btn ghost">copy</button><button id="tabapi-regen" class="btn ghost" title="Invalidate the current address">regenerate</button></div>
+        <pre id="tabapi-example" class="tabapi-example"></pre>
+        <div class="hint" id="tabapi-status">idle</div>
+      </div>
+    </div>
     <div class="settings-group">
       <div class="settings-label">On-device model</div>
       <div class="dd" id="model-dd">

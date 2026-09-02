@@ -1453,3 +1453,101 @@ async function backgroundJudge(text, latex) {
   });
   checksEl.appendChild(fix);
 }
+
+
+// ---- Tab API: let external clients (curl, Postman, Shortcuts) use this tab ----
+// The tab long-polls the relay for jobs and answers them by driving the same
+// conversion pipeline the UI uses, so the user literally sees requests flow
+// through. The id is a capability token kept in localStorage so the URL is
+// stable across reloads; "regenerate" revokes it. Opt-in.
+{
+  const TABAPI_KEY = "latexgen.tabapi";
+  const toggle = $("tabapi-toggle"), details = $("tabapi-details"), urlEl = $("tabapi-url");
+  const statusEl = $("tabapi-status"), exampleEl = $("tabapi-example");
+  const prefs = () => { try { return JSON.parse(localStorage.getItem(TABAPI_KEY) || "{}"); } catch { return {}; } };
+  const save = (p) => localStorage.setItem(TABAPI_KEY, JSON.stringify(p));
+  const newId = () => [...crypto.getRandomValues(new Uint8Array(16))].map((b) => b.toString(16).padStart(2, "0")).join("");
+  let state = prefs();
+  if (!state.id) { state.id = newId(); save(state); }
+  let polling = false, generation = 0;
+
+  const render = () => {
+    const base = `${location.origin}/api/tab/${state.id}`;
+    urlEl.textContent = `${base}/convert`;
+    exampleEl.textContent =
+      `curl -X POST ${base}/convert \\\n  -H 'content-type: application/json' \\\n  -d '{"text": "the sum from n equals 1 to infinity of 1 over n squared"}'\n\n` +
+      `# image: {"imageBase64": "<base64 png/jpg>"}   refine: POST ${base}/refine {"latex": "...", "instruction": "..."}`;
+    toggle.checked = !!state.enabled;
+    details.hidden = !state.enabled;
+  };
+
+  const waitFor = (pred, timeoutMs = 60000) => new Promise((resolve, reject) => {
+    const t0 = Date.now();
+    const iv = setInterval(() => {
+      if (pred()) { clearInterval(iv); resolve(); }
+      else if (Date.now() - t0 > timeoutMs) { clearInterval(iv); reject(new Error("timeout")); }
+    }, 80);
+  });
+  const doneRe = /\ds? ·|failed|error/i;
+
+  async function runJob(job) {
+    const t0 = performance.now();
+    if (job.kind === "refine") {
+      currentLatex = job.latex; currentInput = job.original || "(tab api)";
+      outputCode.textContent = job.latex; setChatEnabled(true);
+      $("chat-input").value = job.instruction;
+      $("chat-send").click();
+      await new Promise((r) => setTimeout(r, 200));
+      await waitFor(() => !$("chat-send").disabled);
+    } else if (job.imageBase64) {
+      const bin = atob(job.imageBase64.replace(/^data:[^,]+,/, ""));
+      const bytes = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+      await convertImage(new Blob([bytes], { type: job.mime || "image/png" }));
+    } else {
+      document.querySelector('.seg[data-mode="text"]')?.click();
+      $("input").value = job.text; $("input").dispatchEvent(new Event("input"));
+      convertStatus.textContent = "";
+      convertBtn.click();
+      await waitFor(() => doneRe.test(convertStatus.textContent));
+    }
+    const issues = [...document.querySelectorAll("#checks span.warn")].map((s) => s.textContent);
+    return {
+      latex: outputCode.textContent, ok: issues.length === 0, issues,
+      model: job.kind === "refine" ? "refine" : convertStatus.textContent.replace(/^[\d.]+s · /, ""),
+      ms: Math.round(performance.now() - t0),
+    };
+  }
+
+  async function pollLoop(gen) {
+    polling = true;
+    while (state.enabled && gen === generation) {
+      try {
+        statusEl.textContent = "listening for requests…";
+        const r = await fetch(`/api/relay/${state.id}/next`, { cache: "no-store" });
+        if (gen !== generation) break;
+        if (r.status === 204) continue;
+        if (!r.ok) { await new Promise((res) => setTimeout(res, 3000)); continue; }
+        const job = await r.json();
+        statusEl.textContent = `handling request ${job.jobId.slice(0, 6)}…`;
+        let result;
+        try { result = await runJob(job); } catch (e) { result = { error: String(e.message || e) }; }
+        await fetch(`/api/relay/${state.id}/result/${job.jobId}`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(result) });
+        statusEl.textContent = `answered request ${job.jobId.slice(0, 6)} in ${result.ms ?? "?"} ms`;
+      } catch {
+        await new Promise((res) => setTimeout(res, 3000));
+      }
+    }
+    polling = false;
+    if (!state.enabled) statusEl.textContent = "idle";
+  }
+
+  toggle.addEventListener("change", () => {
+    state.enabled = toggle.checked; save(state); render();
+    generation++;
+    if (state.enabled && !polling) pollLoop(generation);
+  });
+  $("tabapi-regen").addEventListener("click", () => { state.id = newId(); save(state); generation++; render(); if (state.enabled) pollLoop(generation); });
+  $("tabapi-copy").addEventListener("click", () => navigator.clipboard.writeText(urlEl.textContent));
+  render();
+  if (state.enabled && serverAvailable !== false) pollLoop(generation);
+}

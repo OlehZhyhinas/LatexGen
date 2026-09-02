@@ -83,6 +83,26 @@ following*, not math). Rerun the benchmark with `public/bench.html` +
 - `public/benchmarks.html` is a static, crawlable page of the benchmark
   results, regenerated with `python3 bench/build-benchmarks-page.py`.
 
+## Tab API: use an open tab from curl, Postman, Shortcuts, Zapier
+
+A browser tab cannot accept connections, so LatexGen turns the problem around:
+with **Tab API** enabled in settings, the tab long-polls the server for jobs
+and answers them with the models it already has loaded. Each tab gets a stable,
+unguessable address (128-bit token in localStorage; *regenerate* revokes it):
+
+```bash
+curl -X POST https://<host>/api/tab/<id>/convert \
+  -H 'content-type: application/json' \
+  -d '{"text": "the sum from n equals 1 to infinity of 1 over n squared"}'
+# -> {"latex":"$$\\sum_{n=1}^{\\infty}\\frac{1}{n^{2}}$$","ok":true,"issues":[],"model":"IntelliTeX · specialist","ms":412}
+```
+
+Also `{"imageBase64": "..."}` for screenshots and `POST .../refine` with
+`{"latex", "instruction"}`. The relay forwards bytes only — no inference on the
+server — and holds each request open for up to 25s. Requests visibly run
+through the tab's UI. In-memory relay (`server.js`); the AWS build needs a
+small table-backed equivalent on the Lambda.
+
 ## In-browser runtime (Level A results)
 
 Every (model × device × dtype) the runtime offers was measured with
