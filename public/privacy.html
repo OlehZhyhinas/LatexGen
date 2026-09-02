@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LatexGen — Privacy</title>
+  <link rel="stylesheet" href="/vendor/fonts/geist/geist.css" />
+  <link rel="stylesheet" href="/style.css" />
+  <style>.doc{max-width:720px;margin:0 auto;padding:32px 16px;line-height:1.6}.doc h1{font-size:24px}.doc h2{font-size:16px;margin-top:28px}.doc p,.doc li{font-size:15px}</style>
+</head>
+<body>
+  <header class="topbar"><div class="brand"><a href="/" class="row gap-sm"><span class="logo-mark" aria-hidden="true">Σ</span><span class="wordmark">LatexGen</span></a></div></header>
+  <main class="doc">
+    <h1>Privacy</h1>
+    <p>LatexGen is built so that your math does not have to leave your device. This page says exactly what stays local and what does not, tier by tier.</p>
+    <h2>Default: everything on your device</h2>
+    <p>Typing text or dropping an image runs models inside your browser tab. The text, the image, and the result are never sent anywhere. Model weights are downloaded once from this site (and, for the optional on-device language model, from HuggingFace's CDN) and cached by your browser. History and settings are stored only in your browser.</p>
+    <h2>Server model (optional)</h2>
+    <p>When a conversion cannot be completed on your device, the app may send the <em>text</em> of that conversion to the server model configured by whoever runs this instance. Images are never sent. The server forwards the text to the configured model provider and returns the result; this site keeps request logs without content, and does not store your text. Whether a server model exists at all depends on the deployment, and the settings drawer shows which one is configured.</p>
+    <h2>Tab API and compute sharing (opt-in)</h2>
+    <p>If you turn on the Tab API, requests you send to your tab's address are relayed through this server to your browser and answered there; the server forwards bytes and does not store them. If you also turn on <em>Share compute</em>, some of your text conversions may be run inside another LatexGen user's browser, and yours may run theirs. That means the text of those conversions is visible to that other user's device. Images are shared only if you additionally opt in. Both switches are off by default and can be turned off at any time.</p>
+    <h2>What this site does not do</h2>
+    <ul>
+      <li>No accounts, no cookies, no third-party analytics or advertising scripts.</li>
+      <li>No storage of conversion content on the server.</li>
+      <li>No requests to third parties from the page except downloading model weights.</li>
+    </ul>
+    <p class="hint">Source code: <a href="https://github.com/OlehZhyhinas/LatexGen">github.com/OlehZhyhinas/LatexGen</a></p>
+  </main>
+</body>
+</html>

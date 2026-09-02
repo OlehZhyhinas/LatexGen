@@ -328,3 +328,5 @@ math-field::part(virtual-keyboard-toggle) { display: none; }
 .pool-details { display: flex; flex-direction: column; gap: 8px; padding: 4px 0 4px 26px; }
 .pool-key { flex: 1; min-width: 160px; padding: 6px 10px; font: inherit; font-size: 13px; color: var(--text); background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--r-sm); }
 .check.small { font-size: 12px; }
+
+.link-plain { color: var(--muted); text-decoration: underline; }

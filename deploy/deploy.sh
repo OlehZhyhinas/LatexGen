@@ -63,9 +63,9 @@ else
     --runtime nodejs20.x --handler index.handler --role "$ROLE_ARN" \
     --zip-file fileb:///tmp/$APP-lambda.zip --timeout 60 --memory-size 256 >/dev/null
 fi
-# NOTE: no ANTHROPIC_API_KEY is set — escalation stays disabled until you run:
+# NOTE: no API key is set — escalation stays disabled until you run:
 #   aws lambda update-function-configuration --function-name latexgen-api \
-#     --environment 'Variables={ANTHROPIC_API_KEY=sk-...}'
+#     --environment 'Variables={OPENAI_BASE_URL=https://openrouter.ai/api/v1,OPENAI_API_KEY=...,OPENAI_MODEL=...,OPENAI_REFINE_MODEL=...}'
 
 FURL=$(aws lambda create-function-url-config --function-name "$APP-api" --region "$REGION" \
   --auth-type NONE --query FunctionUrl --output text 2>/dev/null || \
@@ -138,4 +138,4 @@ fi
 
 echo ""
 echo "==> DONE. Site: https://$DOMAIN"
-echo "    Escalation: disabled until ANTHROPIC_API_KEY is set on the lambda."
+echo "    Escalation: disabled until OPENAI_BASE_URL / OPENAI_API_KEY / OPENAI_MODEL are set on the lambda."

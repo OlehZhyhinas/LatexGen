@@ -798,3 +798,19 @@ async function setVisualEdit(on) {
   // the UI's own conversions that went to a peer show up in the log too
   window.addEventListener("latexgen:converted", (e) => { if (e.detail?.peer) logEntry({ t: Date.now(), kind: "via peer", summary: e.detail.summary, model: e.detail.model, ms: e.detail.ms, ok: true }); });
 }
+
+// ---- resilience: surface unexpected errors, show connectivity ----
+{
+  const report = (msg) => { try { toast(`Something went wrong: ${String(msg).slice(0, 80)}`, 4000); } catch {} };
+  window.addEventListener("error", (e) => { if (e.message && !/ResizeObserver/.test(e.message)) report(e.message); });
+  window.addEventListener("unhandledrejection", (e) => report(e.reason?.message || e.reason));
+  const chip = $("privacy-chip");
+  const setOffline = (off) => {
+    if (!chip) return;
+    if (off) { chip.dataset.prev ??= chip.innerHTML; chip.className = "chip warn"; chip.innerHTML = "<i></i>Offline — on-device models still work"; }
+    else if (chip.dataset.prev) { chip.className = "chip ok"; chip.innerHTML = chip.dataset.prev; }
+  };
+  window.addEventListener("offline", () => setOffline(true));
+  window.addEventListener("online", () => setOffline(false));
+  if (!navigator.onLine) setOffline(true);
+}

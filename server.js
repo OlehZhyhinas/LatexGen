@@ -1,23 +1,40 @@
-// Zero-dependency Node server: serves the static frontend and proxies
-// conversion requests to a local Ollama instance (the "server model" path).
+// Zero-dependency Node server: serves the static frontend, proxies the
+// "server model" tier to any OpenAI-compatible API or Ollama, and hosts the
+// Tab API / compute-mesh relay.
 import { createServer } from "node:http";
 import { readFile } from "node:fs/promises";
 import { extname, join, normalize } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const PORT = process.env.PORT || 8000;
+const PROD = process.env.NODE_ENV === "production" || process.env.LATEXGEN_PROD === "1";
+const TRUST_PROXY = process.env.TRUST_PROXY === "1";   // behind App Runner/CloudFront/ALB
+const HSTS = process.env.HSTS === "1";                 // only when TLS terminates in front
+const LOG_IP = process.env.LOG_IP === "1";             // access logs omit IPs by default
+
+// --- Backend A: any OpenAI-compatible chat API (OpenRouter, OpenAI, Groq,
+// Together, a vLLM box, or local mlx_lm.server). Provider-agnostic on purpose.
+const OPENAI_BASE_URL = (process.env.OPENAI_BASE_URL
+  || (process.env.MLX_URL ? `${process.env.MLX_URL}/v1` : "http://host.docker.internal:8080/v1")).replace(/\/+$/, "");
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY || "";
+const OPENAI_MODEL = process.env.OPENAI_MODEL || process.env.MLX_MODEL || "mlx-community/Qwen3-1.7B-4bit";
+// Refinement, prose and judging want a stronger model than plain conversion.
+const OPENAI_REFINE_MODEL = process.env.OPENAI_REFINE_MODEL || process.env.MLX_REFINE_MODEL || null;
+const OPENAI_LOCAL = /^https?:\/\/(localhost|127\.0\.0\.1|host\.docker\.internal|\[::1\])(:|\/|$)/.test(OPENAI_BASE_URL);
+const OPENAI_ENABLED = process.env.OPENAI_DISABLED !== "1";
+// --- Backend B: Ollama (self-hosted).
 const OLLAMA_URL = process.env.OLLAMA_URL || "http://host.docker.internal:11434";
-const OLLAMA_MODEL = process.env.OLLAMA_MODEL || "qwen3.8:27b-q8_0";
-// Refinement (editing LaTeX per feedback) is a harder task than conversion —
-// small models echo feedback or hallucinate edits — so it gets its own model.
+const OLLAMA_MODEL = process.env.OLLAMA_MODEL || "qwen3:1.7b";
 const OLLAMA_REFINE_MODEL = process.env.OLLAMA_REFINE_MODEL || OLLAMA_MODEL;
-// Optional MLX backend (mlx_lm.server, OpenAI-compatible). On Apple Silicon
-// MLX decodes noticeably faster than Ollama, so when it's reachable,
-// conversions route to it automatically. Refinement stays on the strongest
-// available model.
-const MLX_URL = process.env.MLX_URL || "http://host.docker.internal:8080";
-const MLX_MODEL = process.env.MLX_MODEL || "mlx-community/Qwen3-1.7B-4bit";
-const MLX_REFINE_MODEL = process.env.MLX_REFINE_MODEL || null;
+const OLLAMA_ENABLED = process.env.OLLAMA_DISABLED !== "1";
+// Clients order their escalation ladder by this: a self-hosted local server is
+// trusted and used before peers; a cloud API (costs, logs) comes after peers.
+const SERVER_KIND = process.env.SERVER_KIND || (OPENAI_ENABLED && !OPENAI_LOCAL ? "cloud" : "local");
+
+// --- limits ---
+const BODY_LIMIT_TEXT = 64 * 1024, BODY_LIMIT_IMAGE = 6 * 1024 * 1024;
+const RATE = { general: 600, inference: 120, relay: 1200 }; // requests per minute per IP
+const MAX_TABS = 2000, MAX_RESULTS = 5000;
 
 const PUBLIC_DIR = join(fileURLToPath(new URL(".", import.meta.url)), "public");
 
@@ -54,10 +71,63 @@ Rules:
 - Change only what the feedback concerns; keep everything else, including delimiters, exactly as it was.
 - If the feedback is vague, make your best guess at what is wrong and fix that.`;
 
-async function readBody(req) {
-  const chunks = [];
-  for await (const c of req) chunks.push(c);
+class HttpError extends Error { constructor(status, msg) { super(msg); this.status = status; } }
+async function readBody(req, limit = BODY_LIMIT_TEXT) {
+  const chunks = []; let size = 0, over = false;
+  for await (const c of req) {
+    size += c.length;
+    if (size > limit) { over = true; if (size > limit * 4) break; continue; } // drain (bounded) so the 413 reaches the client
+    chunks.push(c);
+  }
+  if (over) throw new HttpError(413, "payload too large");
   return Buffer.concat(chunks).toString("utf-8");
+}
+async function readJson(req, limit) {
+  try { return JSON.parse(await readBody(req, limit) || "{}"); }
+  catch (e) { if (e instanceof HttpError) throw e; throw new HttpError(400, "invalid json"); }
+}
+
+// ---- per-IP token buckets ----
+const buckets = new Map();
+function clientIp(req) {
+  if (TRUST_PROXY) { const xff = req.headers["x-forwarded-for"]; if (xff) return String(xff).split(",")[0].trim(); }
+  return req.socket.remoteAddress || "?";
+}
+function rateLimited(ip, cls) {
+  const limit = RATE[cls], now = Date.now();
+  const key = `${cls}:${ip}`;
+  let b = buckets.get(key);
+  if (!b) { b = { tokens: limit, at: now }; buckets.set(key, b); }
+  b.tokens = Math.min(limit, b.tokens + ((now - b.at) / 60_000) * limit); b.at = now;
+  if (b.tokens < 1) return true;
+  b.tokens -= 1; return false;
+}
+setInterval(() => { const cutoff = Date.now() - 600_000; for (const [k, b] of buckets) if (b.at < cutoff) buckets.delete(k); }, 300_000).unref();
+const rateClass = (path) => path.startsWith("/api/relay/") ? "relay"
+  : /^\/api\/(convert|refine|judge|pool\/|tab\/)/.test(path) ? "inference" : "general";
+
+// ---- security headers ----
+const CSP = [
+  "default-src 'self'",
+  "script-src 'self' 'wasm-unsafe-eval'",
+  "worker-src 'self' blob:",
+  "connect-src 'self' https:", // model weights stream from HuggingFace CDNs
+  "img-src 'self' data: blob:",
+  "style-src 'self' 'unsafe-inline'", // KaTeX and MathLive set inline styles
+  "font-src 'self' data:",
+  "form-action 'self' https://www.overleaf.com",
+  "frame-ancestors 'none'", "base-uri 'self'", "object-src 'none'",
+].join("; ");
+function securityHeaders(isHtml) {
+  const h = {
+    "x-content-type-options": "nosniff",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "permissions-policy": "camera=(self), microphone=(), geolocation=()",
+    "x-frame-options": "DENY",
+  };
+  if (isHtml) h["content-security-policy"] = CSP;
+  if (HSTS) h["strict-transport-security"] = "max-age=31536000; includeSubDomains";
+  return h;
 }
 
 function stripThink(text) {
@@ -71,16 +141,18 @@ function stripFences(text) {
 }
 
 // ---- backend probing (cached ~20s so routing adapts if servers start/stop) ----
-let probeCache = { at: 0, ollama: false, mlx: false };
+let probeCache = { at: 0, ollama: false, openai: false };
+const openaiHeaders = () => ({ "content-type": "application/json", ...(OPENAI_API_KEY ? { authorization: `Bearer ${OPENAI_API_KEY}` } : {}) });
 async function probeBackends() {
+  // Cloud APIs are assumed up when configured (probing them costs requests and
+  // some providers gate /models); local backends are probed and cached ~20s.
   if (Date.now() - probeCache.at < 20_000) return probeCache;
-  const check = (url) =>
-    fetch(url, { signal: AbortSignal.timeout(1500) }).then((r) => r.ok).catch(() => false);
-  const [ollama, mlx] = await Promise.all([
-    check(`${OLLAMA_URL}/api/version`),
-    check(`${MLX_URL}/v1/models`),
+  const check = (url, headers) => fetch(url, { headers, signal: AbortSignal.timeout(1500) }).then((r) => r.ok).catch(() => false);
+  const [ollama, openai] = await Promise.all([
+    OLLAMA_ENABLED ? check(`${OLLAMA_URL}/api/version`) : false,
+    OPENAI_ENABLED ? (OPENAI_LOCAL ? check(`${OPENAI_BASE_URL}/models`, openaiHeaders()) : !!OPENAI_API_KEY) : false,
   ]);
-  probeCache = { at: Date.now(), ollama, mlx };
+  probeCache = { at: Date.now(), ollama, openai };
   return probeCache;
 }
 
@@ -88,16 +160,33 @@ async function probeBackends() {
 // (MLX when present), refinements want the strongest model (Ollama's big
 // model, unless an MLX refine model is configured or Ollama is down).
 async function routeFor(task) {
-  const { ollama, mlx } = await probeBackends();
+  const { ollama, openai } = await probeBackends();
   if (task === "convert") {
-    if (mlx) return { kind: "mlx", model: MLX_MODEL };
+    if (openai) return { kind: "openai", model: OPENAI_MODEL };
     if (ollama) return { kind: "ollama", model: OLLAMA_MODEL };
   } else {
-    if (mlx && MLX_REFINE_MODEL) return { kind: "mlx", model: MLX_REFINE_MODEL };
+    if (openai && OPENAI_REFINE_MODEL) return { kind: "openai", model: OPENAI_REFINE_MODEL };
     if (ollama) return { kind: "ollama", model: OLLAMA_REFINE_MODEL };
-    if (mlx) return { kind: "mlx", model: MLX_MODEL };
+    if (openai) return { kind: "openai", model: OPENAI_MODEL };
   }
   return null;
+}
+// One request body for either dialect.
+function chatBody(route, messages, { stream, temperature, maxTokens }) {
+  if (route.kind === "openai") {
+    const b = { model: route.model, stream, temperature, max_tokens: maxTokens, messages };
+    if (OPENAI_LOCAL) b.chat_template_kwargs = { enable_thinking: false }; // mlx_lm.server / vLLM with Qwen
+    return b;
+  }
+  return { model: route.model, stream, think: false, keep_alive: -1, options: { temperature, num_predict: maxTokens }, messages };
+}
+const chatUrl = (route) => route.kind === "openai" ? `${OPENAI_BASE_URL}/chat/completions` : `${OLLAMA_URL}/api/chat`;
+const chatHeaders = (route) => route.kind === "openai" ? openaiHeaders() : { "content-type": "application/json" };
+async function chatOnce(route, messages, opts) {
+  const r = await fetch(chatUrl(route), { method: "POST", headers: chatHeaders(route), body: JSON.stringify(chatBody(route, messages, { stream: false, ...opts })), signal: AbortSignal.timeout(60_000) });
+  if (!r.ok) throw new HttpError(502, `${route.kind} ${r.status}`);
+  const data = await r.json();
+  return route.kind === "openai" ? (data.choices?.[0]?.message?.content ?? "") : (data.message?.content ?? "");
 }
 
 // Stream a chat completion to the client as NDJSON: {delta} lines while
@@ -105,34 +194,12 @@ async function routeFor(task) {
 // dialects: Ollama's NDJSON and MLX/OpenAI's SSE.
 async function streamChat(res, route, messages) {
   const started = Date.now();
-  const isMlx = route.kind === "mlx";
-  const r = await fetch(
-    isMlx ? `${MLX_URL}/v1/chat/completions` : `${OLLAMA_URL}/api/chat`,
-    {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify(
-        isMlx
-          ? {
-              model: route.model,
-              stream: true,
-              temperature: 0.2,
-              max_tokens: 2048,
-              chat_template_kwargs: { enable_thinking: false },
-              messages,
-            }
-          : {
-              model: route.model,
-              stream: true,
-              think: false,
-              keep_alive: -1,
-              options: { temperature: 0.2, num_predict: 2048 },
-              messages,
-            }
-      ),
-      signal: AbortSignal.timeout(120_000),
-    }
-  );
+  const isMlx = route.kind === "openai"; // SSE dialect (OpenAI-compatible); else Ollama NDJSON
+  const r = await fetch(chatUrl(route), {
+    method: "POST", headers: chatHeaders(route),
+    body: JSON.stringify(chatBody(route, messages, { stream: true, temperature: 0.2, maxTokens: 2048 })),
+    signal: AbortSignal.timeout(120_000),
+  });
   if (!r.ok) {
     const detail = await r.text();
     res.writeHead(502, { "content-type": "application/json" });
@@ -171,6 +238,7 @@ async function streamChat(res, route, messages) {
 
 // Load both models into memory at boot so the first user request is warm.
 function warmModels() {
+  if (!OLLAMA_ENABLED) return;
   for (const model of new Set([OLLAMA_MODEL, OLLAMA_REFINE_MODEL])) {
     fetch(`${OLLAMA_URL}/api/chat`, {
       method: "POST",
@@ -310,28 +378,41 @@ function spotCheck(requester, body, cls, first, firstResult) {
 }
 
 const server = createServer(async (req, res) => {
+  const started = Date.now();
+  const path = (req.url || "/").split("?")[0];
+  const ip = clientIp(req);
+  // security headers on every response
+  const baseHeaders = securityHeaders(path === "/" || path.endsWith(".html"));
+  const origWriteHead = res.writeHead.bind(res);
+  res.writeHead = (status, headers) => origWriteHead(status, { ...baseHeaders, ...(headers || {}) });
+  res.on("finish", () => {
+    if (path.startsWith("/api/relay/")) return; // long-poll chatter
+    console.log(JSON.stringify({ t: new Date().toISOString(), m: req.method, p: path.replace(/[a-f0-9]{32}/g, "<id>"), s: res.statusCode, ms: Date.now() - started, ...(LOG_IP ? { ip } : {}) }));
+  });
   try {
-    if (req.method === "GET" && req.url === "/api/health") {
-      const { ollama, mlx } = await probeBackends();
+    if (path.startsWith("/api/") && rateLimited(ip, rateClass(path))) return json(res, 429, { error: "rate limit exceeded, slow down" });
+
+    if (req.method === "GET" && path === "/api/health") {
+      const { ollama, openai } = await probeBackends();
       const [convert, refine] = await Promise.all([routeFor("convert"), routeFor("refine")]);
-      res.writeHead(200, { "content-type": "application/json" });
+      res.writeHead(200, { "content-type": "application/json", "cache-control": "no-store" });
       res.end(JSON.stringify({
         ok: true,
-        backends: { ollama, mlx },
+        backends: { ollama, openai, mlx: openai && OPENAI_LOCAL },
         routes: { convert, refine },
-        serverKind: "local", // self-hosted Ollama/MLX: trusted, fast — used before peers
+        serverKind: SERVER_KIND,
         mesh: { tabs: [...tabs.values()].filter((t) => isLive(t)).length, pooled: [...tabs.values()].filter((t) => isLive(t) && t.pool).length },
-        // kept for older clients
-        ollama: { reachable: ollama, model: OLLAMA_MODEL, url: OLLAMA_URL },
+        ollama: { reachable: ollama, model: OLLAMA_MODEL },
       }));
       return;
     }
 
     let m;
     // --- mesh: a tab registers its capabilities and pool membership ---
-    if (req.method === "POST" && (m = req.url.match(/^\/api\/relay\/([a-f0-9]{32})\/caps$/))) {
+    if (req.method === "POST" && (m = path.match(/^\/api\/relay\/([a-f0-9]{32})\/caps$/))) {
+      if (!tabs.has(m[1]) && tabs.size >= MAX_TABS) return json(res, 503, { error: "relay is full" });
       const tab = tabState(m[1]);
-      const body = JSON.parse(await readBody(req));
+      const body = await readJson(req);
       tab.caps = body.caps ?? {};
       tab.pool = body.pool ? { keys: (body.pool.keys ?? ["public"]).map((k) => String(k).slice(0, 64)), images: !!body.pool.images, maxConcurrent: Math.min(3, Math.max(1, body.pool.maxConcurrent ?? 1)) } : null;
       tab.lastSeen = Date.now();
@@ -339,13 +420,12 @@ const server = createServer(async (req, res) => {
       return;
     }
     // --- mesh: a tab (or its owner's client) asks a peer to run a job ---
-    if (req.method === "POST" && (m = req.url.match(/^\/api\/pool\/([a-f0-9]{32})\/(convert|refine|check)$/))) {
+    if (req.method === "POST" && (m = path.match(/^\/api\/pool\/([a-f0-9]{32})\/(convert|refine|check)$/))) {
       const requester = tabs.get(m[1]);
       if (!requester) return json(res, 404, { error: "unknown tab" });
       const why = reciprocityOk(requester);
       if (why) return json(res, 429, { error: why });
-      let body;
-      try { body = JSON.parse(await readBody(req)); } catch { return json(res, 400, { error: "invalid json" }); }
+      const body = await readJson(req, BODY_LIMIT_IMAGE);
       if ((body.text ?? "").length > 6000 || (body.latex ?? "").length > 6000) return json(res, 413, { error: "payload too large" });
       if (body.imageBase64 && !requester.pool.images) return json(res, 400, { error: "images are not shared with peers" });
       const out = await runOnMesh(requester, { kind: m[2], ...body });
@@ -355,7 +435,7 @@ const server = createServer(async (req, res) => {
 
     // --- Tab API: external client -> tab ---
     // POST /api/tab/<id>/convert {text} | {imageBase64, mime} | {latex, instruction}
-    if (req.method === "POST" && (m = req.url.match(/^\/api\/tab\/([a-f0-9]{32})\/(convert|refine|check|format|status|history)$/))) {
+    if (req.method === "POST" && (m = path.match(/^\/api\/tab\/([a-f0-9]{32})\/(convert|refine|check|format|status|history)$/))) {
       const [, tabId, kind] = m;
       const tab = tabs.get(tabId);
       if (!tab || Date.now() - tab.lastSeen > 45_000) {
@@ -367,14 +447,14 @@ const server = createServer(async (req, res) => {
         res.writeHead(429, { "content-type": "application/json" });
         res.end(JSON.stringify({ error: "tab is busy (queue full)" })); return;
       }
-      let body;
-      try { body = JSON.parse(await readBody(req)); } catch { res.writeHead(400, { "content-type": "application/json" }); res.end(JSON.stringify({ error: "invalid json" })); return; }
+      const body = await readJson(req, BODY_LIMIT_IMAGE);
       const bad = (msg) => { res.writeHead(400, { "content-type": "application/json" }); res.end(JSON.stringify({ error: msg })); };
       if (kind === "convert" && !body.text && !body.imageBase64 && !body.latex) return bad("text, imageBase64 or latex required");
       if (kind === "refine" && (!body.latex || !body.instruction)) return bad("latex and instruction required");
       if (kind === "check" && !body.latex) return bad("latex required");
       if (kind === "format" && (!body.latex || !body.format)) return bad("latex and format required");
-      if ((body.text ?? "").length > 6000 || (body.imageBase64 ?? "").length > 8_000_000) { res.writeHead(413, { "content-type": "application/json" }); res.end(JSON.stringify({ error: "payload too large" })); return; }
+      if ((body.text ?? "").length > 6000) return json(res, 413, { error: "payload too large" });
+      if (results.size >= MAX_RESULTS) return json(res, 503, { error: "relay is busy" });
       const jobId = Math.random().toString(16).slice(2) + Date.now().toString(16);
       const answer = new Promise((resolve) => {
         const timer = setTimeout(() => { results.delete(jobId); tab.inFlight.delete(jobId); resolve({ error: "tab did not answer in time" }); }, JOB_TIMEOUT_MS);
@@ -387,7 +467,8 @@ const server = createServer(async (req, res) => {
       return;
     }
     // --- Tab API: tab side ---
-    if (req.method === "GET" && (m = req.url.match(/^\/api\/relay\/([a-f0-9]{32})\/next$/))) {
+    if (req.method === "GET" && (m = path.match(/^\/api\/relay\/([a-f0-9]{32})\/next$/))) {
+      if (!tabs.has(m[1]) && tabs.size >= MAX_TABS) return json(res, 503, { error: "relay is full" });
       const tab = tabState(m[1]);
       tab.lastSeen = Date.now();
       if (tab.waiter) { try { tab.waiter.writeHead(204); tab.waiter.end(); } catch { /* ignore */ } }
@@ -397,9 +478,9 @@ const server = createServer(async (req, res) => {
       deliver(tab);
       return;
     }
-    if (req.method === "POST" && (m = req.url.match(/^\/api\/relay\/([a-f0-9]{32})\/result\/([a-f0-9]+)$/))) {
+    if (req.method === "POST" && (m = path.match(/^\/api\/relay\/([a-f0-9]{32})\/result\/([a-f0-9]+)$/))) {
       const entry = results.get(m[2]);
-      const body = JSON.parse(await readBody(req));
+      const body = await readJson(req, BODY_LIMIT_IMAGE);
       const tab = tabState(m[1]);
       tab.lastSeen = Date.now(); tab.inFlight.delete(m[2]);
       if (entry) { clearTimeout(entry.timer); results.delete(m[2]); if (body.error) tab.failures++; entry.onDone(body, entry); }
@@ -409,45 +490,37 @@ const server = createServer(async (req, res) => {
 
     // Dev benchmark collector: bench.html posts result rows here; a script
     // reads them back for judging. In-memory only.
-    if (req.method === "POST" && req.url === "/api/bench") {
-      benchRows.push(JSON.parse(await readBody(req)));
+    if (PROD && path === "/api/bench") return json(res, 404, { error: "not found" });
+    if (req.method === "POST" && path === "/api/bench") {
+      benchRows.push(await readJson(req, BODY_LIMIT_IMAGE));
       res.writeHead(204); res.end();
       return;
     }
-    if (req.method === "GET" && req.url === "/api/bench") {
+    if (req.method === "GET" && path === "/api/bench") {
       res.writeHead(200, { "content-type": "application/json" });
       res.end(JSON.stringify(benchRows));
       return;
     }
-    if (req.method === "DELETE" && req.url === "/api/bench") {
+    if (req.method === "DELETE" && path === "/api/bench") {
       benchRows.length = 0;
       res.writeHead(204); res.end();
       return;
     }
 
     // Strict mode: a second model judges whether the LaTeX matches the input.
-    if (req.method === "POST" && req.url === "/api/judge") {
-      const { text, latex } = JSON.parse(await readBody(req));
-      if (!text || !latex) { res.writeHead(400, { "content-type": "application/json" }); res.end(JSON.stringify({ error: "text and latex required" })); return; }
+    if (req.method === "POST" && path === "/api/judge") {
+      const { text, latex } = await readJson(req);
+      if (!text || !latex) return json(res, 400, { error: "text and latex required" });
       const route = await routeFor("refine");
-      if (!route) { res.writeHead(503, { "content-type": "application/json" }); res.end(JSON.stringify({ error: "no backend" })); return; }
-      const isMlx = route.kind === "mlx";
-      const r = await fetch(isMlx ? `${MLX_URL}/v1/chat/completions` : `${OLLAMA_URL}/api/chat`, {
-        method: "POST", headers: { "content-type": "application/json" },
-        body: JSON.stringify(isMlx
-          ? { model: route.model, stream: false, temperature: 0, max_tokens: 80, chat_template_kwargs: { enable_thinking: false }, messages: [{ role: "system", content: JUDGE_PROMPT }, { role: "user", content: `INPUT:\n${text}\n\nLATEX:\n${latex}` }] }
-          : { model: route.model, stream: false, think: false, keep_alive: -1, options: { temperature: 0, num_predict: 80 }, messages: [{ role: "system", content: JUDGE_PROMPT }, { role: "user", content: `INPUT:\n${text}\n\nLATEX:\n${latex}` }] }),
-        signal: AbortSignal.timeout(60_000),
-      });
-      const data = await r.json();
-      const content = isMlx ? (data.choices?.[0]?.message?.content ?? "") : (data.message?.content ?? "");
+      if (!route) return json(res, 503, { error: "no backend" });
+      const content = await chatOnce(route, [{ role: "system", content: JUDGE_PROMPT }, { role: "user", content: `INPUT:\n${text}\n\nLATEX:\n${latex}` }], { temperature: 0, maxTokens: 80 });
       res.writeHead(200, { "content-type": "application/json" });
       res.end(content.slice(content.indexOf("{"), content.lastIndexOf("}") + 1) || JSON.stringify({ ok: true, reason: "" }));
       return;
     }
 
-    if (req.method === "POST" && req.url === "/api/refine") {
-      const { original, latex, instruction } = JSON.parse(await readBody(req));
+    if (req.method === "POST" && path === "/api/refine") {
+      const { original, latex, instruction } = await readJson(req);
       if (!latex || !instruction || String(instruction).length > 2000) {
         res.writeHead(400, { "content-type": "application/json" });
         res.end(JSON.stringify({ error: "latex and instruction required (instruction max 2000 chars)" }));
@@ -468,8 +541,8 @@ const server = createServer(async (req, res) => {
       return;
     }
 
-    if (req.method === "POST" && req.url === "/api/convert") {
-      const { text, complex } = JSON.parse(await readBody(req));
+    if (req.method === "POST" && path === "/api/convert") {
+      const { text, complex } = await readJson(req);
       if (!text || typeof text !== "string" || text.length > 6000) {
         res.writeHead(400, { "content-type": "application/json" });
         res.end(JSON.stringify({ error: "text required (max 6000 chars)" }));
@@ -491,10 +564,10 @@ const server = createServer(async (req, res) => {
     }
 
     // Static files
-    if (req.method === "GET") {
-      let path = req.url.split("?")[0];
-      if (path === "/") path = "/index.html";
-      const file = normalize(join(PUBLIC_DIR, path));
+    if (req.method === "GET" || req.method === "HEAD") {
+      let filePath = path === "/" ? "/index.html" : path;
+      if (PROD && /^\/bench/.test(filePath)) { res.writeHead(404, { "content-type": "text/plain" }); res.end("not found"); return; }
+      const file = normalize(join(PUBLIC_DIR, decodeURIComponent(filePath)));
       if (!file.startsWith(PUBLIC_DIR)) {
         res.writeHead(403); res.end(); return;
       }
@@ -502,12 +575,12 @@ const server = createServer(async (req, res) => {
         const content = await readFile(file);
         // Vendored libraries and model weights never change under a path;
         // the app shell must always revalidate so deploys show up immediately.
-        const immutable = path.startsWith("/vendor/") || path.startsWith("/models/") || path.startsWith("/icons/");
+        const immutable = filePath.startsWith("/vendor/") || filePath.startsWith("/models/") || filePath.startsWith("/icons/");
         res.writeHead(200, {
           "content-type": MIME[extname(file)] || "application/octet-stream",
           "cache-control": immutable ? "public, max-age=31536000, immutable" : "no-cache",
         });
-        res.end(content);
+        res.end(req.method === "HEAD" ? undefined : content);
         return;
       } catch {
         res.writeHead(404, { "content-type": "text/plain" });
@@ -518,13 +591,32 @@ const server = createServer(async (req, res) => {
 
     res.writeHead(405); res.end();
   } catch (err) {
-    res.writeHead(500, { "content-type": "application/json" });
-    res.end(JSON.stringify({ error: String(err) }));
+    if (res.headersSent) { try { res.end(); } catch {} return; }
+    if (err instanceof HttpError) return json(res, err.status, { error: err.message });
+    console.error(JSON.stringify({ t: new Date().toISOString(), error: String(err?.stack || err).slice(0, 500), p: path }));
+    json(res, 500, { error: PROD ? "internal error" : String(err) });
   }
 });
+server.headersTimeout = 65_000;
+server.requestTimeout = 120_000;
+server.keepAliveTimeout = 65_000;
 
-server.listen(PORT, () => {
-  console.log(`LatexGen on http://localhost:${PORT}`);
-  console.log(`ollama backend: ${OLLAMA_URL} (convert: ${OLLAMA_MODEL}, refine: ${OLLAMA_REFINE_MODEL})`);
-  warmModels();
-});
+// Graceful shutdown: release long-polls so tabs reconnect to the next instance.
+function shutdown(sig) {
+  console.log(JSON.stringify({ t: new Date().toISOString(), shutdown: sig }));
+  for (const t of tabs.values()) if (t.waiter) { try { t.waiter.writeHead(204); t.waiter.end(); } catch {} t.waiter = null; }
+  server.close(() => process.exit(0));
+  setTimeout(() => process.exit(0), 5000).unref();
+}
+process.on("SIGTERM", () => shutdown("SIGTERM"));
+process.on("SIGINT", () => shutdown("SIGINT"));
+
+if (process.env.LATEXGEN_NO_LISTEN !== "1") {
+  server.listen(PORT, () => {
+    console.log(JSON.stringify({ t: new Date().toISOString(), listening: PORT, prod: PROD, serverKind: SERVER_KIND,
+      openai: OPENAI_ENABLED ? { base: OPENAI_BASE_URL, model: OPENAI_MODEL, refine: OPENAI_REFINE_MODEL, key: OPENAI_API_KEY ? "set" : "none" } : "off",
+      ollama: OLLAMA_ENABLED ? { url: OLLAMA_URL, model: OLLAMA_MODEL, refine: OLLAMA_REFINE_MODEL } : "off" }));
+    warmModels();
+  });
+}
+export { server };

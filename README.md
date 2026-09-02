@@ -196,29 +196,63 @@ models stay pinned (`keep_alive: -1`) with a boot-time warm-up.
 
 To share a local instance temporarily: `cloudflared tunnel --url http://localhost:8013`.
 
-## AWS deployment (static + API escalation)
+## Server model: any provider (OpenAI-compatible) or Ollama
+
+The "server model" tier is provider-agnostic. Configure one or both backends
+with environment variables; the server probes them and routes conversions to
+the fast model and refinements/prose/judging to the strong one:
+
+| Variable | Meaning |
+|---|---|
+| `OPENAI_BASE_URL` | Any OpenAI-compatible chat API: `https://openrouter.ai/api/v1`, `https://api.openai.com/v1`, Groq, Together, a vLLM box, or local `mlx_lm.server` (`http://host.docker.internal:8080/v1`, the default) |
+| `OPENAI_API_KEY` | Bearer key for that API (never shipped to the frontend) |
+| `OPENAI_MODEL` / `OPENAI_REFINE_MODEL` | fast / strong model ids for that provider |
+| `OLLAMA_URL`, `OLLAMA_MODEL`, `OLLAMA_REFINE_MODEL` | self-hosted Ollama alternative |
+| `OPENAI_DISABLED=1` / `OLLAMA_DISABLED=1` | turn a backend off |
+| `SERVER_KIND` | `local` or `cloud` (auto: cloud when the API base is not localhost). Clients use a local server before peers and a cloud one after |
+
+Cost reference: an OpenRouter-class small model runs well under a cent per
+escalated conversion, and only conversions the browser could not finish reach
+the server at all.
+
+## Deploying to AWS (App Runner, one container)
 
 ```bash
-AWS_PROFILE=<personal-profile> deploy/deploy.sh
+AWS_PROFILE=<personal> OPENAI_BASE_URL=https://openrouter.ai/api/v1 \
+OPENAI_MODEL=<fast model> OPENAI_REFINE_MODEL=<strong model> \
+OPENAI_API_KEY_SECRET_ARN=arn:aws:secretsmanager:...:secret:latexgen/openai \
+deploy/aws-apprunner.sh
 ```
 
-Creates: a private S3 bucket (CloudFront-only via Origin Access Control),
-a CloudFront distribution (static site + `/api/*` → Lambda), and the
-escalation Lambda (`deploy/lambda/index.mjs`). The script refuses to run
-against any account other than the one pinned in `EXPECTED_ACCOUNT`.
+Builds the image, pushes to ECR, creates or updates an App Runner service
+(0.25 vCPU / 0.5 GB, ~$5–10/month always-on) serving the static site, the
+server-model proxy and the Tab API / mesh relay. The API key is injected from
+Secrets Manager at runtime. Keep the service at **one instance**: the relay is
+in-memory state (long-polls, queues, pool reputation). Put CloudFront in front
+later for caching the model weights; `deploy/deploy.sh` still provisions the
+S3 + CloudFront static path, with the Lambda as a stateless fallback proxy for
+`/api/convert`, `/api/refine`, `/api/judge` only (no relay).
 
-The Lambda holds the Claude API key **server-side only** — nothing sensitive
-ships to the frontend. It deploys with *no key configured*: escalation
-returns 503, `/api/health` reports no routes, and the frontend silently runs
-browser-only. Enable escalation later with:
+### Production hardening (built in)
 
-```bash
-aws lambda update-function-configuration --function-name latexgen-api \
-  --environment 'Variables={ANTHROPIC_API_KEY=sk-...}'
-```
-
-Idle cost is ~$1–5/month (S3/Lambda free tier; CloudFront egress — mostly
-the 264MB specialist download per new user — is the variable part).
+- `NODE_ENV=production`: dev benchmark endpoints and pages are disabled;
+  errors are not echoed to clients.
+- Per-IP token buckets (`general` 600/min, inference 120/min, relay 1200/min);
+  set `TRUST_PROXY=1` behind App Runner / CloudFront so limits key on the
+  real client IP.
+- Payload caps (64 KB text, 6 MB images), relay caps (2000 tabs, 5000 pending
+  jobs), request/keep-alive timeouts, graceful `SIGTERM` (long-polls released
+  so tabs reconnect to the next instance).
+- Security headers on every response, including a CSP that permits WebAssembly
+  and WebGPU workers, same-origin vendored assets, HuggingFace weight
+  downloads, and the Overleaf form post — nothing else. `HSTS=1` when TLS
+  terminates in front.
+- Structured JSON access logs with request ids redacted; client IPs are not
+  logged unless `LOG_IP=1`.
+- Container runs as the unprivileged `node` user with a Docker healthcheck.
+- `npm test` runs validator unit tests plus integration tests that spawn the
+  server against a mock OpenAI-compatible upstream (streaming proxy, judge,
+  hardening, rate limit, Tab API relay, mesh routing and reciprocity).
 
 ## Repo layout
 

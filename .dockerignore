@@ -1,0 +1,14 @@
+.git
+node_modules
+tests
+bench
+deploy
+scripts
+public/bench*.html
+public/bench*.js
+public/bench-images
+public/bench-images.json
+public/bench-data.json
+*.md
+.gitattributes
+.gitignore
