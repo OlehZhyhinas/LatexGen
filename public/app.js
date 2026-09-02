@@ -369,11 +369,6 @@ loadBtn.addEventListener("click", () => { const row = modelRows.find((r) => r.id
 ddBtn.addEventListener("click", () => { ddMenu.hidden = !ddMenu.hidden; });
 document.addEventListener("click", (e) => { if (!$("model-dd").contains(e.target)) ddMenu.hidden = true; });
 specialistReady.then(buildModelPicker, buildModelPicker);
-if (deepLink.get("q")) {
-  $("input").value = deepLink.get("q").slice(0, 6000); $("input").dispatchEvent(new Event("input"));
-  specialistReady.then(() => convertBtn.click());
-  history.replaceState(null, "", location.pathname);
-}
 
 // ---- WebGPU availability ----
 if (!navigator.gpu) {
@@ -446,8 +441,7 @@ $("input").addEventListener("keydown", (e) => { if ((e.metaKey || e.ctrlKey) && 
   });
 }
 
-// ---- deep links: ?consent=quick|full skips the first-visit choice (kiosks,
-// Shortcuts, docs); ?q=<text> prefills and converts on load ----
+// ---- deep link: ?consent=quick|full skips the first-visit choice (kiosks, docs) ----
 const deepLink = new URLSearchParams(location.search);
 if (!prefs().consent && ["quick", "full"].includes(deepLink.get("consent"))) setPref("consent", deepLink.get("consent"));
 
