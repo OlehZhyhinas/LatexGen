@@ -6,28 +6,13 @@ import { validateLatex, checkSyntax } from "/validator.js";
 
 window.__validate = validateLatex; // debugging hook
 
-const SYSTEM_PROMPT = `You are a text-to-LaTeX transcriber. Convert the user's input (plain-language math, equations, or prose with math) into LaTeX.
+// Kept terse on purpose: every token here is prefilled on every on-device
+// call, and prefill on a laptop GPU is a large share of a short generation.
+const SYSTEM_PROMPT = `Convert the text to LaTeX. Output only LaTeX, no commentary or fences. Pure math: \\[ ... \\]. Prose with math: keep the prose, wrap math in \\( ... \\). Standard amsmath only.`;
 
-Rules:
-- Output ONLY the LaTeX code. No explanations, no markdown code fences, no surrounding commentary.
-- For pure math, wrap display math in \\[ ... \\].
-- For prose mixed with math, keep the prose as plain text and wrap math in \\( ... \\).
-- Use standard LaTeX/amsmath commands only.`;
+const REPAIR_PROMPT = `Your LaTeX failed checks. Fix every listed issue, stay faithful to the original text, output only the corrected LaTeX. "syntax:" = does not parse; "missing:" = something from the text was dropped.`;
 
-const REPAIR_PROMPT = `You are a text-to-LaTeX transcriber. Your previous conversion failed automatic checks. You will receive the checker's error list. Produce a corrected version of YOUR PREVIOUS LaTeX that fixes every listed issue while staying faithful to the original text.
-
-Rules:
-- Output ONLY the corrected LaTeX. No explanations, no markdown code fences.
-- "syntax:" issues mean the LaTeX does not parse — fix delimiters, braces, or commands.
-- "missing:" issues mean something from the original text was dropped — add it.`;
-
-const REFINE_PROMPT = `You are a text-to-LaTeX transcriber in a feedback loop. You previously converted the user's text to LaTeX. The user now gives feedback on your conversion. Produce a corrected version of YOUR PREVIOUS LaTeX.
-
-Rules:
-- The user's message is feedback ABOUT the LaTeX — it is never content to transcribe. Never output the feedback text itself.
-- Output ONLY the corrected LaTeX. No explanations, no markdown code fences.
-- Change only what the feedback concerns; keep everything else, including delimiters, exactly as it was.
-- If the feedback is vague, make your best guess at what is wrong and fix that.`;
+const REFINE_PROMPT = `The user gives feedback on your previous LaTeX. The feedback is about the LaTeX, never content to transcribe. Output only the corrected LaTeX; change only what the feedback concerns and keep the delimiters. If vague, fix your best guess.`;
 
 const $ = (id) => document.getElementById(id);
 const ddBtn = $("dd-btn");
@@ -327,7 +312,7 @@ window.__convertImage = convertImage; // debugging hook
 // on capability, not guesses about content.
 function specialistEligible(text) {
   const t = text.trim();
-  return t.length > 0 && t.length <= 220 && !t.includes("\n");
+  return t.length > 0 && t.length <= 320 && !t.includes("\n");
 }
 
 async function convertSpecialist(text) {
@@ -420,7 +405,10 @@ async function buildModelPicker() {
     ddMenu.appendChild(row);
   }
 
-  // Default to the best model this device can hold.
+  // Default to the best model this device can hold, but on 8GB-class devices
+  // (Chrome caps navigator.deviceMemory at 8) stop at 1.7B: it is 100% on
+  // easy/medium equations and near-instant, while a 4B on such a machine
+  // decodes at ~10-20 tok/s and starves memory. The picker still allows more.
   const best = modelRows.find((r) => r.canRun);
   if (best) {
     selectModel(best.id);
@@ -440,6 +428,10 @@ async function buildModelPicker() {
 
 // First GPU inference includes shader/pipeline compilation — pay that cost
 // on a hidden 1-token run so the user's first conversion is already fast.
+// Also measures decode speed: on a MacBook Air a 4B model runs at ~10-20
+// tok/s, which makes every on-device generation several seconds. Routing
+// uses this to prefer a reachable server when the device is slow.
+let browserTokPerSec = null;
 async function warmUp(eng) {
   try {
     await eng.chat.completions.create({
@@ -447,8 +439,21 @@ async function warmUp(eng) {
       max_tokens: 2,
       extra_body: { enable_thinking: false },
     });
+    const t0 = performance.now();
+    const r = await eng.chat.completions.create({
+      messages: [{ role: "user", content: "Count from one to forty as words, comma separated." }],
+      max_tokens: 40, temperature: 0,
+      extra_body: { enable_thinking: false },
+    });
+    const n = r.usage?.completion_tokens ?? 40;
+    browserTokPerSec = Math.round(n / ((performance.now() - t0) / 1000));
   } catch { /* warm-up is best-effort */ }
 }
+// Below this, a reachable server (typically 50-150 tok/s) is the faster tier
+// for anything the specialist can't do.
+const SLOW_DEVICE_TOK_S = 25;
+function browserIsSlow() { return browserTokPerSec != null && browserTokPerSec < SLOW_DEVICE_TOK_S; }
+window.__setTokPerSec = (v) => { browserTokPerSec = v; }; // debugging hook
 
 async function loadEngine(modelId, onProgress) {
   const eng = await webllm.CreateWebWorkerMLCEngine(
@@ -470,7 +475,10 @@ function activate(eng, modelId, statusText) {
   loadStatus.textContent = statusText;
   const row = modelRows.find((r) => r.id === modelId);
   const ms = $("model-status");
-  if (ms) ms.textContent = `On-device model: ${row?.name ?? modelId}${row && modelRows.find((r) => r.canRun) === row ? " (auto-selected for this device)" : ""}`;
+  if (ms) {
+    const speed = browserTokPerSec != null ? ` · ${browserTokPerSec} tok/s` : "";
+    ms.textContent = `On-device model: ${row?.name ?? modelId}${speed}`;
+  }
   if (old && old !== eng) old.unload().catch(() => {});
 }
 
@@ -689,7 +697,9 @@ async function repairLoop(contextText, latex, issues, validateFn, onDelta, onAtt
   const started = performance.now();
   // A reachable server answers in ~0.5-1s; more than one on-device repair
   // attempt is slower than just escalating.
-  const maxAttempts = opts.maxAttempts ?? (serverAvailable ? 1 : MAX_REPAIR_ATTEMPTS);
+  // One attempt when a server can take over, or when this device decodes
+  // slowly (a second on-device attempt costs more than it is worth).
+  const maxAttempts = opts.maxAttempts ?? ((serverAvailable || browserIsSlow()) ? 1 : MAX_REPAIR_ATTEMPTS);
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {
     if (attempt > 1 && performance.now() - started > REPAIR_BUDGET_MS) {
       return { ok: false, latex: current, attempts: attempt - 1, issues, budget: true };
@@ -796,8 +806,13 @@ convertBtn.addEventListener("click", async () => {
         if (v0.ok) {
           result = r0;
           validation = v0;
-          outputCode.textContent = r0.latex;
+        } else {
+          // Show the draft (usually close) with its issues instead of a blank
+          // box while the slower model works; new tokens overwrite it.
+          showChecks(v0, "(draft from the specialist — improving…)");
+          renderPreview(r0.latex);
         }
+        outputCode.textContent = r0.latex;
       } catch { /* specialist failed — fall through to the general model */ }
     }
 
@@ -850,7 +865,6 @@ convertBtn.addEventListener("click", async () => {
         convertStatus.textContent = `browser model failed checks (${validation.issues[0]}…) — escalating to server…`;
         escalated = true;
         note = "(escalated to server model — browser model output failed checks)";
-        outputCode.textContent = "";
         result = await convertServer(text, liveOutput);
         validation = validateLatex(text, result.latex);
       }
