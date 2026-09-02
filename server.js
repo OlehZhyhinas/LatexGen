@@ -186,31 +186,128 @@ function warmModels() {
 
 const benchRows = [];
 
-// ---- Tab API relay ----
-// A browser tab can't accept connections, so it long-polls here for jobs and
-// posts results back; external clients POST a job and wait for the answer.
-// The relay forwards bytes only — all inference happens in the tab. State is
-// in-memory (one process); ids are unguessable capability tokens.
+// ---- Tab API relay + compute mesh ----
+// A browser tab can't accept connections, so tabs long-poll here for jobs and
+// post results back. Two lanes per tab: the owner's own requests first, then
+// pool jobs from other tabs. The relay forwards bytes only — all inference
+// happens in tabs. State is in-memory (one process).
 const TAB_ID_RE = /^[a-f0-9]{32}$/;
-const tabs = new Map();      // tabId -> { queue: [job], waiter: res|null, lastSeen }
-const results = new Map();   // jobId -> { resolve, timer }
+const tabs = new Map();      // tabId -> tab state
+const results = new Map();   // jobId -> { resolve, timer, job }
 const JOB_TIMEOUT_MS = 25_000, POLL_TIMEOUT_MS = 30_000, MAX_QUEUE = 8;
+const PEER_ATTEMPT_MS = 12_000;   // re-dispatch to another peer after this
+const SPOT_CHECK_RATE = 0.1;      // duplicate 1 in 10 pool jobs for agreement scoring
+const CLASS_WEIGHT = { equation: 1, prose: 3, refine: 2, check: 1, image: 2 };
+const json = (res, code, body) => { res.writeHead(code, { "content-type": "application/json" }); res.end(JSON.stringify(body)); };
+
 function tabState(id) {
-  if (!tabs.has(id)) tabs.set(id, { queue: [], waiter: null, lastSeen: 0 });
+  if (!tabs.has(id)) tabs.set(id, {
+    id, queue: [], poolQueue: [], waiter: null, lastSeen: 0,
+    caps: {}, pool: null, // pool: { keys: [...], images: bool, maxConcurrent: n }
+    inFlight: new Set(), servedWeight: 0, usedWeight: 0, servedJobs: 0, usedJobs: 0,
+    agree: 0, disagree: 0, failures: 0, latency: {}, // class -> EMA ms
+  });
   return tabs.get(id);
 }
+const isLive = (t) => t && Date.now() - t.lastSeen < 45_000;
 function deliver(tab) {
-  if (tab.waiter && tab.queue.length) {
-    const job = tab.queue.shift();
-    const res = tab.waiter; tab.waiter = null;
-    res.writeHead(200, { "content-type": "application/json" });
-    res.end(JSON.stringify(job));
-  }
+  if (!tab.waiter) return;
+  const job = tab.queue.shift() ?? tab.poolQueue.shift();
+  if (!job) return;
+  const res = tab.waiter; tab.waiter = null;
+  tab.inFlight.add(job.jobId);
+  job.dispatchedAt = Date.now();
+  json(res, 200, job);
 }
 setInterval(() => { // drop tabs not seen for 5 minutes
   const cutoff = Date.now() - 300_000;
   for (const [id, t] of tabs) if (t.lastSeen < cutoff && !t.waiter) tabs.delete(id);
 }, 60_000).unref();
+
+// ---- scheduler ----
+const classOf = (body) => body.imageBase64 ? "image" : body.instruction ? "refine" : body.latex && !body.text ? "check"
+  : (body.text ?? "").includes("\n") || (body.text ?? "").length > 320 ? "prose" : "equation";
+function reputationOk(t) { const n = t.agree + t.disagree; return n < 5 || t.agree / n >= 0.6; }
+function canServe(t, cls, requester) {
+  if (t === requester || !isLive(t) || !t.pool || !t.waiter && t.inFlight.size >= (t.pool.maxConcurrent || 1)) return false;
+  if (t.inFlight.size >= (t.pool.maxConcurrent || 1)) return false;
+  if (!t.pool.keys.some((k) => requester.pool.keys.includes(k))) return false;
+  if (!reputationOk(t) || t.failures > 5) return false;
+  if (cls === "image") return !!t.pool.images && !!(t.caps.texo || t.caps.texify);
+  if (cls === "check") return !!t.caps.llm || !!t.caps.specialist;
+  if (!t.caps.llm) return false;
+  if (cls === "prose" && !t.caps.multiline) return false;
+  return true;
+}
+// Expected finish time: queued work ahead + this job's decode time. Bigger
+// models than the job needs get a small penalty so a lone 9B tab isn't the
+// default target for every trivial equation.
+function scoreFor(t, cls, body) {
+  const avg = t.latency[cls] ?? 3000;
+  const tokens = cls === "prose" ? 200 : cls === "refine" ? 80 : 60;
+  const decode = t.caps.tokPerSec ? (tokens / t.caps.tokPerSec) * 1000 : avg;
+  const oversize = (cls === "equation" || cls === "refine") && t.caps.multiline ? 400 : 0;
+  return (t.inFlight.size + t.poolQueue.length) * avg + decode + 150 + oversize;
+}
+function pickPeer(requester, cls, body, exclude = new Set()) {
+  const cands = [...tabs.values()].filter((t) => !exclude.has(t.id) && canServe(t, cls, requester));
+  if (!cands.length) return null;
+  const sample = cands.length <= 2 ? cands : [cands[Math.floor(Math.random() * cands.length)], cands[Math.floor(Math.random() * cands.length)]];
+  return sample.reduce((a, b) => (scoreFor(b, cls, body) < scoreFor(a, cls, body) ? b : a));
+}
+// Good faith: your tab must be listening and pooled, and you can't consume
+// much more than you serve (weighted by job class). Small grace for newcomers.
+function reciprocityOk(requester) {
+  if (!isLive(requester) || !requester.pool) return "your tab is not serving the pool";
+  if (requester.usedWeight > requester.servedWeight * 2 + 6) return "contribute more before using peers (served/used ratio)";
+  return null;
+}
+const normLatex = (s) => (s || "").replace(/\s+/g, "");
+
+function dispatchToPeer(peer, job, requester, cls, weight, onDone) {
+  const jobId = Math.random().toString(16).slice(2) + Date.now().toString(16);
+  const entry = { job: { ...job, jobId, pool: true, noMesh: true, noServer: true }, peer, requester, cls, weight, started: Date.now(), onDone };
+  entry.timer = setTimeout(() => { results.delete(jobId); peer.inFlight.delete(jobId); peer.failures++; onDone({ error: "peer did not answer in time", timeout: true }, entry); }, PEER_ATTEMPT_MS);
+  results.set(jobId, entry);
+  peer.poolQueue.push(entry.job);
+  deliver(peer);
+  return jobId;
+}
+
+async function runOnMesh(requester, body) {
+  const cls = classOf(body), weight = CLASS_WEIGHT[cls] ?? 1;
+  const tried = new Set();
+  const deadline = Date.now() + JOB_TIMEOUT_MS;
+  return new Promise((resolve) => {
+    const attempt = () => {
+      const peer = pickPeer(requester, cls, body, tried);
+      if (!peer) return resolve({ error: tried.size ? "peers did not answer" : "no capable peer available", noPeer: true });
+      tried.add(peer.id);
+      dispatchToPeer(peer, body, requester, cls, weight, (result, entry) => {
+        if (result.error && result.timeout && Date.now() + 5000 < deadline) return attempt(); // re-dispatch
+        if (!result.error) {
+          peer.servedWeight += weight; peer.servedJobs++;
+          requester.usedWeight += weight; requester.usedJobs++;
+          const ms = Date.now() - entry.started;
+          peer.latency[cls] = peer.latency[cls] ? peer.latency[cls] * 0.7 + ms * 0.3 : ms;
+          if (Math.random() < SPOT_CHECK_RATE) spotCheck(requester, body, cls, peer, result);
+        }
+        resolve({ ...result, peer: peer.id.slice(0, 6), peerModel: peer.caps.llmName ?? null });
+      });
+    };
+    attempt();
+  });
+}
+// Duplicate a job to a second peer purely for agreement scoring.
+function spotCheck(requester, body, cls, first, firstResult) {
+  const second = pickPeer(requester, cls, body, new Set([first.id]));
+  if (!second) return;
+  dispatchToPeer(second, body, requester, cls, 0, (r2) => {
+    if (r2.error) return;
+    const same = normLatex(r2.latex) === normLatex(firstResult.latex);
+    for (const t of [first, second]) { if (same) t.agree++; else t.disagree++; }
+  });
+}
 
 const server = createServer(async (req, res) => {
   try {
@@ -222,15 +319,42 @@ const server = createServer(async (req, res) => {
         ok: true,
         backends: { ollama, mlx },
         routes: { convert, refine },
+        serverKind: "local", // self-hosted Ollama/MLX: trusted, fast — used before peers
+        mesh: { tabs: [...tabs.values()].filter((t) => isLive(t)).length, pooled: [...tabs.values()].filter((t) => isLive(t) && t.pool).length },
         // kept for older clients
         ollama: { reachable: ollama, model: OLLAMA_MODEL, url: OLLAMA_URL },
       }));
       return;
     }
 
+    let m;
+    // --- mesh: a tab registers its capabilities and pool membership ---
+    if (req.method === "POST" && (m = req.url.match(/^\/api\/relay\/([a-f0-9]{32})\/caps$/))) {
+      const tab = tabState(m[1]);
+      const body = JSON.parse(await readBody(req));
+      tab.caps = body.caps ?? {};
+      tab.pool = body.pool ? { keys: (body.pool.keys ?? ["public"]).map((k) => String(k).slice(0, 64)), images: !!body.pool.images, maxConcurrent: Math.min(3, Math.max(1, body.pool.maxConcurrent ?? 1)) } : null;
+      tab.lastSeen = Date.now();
+      json(res, 200, { ok: true, served: tab.servedWeight, used: tab.usedWeight, servedJobs: tab.servedJobs, usedJobs: tab.usedJobs, peers: [...tabs.values()].filter((t) => t !== tab && isLive(t) && t.pool && t.pool.keys.some((k) => tab.pool?.keys.includes(k))).length });
+      return;
+    }
+    // --- mesh: a tab (or its owner's client) asks a peer to run a job ---
+    if (req.method === "POST" && (m = req.url.match(/^\/api\/pool\/([a-f0-9]{32})\/(convert|refine|check)$/))) {
+      const requester = tabs.get(m[1]);
+      if (!requester) return json(res, 404, { error: "unknown tab" });
+      const why = reciprocityOk(requester);
+      if (why) return json(res, 429, { error: why });
+      let body;
+      try { body = JSON.parse(await readBody(req)); } catch { return json(res, 400, { error: "invalid json" }); }
+      if ((body.text ?? "").length > 6000 || (body.latex ?? "").length > 6000) return json(res, 413, { error: "payload too large" });
+      if (body.imageBase64 && !requester.pool.images) return json(res, 400, { error: "images are not shared with peers" });
+      const out = await runOnMesh(requester, { kind: m[2], ...body });
+      json(res, out.error ? (out.noPeer ? 503 : 504) : 200, out);
+      return;
+    }
+
     // --- Tab API: external client -> tab ---
     // POST /api/tab/<id>/convert {text} | {imageBase64, mime} | {latex, instruction}
-    let m;
     if (req.method === "POST" && (m = req.url.match(/^\/api\/tab\/([a-f0-9]{32})\/(convert|refine|check|format|status|history)$/))) {
       const [, tabId, kind] = m;
       const tab = tabs.get(tabId);
@@ -253,14 +377,13 @@ const server = createServer(async (req, res) => {
       if ((body.text ?? "").length > 6000 || (body.imageBase64 ?? "").length > 8_000_000) { res.writeHead(413, { "content-type": "application/json" }); res.end(JSON.stringify({ error: "payload too large" })); return; }
       const jobId = Math.random().toString(16).slice(2) + Date.now().toString(16);
       const answer = new Promise((resolve) => {
-        const timer = setTimeout(() => { results.delete(jobId); resolve({ error: "tab did not answer in time" }); }, JOB_TIMEOUT_MS);
-        results.set(jobId, { resolve, timer });
+        const timer = setTimeout(() => { results.delete(jobId); tab.inFlight.delete(jobId); resolve({ error: "tab did not answer in time" }); }, JOB_TIMEOUT_MS);
+        results.set(jobId, { onDone: (r) => resolve(r), timer, peer: tab });
       });
       tab.queue.push({ jobId, kind, ...body });
       deliver(tab);
       const out = await answer;
-      res.writeHead(out.error ? 504 : 200, { "content-type": "application/json" });
-      res.end(JSON.stringify(out));
+      json(res, out.error ? 504 : 200, out);
       return;
     }
     // --- Tab API: tab side ---
@@ -277,8 +400,9 @@ const server = createServer(async (req, res) => {
     if (req.method === "POST" && (m = req.url.match(/^\/api\/relay\/([a-f0-9]{32})\/result\/([a-f0-9]+)$/))) {
       const entry = results.get(m[2]);
       const body = JSON.parse(await readBody(req));
-      if (entry) { clearTimeout(entry.timer); results.delete(m[2]); entry.resolve(body); }
-      tabState(m[1]).lastSeen = Date.now();
+      const tab = tabState(m[1]);
+      tab.lastSeen = Date.now(); tab.inFlight.delete(m[2]);
+      if (entry) { clearTimeout(entry.timer); results.delete(m[2]); if (body.error) tab.failures++; entry.onDone(body, entry); }
       res.writeHead(204); res.end();
       return;
     }

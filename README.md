@@ -120,6 +120,38 @@ answered (`model`), the routing note, and timing. The relay forwards bytes
 only (no inference on the server) and holds each request up to 25s. In-memory
 relay in `server.js`; the AWS build needs a small table-backed equivalent.
 
+## Compute mesh: tabs help each other
+
+With **Share compute** on (API drawer), your tab joins a pool and the ladder
+gains a tier: *your device → (self-hosted server) → another user's tab →
+(hosted server)*. Peers are used when your tab can't do a job itself (no LLM
+loaded, model too small for a prose passage, output failed checks), and
+everything a peer returns goes through the same validator as every other tier.
+Text only; images never leave your device unless you opt in.
+
+Rules the relay enforces from what it observes (nothing is self-reported):
+
+- **Good faith.** You can use peers only while your own tab is listening and
+  pooled, and your weighted served/used ratio stays reasonable (equation 1,
+  refine 2, prose 3, image 2; small newcomer grace). Your own requests always
+  go ahead of pool jobs on your tab.
+- **Cheapest sufficient peer.** Jobs are classed (equation / prose / refine /
+  check / image) and routed to the least-loaded peer *capable* of the class by
+  expected finish time (queue + tokens ÷ its measured tok/s), power-of-two
+  choices, max one pool job per tab at a time, re-dispatch if a peer vanishes.
+  Big models get a small penalty for trivial jobs so one 9B tab doesn't
+  absorb all the traffic.
+- **Spot checks.** 1 in 10 pool jobs is duplicated to a second peer; agreement
+  feeds a per-peer reputation, and low-agreement or failing peers stop
+  receiving work.
+- **Pools.** Blank passphrase = public pool; a passphrase makes a private
+  personal/family pool (e.g. your laptop serving your phone).
+
+Peer jobs run on the peer's headless pipeline with escalation disabled (they
+never re-escalate or use the peer's server) and are not written to the peer's
+history. In-memory relay in `server.js`; the AWS build needs the table-backed
+relay first.
+
 ## In-browser runtime (Level A results)
 
 Every (model × device × dtype) the runtime offers was measured with

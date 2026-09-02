@@ -52,12 +52,17 @@ function toast(msg, ms = 1800) {
 const SLOW_DEVICE_TOK_S = 25;
 function browserIsSlow() { return browserTokPerSec != null && browserTokPerSec < SLOW_DEVICE_TOK_S; }
 window.__setTokPerSec = (v) => { browserTokPerSec = v; }; // debugging hook
+window.__setServerAvailable = (v) => { serverAvailable = v; }; // debugging hook
+window.__setServerKind = (k) => { serverKind = k; }; // debugging hook
+let serverKind = "cloud";
+const meshHooks = { enabled: () => false, tabId: () => null, serverKind: () => serverKind }; // wired by the Tab API block
 const pipe = createPipeline({
   getEngine: () => engine,
   getEngineName: () => modelRows.find((r) => r.id === loadedModel)?.name ?? loadedModel,
   serverAvailable: () => serverAvailable,
   loadedModelMultiline: () => !!modelRows.find((r) => r.id === loadedModel)?.multiline,
   browserIsSlow,
+  mesh: meshHooks,
 });
 window.__repairLoop = pipe.repairLoop; // debugging hook
 const specialistReady = pipe.ensureSpecialist(); // start the 260MB specialist download immediately
@@ -124,6 +129,7 @@ convertBtn.addEventListener("click", async () => {
       onDraft: (latex, v) => { outputCode.textContent = latex; renderPreview(latex); showChecks(v, "(draft from the specialist — improving…)"); },
     });
     presentResult(text, r, `${(r.ms / 1000).toFixed(1)}s · ${r.model}${r.escalated ? " (escalated)" : ""}`);
+    if (r.peer) window.dispatchEvent(new CustomEvent("latexgen:converted", { detail: { peer: r.peer, summary: text.slice(0, 60), model: r.model, ms: r.ms } }));
     if (strictMode() && r.validation.ok && !r.batch) backgroundJudge(text, r.latex);
   } catch (err) {
     convertStatus.textContent = String(err.message || err);
@@ -207,6 +213,7 @@ async function sendRefinement() {
       return;
     }
     currentLatex = r.latex; recordHistory(currentInput, r.latex);
+    if (r.peer) window.dispatchEvent(new CustomEvent("latexgen:converted", { detail: { peer: r.peer, summary: `refine: ${instruction.slice(0, 50)}`, model: r.model, ms: r.ms } }));
     addMsg("model", r.latex);
     outputCode.textContent = r.latex; renderPreview(r.latex);
     showChecks(r.validation, false);
@@ -327,6 +334,7 @@ function activate(eng, modelId, statusText) {
   const speed = browserTokPerSec != null ? ` · ${browserTokPerSec} tok/s` : "";
   $("model-status").textContent = `On-device model: ${row?.name ?? modelId}${speed}`;
   if (old && old !== eng) old.unload().catch(() => {});
+  window.dispatchEvent(new CustomEvent("latexgen:caps-changed"));
 }
 // Progressive ladder: quick model first, best-for-device model swapped in later.
 async function startModelLadder(best) {
@@ -370,8 +378,9 @@ if (!navigator.gpu) {
 }
 
 // ---- server health ----
-fetch("/api/health").then((r) => r.json()).then(({ routes, ollama }) => {
+fetch("/api/health").then((r) => r.json()).then(({ routes, ollama, serverKind: kind }) => {
   serverAvailable = !!routes?.convert;
+  serverKind = kind ?? "cloud";
   if (routes?.convert) $("server-hint").textContent = `(${routes.convert.kind} · ${routes.convert.model.split("/").pop()})`;
   else $("server-hint").textContent = ollama?.reachable ? `(Ollama · ${ollama.model})` : "(no backend reachable)";
 }).catch(() => {});
@@ -622,8 +631,34 @@ async function setVisualEdit(on) {
   const save = (p) => localStorage.setItem(TABAPI_KEY, JSON.stringify(p));
   const newId = () => [...crypto.getRandomValues(new Uint8Array(16))].map((b) => b.toString(16).padStart(2, "0")).join("");
   let state = tprefs();
-  if (!state.id) { state.id = newId(); save(state); }
+  // The address identifies THIS tab (two tabs must not share one), so the id
+  // lives in sessionStorage: stable across reloads of the tab, unique per tab.
+  const ID_KEY = "latexgen.tabapi.id";
+  let tabId = sessionStorage.getItem(ID_KEY) || state.id; // migrate an old localStorage id once
+  if (!tabId) tabId = newId();
+  sessionStorage.setItem(ID_KEY, tabId); delete state.id; save(state);
+  state.id = tabId;
   let generation = 0;
+  // mesh hooks for the pipeline: peers are usable only while this tab serves
+  meshHooks.enabled = () => !!(state.enabled && state.pool);
+  meshHooks.tabId = () => state.id;
+  const poolToggle = $("pool-toggle"), poolDetails = $("pool-details"), poolKey = $("pool-key"), poolImages = $("pool-images"), poolStats = $("pool-stats");
+  // Advertise what this tab can do; the relay uses it to route pool jobs.
+  async function registerCaps() {
+    if (!state.enabled) return;
+    const row = modelRows.find((r) => r.id === loadedModel);
+    const body = {
+      caps: { specialist: !!pipe.loaded.intellitex, texo: !!pipe.loaded.texo, texify: !!pipe.loaded.texify, llm: !!engine, llmName: row?.name ?? null, multiline: !!row?.multiline, tokPerSec: browserTokPerSec },
+      pool: state.pool ? { keys: [state.poolKey ? `k:${state.poolKey}` : "public"], images: !!state.poolImages, maxConcurrent: 1 } : null,
+    };
+    try {
+      const r = await fetch(`/api/relay/${state.id}/caps`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) });
+      const d = await r.json();
+      poolStats.textContent = `served ${d.servedJobs} · used ${d.usedJobs} · ${d.peers} peer${d.peers === 1 ? "" : "s"} online`;
+    } catch {}
+  }
+  window.addEventListener("latexgen:caps-changed", registerCaps);
+  setInterval(registerCaps, 60_000);
   const running = new Map(); // jobId -> { kind, summary, started }
   let log = (() => { try { return JSON.parse(sessionStorage.getItem(LOG_KEY) || "[]"); } catch { return []; } })();
 
@@ -648,6 +683,8 @@ async function setVisualEdit(on) {
       `# response: {"latex", "ok", "issues", "model", "note", "ms", ...}`,
     ].join("\n");
     toggle.checked = !!state.enabled; details.hidden = !state.enabled;
+    poolToggle.checked = !!state.pool; poolDetails.hidden = !state.pool;
+    poolKey.value = state.poolKey ?? ""; poolImages.checked = !!state.poolImages;
     renderRunning(); renderLog();
   };
   const renderRunning = () => {
@@ -669,7 +706,7 @@ async function setVisualEdit(on) {
     }
   };
   const logEntry = (e) => { log.unshift(e); log = log.slice(0, LOG_MAX); try { sessionStorage.setItem(LOG_KEY, JSON.stringify(log)); } catch {} renderLog(); };
-  const summarize = (job) => job.text ? job.text.slice(0, 60) : job.imageBase64 ? `image (${Math.round(job.imageBase64.length * 0.75 / 1024)} KB)` : job.latex ? job.latex.slice(0, 60) : job.kind;
+  const summarize = (job) => (job.pool ? "peer · " : "") + (job.text ? job.text.slice(0, 60) : job.imageBase64 ? `image (${Math.round(job.imageBase64.length * 0.75 / 1024)} KB)` : job.latex ? job.latex.slice(0, 60) : job.kind);
 
   async function runJob(job) {
     const fmt = async (latex, format) => {
@@ -696,7 +733,7 @@ async function setVisualEdit(on) {
       const r = await pipe.checkLatex(job.latex); return pack(r, { repaired: r.repaired, ...(await fmt(r.latex, job.format)) });
     }
     if (job.kind === "refine") {
-      const r = await pipe.refine({ original: job.original || "(tab api)", latex: job.latex, instruction: job.instruction, engineChoice: eng });
+      const r = await pipe.refine({ original: job.original || "(tab api)", latex: job.latex, instruction: job.instruction, engineChoice: eng, allowMesh: !job.noMesh, allowServer: !job.noServer });
       return pack(r, { echo: r.echo, retried: r.retried, ...(await fmt(r.latex, job.format)) });
     }
     if (job.imageBase64) {
@@ -705,14 +742,15 @@ async function setVisualEdit(on) {
       const r = await pipe.convertImage(new Blob([bytes], { type: job.mime || "image/png" }), { ocr: job.ocr || "auto" });
       return pack(r, { ocr: r.used, escalated: r.escalatedWhy || undefined, repaired: r.repaired, ...(await fmt(r.latex, job.format)) });
     }
-    const r = await pipe.convertText(job.text, { engineChoice: eng, strict: !!job.strict });
-    if (r.validation.ok) recordHistory(job.text, r.latex);
-    return pack(r, { escalated: r.escalated, batch: r.batch, judge: r.judge, ...(await fmt(r.latex, job.format)) });
+    const local = { allowMesh: !job.noMesh, allowServer: !job.noServer };
+    const r = await pipe.convertText(job.text, { engineChoice: eng, strict: !!job.strict, ...local });
+    if (r.validation.ok && !job.pool) recordHistory(job.text, r.latex);
+    return pack(r, { escalated: r.escalated, batch: r.batch, judge: r.judge, peer: r.peer, ...(await fmt(r.latex, job.format)) });
   }
 
   async function handle(job) {
     const started = performance.now();
-    running.set(job.jobId, { kind: job.kind, summary: summarize(job), started }); renderRunning();
+    running.set(job.jobId, { kind: job.pool ? "peer job" : job.kind, summary: summarize(job), started }); renderRunning();
     const tick = setInterval(renderRunning, 1000);
     let result;
     try { result = await runJob(job); } catch (e) { result = { error: String(e.message || e) }; }
@@ -720,8 +758,9 @@ async function setVisualEdit(on) {
     result.ms ??= Math.round(performance.now() - started);
     try { await fetch(`/api/relay/${state.id}/result/${job.jobId}`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(result) }); } catch {}
     running.delete(job.jobId); renderRunning();
-    logEntry({ t: Date.now(), kind: job.kind, summary: summarize(job), model: result.model, ms: result.ms, ok: !!result.ok && !result.error, error: result.error });
-    statusEl.textContent = `answered ${job.kind} in ${result.ms} ms · listening`;
+    logEntry({ t: Date.now(), kind: job.pool ? "peer job" : job.kind, summary: summarize(job), model: result.model, ms: result.ms, ok: !!result.ok && !result.error, error: result.error });
+    statusEl.textContent = `answered ${job.pool ? "a peer's " : ""}${job.kind} in ${result.ms} ms · listening`;
+    if (job.pool) registerCaps();
   }
 
   async function pollLoop(gen) {
@@ -740,10 +779,22 @@ async function setVisualEdit(on) {
     if (!state.enabled) { statusEl.textContent = "idle"; dotEl.className = "dot-ind"; }
   }
 
-  toggle.addEventListener("change", () => { state.enabled = toggle.checked; save(state); generation++; render(); if (state.enabled) pollLoop(generation); });
-  $("tabapi-regen").addEventListener("click", () => { state.id = newId(); save(state); generation++; render(); if (state.enabled) pollLoop(generation); toast("New address — the old one no longer works"); });
+  toggle.addEventListener("change", () => {
+    state.enabled = toggle.checked; if (!state.enabled) state.pool = false; save(state); generation++; render();
+    if (state.enabled) { pollLoop(generation); registerCaps(); }
+  });
+  poolToggle.addEventListener("change", () => {
+    state.pool = poolToggle.checked;
+    if (state.pool && !state.enabled) { state.enabled = true; generation++; pollLoop(generation); } // serving is the price of using peers
+    save(state); render(); registerCaps();
+  });
+  poolKey.addEventListener("change", () => { state.poolKey = poolKey.value.trim(); save(state); registerCaps(); });
+  poolImages.addEventListener("change", () => { state.poolImages = poolImages.checked; save(state); registerCaps(); });
+  $("tabapi-regen").addEventListener("click", () => { state.id = newId(); sessionStorage.setItem(ID_KEY, state.id); generation++; render(); if (state.enabled) { pollLoop(generation); registerCaps(); } toast("New address — the old one no longer works"); });
   $("tabapi-copy").addEventListener("click", () => { navigator.clipboard.writeText(urlEl.textContent); toast("Copied API address"); });
   $("api-log-clear").addEventListener("click", () => { log = []; sessionStorage.removeItem(LOG_KEY); renderLog(); });
   render();
-  if (state.enabled) pollLoop(generation);
+  if (state.enabled) { pollLoop(generation); specialistReady.then(registerCaps, registerCaps); }
+  // the UI's own conversions that went to a peer show up in the log too
+  window.addEventListener("latexgen:converted", (e) => { if (e.detail?.peer) logEntry({ t: Date.now(), kind: "via peer", summary: e.detail.summary, model: e.detail.model, ms: e.detail.ms, ok: true }); });
 }

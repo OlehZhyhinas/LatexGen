@@ -62,6 +62,17 @@ function dedupeRepeats(s) {
   return parts.join("\n\n");
 }
 
+// Text outside math delimiters. A refinement must not introduce prose where
+// the original had none (a chat answer is not an edit), nor grow the prose
+// noticeably where it had some.
+function outsideMath(t) {
+  return (t.replace(/\$\$[\s\S]*?\$\$|\\\[[\s\S]*?\\\]|\\\([\s\S]*?\\\)|\$[^$\n]*?\$/g, " ").match(/[A-Za-z]{2,}/g) || []);
+}
+function looksLikeProse(out, prev) {
+  const before = outsideMath(prev).length, after = outsideMath(out).length;
+  if (before === 0) return after > 0;
+  return after > before + 3;
+}
 // A degenerate revision: the model echoed the feedback instead of editing.
 export function isEcho(instruction, revised) {
   const norm = (s) => s.toLowerCase().replace(/[^a-z0-9]/g, "");
@@ -159,6 +170,28 @@ export function createPipeline(ctx) {
     return { ok: false, latex: current, attempts: maxAttempts, issues };
   }
 
+  // ---- mesh tier: another user's tab runs the job (text only), routed by the relay ----
+  function meshUsable() { return !!(ctx.mesh && ctx.mesh.enabled() && ctx.mesh.tabId()); }
+  async function runOnMesh(kind, body, onStatus) {
+    onStatus?.("asking another LatexGen tab…");
+    const r = await fetch(`/api/pool/${ctx.mesh.tabId()}/${kind}`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) });
+    const data = await r.json().catch(() => ({}));
+    if (!r.ok || data.error || !data.latex) throw new Error(data.error || `mesh ${r.status}`);
+    return { latex: data.latex, model: `peer · ${data.peerModel ?? "on-device model"}`, peer: data.peer };
+  }
+  // Ladder order after your own device: a self-hosted local server is more
+  // trusted and faster than a stranger's tab, so it goes first; on a hosted
+  // deployment (cloud API, costs, logs) peers go first.
+  function afterLocalOrder() {
+    const server = ctx.serverAvailable(), mesh = meshUsable();
+    const kind = ctx.mesh?.serverKind?.() ?? "cloud";
+    const order = [];
+    if (server && kind === "local") order.push("server");
+    if (mesh) order.push("mesh");
+    if (server && kind !== "local") order.push("server");
+    return order;
+  }
+
   async function ensureSpecialist() { try { await loadModel("intellitex"); return true; } catch { return false; } }
   async function convertSpecialist(text) {
     return { latex: await runModel("intellitex", text), model: "IntelliTeX · specialist" };
@@ -184,9 +217,22 @@ export function createPipeline(ctx) {
 
   // ---- text -> LaTeX ----
   async function convertText(text, opts = {}) {
-    const { engineChoice = "browser", onStatus = () => {}, onDelta = () => {}, onDraft = () => {}, strict = false } = opts;
+    const { engineChoice = "browser", onStatus = () => {}, onDelta = () => {}, onDraft = () => {}, strict = false, allowMesh = true, allowServer = true } = opts;
     const started = performance.now();
-    const engine = ctx.getEngine(), server = ctx.serverAvailable();
+    const engine = ctx.getEngine();
+    const server = allowServer && ctx.serverAvailable();
+    // Escalation targets after the on-device attempt, in order.
+    const tiers = afterLocalOrder().filter((t) => (t === "server" ? server : allowMesh));
+    let peer = null;
+    const escalate = async (why) => {
+      for (const tier of tiers) {
+        try {
+          if (tier === "server") { onStatus(`${why} — using server model…`); const r = await convertServer(text, onDelta); return { r, tier }; }
+          const r = await runOnMesh("convert", { text }, onStatus); peer = r.peer; return { r, tier };
+        } catch (e) { onStatus(`${tier} unavailable (${String(e.message || e).slice(0, 40)})…`); }
+      }
+      return null;
+    };
     const haveSpecialist = await ensureSpecialist();
     let result = null, validation = null, escalated = false, note = "", batch = false;
 
@@ -215,15 +261,16 @@ export function createPipeline(ctx) {
     }
 
     const complexInput = !specialistEligible(text);
+    const tierNote = (tier, why) => tier === "mesh" ? `(${why} — answered by another LatexGen user's device)` : `(${why} — routed to server)`;
     if (!result) {
-      if (engineChoice === "browser" && complexInput && !ctx.loadedModelMultiline() && server) {
-        onStatus("long or mixed input — using server model…");
-        result = await convertServer(text, onDelta); validation = validateLatex(text, result.latex);
-        note = "(routed to server — loaded browser model is too small for prose passages)";
-      } else if (engineChoice === "browser" && !engine && server) {
-        onStatus("no on-device model loaded — using server model…");
-        result = await convertServer(text, onDelta); validation = validateLatex(text, result.latex);
-        note = "(routed to server — no on-device language model loaded)";
+      if (engineChoice === "browser" && complexInput && !ctx.loadedModelMultiline() && tiers.length) {
+        const e = await escalate("long or mixed input");
+        if (!e) throw new Error("No model available for this input.");
+        result = e.r; validation = validateLatex(text, result.latex); note = tierNote(e.tier, "loaded on-device model is too small for prose passages");
+      } else if (engineChoice === "browser" && !engine && tiers.length) {
+        const e = await escalate("no on-device model loaded");
+        if (!e) throw new Error("No model available: load an on-device model in settings.");
+        result = e.r; validation = validateLatex(text, result.latex); note = tierNote(e.tier, "no on-device language model loaded");
       } else if (engineChoice === "browser") {
         if (!engine) throw new Error("No model available: load an on-device model in settings.");
         onStatus("converting with on-device model…");
@@ -237,10 +284,9 @@ export function createPipeline(ctx) {
             else validation = { ok: false, issues: r.issues };
           } catch { /* fall through to escalation */ }
         }
-        if (!validation.ok && server) {
-          onStatus(`browser model failed checks (${validation.issues[0]}…) — escalating to server…`);
-          escalated = true; note = "(escalated to server model — browser model output failed checks)";
-          result = await convertServer(text, onDelta); validation = validateLatex(text, result.latex);
+        if (!validation.ok && tiers.length) {
+          const e = await escalate(`browser model failed checks (${validation.issues[0]}…)`);
+          if (e) { escalated = true; result = e.r; validation = validateLatex(text, result.latex); note = tierNote(e.tier, "escalated — on-device output failed checks"); }
         }
       } else {
         if (!server) throw new Error("Server model is not reachable.");
@@ -248,7 +294,7 @@ export function createPipeline(ctx) {
         result = await convertServer(text, onDelta); validation = validateLatex(text, result.latex);
       }
     }
-    const out = { latex: result.latex, validation, model: result.model, note, escalated, batch, ms: Math.round(performance.now() - started) };
+    const out = { latex: result.latex, validation, model: result.model, note, escalated, batch, peer, ms: Math.round(performance.now() - started) };
     if (strict && validation.ok && !batch) out.judge = await judge(text, result.latex);
     return out;
   }
@@ -308,10 +354,16 @@ export function createPipeline(ctx) {
   }
 
   // ---- refine with an instruction ----
-  async function refine({ original, latex, instruction, engineChoice = "browser", onDelta = () => {} }) {
+  async function refine({ original, latex, instruction, engineChoice = "browser", onDelta = () => {}, allowMesh = true, allowServer = true }) {
     const started = performance.now();
-    const engine = ctx.getEngine(), server = ctx.serverAvailable();
+    const engine = ctx.getEngine(), server = allowServer && ctx.serverAvailable();
     const useBrowser = engineChoice === "browser" && !!engine;
+    const acceptable = (out) => out && !isEcho(instruction, out) && checkSyntax(out).length === 0 && !looksLikeProse(out, latex);
+    if (!useBrowser && !server && allowMesh && meshUsable()) {
+      const r = await runOnMesh("refine", { original, latex, instruction });
+      const ok = acceptable(r.latex); const fl = ok ? r.latex : latex;
+      return { latex: fl, validation: validateLatex(original, fl), model: r.model, echo: !ok, retried: false, peer: r.peer, ms: Math.round(performance.now() - started) };
+    }
     if (!useBrowser && !server) throw new Error("No model available to refine with: load an on-device model in settings.");
     const viaBrowser = () => streamBrowserChat([
       { role: "system", content: REFINE_PROMPT }, { role: "user", content: `Convert to LaTeX:\n${original}` },
@@ -320,8 +372,8 @@ export function createPipeline(ctx) {
     const viaServer = () => streamServerChat("/api/refine", { original, latex, instruction }, onDelta);
     let result = useBrowser ? await viaBrowser() : await viaServer();
     let retried = false;
-    if (isEcho(instruction, result.latex) && useBrowser && server) { retried = true; result = await viaServer(); }
-    const echo = isEcho(instruction, result.latex);
+    if (!acceptable(result.latex) && useBrowser && server) { retried = true; result = await viaServer(); }
+    const echo = !acceptable(result.latex);
     const finalLatex = echo ? latex : result.latex;
     return { latex: finalLatex, validation: validateLatex(original, finalLatex), model: result.model ?? "refine", echo, retried, ms: Math.round(performance.now() - started) };
   }

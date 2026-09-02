@@ -78,6 +78,15 @@
     </div>
     <label class="check"><input type="checkbox" id="tabapi-toggle" />
       <span>Let other apps send this tab work <span class="hint">curl, Postman, Shortcuts, Zapier. Nothing runs outside this tab: requests are relayed to it and answered with the models loaded here, in the background — the page stays usable.</span></span></label>
+    <label class="check"><input type="checkbox" id="pool-toggle" />
+      <span>Share compute with other LatexGen tabs <span class="hint">While this is on, some of your conversions may run on other users' devices, and theirs may run on yours. Text only; images never leave this device. You can only use other tabs while yours is serving.</span></span></label>
+    <div id="pool-details" class="pool-details" hidden>
+      <div class="row gap-sm wrap">
+        <input id="pool-key" class="pool-key" type="text" placeholder="pool passphrase (blank = public)" maxlength="64" />
+        <label class="check small"><input type="checkbox" id="pool-images" /> <span>also share images</span></label>
+      </div>
+      <div class="hint" id="pool-stats">served 0 · used 0 · 0 peers online</div>
+    </div>
     <div id="tabapi-details" hidden>
       <div class="settings-label">Address</div>
       <div class="row gap-sm"><code id="tabapi-url" class="tabapi-url"></code><button id="tabapi-copy" class="btn ghost">copy</button><button id="tabapi-regen" class="btn ghost" title="Invalidate the current address">regenerate</button></div>

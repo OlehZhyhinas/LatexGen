@@ -323,3 +323,8 @@ math-field::part(virtual-keyboard-toggle) { display: none; }
 .api-log .req.err .meta { color: var(--warn); }
 .badge { position: absolute; top: -2px; right: -2px; min-width: 14px; height: 14px; border-radius: 7px; background: var(--accent); color: var(--on-accent); font-size: 9px; line-height: 14px; text-align: center; padding: 0 3px; }
 .icon-btn { position: relative; }
+
+/* pool */
+.pool-details { display: flex; flex-direction: column; gap: 8px; padding: 4px 0 4px 26px; }
+.pool-key { flex: 1; min-width: 160px; padding: 6px 10px; font: inherit; font-size: 13px; color: var(--text); background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--r-sm); }
+.check.small { font-size: 12px; }
