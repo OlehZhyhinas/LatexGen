@@ -26,7 +26,7 @@ for f in intellitex/onnx/encoder_model_q4.onnx intellitex/onnx/decoder_model_mer
   [ -f "$SRC/$f" ] || { echo "missing $f — run scripts/build-model-variants.sh first" >&2; exit 1; }
 done
 
-hf repo create "$REPO" --repo-type model --exist-ok
+hf repos create "$REPO" --repo-type model --exist-ok
 
 # One commit per model keeps each upload resumable.
 for model in intellitex texo texify; do
