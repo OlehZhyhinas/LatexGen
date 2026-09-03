@@ -50,4 +50,24 @@ int4 on the CPU was 10x slower than int8 (no fast WASM kernel), so int4 is GPU-o
 
 Reproduce: open `public/bench-runtime.html?i=0`.
 
+## Loading: getting the weights into the browser
+
+Cold means an empty Cache API and a bypassed HTTP cache, weights streamed from the Hugging Face repo the static build uses; warm means the Cache API. Median of three cold runs for the WebGPU rows, single runs elsewhere. M5 Pro, Chromium 148, one evening, both sides measured within the same two hours.
+
+| Model, runtime | Before: bytes | cold | warm | After: bytes (on the wire) | cold | warm |
+|---|---|---|---|---|---|---|
+| IntelliTeX, WebGPU int4 | 324 MB | 14.3 s | 1.0 s | 184 MB (182) | **6.8 s** | 1.2 s |
+| IntelliTeX, CPU int8 | 263 MB | 12.4 s | 1.0 s | 263 MB (183) | **7.6 s** | 1.4 s |
+| Texify, WebGPU int4 | 362 MB | 193 s | not cached: 255 s | 211 MB (182) | **12.1 s** | 3.0 s |
+| Texify, CPU int8 | 306 MB | 114 s | 5.2 s | 306 MB (220) | **13.7 s** | 3.0 s |
+
+Three things changed, and one thing was found:
+
+- **The int4 files were mostly fp32.** `MatMulNBits` only rewrites MatMul weights; the token-embedding tables feed a `Gather` and stayed fp32, which made them 53 to 65% of every `_q4` file, so the WebGPU download was *larger* than the CPU one. `scripts/quantize-embeddings.py` stores them as uint8 with a per-row scale and zero point. Outputs: Texify identical on all 18 images; IntelliTeX identical on 14 of 15 text items under deterministic CPU decoding, the exception being the trailing clause of a prose passage the specialist gets wrong either way. For scale, the WebGPU int4 path itself produced different outputs on 4 of the 15 items between two runs of *unchanged* weights.
+- **Nothing was compressed on the wire.** Neither `server.js` nor the Hugging Face CDN negotiates `Content-Encoding`. The int8 weights gzip to about 70%, the JSON to about 20%, int4 and fp32 barely at all. `scripts/compress-models.mjs` writes `.gz` siblings where it pays and a manifest; the service worker swaps them in and inflates in flight, keeping the real `Content-Length` so progress stays honest. This is what moves the CPU rows (the int8 files did not change).
+- **A 328 MB file did not fit the Cache API.** In this browser `cache.put` fails for bodies above roughly 250 MB, so the old Texify decoder was downloaded again on every visit: the "warm" run was slower than the cold ones. At 170 MB it caches, hence 3.0 s.
+- **CDN throughput is per object.** The old Texify objects streamed at about 2 MB/s while everything else came down at 15 to 25 MB/s; the new objects are fast. Measured back to back after the change, the old revision took 47 s for Texify (380 MB at 8.5 MB/s) against 12 s for the new files (182 MB at 17 MB/s), and 18 s for IntelliTeX against 7 s. So the Texify rows overstate what fewer bytes alone buy; the IntelliTeX rows, whose objects were fast on both sides, are the clean signal: about 2x.
+
+Reproduce: `public/bench-load.html?label=x&queue=intellitex,webgpu,q4,hf,cold,1;...` with the local server running (see the file header for the queue syntax), then `curl -s localhost:8000/api/bench > bench/results-load-<date>.json` and `python3 bench/summarize-load.py` on it. The rows behind this table are `bench/results-load-2026-09-03.json`.
+
 Raw results live in `bench/results-*.json`; a static, crawlable summary is generated into `public/benchmarks.html` by `python3 bench/build-benchmarks-page.py`.

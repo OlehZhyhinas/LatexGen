@@ -1,0 +1,3189 @@
+[
+ {
+  "tier": "load",
+  "label": "before",
+  "model": "intellitex",
+  "device": "webgpu",
+  "dtype": "q4",
+  "src": "hf",
+  "rev": "main",
+  "mode": "cold",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Claude/1.40609.1 Chrome/148.0.7778.280 Safari/537.36",
+  "at": "2026-09-03T21:46:59.529Z",
+  "loadMs": 14330,
+  "downloadMs": 13294,
+  "sessionMs": 476,
+  "files": {
+   "config.json": 830,
+   "generation_config.json": 163,
+   "tokenizer.json": 2288924,
+   "tokenizer_config.json": 21058,
+   "onnx/decoder_model_merged_q4.onnx": 185600992,
+   "onnx/encoder_model_q4.onnx": 151942871
+  },
+  "totalBytes": 339854838,
+  "network": {
+   "requests": 6,
+   "bytes": 337544856,
+   "files": [
+    {
+     "file": "intellitex/config.json",
+     "len": 830,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "onnx/encoder_model_q4.onnx",
+     "len": 151942871,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "onnx/decoder_model_merged_q4.onnx",
+     "len": 185600992,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "intellitex/tokenizer_config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "intellitex/generation_config.json",
+     "len": 163,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "intellitex/tokenizer.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    }
+   ]
+  },
+  "warmupMs": 481,
+  "items": [
+   {
+    "id": "quadratic-formula",
+    "ms": 750,
+    "output": "$$x=\\frac{-b\\pm\\sqrt{b^{2}-4ac}}{2a}$$",
+    "err": ""
+   },
+   {
+    "id": "eulers-identity",
+    "ms": 191,
+    "output": "$$e^{i\\pi}+1=0$$",
+    "err": ""
+   },
+   {
+    "id": "pythagorean-theorem",
+    "ms": 450,
+    "output": "$$a^{2}+b^{2}=c^{2}$$",
+    "err": ""
+   },
+   {
+    "id": "circle-area",
+    "ms": 318,
+    "output": "$$A=\\pi r^{2}$$",
+    "err": ""
+   },
+   {
+    "id": "gaussian-integral",
+    "ms": 509,
+    "output": "$$\\int_{-\\infty}^{\\infty}e^{-x^{2}}\\,dx=\\sqrt{\\pi}$$",
+    "err": ""
+   },
+   {
+    "id": "basel-problem",
+    "ms": 698,
+    "output": "$$\\sum_{n=1}^{\\infty}\\frac{1}{n^{2}}=\\frac{\\pi^{2}}{6}$$",
+    "err": ""
+   },
+   {
+    "id": "binomial-theorem",
+    "ms": 931,
+    "output": "$$(x+y)^{n}=\\sum_{k=0}^{n}\\binom{n}{k}x^{n-k}y^{k}$$",
+    "err": ""
+   },
+   {
+    "id": "bayes-theorem",
+    "ms": 530,
+    "output": "$$P(A|B)=\\frac{P(B|A)P(A)}{P(B)}$$",
+    "err": ""
+   },
+   {
+    "id": "schrodinger-time-dependent",
+    "ms": 941,
+    "output": "$$i\\hbar\\frac{d}{dt}\\left(|\\Psi(t)\\rangle\\langle\\Psi(t)|\\right)=\\hat{H}|\\Psi(t)\\rangle\\langle\\Psi(t)|$$",
+    "err": ""
+   },
+   {
+    "id": "cauchy-integral-formula",
+    "ms": 709,
+    "output": "$$f(a)=\\frac{1}{2\\pi i}\\oint_{\\gamma}\\frac{f(z)}{z-a}dz$$",
+    "err": ""
+   },
+   {
+    "id": "riemann-zeta-functional-equation",
+    "ms": 661,
+    "output": "$$\\zeta(s)=2^{s}\\pi^{s-1}\\sin\\left(\\frac{\\pi s}{2}\\right)\\Gamma(1-s)\\zeta(1-s)$$",
+    "err": ""
+   },
+   {
+    "id": "einstein-field-equations",
+    "ms": 450,
+    "output": "$$G_{\\mu\\nu}+\\lambda g_{\\mu\\nu}=\\kappa T_{\\mu\\nu}$$",
+    "err": ""
+   },
+   {
+    "id": "mechanics-homework-passage",
+    "ms": 1242,
+    "output": "$$A_{b}=\\frac{m\\vec{a}}{\\varepsilon}~  \\Rightarrow~  \\int\\frac{dv}{dt}\\frac{dS}{dt}~  \\kappa(E_{k})=\\frac{1}{2}m v^{2}.$$",
+    "err": ""
+   },
+   {
+    "id": "euler-formula-passage",
+    "ms": 625,
+    "output": "$$e^{ix}=\\cos(x)+i\\sin(x)\\cos^{-1}(x)+\\frac{1}{2}i\\sin^{2}(x)=0\\textrm{if}x=\\pi,$$",
+    "err": ""
+   },
+   {
+    "id": "analysis-classics-passage",
+    "ms": 1233,
+    "output": "$$\\sum_{n=1}^{\\infty}\\frac{1}{n^{2}}=\\frac{\\pi^{2}}{6}\\quad\\Rightarrow\\quad\\int_{-\\infty}^{\\infty}e^{-x^{2}}dx=\\sqrt{\\pi}\\quad\\Rightarrow\\quad\\pi\\text{isnotexcessly}$$",
+    "err": ""
+   }
+  ]
+ },
+ {
+  "tier": "load",
+  "label": "before",
+  "model": "intellitex",
+  "device": "webgpu",
+  "dtype": "q4",
+  "src": "hf",
+  "rev": "main",
+  "mode": "cold",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Claude/1.40609.1 Chrome/148.0.7778.280 Safari/537.36",
+  "at": "2026-09-03T21:47:27.018Z",
+  "loadMs": 12783,
+  "downloadMs": 11950,
+  "sessionMs": 552,
+  "files": {
+   "config.json": 830,
+   "generation_config.json": 163,
+   "tokenizer_config.json": 21058,
+   "tokenizer.json": 2288924,
+   "onnx/encoder_model_q4.onnx": 151942871,
+   "onnx/decoder_model_merged_q4.onnx": 185600992
+  },
+  "totalBytes": 339854838,
+  "network": {
+   "requests": 6,
+   "bytes": 337544856,
+   "files": [
+    {
+     "file": "intellitex/config.json",
+     "len": 830,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "intellitex/tokenizer_config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "intellitex/tokenizer.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "intellitex/generation_config.json",
+     "len": 163,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "onnx/encoder_model_q4.onnx",
+     "len": 151942871,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "onnx/decoder_model_merged_q4.onnx",
+     "len": 185600992,
+     "encoding": null,
+     "type": "application/octet-stream"
+    }
+   ]
+  },
+  "warmupMs": 604
+ },
+ {
+  "tier": "load",
+  "label": "before",
+  "model": "intellitex",
+  "device": "webgpu",
+  "dtype": "q4",
+  "src": "hf",
+  "rev": "main",
+  "mode": "cold",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Claude/1.40609.1 Chrome/148.0.7778.280 Safari/537.36",
+  "at": "2026-09-03T21:47:42.009Z",
+  "loadMs": 22612,
+  "downloadMs": 21532,
+  "sessionMs": 810,
+  "files": {
+   "config.json": 830,
+   "generation_config.json": 163,
+   "tokenizer.json": 2288924,
+   "tokenizer_config.json": 21058,
+   "onnx/decoder_model_merged_q4.onnx": 185600992,
+   "onnx/encoder_model_q4.onnx": 151942871
+  },
+  "totalBytes": 339854838,
+  "network": {
+   "requests": 6,
+   "bytes": 337544856,
+   "files": [
+    {
+     "file": "intellitex/config.json",
+     "len": 830,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "intellitex/tokenizer.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "intellitex/generation_config.json",
+     "len": 163,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "intellitex/tokenizer_config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "onnx/decoder_model_merged_q4.onnx",
+     "len": 185600992,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "onnx/encoder_model_q4.onnx",
+     "len": 151942871,
+     "encoding": null,
+     "type": "application/octet-stream"
+    }
+   ]
+  },
+  "warmupMs": 843
+ },
+ {
+  "tier": "load",
+  "label": "before",
+  "model": "intellitex",
+  "device": "webgpu",
+  "dtype": "q4",
+  "src": "hf",
+  "rev": "main",
+  "mode": "warm",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Claude/1.40609.1 Chrome/148.0.7778.280 Safari/537.36",
+  "at": "2026-09-03T21:48:07.013Z",
+  "loadMs": 1049,
+  "downloadMs": 121,
+  "sessionMs": 925,
+  "files": {
+   "config.json": 830,
+   "tokenizer.json": 2288924,
+   "tokenizer_config.json": 21058,
+   "onnx/encoder_model_q4.onnx": 151942871,
+   "onnx/decoder_model_merged_q4.onnx": 185600992,
+   "generation_config.json": 163
+  },
+  "totalBytes": 339854838,
+  "network": {
+   "requests": 0,
+   "bytes": 0,
+   "files": []
+  },
+  "warmupMs": 322
+ },
+ {
+  "tier": "load",
+  "label": "before",
+  "model": "texify",
+  "device": "webgpu",
+  "dtype": "q4",
+  "src": "hf",
+  "rev": "main",
+  "mode": "cold",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Claude/1.40609.1 Chrome/148.0.7778.280 Safari/537.36",
+  "at": "2026-09-03T21:48:10.006Z",
+  "loadMs": 193383,
+  "downloadMs": 191534,
+  "sessionMs": 1201,
+  "files": {
+   "config.json": 4876,
+   "preprocessor_config.json": 615,
+   "tokenizer.json": 2140013,
+   "tokenizer_config.json": 4491,
+   "generation_config.json": 191,
+   "onnx/encoder_model_q4.onnx": 49064106,
+   "onnx/decoder_model_merged_q4.onnx": 328316375
+  },
+  "totalBytes": 379530667,
+  "network": {
+   "requests": 7,
+   "bytes": 377381287,
+   "files": [
+    {
+     "file": "texify/config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "texify/preprocessor_config.json",
+     "len": 615,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "onnx/decoder_model_merged_q4.onnx",
+     "len": 328316375,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "texify/tokenizer_config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "texify/tokenizer.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "onnx/encoder_model_q4.onnx",
+     "len": 49064106,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "texify/generation_config.json",
+     "len": 191,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    }
+   ]
+  },
+  "error": "TypeError: Failed to fetch\n    at globalThis.fetch (http://localhost:51862/bench-fetch-patch.js:13:23)\n    at Nr (http://localhost:51862/vendor/transformers/transformers.min.js:10:15050)\n    at t.fromURL (http://localhost:51862/vendor/transformers/transformers.min.js:13:123449)\n    at t.read (http://localhost:51862/vendor/transformers/transformers.min.js:13:122934)\n    at http://localhost:51862/vendor/transformers/transformers.min.js:37:146665\n    at Array.map (<anonymous>)\n    at tt (http://localhost:51862/vendor/transformers/transformers.min.js:37:146655)\n    at t._call (http://localhost:51862/vendor/transformers/transformers.min.js:37:160328)\n    at t (http://localhost:51862/vendor/transformers/transformers.min.js:1:2618)\n    at predict (http://localhost:51862/bench-load.js:98:90)"
+ },
+ {
+  "tier": "load",
+  "label": "before",
+  "model": "texify",
+  "device": "webgpu",
+  "dtype": "q4",
+  "src": "hf",
+  "rev": "main",
+  "mode": "cold",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Claude/1.40609.1 Chrome/148.0.7778.280 Safari/537.36",
+  "at": "2026-09-03T21:51:25.034Z",
+  "loadMs": 186150,
+  "downloadMs": 184201,
+  "sessionMs": 1085,
+  "files": {
+   "config.json": 4876,
+   "preprocessor_config.json": 615,
+   "generation_config.json": 191,
+   "tokenizer_config.json": 4491,
+   "tokenizer.json": 2140013,
+   "onnx/decoder_model_merged_q4.onnx": 328316375,
+   "onnx/encoder_model_q4.onnx": 49064106
+  },
+  "totalBytes": 379530667,
+  "network": {
+   "requests": 7,
+   "bytes": 377381287,
+   "files": [
+    {
+     "file": "texify/config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "texify/tokenizer_config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "texify/tokenizer.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "texify/preprocessor_config.json",
+     "len": 615,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "onnx/decoder_model_merged_q4.onnx",
+     "len": 328316375,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "texify/generation_config.json",
+     "len": 191,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "onnx/encoder_model_q4.onnx",
+     "len": 49064106,
+     "encoding": null,
+     "type": "application/octet-stream"
+    }
+   ]
+  },
+  "error": "TypeError: Failed to fetch\n    at globalThis.fetch (http://localhost:51862/bench-fetch-patch.js:13:23)\n    at Nr (http://localhost:51862/vendor/transformers/transformers.min.js:10:15050)\n    at t.fromURL (http://localhost:51862/vendor/transformers/transformers.min.js:13:123449)\n    at t.read (http://localhost:51862/vendor/transformers/transformers.min.js:13:122934)\n    at http://localhost:51862/vendor/transformers/transformers.min.js:37:146665\n    at Array.map (<anonymous>)\n    at tt (http://localhost:51862/vendor/transformers/transformers.min.js:37:146655)\n    at t._call (http://localhost:51862/vendor/transformers/transformers.min.js:37:160328)\n    at t (http://localhost:51862/vendor/transformers/transformers.min.js:1:2618)\n    at predict (http://localhost:51862/bench-load.js:98:90)"
+ },
+ {
+  "tier": "load",
+  "label": "before",
+  "model": "texify",
+  "device": "webgpu",
+  "dtype": "q4",
+  "src": "hf",
+  "rev": "main",
+  "mode": "cold",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Claude/1.40609.1 Chrome/148.0.7778.280 Safari/537.36",
+  "at": "2026-09-03T21:54:33.003Z",
+  "loadMs": 196846,
+  "downloadMs": 195321,
+  "sessionMs": 1114,
+  "files": {
+   "config.json": 4876,
+   "preprocessor_config.json": 615,
+   "generation_config.json": 191,
+   "tokenizer_config.json": 4491,
+   "tokenizer.json": 2140013,
+   "onnx/encoder_model_q4.onnx": 49064106,
+   "onnx/decoder_model_merged_q4.onnx": 328316375
+  },
+  "totalBytes": 379530667,
+  "network": {
+   "requests": 7,
+   "bytes": 377381287,
+   "files": [
+    {
+     "file": "texify/config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "texify/tokenizer.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "texify/preprocessor_config.json",
+     "len": 615,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "texify/tokenizer_config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "texify/generation_config.json",
+     "len": 191,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "onnx/decoder_model_merged_q4.onnx",
+     "len": 328316375,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "onnx/encoder_model_q4.onnx",
+     "len": 49064106,
+     "encoding": null,
+     "type": "application/octet-stream"
+    }
+   ]
+  },
+  "warmupMs": 632
+ },
+ {
+  "tier": "load",
+  "label": "before",
+  "model": "texify",
+  "device": "webgpu",
+  "dtype": "q4",
+  "src": "hf",
+  "rev": "main",
+  "mode": "warm",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Claude/1.40609.1 Chrome/148.0.7778.280 Safari/537.36",
+  "at": "2026-09-03T21:57:52.993Z",
+  "loadMs": 255190,
+  "downloadMs": 253781,
+  "sessionMs": 1230,
+  "files": {
+   "config.json": 4876,
+   "preprocessor_config.json": 615,
+   "tokenizer.json": 2140013,
+   "tokenizer_config.json": 4491,
+   "onnx/encoder_model_q4.onnx": 49064106,
+   "generation_config.json": 191,
+   "onnx/decoder_model_merged_q4.onnx": 328316375
+  },
+  "totalBytes": 379530667,
+  "network": {
+   "requests": 1,
+   "bytes": 328316375,
+   "files": [
+    {
+     "file": "onnx/decoder_model_merged_q4.onnx",
+     "len": 328316375,
+     "encoding": null,
+     "type": "application/octet-stream"
+    }
+   ]
+  },
+  "warmupMs": 507
+ },
+ {
+  "tier": "load",
+  "label": "before",
+  "model": "intellitex",
+  "device": "wasm",
+  "dtype": "q8",
+  "src": "hf",
+  "rev": "main",
+  "mode": "cold",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Claude/1.40609.1 Chrome/148.0.7778.280 Safari/537.36",
+  "at": "2026-09-03T22:02:10.997Z",
+  "loadMs": 12433,
+  "downloadMs": 11508,
+  "sessionMs": 549,
+  "files": {
+   "config.json": 830,
+   "generation_config.json": 163,
+   "tokenizer_config.json": 21058,
+   "tokenizer.json": 2288924,
+   "onnx/encoder_model_quantized.onnx": 109974435,
+   "onnx/decoder_model_merged_quantized.onnx": 163856759
+  },
+  "totalBytes": 276142169,
+  "network": {
+   "requests": 6,
+   "bytes": 273832187,
+   "files": [
+    {
+     "file": "intellitex/config.json",
+     "len": 830,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "intellitex/tokenizer_config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "intellitex/tokenizer.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "intellitex/generation_config.json",
+     "len": 163,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "onnx/decoder_model_merged_quantized.onnx",
+     "len": 163856759,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "onnx/encoder_model_quantized.onnx",
+     "len": 109974435,
+     "encoding": null,
+     "type": "application/octet-stream"
+    }
+   ]
+  },
+  "warmupMs": 2006,
+  "items": [
+   {
+    "id": "quadratic-formula",
+    "ms": 1800,
+    "output": "$$x=\\frac{-b\\pm\\sqrt{b^{2}-4ac}}{2a}$$",
+    "err": ""
+   },
+   {
+    "id": "eulers-identity",
+    "ms": 909,
+    "output": "$$e^{i\\pi}+1=0$$",
+    "err": ""
+   },
+   {
+    "id": "pythagorean-theorem",
+    "ms": 1367,
+    "output": "$$a^{2}+b^{2}=c^{2}$$",
+    "err": ""
+   },
+   {
+    "id": "circle-area",
+    "ms": 660,
+    "output": "$$A=\\pi r^{2}$$",
+    "err": ""
+   },
+   {
+    "id": "gaussian-integral",
+    "ms": 1174,
+    "output": "$$\\int_{-\\infty}^{\\infty}e^{-x^{2}}\\,dx=\\sqrt{\\pi}$$",
+    "err": ""
+   },
+   {
+    "id": "basel-problem",
+    "ms": 2015,
+    "output": "$$\\sum_{n=1}^{\\infty}\\frac{1}{n^{2}}=\\frac{\\pi^{2}}{6}$$",
+    "err": ""
+   },
+   {
+    "id": "binomial-theorem",
+    "ms": 1091,
+    "output": "$$(x+y)^{n}=\\sum_{k=0}^{n}\\binom{n}{k}x^{n-k}y^{k}$$",
+    "err": ""
+   },
+   {
+    "id": "bayes-theorem",
+    "ms": 728,
+    "output": "$$P(A|B)=\\frac{P(B|A)P(A)}{P(B)}$$",
+    "err": ""
+   },
+   {
+    "id": "schrodinger-time-dependent",
+    "ms": 813,
+    "output": "$$i\\hbar\\frac{d}{dt}\\Psi(t)=\\hat{H}\\Psi(t),$$",
+    "err": ""
+   },
+   {
+    "id": "cauchy-integral-formula",
+    "ms": 916,
+    "output": "$$f(a)=\\frac{1}{2\\pi i}\\oint_{\\gamma}\\frac{f(z)}{z-a}\\,dz$$",
+    "err": ""
+   },
+   {
+    "id": "riemann-zeta-functional-equation",
+    "ms": 1229,
+    "output": "$$\\zeta(s)=2^{s}\\pi^{s-1}\\sin\\left(\\frac{\\pi s}{2}\\right)\\Gamma(1-s)\\zeta(1-s)$$",
+    "err": ""
+   },
+   {
+    "id": "einstein-field-equations",
+    "ms": 733,
+    "output": "$$G_{\\mu\\nu}+\\lambda g_{\\mu\\nu}=\\kappa T_{\\mu\\nu}$$",
+    "err": ""
+   },
+   {
+    "id": "mechanics-homework-passage",
+    "ms": 1804,
+    "output": "$$A_{b}=\\frac{m}{2}a,\\quad F=m a,\\quad F_{t}=m a,\\quad F_{tt}=\\frac{m^{2}}{2}a,\\quad E_{k}=\\frac{1}{2}m v^{2},$$",
+    "err": ""
+   },
+   {
+    "id": "euler-formula-passage",
+    "ms": 1402,
+    "output": "$$e^{ix}=\\cos(x)+i\\sin(x)\\cos(\\pi x)(-1)^{|x|}=0\\quad\\Rightarrow\\quad x=5\\pmod{8}.$$",
+    "err": ""
+   },
+   {
+    "id": "analysis-classics-passage",
+    "ms": 2151,
+    "output": "$$\\sum_{n=1}^{\\infty}\\frac{1}{n^{2}}=\\frac{\\pi^{2}}{6}\\quad\\Rightarrow\\quad\\int_{-\\infty}^{\\infty}e^{-x^{2}}dx=\\sqrt{\\pi}\\quad\\Rightarrow\\quad\\pi\\text{isnotexcessly}$$",
+    "err": ""
+   }
+  ]
+ },
+ {
+  "tier": "load",
+  "label": "before",
+  "model": "intellitex",
+  "device": "wasm",
+  "dtype": "q8",
+  "src": "hf",
+  "rev": "main",
+  "mode": "warm",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Claude/1.40609.1 Chrome/148.0.7778.280 Safari/537.36",
+  "at": "2026-09-03T22:02:45.973Z",
+  "loadMs": 961,
+  "downloadMs": 120,
+  "sessionMs": 837,
+  "files": {
+   "config.json": 830,
+   "tokenizer.json": 2288924,
+   "tokenizer_config.json": 21058,
+   "onnx/encoder_model_quantized.onnx": 109974435,
+   "onnx/decoder_model_merged_quantized.onnx": 163856759,
+   "generation_config.json": 163
+  },
+  "totalBytes": 276142169,
+  "network": {
+   "requests": 0,
+   "bytes": 0,
+   "files": []
+  },
+  "warmupMs": 1002
+ },
+ {
+  "tier": "load",
+  "label": "before",
+  "model": "texify",
+  "device": "wasm",
+  "dtype": "q8",
+  "src": "hf",
+  "rev": "main",
+  "mode": "cold",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Claude/1.40609.1 Chrome/148.0.7778.280 Safari/537.36",
+  "at": "2026-09-03T22:02:49.967Z",
+  "loadMs": 113547,
+  "downloadMs": 112431,
+  "sessionMs": 726,
+  "files": {
+   "config.json": 4876,
+   "preprocessor_config.json": 615,
+   "generation_config.json": 191,
+   "tokenizer.json": 2140013,
+   "tokenizer_config.json": 4491,
+   "onnx/decoder_model_merged_quantized.onnx": 239901134,
+   "onnx/encoder_model_quantized.onnx": 79294829
+  },
+  "totalBytes": 321346149,
+  "network": {
+   "requests": 7,
+   "bytes": 319196769,
+   "files": [
+    {
+     "file": "texify/config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "texify/preprocessor_config.json",
+     "len": 615,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "texify/tokenizer.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "texify/generation_config.json",
+     "len": 191,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "texify/tokenizer_config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "onnx/decoder_model_merged_quantized.onnx",
+     "len": 239901134,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "onnx/encoder_model_quantized.onnx",
+     "len": 79294829,
+     "encoding": null,
+     "type": "application/octet-stream"
+    }
+   ]
+  },
+  "warmupMs": 27545
+ },
+ {
+  "tier": "load",
+  "label": "before",
+  "model": "texify",
+  "device": "wasm",
+  "dtype": "q8",
+  "src": "hf",
+  "rev": "main",
+  "mode": "warm",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Claude/1.40609.1 Chrome/148.0.7778.280 Safari/537.36",
+  "at": "2026-09-03T22:05:12.974Z",
+  "loadMs": 5194,
+  "downloadMs": 156,
+  "sessionMs": 5030,
+  "files": {
+   "config.json": 4876,
+   "preprocessor_config.json": 615,
+   "tokenizer.json": 2140013,
+   "tokenizer_config.json": 4491,
+   "onnx/encoder_model_quantized.onnx": 79294829,
+   "onnx/decoder_model_merged_quantized.onnx": 239901134,
+   "generation_config.json": 191
+  },
+  "totalBytes": 321346149,
+  "network": {
+   "requests": 0,
+   "bytes": 0,
+   "files": []
+  },
+  "warmupMs": 36628,
+  "cacheSettled": true
+ },
+ {
+  "tier": "load",
+  "label": "before",
+  "model": "intellitex",
+  "device": "webgpu",
+  "dtype": "q4",
+  "src": "local",
+  "rev": "main",
+  "mode": "cold",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Claude/1.40609.1 Chrome/148.0.7778.280 Safari/537.36",
+  "at": "2026-09-03T22:05:56.969Z",
+  "loadMs": 6891,
+  "downloadMs": 5748,
+  "sessionMs": 1053,
+  "files": {
+   "config.json": 830,
+   "tokenizer_config.json": 21058,
+   "tokenizer.json": 2288924,
+   "generation_config.json": 163,
+   "onnx/encoder_model_q4.onnx": 151942871,
+   "onnx/decoder_model_merged_q4.onnx": 185600992
+  },
+  "totalBytes": 339854838,
+  "network": {
+   "requests": 16,
+   "bytes": 0,
+   "files": [
+    {
+     "file": "intellitex/config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex/tokenizer_config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex/generation_config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex/tokenizer.json",
+     "len": 0,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "onnx/encoder_model_q4.onnx",
+     "len": 0,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "onnx/decoder_model_merged_q4.onnx",
+     "len": 0,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "intellitex/tokenizer_config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex/tokenizer.json",
+     "len": 0,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex/generation_config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex/tokenizer_config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex/tokenizer.json",
+     "len": 0,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex/generation_config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "onnx/encoder_model_q4.onnx",
+     "len": 0,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "onnx/decoder_model_merged_q4.onnx",
+     "len": 0,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "onnx/encoder_model_q4.onnx",
+     "len": 0,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "onnx/decoder_model_merged_q4.onnx",
+     "len": 0,
+     "encoding": null,
+     "type": "application/octet-stream"
+    }
+   ]
+  },
+  "warmupMs": 489,
+  "cacheSettled": true
+ },
+ {
+  "tier": "load",
+  "label": "before",
+  "model": "intellitex",
+  "device": "webgpu",
+  "dtype": "q4",
+  "src": "local",
+  "rev": "main",
+  "mode": "warm",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Claude/1.40609.1 Chrome/148.0.7778.280 Safari/537.36",
+  "at": "2026-09-03T22:06:05.988Z",
+  "loadMs": 1085,
+  "downloadMs": 104,
+  "sessionMs": 976,
+  "files": {
+   "config.json": 830,
+   "tokenizer.json": 2288924,
+   "tokenizer_config.json": 21058,
+   "onnx/encoder_model_q4.onnx": 151942871,
+   "onnx/decoder_model_merged_q4.onnx": 185600992,
+   "generation_config.json": 163
+  },
+  "totalBytes": 339854838,
+  "network": {
+   "requests": 0,
+   "bytes": 0,
+   "files": []
+  },
+  "warmupMs": 568,
+  "cacheSettled": true
+ },
+ {
+  "tier": "load",
+  "label": "before",
+  "model": "texify",
+  "device": "webgpu",
+  "dtype": "q4",
+  "src": "local",
+  "rev": "main",
+  "mode": "cold",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Claude/1.40609.1 Chrome/148.0.7778.280 Safari/537.36",
+  "at": "2026-09-03T22:06:09.990Z",
+  "loadMs": 8109,
+  "downloadMs": 6407,
+  "sessionMs": 1585,
+  "files": {
+   "config.json": 4876,
+   "preprocessor_config.json": 615,
+   "tokenizer_config.json": 4491,
+   "generation_config.json": 191,
+   "tokenizer.json": 2140013,
+   "onnx/encoder_model_q4.onnx": 49064106,
+   "onnx/decoder_model_merged_q4.onnx": 328316375
+  },
+  "totalBytes": 379530667,
+  "network": {
+   "requests": 19,
+   "bytes": 0,
+   "files": [
+    {
+     "file": "texify/config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "texify/tokenizer_config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "texify/preprocessor_config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "onnx/encoder_model_q4.onnx",
+     "len": 0,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "texify/generation_config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "texify/tokenizer.json",
+     "len": 0,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "onnx/decoder_model_merged_q4.onnx",
+     "len": 0,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "texify/preprocessor_config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "texify/tokenizer_config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "texify/tokenizer.json",
+     "len": 0,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "texify/generation_config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "texify/preprocessor_config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "texify/tokenizer_config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "texify/generation_config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "texify/tokenizer.json",
+     "len": 0,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "onnx/encoder_model_q4.onnx",
+     "len": 0,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "onnx/decoder_model_merged_q4.onnx",
+     "len": 0,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "onnx/encoder_model_q4.onnx",
+     "len": 0,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "onnx/decoder_model_merged_q4.onnx",
+     "len": 0,
+     "encoding": null,
+     "type": "application/octet-stream"
+    }
+   ]
+  },
+  "warmupMs": 482,
+  "items": [
+   {
+    "id": "pythagorean",
+    "ms": 592,
+    "output": "$$x^{2}+y^{2}=r^{2}$$",
+    "err": ""
+   },
+   {
+    "id": "quadratic",
+    "ms": 403,
+    "output": "$$x=\\frac{-b\\pm\\sqrt{b^{2}-4ac}}{2a}$$",
+    "err": ""
+   },
+   {
+    "id": "euler",
+    "ms": 4281,
+    "output": "$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}",
+    "err": ""
+   },
+   {
+    "id": "circle-area",
+    "ms": 6199,
+    "output": "$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r",
+    "err": ""
+   },
+   {
+    "id": "gaussian",
+    "ms": 3869,
+    "output": "$$\\int_{-\\infty}^{\\infty}e^{-x^{2}}\\,dx=\\sqrt{\\pi}$$\n\n$$\\int_{-\\infty}^{\\infty}e^{-x^{2}}\\,dx=\\sqrt{\\pi}$$\n\n$$\\int_{-\\infty}^{\\infty}e^{-x^{2}}\\,dx=\\sqrt{\\pi}$$\n\n$$\\int_{-\\infty}^{\\infty}e^{-x^{2}}\\,dx=\\sqrt{\\pi}$$\n\n$$\\int_{-\\infty}^{\\infty}e^{-x^{2}}\\,dx=\\sqrt{\\pi}$$\n\n$$\\int_{-\\infty}^{\\infty}e^{-x^{2}}\\,dx=\\sqrt{\\pi}$$\n\n$$\\int_{-\\infty}^{\\infty}e^{-x^{2}}\\,dx=\\sqrt{\\pi}$$\n\n$$\\int_{-\\infty}^{\\infty}e^{-x^{2}}\\,dx=\\sqrt{\\pi}$$\n\n$$\\int_{-\\infty}^{\\infty}e^{-x^{2}}\\,dx=\\sqrt{\\pi}$$\n\n$$\\int_{-\\infty}^{\\infty}e^{-x^{2}}\\,dx=\\sqrt{\\pi}$$\n\n$$\\int_{-\\infty}^{\\infty",
+    "err": ""
+   },
+   {
+    "id": "basel",
+    "ms": 682,
+    "output": "$$\\sum_{n=1}^{\\infty}\\frac{1}{n^{2}}=\\frac{\\pi^{2}}{6}$$",
+    "err": ""
+   },
+   {
+    "id": "binomial",
+    "ms": 708,
+    "output": "$$(x+y)^{n}=\\sum_{k=0}^{n}\\binom{n}{k}x^{k}y^{n-k}$$",
+    "err": ""
+   },
+   {
+    "id": "derivative",
+    "ms": 526,
+    "output": "$$f^{\\prime}(x)=\\lim_{h\\to0}\\frac{f(x+h)-f(x)}{h}$$",
+    "err": ""
+   },
+   {
+    "id": "det2x2",
+    "ms": 398,
+    "output": "$$\\det\\begin{pmatrix}a&b\\\\ c&d\\end{pmatrix}=ad-bc$$",
+    "err": ""
+   },
+   {
+    "id": "schrodinger",
+    "ms": 740,
+    "output": "$$i\\hbar{\\frac{\\partial}{\\partial t}}\\Psi(\\mathbf{r},t)=\\left[-{\\frac{\\hbar^{2}}{2m}}\\nabla^{2}+V(\\mathbf{r},t)\\right]\\Psi(\\mathbf{r},t)$$",
+    "err": ""
+   },
+   {
+    "id": "cauchy",
+    "ms": 629,
+    "output": "$$f(a)=\\frac{1}{2\\pi i}\\oint_{\\gamma}\\frac{f(z)}{z-a}\\,dz$$",
+    "err": ""
+   },
+   {
+    "id": "zeta",
+    "ms": 752,
+    "output": "$$\\zeta(s)=2^{s}\\pi^{s-1}\\sin\\left(\\frac{\\pi s}{2}\\right)\\Gamma(1-s)\\,\\zeta(1-s)$$",
+    "err": ""
+   },
+   {
+    "id": "maxwell",
+    "ms": 922,
+    "output": "$$\\nabla\\cdot{\\bf E}=\\frac{\\rho}{\\varepsilon_{0}}$$ $$\\nabla\\times{\\bf B}=\\mu_{0}{\\bf J}+\\mu_{0}\\varepsilon_{0}\\frac{\\partial{\\bf E}}{\\partial t}$$",
+    "err": ""
+   },
+   {
+    "id": "newton-text",
+    "ms": 712,
+    "output": "Newton's second law states that $F=ma.$ The kinetic energy of the body is $K=\\frac{1}{2}mv^{2}.$\n\n$K=\\frac{1}{2}mv^{2}.$",
+    "err": ""
+   },
+   {
+    "id": "epsilon-delta-text",
+    "ms": 645,
+    "output": "For all $\\varepsilon>0$ there exists $\\delta>0$ such that $|x-a|<\\delta$ implies $|f(x)-L|<\\varepsilon$.",
+    "err": ""
+   },
+   {
+    "id": "gaussian-text",
+    "ms": 833,
+    "output": "The Gaussian integral $\\int_{-\\infty}^{\\infty}e^{-x^{2}}\\,dx=\\sqrt{\\pi}$ follows from polar coordinates, where $dA=r\\;dr\\;d\\theta$.",
+    "err": ""
+   },
+   {
+    "id": "quadratic-tiny",
+    "ms": 468,
+    "output": "$$\\kappa=\\frac{-b\\pm\\sqrt{b^{2}-4ac}}{2a}$$",
+    "err": ""
+   },
+   {
+    "id": "basel-dark",
+    "ms": 6276,
+    "output": "$\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{",
+    "err": ""
+   }
+  ],
+  "cacheSettled": false
+ },
+ {
+  "tier": "load",
+  "label": "before",
+  "model": "texify",
+  "device": "webgpu",
+  "dtype": "q4",
+  "src": "local",
+  "rev": "main",
+  "mode": "warm",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Claude/1.40609.1 Chrome/148.0.7778.280 Safari/537.36",
+  "at": "2026-09-03T22:08:51.004Z",
+  "loadMs": 10176,
+  "downloadMs": 8991,
+  "sessionMs": 1107,
+  "files": {
+   "config.json": 4876,
+   "preprocessor_config.json": 615,
+   "tokenizer.json": 2140013,
+   "tokenizer_config.json": 4491,
+   "onnx/encoder_model_q4.onnx": 49064106,
+   "generation_config.json": 191,
+   "onnx/decoder_model_merged_q4.onnx": 328316375
+  },
+  "totalBytes": 379530667,
+  "network": {
+   "requests": 3,
+   "bytes": 0,
+   "files": [
+    {
+     "file": "onnx/decoder_model_merged_q4.onnx",
+     "len": 0,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "onnx/decoder_model_merged_q4.onnx",
+     "len": 0,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "onnx/decoder_model_merged_q4.onnx",
+     "len": 0,
+     "encoding": null,
+     "type": "application/octet-stream"
+    }
+   ]
+  },
+  "warmupMs": 414,
+  "cacheSettled": false
+ },
+ {
+  "tier": "load",
+  "label": "after",
+  "model": "intellitex",
+  "device": "webgpu",
+  "dtype": "q4",
+  "src": "local",
+  "rev": "main",
+  "mode": "cold",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Claude/1.40609.1 Chrome/148.0.7778.280 Safari/537.36",
+  "at": "2026-09-03T22:14:36.272Z",
+  "loadMs": 4026,
+  "downloadMs": 2741,
+  "sessionMs": 1248,
+  "files": {
+   "config.json": 830,
+   "tokenizer_config.json": 21058,
+   "tokenizer.json": 2288924,
+   "generation_config.json": 163,
+   "onnx/encoder_model_q4.onnx": 78242154,
+   "onnx/decoder_model_merged_q4.onnx": 111901161
+  },
+  "totalBytes": 192454290,
+  "network": {
+   "requests": 13,
+   "bytes": 2310975,
+   "files": [
+    {
+     "file": "intellitex/config.json",
+     "len": 830,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex/tokenizer_config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex/generation_config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex/tokenizer.json",
+     "len": 0,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "onnx/encoder_model_q4.onnx",
+     "len": 0,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "onnx/decoder_model_merged_q4.onnx",
+     "len": 0,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "intellitex/tokenizer_config.json",
+     "len": 21058,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex/tokenizer.json",
+     "len": 2288924,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex/generation_config.json",
+     "len": 163,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "onnx/decoder_model_merged_q4.onnx",
+     "len": 0,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "onnx/encoder_model_q4.onnx",
+     "len": 0,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "onnx/encoder_model_q4.onnx",
+     "len": 0,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "onnx/decoder_model_merged_q4.onnx",
+     "len": 0,
+     "encoding": null,
+     "type": "application/octet-stream"
+    }
+   ]
+  },
+  "warmupMs": 502,
+  "items": [
+   {
+    "id": "quadratic-formula",
+    "ms": 317,
+    "output": "$$x=\\frac{-b\\pm\\sqrt{b^{2}-4ac}}{2a}$$",
+    "err": ""
+   },
+   {
+    "id": "eulers-identity",
+    "ms": 170,
+    "output": "$$e^{i\\pi}+1=0$$",
+    "err": ""
+   },
+   {
+    "id": "pythagorean-theorem",
+    "ms": 190,
+    "output": "$$a^{2}+b^{2}=c^{2}$$",
+    "err": ""
+   },
+   {
+    "id": "circle-area",
+    "ms": 126,
+    "output": "$$A=\\pi r^{2}$$",
+    "err": ""
+   },
+   {
+    "id": "gaussian-integral",
+    "ms": 354,
+    "output": "$$\\int_{-\\infty}^{\\infty}e^{-x^{2}}\\,dx=\\sqrt{\\pi}$$",
+    "err": ""
+   },
+   {
+    "id": "basel-problem",
+    "ms": 373,
+    "output": "$$\\sum_{n=1}^{\\infty}\\frac{1}{n^{2}}=\\frac{\\pi^{2}}{6}$$",
+    "err": ""
+   },
+   {
+    "id": "binomial-theorem",
+    "ms": 442,
+    "output": "$$(x+y)^{n}=\\sum_{k=0}^{n}\\binom{n}{k}x^{n-k}y^{k}$$",
+    "err": ""
+   },
+   {
+    "id": "bayes-theorem",
+    "ms": 303,
+    "output": "$$P(A|B)=\\frac{P(B|A)P(A)}{P(B)}$$",
+    "err": ""
+   },
+   {
+    "id": "schrodinger-time-dependent",
+    "ms": 622,
+    "output": "$$i\\hbar\\frac{d}{dt}\\left(|\\Psi(t)\\rangle\\langle\\Psi(t)|\\right)=\\hat{H}|\\Psi(t)\\rangle\\langle\\Psi(t)|$$",
+    "err": ""
+   },
+   {
+    "id": "cauchy-integral-formula",
+    "ms": 452,
+    "output": "$$f(a)=\\frac{1}{2\\pi i}\\oint_{\\gamma}\\frac{f(z)}{z-a}dz$$",
+    "err": ""
+   },
+   {
+    "id": "riemann-zeta-functional-equation",
+    "ms": 496,
+    "output": "$$\\zeta(s)=2^{s}\\pi^{s-1}\\sin\\left(\\frac{\\pi s}{2}\\right)\\Gamma(1-s)\\zeta(1-s)$$",
+    "err": ""
+   },
+   {
+    "id": "einstein-field-equations",
+    "ms": 540,
+    "output": "$$G_{\\mu\\nu}+\\lambda g_{\\mu\\nu}=\\kappa T_{\\mu\\nu}$$",
+    "err": ""
+   },
+   {
+    "id": "mechanics-homework-passage",
+    "ms": 1129,
+    "output": "$$A_{b}=\\frac{m\\vec{a}}{\\varepsilon}~  \\Rightarrow~  \\int\\frac{dv}{dt}\\frac{dS}{dt}~  \\kappa(E_{k})=\\frac{1}{2}m v^{2}.$$",
+    "err": ""
+   },
+   {
+    "id": "euler-formula-passage",
+    "ms": 598,
+    "output": "$$e^{ix}=\\cos(x)+i\\sin(x)\\cos^{-1}(x)+\\frac{1}{2}i\\sin^{2}(x)=0\\textrm{if}x=\\pi,$$",
+    "err": ""
+   },
+   {
+    "id": "analysis-classics-passage",
+    "ms": 926,
+    "output": "$$\\sum_{n=1}^{\\infty}\\frac{1}{n^{2}}=\\frac{\\pi^{2}}{6}\\quad\\Rightarrow\\quad\\int_{-\\infty}^{\\infty}e^{-x^{2}}dx=\\sqrt{\\pi}\\quad\\Rightarrow\\quad\\pi\\text{isnotexcessly}$$",
+    "err": ""
+   }
+  ],
+  "cacheSettled": true
+ },
+ {
+  "tier": "load",
+  "label": "after",
+  "model": "intellitex",
+  "device": "webgpu",
+  "dtype": "q4",
+  "src": "local",
+  "rev": "main",
+  "mode": "warm",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Claude/1.40609.1 Chrome/148.0.7778.280 Safari/537.36",
+  "at": "2026-09-03T22:14:49.973Z",
+  "loadMs": 1715,
+  "downloadMs": 93,
+  "sessionMs": 1614,
+  "files": {
+   "config.json": 830,
+   "tokenizer.json": 2288924,
+   "tokenizer_config.json": 21058,
+   "onnx/encoder_model_q4.onnx": 78242154,
+   "onnx/decoder_model_merged_q4.onnx": 111901161,
+   "generation_config.json": 163
+  },
+  "totalBytes": 192454290,
+  "network": {
+   "requests": 0,
+   "bytes": 0,
+   "files": []
+  },
+  "warmupMs": 510,
+  "cacheSettled": true
+ },
+ {
+  "tier": "load",
+  "label": "after",
+  "model": "texify",
+  "device": "webgpu",
+  "dtype": "q4",
+  "src": "local",
+  "rev": "main",
+  "mode": "cold",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Claude/1.40609.1 Chrome/148.0.7778.280 Safari/537.36",
+  "at": "2026-09-03T22:14:53.979Z",
+  "loadMs": 3466,
+  "downloadMs": 2686,
+  "sessionMs": 725,
+  "files": {
+   "config.json": 4876,
+   "preprocessor_config.json": 615,
+   "tokenizer_config.json": 4491,
+   "tokenizer.json": 2140013,
+   "generation_config.json": 191,
+   "onnx/encoder_model_q4.onnx": 49064106,
+   "onnx/decoder_model_merged_q4.onnx": 170408898
+  },
+  "totalBytes": 221623190,
+  "network": {
+   "requests": 13,
+   "bytes": 221623190,
+   "files": [
+    {
+     "file": "texify/config.json",
+     "len": 4876,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "texify/tokenizer_config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "texify/preprocessor_config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "texify/generation_config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "texify/tokenizer.json",
+     "len": 0,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "onnx/encoder_model_q4.onnx",
+     "len": 0,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "onnx/decoder_model_merged_q4.onnx",
+     "len": 0,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "texify/preprocessor_config.json",
+     "len": 615,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "texify/tokenizer_config.json",
+     "len": 4491,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "texify/tokenizer.json",
+     "len": 2140013,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "texify/generation_config.json",
+     "len": 191,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "onnx/encoder_model_q4.onnx",
+     "len": 49064106,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "onnx/decoder_model_merged_q4.onnx",
+     "len": 170408898,
+     "encoding": null,
+     "type": "application/octet-stream"
+    }
+   ]
+  },
+  "warmupMs": 760,
+  "items": [
+   {
+    "id": "pythagorean",
+    "ms": 381,
+    "output": "$$x^{2}+y^{2}=r^{2}$$",
+    "err": ""
+   },
+   {
+    "id": "quadratic",
+    "ms": 475,
+    "output": "$$x=\\frac{-b\\pm\\sqrt{b^{2}-4ac}}{2a}$$",
+    "err": ""
+   },
+   {
+    "id": "euler",
+    "ms": 4432,
+    "output": "$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}",
+    "err": ""
+   },
+   {
+    "id": "circle-area",
+    "ms": 4258,
+    "output": "$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r",
+    "err": ""
+   },
+   {
+    "id": "gaussian",
+    "ms": 5102,
+    "output": "$$\\int_{-\\infty}^{\\infty}e^{-x^{2}}\\,dx=\\sqrt{\\pi}$$\n\n$$\\int_{-\\infty}^{\\infty}e^{-x^{2}}\\,dx=\\sqrt{\\pi}$$\n\n$$\\int_{-\\infty}^{\\infty}e^{-x^{2}}\\,dx=\\sqrt{\\pi}$$\n\n$$\\int_{-\\infty}^{\\infty}e^{-x^{2}}\\,dx=\\sqrt{\\pi}$$\n\n$$\\int_{-\\infty}^{\\infty}e^{-x^{2}}\\,dx=\\sqrt{\\pi}$$\n\n$$\\int_{-\\infty}^{\\infty}e^{-x^{2}}\\,dx=\\sqrt{\\pi}$$\n\n$$\\int_{-\\infty}^{\\infty}e^{-x^{2}}\\,dx=\\sqrt{\\pi}$$\n\n$$\\int_{-\\infty}^{\\infty}e^{-x^{2}}\\,dx=\\sqrt{\\pi}$$\n\n$$\\int_{-\\infty}^{\\infty}e^{-x^{2}}\\,dx=\\sqrt{\\pi}$$\n\n$$\\int_{-\\infty}^{\\infty}e^{-x^{2}}\\,dx=\\sqrt{\\pi}$$\n\n$$\\int_{-\\infty}^{\\infty",
+    "err": ""
+   },
+   {
+    "id": "basel",
+    "ms": 484,
+    "output": "$$\\sum_{n=1}^{\\infty}\\frac{1}{n^{2}}=\\frac{\\pi^{2}}{6}$$",
+    "err": ""
+   },
+   {
+    "id": "binomial",
+    "ms": 442,
+    "output": "$$(x+y)^{n}=\\sum_{k=0}^{n}\\binom{n}{k}x^{k}y^{n-k}$$",
+    "err": ""
+   },
+   {
+    "id": "derivative",
+    "ms": 463,
+    "output": "$$f^{\\prime}(x)=\\lim_{h\\to0}\\frac{f(x+h)-f(x)}{h}$$",
+    "err": ""
+   },
+   {
+    "id": "det2x2",
+    "ms": 307,
+    "output": "$$\\det\\begin{pmatrix}a&b\\\\ c&d\\end{pmatrix}=ad-bc$$",
+    "err": ""
+   },
+   {
+    "id": "schrodinger",
+    "ms": 1110,
+    "output": "$$i\\hbar{\\frac{\\partial}{\\partial t}}\\Psi(\\mathbf{r},t)=\\left[-{\\frac{\\hbar^{2}}{2m}}\\nabla^{2}+V(\\mathbf{r},t)\\right]\\Psi(\\mathbf{r},t)$$",
+    "err": ""
+   },
+   {
+    "id": "cauchy",
+    "ms": 1206,
+    "output": "$$f(a)=\\frac{1}{2\\pi i}\\oint_{\\gamma}\\frac{f(z)}{z-a}\\,dz$$",
+    "err": ""
+   },
+   {
+    "id": "zeta",
+    "ms": 757,
+    "output": "$$\\zeta(s)=2^{s}\\pi^{s-1}\\sin\\left(\\frac{\\pi s}{2}\\right)\\Gamma(1-s)\\,\\zeta(1-s)$$",
+    "err": ""
+   },
+   {
+    "id": "maxwell",
+    "ms": 1028,
+    "output": "$$\\nabla\\cdot{\\bf E}=\\frac{\\rho}{\\varepsilon_{0}}$$ $$\\nabla\\times{\\bf B}=\\mu_{0}{\\bf J}+\\mu_{0}\\varepsilon_{0}\\frac{\\partial{\\bf E}}{\\partial t}$$",
+    "err": ""
+   },
+   {
+    "id": "newton-text",
+    "ms": 1635,
+    "output": "Newton's second law states that $F=ma.$ The kinetic energy of the body is $K=\\frac{1}{2}mv^{2}.$\n\n$K=\\frac{1}{2}mv^{2}.$",
+    "err": ""
+   },
+   {
+    "id": "epsilon-delta-text",
+    "ms": 730,
+    "output": "For all $\\varepsilon>0$ there exists $\\delta>0$ such that $|x-a|<\\delta$ implies $|f(x)-L|<\\varepsilon$.",
+    "err": ""
+   },
+   {
+    "id": "gaussian-text",
+    "ms": 737,
+    "output": "The Gaussian integral $\\int_{-\\infty}^{\\infty}e^{-x^{2}}\\,dx=\\sqrt{\\pi}$ follows from polar coordinates, where $dA=r\\;dr\\;d\\theta$.",
+    "err": ""
+   },
+   {
+    "id": "quadratic-tiny",
+    "ms": 387,
+    "output": "$$\\kappa=\\frac{-b\\pm\\sqrt{b^{2}-4ac}}{2a}$$",
+    "err": ""
+   },
+   {
+    "id": "basel-dark",
+    "ms": 5202,
+    "output": "$\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{",
+    "err": ""
+   }
+  ],
+  "cacheSettled": true
+ },
+ {
+  "tier": "load",
+  "label": "after",
+  "model": "texify",
+  "device": "webgpu",
+  "dtype": "q4",
+  "src": "local",
+  "rev": "main",
+  "mode": "warm",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Claude/1.40609.1 Chrome/148.0.7778.280 Safari/537.36",
+  "at": "2026-09-03T22:15:28.980Z",
+  "loadMs": 1737,
+  "downloadMs": 100,
+  "sessionMs": 1633,
+  "files": {
+   "config.json": 4876,
+   "preprocessor_config.json": 615,
+   "tokenizer.json": 2140013,
+   "tokenizer_config.json": 4491,
+   "onnx/encoder_model_q4.onnx": 49064106,
+   "onnx/decoder_model_merged_q4.onnx": 170408898,
+   "generation_config.json": 191
+  },
+  "totalBytes": 221623190,
+  "network": {
+   "requests": 0,
+   "bytes": 0,
+   "files": []
+  },
+  "warmupMs": 362,
+  "cacheSettled": true
+ },
+ {
+  "tier": "load",
+  "label": "after",
+  "model": "intellitex",
+  "device": "wasm",
+  "dtype": "q8",
+  "src": "local",
+  "rev": "main",
+  "mode": "cold",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Claude/1.40609.1 Chrome/148.0.7778.280 Safari/537.36",
+  "at": "2026-09-03T22:15:32.974Z",
+  "loadMs": 4303,
+  "downloadMs": 2942,
+  "sessionMs": 1313,
+  "files": {
+   "config.json": 830,
+   "tokenizer.json": 2288924,
+   "tokenizer_config.json": 21058,
+   "generation_config.json": 163,
+   "onnx/decoder_model_merged_quantized.onnx": 163856759,
+   "onnx/encoder_model_quantized.onnx": 109974435
+  },
+  "totalBytes": 276142169,
+  "network": {
+   "requests": 11,
+   "bytes": 276142169,
+   "files": [
+    {
+     "file": "intellitex/config.json",
+     "len": 830,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex/tokenizer_config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex/generation_config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex/tokenizer.json",
+     "len": 0,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "onnx/encoder_model_quantized.onnx",
+     "len": 0,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "onnx/decoder_model_merged_quantized.onnx",
+     "len": 0,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "intellitex/tokenizer.json",
+     "len": 2288924,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex/tokenizer_config.json",
+     "len": 21058,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex/generation_config.json",
+     "len": 163,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "onnx/decoder_model_merged_quantized.onnx",
+     "len": 163856759,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "onnx/encoder_model_quantized.onnx",
+     "len": 109974435,
+     "encoding": null,
+     "type": "application/octet-stream"
+    }
+   ]
+  },
+  "warmupMs": 3689,
+  "items": [
+   {
+    "id": "quadratic-formula",
+    "ms": 2699,
+    "output": "$$x=\\frac{-b\\pm\\sqrt{b^{2}-4ac}}{2a}$$",
+    "err": ""
+   },
+   {
+    "id": "eulers-identity",
+    "ms": 743,
+    "output": "$$e^{i\\pi}+1=0$$",
+    "err": ""
+   },
+   {
+    "id": "pythagorean-theorem",
+    "ms": 1519,
+    "output": "$$a^{2}+b^{2}=c^{2}$$",
+    "err": ""
+   },
+   {
+    "id": "circle-area",
+    "ms": 1062,
+    "output": "$$A=\\pi r^{2}$$",
+    "err": ""
+   },
+   {
+    "id": "gaussian-integral",
+    "ms": 2539,
+    "output": "$$\\int_{-\\infty}^{\\infty}e^{-x^{2}}\\,dx=\\sqrt{\\pi}$$",
+    "err": ""
+   },
+   {
+    "id": "basel-problem",
+    "ms": 2776,
+    "output": "$$\\sum_{n=1}^{\\infty}\\frac{1}{n^{2}}=\\frac{\\pi^{2}}{6}$$",
+    "err": ""
+   },
+   {
+    "id": "binomial-theorem",
+    "ms": 5304,
+    "output": "$$(x+y)^{n}=\\sum_{k=0}^{n}\\binom{n}{k}x^{n-k}y^{k}$$",
+    "err": ""
+   },
+   {
+    "id": "bayes-theorem",
+    "ms": 2200,
+    "output": "$$P(A|B)=\\frac{P(B|A)P(A)}{P(B)}$$",
+    "err": ""
+   },
+   {
+    "id": "schrodinger-time-dependent",
+    "ms": 1894,
+    "output": "$$i\\hbar\\frac{d}{dt}\\Psi(t)=\\hat{H}\\Psi(t),$$",
+    "err": ""
+   },
+   {
+    "id": "cauchy-integral-formula",
+    "ms": 3510,
+    "output": "$$f(a)=\\frac{1}{2\\pi i}\\oint_{\\gamma}\\frac{f(z)}{z-a}\\,dz$$",
+    "err": ""
+   },
+   {
+    "id": "riemann-zeta-functional-equation",
+    "ms": 5467,
+    "output": "$$\\zeta(s)=2^{s}\\pi^{s-1}\\sin\\left(\\frac{\\pi s}{2}\\right)\\Gamma(1-s)\\zeta(1-s)$$",
+    "err": ""
+   },
+   {
+    "id": "einstein-field-equations",
+    "ms": 3281,
+    "output": "$$G_{\\mu\\nu}+\\lambda g_{\\mu\\nu}=\\kappa T_{\\mu\\nu}$$",
+    "err": ""
+   },
+   {
+    "id": "mechanics-homework-passage",
+    "ms": 6057,
+    "output": "$$A_{b}=\\frac{m}{2}a,\\quad F=m a,\\quad F_{t}=m a,\\quad F_{tt}=\\frac{m^{2}}{2}a,\\quad E_{k}=\\frac{1}{2}m v^{2},$$",
+    "err": ""
+   },
+   {
+    "id": "euler-formula-passage",
+    "ms": 8222,
+    "output": "$$e^{ix}=\\cos(x)+i\\sin(x)\\cos(\\pi x)(-1)^{|x|}=0\\quad\\Rightarrow\\quad x=5\\pmod{8}.$$",
+    "err": ""
+   },
+   {
+    "id": "analysis-classics-passage",
+    "ms": 5303,
+    "output": "$$\\sum_{n=1}^{\\infty}\\frac{1}{n^{2}}=\\frac{\\pi^{2}}{6}\\quad\\Rightarrow\\quad\\int_{-\\infty}^{\\infty}e^{-x^{2}}dx=\\sqrt{\\pi}\\quad\\Rightarrow\\quad\\pi\\text{isnotexcessly}$$",
+    "err": ""
+   }
+  ],
+  "cacheSettled": true
+ },
+ {
+  "tier": "load",
+  "label": "after",
+  "model": "intellitex",
+  "device": "wasm",
+  "dtype": "q8",
+  "src": "local",
+  "rev": "main",
+  "mode": "warm",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Claude/1.40609.1 Chrome/148.0.7778.280 Safari/537.36",
+  "at": "2026-09-03T22:16:35.972Z",
+  "loadMs": 2730,
+  "downloadMs": 140,
+  "sessionMs": 2573,
+  "files": {
+   "config.json": 830,
+   "tokenizer.json": 2288924,
+   "tokenizer_config.json": 21058,
+   "onnx/encoder_model_quantized.onnx": 109974435,
+   "onnx/decoder_model_merged_quantized.onnx": 163856759,
+   "generation_config.json": 163
+  },
+  "totalBytes": 276142169,
+  "network": {
+   "requests": 0,
+   "bytes": 0,
+   "files": []
+  },
+  "warmupMs": 1590,
+  "cacheSettled": true
+ },
+ {
+  "tier": "load",
+  "label": "after",
+  "model": "intellitex",
+  "device": "webgpu",
+  "dtype": "q4",
+  "src": "hf",
+  "rev": "main",
+  "mode": "cold",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Claude/1.40609.1 Chrome/148.0.7778.280 Safari/537.36",
+  "at": "2026-09-03T22:21:58.159Z",
+  "loadMs": 13524,
+  "downloadMs": 11906,
+  "sessionMs": 790,
+  "files": {
+   "config.json": 830,
+   "tokenizer_config.json": 21058,
+   "generation_config.json": 163,
+   "tokenizer.json": 2288924,
+   "onnx/encoder_model_q4.onnx": 78242154,
+   "onnx/decoder_model_merged_q4.onnx": 111901161
+  },
+  "totalBytes": 192454290,
+  "network": {
+   "requests": 6,
+   "bytes": 192454290,
+   "files": [
+    {
+     "file": "intellitex/config.json",
+     "len": 830,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "onnx/encoder_model_q4.onnx",
+     "len": 78242154,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "onnx/decoder_model_merged_q4.onnx",
+     "len": 111901161,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "intellitex/tokenizer_config.json",
+     "len": 21058,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex/generation_config.json",
+     "len": 163,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex/tokenizer.json",
+     "len": 2288924,
+     "encoding": null,
+     "type": "application/json"
+    }
+   ]
+  },
+  "warmupMs": 595,
+  "items": [
+   {
+    "id": "quadratic-formula",
+    "ms": 342,
+    "output": "$$x=\\frac{-b\\pm\\sqrt{b^{2}-4ac}}{2a}$$",
+    "err": ""
+   },
+   {
+    "id": "eulers-identity",
+    "ms": 199,
+    "output": "$$e^{i\\pi}+1=0$$",
+    "err": ""
+   },
+   {
+    "id": "pythagorean-theorem",
+    "ms": 314,
+    "output": "$$a^{2}+b^{2}=c^{2}$$",
+    "err": ""
+   },
+   {
+    "id": "circle-area",
+    "ms": 170,
+    "output": "$$A=\\pi r^{2}$$",
+    "err": ""
+   },
+   {
+    "id": "gaussian-integral",
+    "ms": 554,
+    "output": "$$\\int_{-\\infty}^{\\infty}e^{-x^{2}}\\,dx=\\sqrt{\\pi}$$",
+    "err": ""
+   },
+   {
+    "id": "basel-problem",
+    "ms": 857,
+    "output": "$$\\sum_{n=1}^{\\infty}\\frac{1}{n^{2}}=\\frac{\\pi^{2}}{6}$$",
+    "err": ""
+   },
+   {
+    "id": "binomial-theorem",
+    "ms": 1443,
+    "output": "$$(x+y)^{n}=\\sum_{k=0}^{n}\\binom{n}{k}x^{n-k}y^{k}$$",
+    "err": ""
+   },
+   {
+    "id": "bayes-theorem",
+    "ms": 302,
+    "output": "$$P(A|B)=\\frac{P(B|A)P(A)}{P(B)}$$",
+    "err": ""
+   },
+   {
+    "id": "schrodinger-time-dependent",
+    "ms": 660,
+    "output": "$$i\\hbar\\frac{d}{dt}\\left(|\\Psi(t)\\rangle\\langle\\Psi(t)|\\right)=\\hat{H}|\\Psi(t)\\rangle\\langle\\Psi(t)|$$",
+    "err": ""
+   },
+   {
+    "id": "cauchy-integral-formula",
+    "ms": 386,
+    "output": "$$f(a)=\\frac{1}{2\\pi i}\\oint_{\\gamma}\\frac{f(z)}{z-a}dz$$",
+    "err": ""
+   },
+   {
+    "id": "riemann-zeta-functional-equation",
+    "ms": 530,
+    "output": "$$\\zeta(s)=2^{s}\\pi^{s-1}\\sin\\left(\\frac{\\pi s}{2}\\right)\\Gamma(1-s)\\zeta(1-s)$$",
+    "err": ""
+   },
+   {
+    "id": "einstein-field-equations",
+    "ms": 334,
+    "output": "$$G_{\\mu\\nu}+\\lambda g_{\\mu\\nu}=\\kappa T_{\\mu\\nu}$$",
+    "err": ""
+   },
+   {
+    "id": "mechanics-homework-passage",
+    "ms": 1187,
+    "output": "$$A_{b}=\\frac{m\\vec{a}}{\\varepsilon}~  \\Rightarrow~  \\int\\frac{dv}{dt}\\frac{dS}{dt}~  \\kappa(E_{k})=\\frac{1}{2}m v^{2}.$$",
+    "err": ""
+   },
+   {
+    "id": "euler-formula-passage",
+    "ms": 741,
+    "output": "$$e^{ix}=\\cos(x)+i\\sin(x)\\cos^{-1}(x)+\\frac{1}{2}i\\sin^{2}(x)=0\\textrm{if}x=\\pi,$$",
+    "err": ""
+   },
+   {
+    "id": "analysis-classics-passage",
+    "ms": 1208,
+    "output": "$$\\sum_{n=1}^{\\infty}\\frac{1}{n^{2}}=\\frac{\\pi^{2}}{6}\\quad\\Rightarrow\\quad\\int_{-\\infty}^{\\infty}e^{-x^{2}}dx=\\sqrt{\\pi}\\quad\\Rightarrow\\quad\\pi\\text{isnotexcessly}$$",
+    "err": ""
+   }
+  ],
+  "cacheSettled": true
+ },
+ {
+  "tier": "load",
+  "label": "after",
+  "model": "intellitex",
+  "device": "webgpu",
+  "dtype": "q4",
+  "src": "hf",
+  "rev": "main",
+  "mode": "cold",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Claude/1.40609.1 Chrome/148.0.7778.280 Safari/537.36",
+  "at": "2026-09-03T22:22:24.001Z",
+  "loadMs": 6200,
+  "downloadMs": 5298,
+  "sessionMs": 475,
+  "files": {
+   "config.json": 830,
+   "tokenizer.json": 2288924,
+   "generation_config.json": 163,
+   "tokenizer_config.json": 21058,
+   "onnx/encoder_model_q4.onnx": 78242154,
+   "onnx/decoder_model_merged_q4.onnx": 111901161
+  },
+  "totalBytes": 192454290,
+  "network": {
+   "requests": 6,
+   "bytes": 192454290,
+   "files": [
+    {
+     "file": "intellitex/config.json",
+     "len": 830,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "onnx/decoder_model_merged_q4.onnx",
+     "len": 111901161,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "onnx/encoder_model_q4.onnx",
+     "len": 78242154,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "intellitex/tokenizer.json",
+     "len": 2288924,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex/generation_config.json",
+     "len": 163,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex/tokenizer_config.json",
+     "len": 21058,
+     "encoding": null,
+     "type": "application/json"
+    }
+   ]
+  },
+  "warmupMs": 630,
+  "cacheSettled": true
+ },
+ {
+  "tier": "load",
+  "label": "after",
+  "model": "intellitex",
+  "device": "webgpu",
+  "dtype": "q4",
+  "src": "hf",
+  "rev": "main",
+  "mode": "cold",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Claude/1.40609.1 Chrome/148.0.7778.280 Safari/537.36",
+  "at": "2026-09-03T22:22:32.969Z",
+  "loadMs": 6825,
+  "downloadMs": 5482,
+  "sessionMs": 878,
+  "files": {
+   "config.json": 830,
+   "tokenizer_config.json": 21058,
+   "tokenizer.json": 2288924,
+   "onnx/encoder_model_q4.onnx": 78242154,
+   "generation_config.json": 163,
+   "onnx/decoder_model_merged_q4.onnx": 111901161
+  },
+  "totalBytes": 192454290,
+  "network": {
+   "requests": 6,
+   "bytes": 192454290,
+   "files": [
+    {
+     "file": "intellitex/config.json",
+     "len": 830,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "onnx/decoder_model_merged_q4.onnx",
+     "len": 111901161,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "onnx/encoder_model_q4.onnx",
+     "len": 78242154,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "intellitex/tokenizer_config.json",
+     "len": 21058,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex/tokenizer.json",
+     "len": 2288924,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex/generation_config.json",
+     "len": 163,
+     "encoding": null,
+     "type": "application/json"
+    }
+   ]
+  },
+  "warmupMs": 387,
+  "cacheSettled": true
+ },
+ {
+  "tier": "load",
+  "label": "after",
+  "model": "intellitex",
+  "device": "webgpu",
+  "dtype": "q4",
+  "src": "hf",
+  "rev": "main",
+  "mode": "warm",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Claude/1.40609.1 Chrome/148.0.7778.280 Safari/537.36",
+  "at": "2026-09-03T22:22:41.967Z",
+  "loadMs": 1164,
+  "downloadMs": 63,
+  "sessionMs": 1097,
+  "files": {
+   "config.json": 830,
+   "tokenizer.json": 2288924,
+   "tokenizer_config.json": 21058,
+   "onnx/encoder_model_q4.onnx": 78242154,
+   "onnx/decoder_model_merged_q4.onnx": 111901161,
+   "generation_config.json": 163
+  },
+  "totalBytes": 192454290,
+  "network": {
+   "requests": 0,
+   "bytes": 0,
+   "files": []
+  },
+  "warmupMs": 567,
+  "cacheSettled": true
+ },
+ {
+  "tier": "load",
+  "label": "after",
+  "model": "texify",
+  "device": "webgpu",
+  "dtype": "q4",
+  "src": "hf",
+  "rev": "main",
+  "mode": "cold",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Claude/1.40609.1 Chrome/148.0.7778.280 Safari/537.36",
+  "at": "2026-09-03T22:22:45.979Z",
+  "loadMs": 12061,
+  "downloadMs": 10478,
+  "sessionMs": 728,
+  "files": {
+   "config.json": 4876,
+   "tokenizer_config.json": 4491,
+   "generation_config.json": 191,
+   "preprocessor_config.json": 615,
+   "tokenizer.json": 2140013,
+   "onnx/encoder_model_q4.onnx": 49064106,
+   "onnx/decoder_model_merged_q4.onnx": 170408898
+  },
+  "totalBytes": 221623190,
+  "network": {
+   "requests": 7,
+   "bytes": 221623190,
+   "files": [
+    {
+     "file": "texify/config.json",
+     "len": 4876,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "texify/tokenizer_config.json",
+     "len": 4491,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "texify/generation_config.json",
+     "len": 191,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "texify/preprocessor_config.json",
+     "len": 615,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "texify/tokenizer.json",
+     "len": 2140013,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "onnx/encoder_model_q4.onnx",
+     "len": 49064106,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "onnx/decoder_model_merged_q4.onnx",
+     "len": 170408898,
+     "encoding": null,
+     "type": "application/octet-stream"
+    }
+   ]
+  },
+  "warmupMs": 1115,
+  "items": [
+   {
+    "id": "pythagorean",
+    "ms": 492,
+    "output": "$$x^{2}+y^{2}=r^{2}$$",
+    "err": ""
+   },
+   {
+    "id": "quadratic",
+    "ms": 582,
+    "output": "$$x=\\frac{-b\\pm\\sqrt{b^{2}-4ac}}{2a}$$",
+    "err": ""
+   },
+   {
+    "id": "euler",
+    "ms": 5681,
+    "output": "$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}+1=0$\n\n$e^{i\\pi}",
+    "err": ""
+   },
+   {
+    "id": "circle-area",
+    "ms": 4585,
+    "output": "$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r^{2}$\n\n$A=\\pi r",
+    "err": ""
+   },
+   {
+    "id": "gaussian",
+    "ms": 4631,
+    "output": "$$\\int_{-\\infty}^{\\infty}e^{-x^{2}}\\,dx=\\sqrt{\\pi}$$\n\n$$\\int_{-\\infty}^{\\infty}e^{-x^{2}}\\,dx=\\sqrt{\\pi}$$\n\n$$\\int_{-\\infty}^{\\infty}e^{-x^{2}}\\,dx=\\sqrt{\\pi}$$\n\n$$\\int_{-\\infty}^{\\infty}e^{-x^{2}}\\,dx=\\sqrt{\\pi}$$\n\n$$\\int_{-\\infty}^{\\infty}e^{-x^{2}}\\,dx=\\sqrt{\\pi}$$\n\n$$\\int_{-\\infty}^{\\infty}e^{-x^{2}}\\,dx=\\sqrt{\\pi}$$\n\n$$\\int_{-\\infty}^{\\infty}e^{-x^{2}}\\,dx=\\sqrt{\\pi}$$\n\n$$\\int_{-\\infty}^{\\infty}e^{-x^{2}}\\,dx=\\sqrt{\\pi}$$\n\n$$\\int_{-\\infty}^{\\infty}e^{-x^{2}}\\,dx=\\sqrt{\\pi}$$\n\n$$\\int_{-\\infty}^{\\infty}e^{-x^{2}}\\,dx=\\sqrt{\\pi}$$\n\n$$\\int_{-\\infty}^{\\infty",
+    "err": ""
+   },
+   {
+    "id": "basel",
+    "ms": 1582,
+    "output": "$$\\sum_{n=1}^{\\infty}\\frac{1}{n^{2}}=\\frac{\\pi^{2}}{6}$$",
+    "err": ""
+   },
+   {
+    "id": "binomial",
+    "ms": 904,
+    "output": "$$(x+y)^{n}=\\sum_{k=0}^{n}\\binom{n}{k}x^{k}y^{n-k}$$",
+    "err": ""
+   },
+   {
+    "id": "derivative",
+    "ms": 748,
+    "output": "$$f^{\\prime}(x)=\\lim_{h\\to0}\\frac{f(x+h)-f(x)}{h}$$",
+    "err": ""
+   },
+   {
+    "id": "det2x2",
+    "ms": 505,
+    "output": "$$\\det\\begin{pmatrix}a&b\\\\ c&d\\end{pmatrix}=ad-bc$$",
+    "err": ""
+   },
+   {
+    "id": "schrodinger",
+    "ms": 1820,
+    "output": "$$i\\hbar{\\frac{\\partial}{\\partial t}}\\Psi(\\mathbf{r},t)=\\left[-{\\frac{\\hbar^{2}}{2m}}\\nabla^{2}+V(\\mathbf{r},t)\\right]\\Psi(\\mathbf{r},t)$$",
+    "err": ""
+   },
+   {
+    "id": "cauchy",
+    "ms": 532,
+    "output": "$$f(a)=\\frac{1}{2\\pi i}\\oint_{\\gamma}\\frac{f(z)}{z-a}\\,dz$$",
+    "err": ""
+   },
+   {
+    "id": "zeta",
+    "ms": 563,
+    "output": "$$\\zeta(s)=2^{s}\\pi^{s-1}\\sin\\left(\\frac{\\pi s}{2}\\right)\\Gamma(1-s)\\,\\zeta(1-s)$$",
+    "err": ""
+   },
+   {
+    "id": "maxwell",
+    "ms": 778,
+    "output": "$$\\nabla\\cdot{\\bf E}=\\frac{\\rho}{\\varepsilon_{0}}$$ $$\\nabla\\times{\\bf B}=\\mu_{0}{\\bf J}+\\mu_{0}\\varepsilon_{0}\\frac{\\partial{\\bf E}}{\\partial t}$$",
+    "err": ""
+   },
+   {
+    "id": "newton-text",
+    "ms": 730,
+    "output": "Newton's second law states that $F=ma.$ The kinetic energy of the body is $K=\\frac{1}{2}mv^{2}.$\n\n$K=\\frac{1}{2}mv^{2}.$",
+    "err": ""
+   },
+   {
+    "id": "epsilon-delta-text",
+    "ms": 598,
+    "output": "For all $\\varepsilon>0$ there exists $\\delta>0$ such that $|x-a|<\\delta$ implies $|f(x)-L|<\\varepsilon$.",
+    "err": ""
+   },
+   {
+    "id": "gaussian-text",
+    "ms": 799,
+    "output": "The Gaussian integral $\\int_{-\\infty}^{\\infty}e^{-x^{2}}\\,dx=\\sqrt{\\pi}$ follows from polar coordinates, where $dA=r\\;dr\\;d\\theta$.",
+    "err": ""
+   },
+   {
+    "id": "quadratic-tiny",
+    "ms": 530,
+    "output": "$$\\kappa=\\frac{-b\\pm\\sqrt{b^{2}-4ac}}{2a}$$",
+    "err": ""
+   },
+   {
+    "id": "basel-dark",
+    "ms": 5315,
+    "output": "$\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{i}\\sum_{j}\\sum_{k}\\sum_{",
+    "err": ""
+   }
+  ],
+  "cacheSettled": true
+ },
+ {
+  "tier": "load",
+  "label": "after",
+  "model": "texify",
+  "device": "webgpu",
+  "dtype": "q4",
+  "src": "hf",
+  "rev": "main",
+  "mode": "cold",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Claude/1.40609.1 Chrome/148.0.7778.280 Safari/537.36",
+  "at": "2026-09-03T22:23:32.983Z",
+  "loadMs": 15034,
+  "downloadMs": 13282,
+  "sessionMs": 865,
+  "files": {
+   "config.json": 4876,
+   "preprocessor_config.json": 615,
+   "generation_config.json": 191,
+   "onnx/encoder_model_q4.onnx": 49064106,
+   "tokenizer_config.json": 4491,
+   "tokenizer.json": 2140013,
+   "onnx/decoder_model_merged_q4.onnx": 170408898
+  },
+  "totalBytes": 221623190,
+  "network": {
+   "requests": 7,
+   "bytes": 221623190,
+   "files": [
+    {
+     "file": "texify/config.json",
+     "len": 4876,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "texify/preprocessor_config.json",
+     "len": 615,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "texify/generation_config.json",
+     "len": 191,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "onnx/encoder_model_q4.onnx",
+     "len": 49064106,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "texify/tokenizer_config.json",
+     "len": 4491,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "texify/tokenizer.json",
+     "len": 2140013,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "onnx/decoder_model_merged_q4.onnx",
+     "len": 170408898,
+     "encoding": null,
+     "type": "application/octet-stream"
+    }
+   ]
+  },
+  "warmupMs": 679,
+  "cacheSettled": true
+ },
+ {
+  "tier": "load",
+  "label": "after",
+  "model": "texify",
+  "device": "webgpu",
+  "dtype": "q4",
+  "src": "hf",
+  "rev": "main",
+  "mode": "cold",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Claude/1.40609.1 Chrome/148.0.7778.280 Safari/537.36",
+  "at": "2026-09-03T22:23:50.975Z",
+  "loadMs": 11131,
+  "downloadMs": 9822,
+  "sessionMs": 804,
+  "files": {
+   "config.json": 4876,
+   "preprocessor_config.json": 615,
+   "tokenizer.json": 2140013,
+   "generation_config.json": 191,
+   "tokenizer_config.json": 4491,
+   "onnx/encoder_model_q4.onnx": 49064106,
+   "onnx/decoder_model_merged_q4.onnx": 170408898
+  },
+  "totalBytes": 221623190,
+  "network": {
+   "requests": 7,
+   "bytes": 221623190,
+   "files": [
+    {
+     "file": "texify/config.json",
+     "len": 4876,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "texify/preprocessor_config.json",
+     "len": 615,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "texify/tokenizer.json",
+     "len": 2140013,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "texify/generation_config.json",
+     "len": 191,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "texify/tokenizer_config.json",
+     "len": 4491,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "onnx/encoder_model_q4.onnx",
+     "len": 49064106,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "onnx/decoder_model_merged_q4.onnx",
+     "len": 170408898,
+     "encoding": null,
+     "type": "application/octet-stream"
+    }
+   ]
+  },
+  "warmupMs": 492,
+  "cacheSettled": true
+ },
+ {
+  "tier": "load",
+  "label": "after",
+  "model": "texify",
+  "device": "webgpu",
+  "dtype": "q4",
+  "src": "hf",
+  "rev": "main",
+  "mode": "warm",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Claude/1.40609.1 Chrome/148.0.7778.280 Safari/537.36",
+  "at": "2026-09-03T22:24:04.976Z",
+  "loadMs": 3001,
+  "downloadMs": 104,
+  "sessionMs": 2887,
+  "files": {
+   "config.json": 4876,
+   "preprocessor_config.json": 615,
+   "tokenizer.json": 2140013,
+   "tokenizer_config.json": 4491,
+   "onnx/encoder_model_q4.onnx": 49064106,
+   "onnx/decoder_model_merged_q4.onnx": 170408898,
+   "generation_config.json": 191
+  },
+  "totalBytes": 221623190,
+  "network": {
+   "requests": 0,
+   "bytes": 0,
+   "files": []
+  },
+  "warmupMs": 725,
+  "cacheSettled": true
+ },
+ {
+  "tier": "load",
+  "label": "after",
+  "model": "intellitex",
+  "device": "wasm",
+  "dtype": "q8",
+  "src": "hf",
+  "rev": "main",
+  "mode": "cold",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Claude/1.40609.1 Chrome/148.0.7778.280 Safari/537.36",
+  "at": "2026-09-03T22:24:10.973Z",
+  "loadMs": 7630,
+  "downloadMs": 6113,
+  "sessionMs": 976,
+  "files": {
+   "config.json": 830,
+   "tokenizer.json": 2288924,
+   "generation_config.json": 163,
+   "tokenizer_config.json": 21058,
+   "onnx/encoder_model_quantized.onnx": 109974435,
+   "onnx/decoder_model_merged_quantized.onnx": 163856759
+  },
+  "totalBytes": 276142169,
+  "network": {
+   "requests": 6,
+   "bytes": 276142169,
+   "files": [
+    {
+     "file": "intellitex/config.json",
+     "len": 830,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex/tokenizer.json",
+     "len": 2288924,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex/generation_config.json",
+     "len": 163,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex/tokenizer_config.json",
+     "len": 21058,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "onnx/encoder_model_quantized.onnx",
+     "len": 109974435,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "onnx/decoder_model_merged_quantized.onnx",
+     "len": 163856759,
+     "encoding": null,
+     "type": "application/octet-stream"
+    }
+   ]
+  },
+  "warmupMs": 1993,
+  "items": [
+   {
+    "id": "quadratic-formula",
+    "ms": 1447,
+    "output": "$$x=\\frac{-b\\pm\\sqrt{b^{2}-4ac}}{2a}$$",
+    "err": ""
+   },
+   {
+    "id": "eulers-identity",
+    "ms": 1186,
+    "output": "$$e^{i\\pi}+1=0$$",
+    "err": ""
+   },
+   {
+    "id": "pythagorean-theorem",
+    "ms": 1455,
+    "output": "$$a^{2}+b^{2}=c^{2}$$",
+    "err": ""
+   },
+   {
+    "id": "circle-area",
+    "ms": 875,
+    "output": "$$A=\\pi r^{2}$$",
+    "err": ""
+   },
+   {
+    "id": "gaussian-integral",
+    "ms": 3179,
+    "output": "$$\\int_{-\\infty}^{\\infty}e^{-x^{2}}\\,dx=\\sqrt{\\pi}$$",
+    "err": ""
+   },
+   {
+    "id": "basel-problem",
+    "ms": 3696,
+    "output": "$$\\sum_{n=1}^{\\infty}\\frac{1}{n^{2}}=\\frac{\\pi^{2}}{6}$$",
+    "err": ""
+   },
+   {
+    "id": "binomial-theorem",
+    "ms": 2649,
+    "output": "$$(x+y)^{n}=\\sum_{k=0}^{n}\\binom{n}{k}x^{n-k}y^{k}$$",
+    "err": ""
+   },
+   {
+    "id": "bayes-theorem",
+    "ms": 2189,
+    "output": "$$P(A|B)=\\frac{P(B|A)P(A)}{P(B)}$$",
+    "err": ""
+   },
+   {
+    "id": "schrodinger-time-dependent",
+    "ms": 2262,
+    "output": "$$i\\hbar\\frac{d}{dt}\\Psi(t)=\\hat{H}\\Psi(t),$$",
+    "err": ""
+   },
+   {
+    "id": "cauchy-integral-formula",
+    "ms": 2023,
+    "output": "$$f(a)=\\frac{1}{2\\pi i}\\oint_{\\gamma}\\frac{f(z)}{z-a}\\,dz$$",
+    "err": ""
+   },
+   {
+    "id": "riemann-zeta-functional-equation",
+    "ms": 3530,
+    "output": "$$\\zeta(s)=2^{s}\\pi^{s-1}\\sin\\left(\\frac{\\pi s}{2}\\right)\\Gamma(1-s)\\zeta(1-s)$$",
+    "err": ""
+   },
+   {
+    "id": "einstein-field-equations",
+    "ms": 3856,
+    "output": "$$G_{\\mu\\nu}+\\lambda g_{\\mu\\nu}=\\kappa T_{\\mu\\nu}$$",
+    "err": ""
+   },
+   {
+    "id": "mechanics-homework-passage",
+    "ms": 5863,
+    "output": "$$A_{b}=\\frac{m}{2}a,\\quad F=m a,\\quad F_{t}=m a,\\quad F_{tt}=\\frac{m^{2}}{2}a,\\quad E_{k}=\\frac{1}{2}m v^{2},$$",
+    "err": ""
+   },
+   {
+    "id": "euler-formula-passage",
+    "ms": 4370,
+    "output": "$$e^{ix}=\\cos(x)+i\\sin(x)\\cos(\\pi x)(-1)^{|x|}=0\\quad\\Rightarrow\\quad x=5\\pmod{8}.$$",
+    "err": ""
+   },
+   {
+    "id": "analysis-classics-passage",
+    "ms": 6842,
+    "output": "$$\\sum_{n=1}^{\\infty}\\frac{1}{n^{2}}=\\frac{\\pi^{2}}{6}\\quad\\Rightarrow\\quad\\int_{-\\infty}^{\\infty}e^{-x^{2}}dx=\\sqrt{\\pi}\\quad\\Rightarrow\\quad\\pi\\text{isnotexcessly}$$",
+    "err": ""
+   }
+  ],
+  "cacheSettled": true
+ },
+ {
+  "tier": "load",
+  "label": "after",
+  "model": "intellitex",
+  "device": "wasm",
+  "dtype": "q8",
+  "src": "hf",
+  "rev": "main",
+  "mode": "warm",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Claude/1.40609.1 Chrome/148.0.7778.280 Safari/537.36",
+  "at": "2026-09-03T22:25:07.969Z",
+  "loadMs": 1394,
+  "downloadMs": 138,
+  "sessionMs": 1234,
+  "files": {
+   "config.json": 830,
+   "tokenizer.json": 2288924,
+   "tokenizer_config.json": 21058,
+   "onnx/encoder_model_quantized.onnx": 109974435,
+   "onnx/decoder_model_merged_quantized.onnx": 163856759,
+   "generation_config.json": 163
+  },
+  "totalBytes": 276142169,
+  "network": {
+   "requests": 0,
+   "bytes": 0,
+   "files": []
+  },
+  "warmupMs": 2250,
+  "cacheSettled": true
+ },
+ {
+  "tier": "load",
+  "label": "after",
+  "model": "texify",
+  "device": "wasm",
+  "dtype": "q8",
+  "src": "hf",
+  "rev": "main",
+  "mode": "cold",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Claude/1.40609.1 Chrome/148.0.7778.280 Safari/537.36",
+  "at": "2026-09-03T22:25:13.964Z",
+  "loadMs": 13696,
+  "downloadMs": 11923,
+  "sessionMs": 838,
+  "files": {
+   "config.json": 4876,
+   "tokenizer_config.json": 4491,
+   "preprocessor_config.json": 615,
+   "tokenizer.json": 2140013,
+   "generation_config.json": 191,
+   "onnx/encoder_model_quantized.onnx": 79294829,
+   "onnx/decoder_model_merged_quantized.onnx": 239901134
+  },
+  "totalBytes": 321346149,
+  "network": {
+   "requests": 7,
+   "bytes": 321346149,
+   "files": [
+    {
+     "file": "texify/config.json",
+     "len": 4876,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "texify/tokenizer_config.json",
+     "len": 4491,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "texify/preprocessor_config.json",
+     "len": 615,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "texify/tokenizer.json",
+     "len": 2140013,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "texify/generation_config.json",
+     "len": 191,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "onnx/encoder_model_quantized.onnx",
+     "len": 79294829,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "onnx/decoder_model_merged_quantized.onnx",
+     "len": 239901134,
+     "encoding": null,
+     "type": "application/octet-stream"
+    }
+   ]
+  },
+  "warmupMs": 29040,
+  "cacheSettled": true
+ },
+ {
+  "tier": "load",
+  "label": "after",
+  "model": "texify",
+  "device": "wasm",
+  "dtype": "q8",
+  "src": "hf",
+  "rev": "main",
+  "mode": "warm",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Claude/1.40609.1 Chrome/148.0.7778.280 Safari/537.36",
+  "at": "2026-09-03T22:25:58.965Z",
+  "loadMs": 2952,
+  "downloadMs": 166,
+  "sessionMs": 2782,
+  "files": {
+   "config.json": 4876,
+   "preprocessor_config.json": 615,
+   "tokenizer.json": 2140013,
+   "tokenizer_config.json": 4491,
+   "onnx/encoder_model_quantized.onnx": 79294829,
+   "onnx/decoder_model_merged_quantized.onnx": 239901134,
+   "generation_config.json": 191
+  },
+  "totalBytes": 321346149,
+  "network": {
+   "requests": 0,
+   "bytes": 0,
+   "files": []
+  },
+  "warmupMs": 13873,
+  "cacheSettled": true
+ },
+ {
+  "tier": "load",
+  "label": "old-rev-now",
+  "model": "texify",
+  "device": "webgpu",
+  "dtype": "q4",
+  "src": "hf",
+  "rev": "878a644efe87",
+  "mode": "cold",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Claude/1.40609.1 Chrome/148.0.7778.280 Safari/537.36",
+  "at": "2026-09-03T22:26:42.277Z",
+  "loadMs": 47023,
+  "downloadMs": 44499,
+  "sessionMs": 1560,
+  "files": {
+   "config.json": 4876,
+   "generation_config.json": 191,
+   "preprocessor_config.json": 615,
+   "tokenizer_config.json": 4491,
+   "tokenizer.json": 2140013,
+   "onnx/encoder_model_q4.onnx": 49064106,
+   "onnx/decoder_model_merged_q4.onnx": 328316375
+  },
+  "totalBytes": 379530667,
+  "network": {
+   "requests": 7,
+   "bytes": 377381287,
+   "files": [
+    {
+     "file": "texify/config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "onnx/decoder_model_merged_q4.onnx",
+     "len": 328316375,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "texify/tokenizer_config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "onnx/encoder_model_q4.onnx",
+     "len": 49064106,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "texify/tokenizer.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "texify/generation_config.json",
+     "len": 191,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "texify/preprocessor_config.json",
+     "len": 615,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    }
+   ]
+  },
+  "warmupMs": 1000,
+  "cacheSettled": false
+ },
+ {
+  "tier": "load",
+  "label": "old-rev-now",
+  "model": "intellitex",
+  "device": "webgpu",
+  "dtype": "q4",
+  "src": "hf",
+  "rev": "878a644efe87",
+  "mode": "cold",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Claude/1.40609.1 Chrome/148.0.7778.280 Safari/537.36",
+  "at": "2026-09-03T22:29:32.986Z",
+  "loadMs": 18087,
+  "downloadMs": 16329,
+  "sessionMs": 1044,
+  "files": {
+   "config.json": 830,
+   "generation_config.json": 163,
+   "tokenizer_config.json": 21058,
+   "tokenizer.json": 2288924,
+   "onnx/encoder_model_q4.onnx": 151942871,
+   "onnx/decoder_model_merged_q4.onnx": 185600992
+  },
+  "totalBytes": 339854838,
+  "network": {
+   "requests": 6,
+   "bytes": 337544856,
+   "files": [
+    {
+     "file": "intellitex/config.json",
+     "len": 830,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "onnx/encoder_model_q4.onnx",
+     "len": 151942871,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "onnx/decoder_model_merged_q4.onnx",
+     "len": 185600992,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "intellitex/generation_config.json",
+     "len": 163,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "intellitex/tokenizer_config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "intellitex/tokenizer.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    }
+   ]
+  },
+  "warmupMs": 435,
+  "cacheSettled": true
+ }
+]
