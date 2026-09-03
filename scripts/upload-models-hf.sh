@@ -11,7 +11,7 @@
 #   hf auth login
 set -euo pipefail
 
-REPO="${MODEL_REPO:-OlehZhyhinas/latexgen-models}"
+REPO="${MODEL_REPO:-ozhyhinas/latexgen-models}"
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 SRC="$ROOT/public/models"
 

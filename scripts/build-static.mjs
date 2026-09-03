@@ -12,7 +12,7 @@ const OUT = "dist";
 
 // Weights live in a Hugging Face repo; transformers.js asks for
 // "<model>/onnx/<file>", so the template turns that into a path inside it.
-const MODEL_REPO = process.env.MODEL_REPO ?? "OlehZhyhinas/latexgen-models";
+const MODEL_REPO = process.env.MODEL_REPO ?? "ozhyhinas/latexgen-models";
 const MODEL_REVISION = process.env.MODEL_REVISION ?? "main";
 
 // Server-only or developer-only files that must not ship.
