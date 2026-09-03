@@ -43,6 +43,16 @@ Share a result with a link: the LaTeX travels in the URL fragment (`#l=...`) and
 docker compose up --build   # http://localhost:8013
 ```
 
+Or publish it as a static site — the on-device app needs no server at all:
+
+```bash
+node scripts/build-static.mjs   # -> dist/, deployable to GitHub Pages
+```
+
+The static build gives up the server tier, the Tab API and the compute mesh,
+which all need a server process; everything on-device is unchanged. See
+[docs/deploy.md](docs/deploy.md#github-pages-static-no-server).
+
 Add [Ollama](https://ollama.com) or any OpenAI-compatible API (OpenRouter, OpenAI, Groq, a local MLX or vLLM server) for the server tier; see [docs/deploy.md](docs/deploy.md) for configuration, the one-command AWS deployment, and what is hardened for production.
 
 ```bash

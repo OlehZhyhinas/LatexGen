@@ -17,6 +17,8 @@ jobs:
           node-version: 22
       - name: Unit tests (validator)
         run: npm test
+      - name: Static build (also guards against root-absolute asset paths)
+        run: node scripts/build-static.mjs
       - name: Syntax check server and frontend modules
         run: |
           node --check server.js

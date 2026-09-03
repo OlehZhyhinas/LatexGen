@@ -1,14 +1,14 @@
 // Level A runtime benchmark: for each in-browser model, try every
 // (device, dtype) the runtime offers, measure load + per-item latency, and
 // keep the outputs so correctness can be judged afterwards.
-import { pipeline, env, VisionEncoderDecoderModel, PreTrainedTokenizer, Tensor, cat } from "/vendor/transformers/transformers.min.js";
-env.allowRemoteModels = false; env.allowLocalModels = true; env.localModelPath = "/models/";
-env.backends.onnx.wasm.wasmPaths = "/vendor/ort/";
+import { pipeline, env, VisionEncoderDecoderModel, PreTrainedTokenizer, Tensor, cat } from "./vendor/transformers/transformers.min.js";
+env.allowRemoteModels = false; env.allowLocalModels = true; env.localModelPath = new URL("models/", import.meta.url).href;
+env.backends.onnx.wasm.wasmPaths = new URL("vendor/ort/", import.meta.url).href;
 env.backends.onnx.wasm.numThreads = 1;
 
 const progress = document.getElementById("progress"), logEl = document.getElementById("log");
 const log = (m, c = "") => { const d = document.createElement("div"); d.className = c; d.textContent = m; logEl.appendChild(d); };
-const post = (row) => fetch("/api/bench", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(row) });
+const post = (row) => fetch("api/bench", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(row) });
 const withTimeout = (p, ms, label) => Promise.race([p, new Promise((_, rej) => setTimeout(() => rej(new Error(`${label} timeout ${ms}ms`)), ms))]);
 const hasGpu = !!navigator.gpu;
 
@@ -17,7 +17,7 @@ const TEXT_ITEMS = [
   ["quadratic", "the quadratic formula: x equals minus b plus or minus the square root of b squared minus 4ac, all over 2a"],
   ["schrodinger", "i h bar partial psi over partial t equals minus h bar squared over 2m laplacian psi plus V psi"],
 ];
-const images = (await fetch("/bench-images.json").then((r) => r.json())).filter((i) => ["quadratic", "gaussian", "schrodinger", "newton-text"].includes(i.id));
+const images = (await fetch("bench-images.json").then((r) => r.json())).filter((i) => ["quadratic", "gaussian", "schrodinger", "newton-text"].includes(i.id));
 const blobs = new Map();
 for (const it of images) blobs.set(it.id, await fetch(it.image).then((r) => r.blob()));
 const PREFIX = "Convert natural-language math into a STRICT LaTeX equation\n";
@@ -98,7 +98,7 @@ const params = new URLSearchParams(location.search);
 const i = Number(params.get("i") ?? "0");
 // ?only=3,4 runs just those config indices (no reset, no chaining past them)
 const only = params.get("only") ? params.get("only").split(",").map(Number) : null;
-if (i === 0 && !only) await fetch("/api/bench", { method: "DELETE" });
+if (i === 0 && !only) await fetch("api/bench", { method: "DELETE" });
 const nextIndex = (from) => { let n = from + 1; if (only) while (n < plan.length && !only.includes(n)) n++; return n; };
 if (i >= plan.length) {
   await post({ approach: "__done__", item: "__done__", tier: "runtime", output: "", ms: 0 });

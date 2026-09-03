@@ -3,8 +3,8 @@
 // jobs never touch the user's screen. Progress is reported through optional
 // callbacks; ONNX models run in a worker (models.js); the WebLLM engine is
 // guarded by a lock because it cannot generate concurrently.
-import { validateLatex, checkSyntax } from "/validator.js";
-import { loadModel, runModel, loaded } from "/models.js";
+import { validateLatex, checkSyntax } from "./validator.js";
+import { loadModel, runModel, loaded } from "./models.js";
 
 // Kept terse: every token is prefilled on every on-device call.
 const SYSTEM_PROMPT = `Convert the text to LaTeX. Output only LaTeX, no commentary or fences. Pure math: \\[ ... \\]. Prose with math: keep the prose, wrap math in \\( ... \\). Standard amsmath only.`;
@@ -149,7 +149,7 @@ export function createPipeline(ctx) {
     { role: "assistant", content: badLatex },
     { role: "user", content: `Checks failed:\n- ${issues.join("\n- ")}\nOutput the corrected LaTeX.` },
   ], onDelta);
-  const convertServer = (text, onDelta) => streamServerChat("/api/convert", { text, complex: !specialistEligible(text) }, onDelta);
+  const convertServer = (text, onDelta) => streamServerChat("api/convert", { text, complex: !specialistEligible(text) }, onDelta);
 
   // Validator-guided repair: up to 5 turns while the error keeps changing;
   // one attempt when a server can take over or the device decodes slowly.
@@ -174,7 +174,7 @@ export function createPipeline(ctx) {
   function meshUsable() { return !!(ctx.mesh && ctx.mesh.enabled() && ctx.mesh.tabId()); }
   async function runOnMesh(kind, body, onStatus) {
     onStatus?.("asking another LatexGen tab…");
-    const r = await fetch(`/api/pool/${ctx.mesh.tabId()}/${kind}`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) });
+    const r = await fetch(`api/pool/${ctx.mesh.tabId()}/${kind}`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) });
     const data = await r.json().catch(() => ({}));
     if (!r.ok || data.error || !data.latex) throw new Error(data.error || `mesh ${r.status}`);
     return { latex: data.latex, model: `peer · ${data.peerModel ?? "on-device model"}`, peer: data.peer };
@@ -201,7 +201,7 @@ export function createPipeline(ctx) {
     const parse = (s) => { try { const j = JSON.parse(s.slice(s.indexOf("{"), s.lastIndexOf("}") + 1)); return { ok: !!j.ok, reason: String(j.reason || "") }; } catch { return { ok: true, reason: "" }; } };
     try {
       if (ctx.serverAvailable()) {
-        const r = await fetch("/api/judge", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ text, latex }) });
+        const r = await fetch("api/judge", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ text, latex }) });
         if (r.ok) return parse(await r.text());
       }
       const engine = ctx.getEngine();
@@ -369,7 +369,7 @@ export function createPipeline(ctx) {
       { role: "system", content: REFINE_PROMPT }, { role: "user", content: `Convert to LaTeX:\n${original}` },
       { role: "assistant", content: latex }, { role: "user", content: instruction },
     ], onDelta);
-    const viaServer = () => streamServerChat("/api/refine", { original, latex, instruction }, onDelta);
+    const viaServer = () => streamServerChat("api/refine", { original, latex, instruction }, onDelta);
     let result = useBrowser ? await viaBrowser() : await viaServer();
     let retried = false;
     if (!acceptable(result.latex) && useBrowser && server) { retried = true; result = await viaServer(); }

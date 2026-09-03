@@ -4,12 +4,23 @@
 // models may run concurrently.
 import {
   pipeline, env, VisionEncoderDecoderModel, PreTrainedTokenizer, Tensor, cat,
-} from "/vendor/transformers/transformers.min.js";
+} from "./vendor/transformers/transformers.min.js";
+import { MODEL_HOST, MODEL_PATH_TEMPLATE } from "./config.js";
 
-env.allowRemoteModels = false;
-env.allowLocalModels = true;
-env.localModelPath = "/models/";
-env.backends.onnx.wasm.wasmPaths = "/vendor/ort/";
+// Weights come from this origin in the self-hosted build, and from a CDN in
+// the static build. Paths are resolved against this worker's own URL so the
+// app works under any deploy prefix (e.g. a GitHub Pages project path).
+if (MODEL_HOST) {
+  env.allowRemoteModels = true;
+  env.allowLocalModels = false;
+  env.remoteHost = MODEL_HOST;
+  env.remotePathTemplate = MODEL_PATH_TEMPLATE;
+} else {
+  env.allowRemoteModels = false;
+  env.allowLocalModels = true;
+  env.localModelPath = new URL("models/", import.meta.url).href;
+}
+env.backends.onnx.wasm.wasmPaths = new URL("vendor/ort/", import.meta.url).href;
 env.backends.onnx.wasm.numThreads = 1; // multi-threaded ORT hung on load in testing
 
 const SPECIALIST_PREFIX = "Convert natural-language math into a STRICT LaTeX equation\n";

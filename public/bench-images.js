@@ -6,7 +6,7 @@ import {
 
 env.allowRemoteModels = false;
 env.allowLocalModels = true;
-env.localModelPath = "/models/";
+env.localModelPath = new URL("models/", import.meta.url).href;
 
 const progress = document.getElementById("progress");
 const logEl = document.getElementById("log");
@@ -18,10 +18,10 @@ const log = (msg, cls = "") => {
   d.scrollIntoView({ block: "end" });
 };
 const post = (row) =>
-  fetch("/api/bench", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(row) });
+  fetch("api/bench", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(row) });
 
-const items = await fetch("/bench-images.json").then((r) => r.json());
-await fetch("/api/bench", { method: "DELETE" });
+const items = await fetch("bench-images.json").then((r) => r.json());
+await fetch("api/bench", { method: "DELETE" });
 const blobs = new Map();
 for (const it of items) blobs.set(it.id, await fetch(it.image).then((r) => r.blob()));
 

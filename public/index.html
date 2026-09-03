@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>LatexGen — text and screenshots to LaTeX, in your browser</title>
   <meta name="description" content="Convert plain-English math or equation screenshots to validated LaTeX. Free, unlimited, private: models run in your browser, nothing is uploaded." />
-  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="manifest" href="manifest.webmanifest" />
   <meta name="theme-color" content="#2F6FEB" />
-  <link rel="icon" href="/icons/icon-192.png" type="image/png" />
-  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
-  <link rel="stylesheet" href="/vendor/fonts/geist/geist.css" />
-  <link rel="stylesheet" href="/vendor/katex/katex.min.css" />
-  <link rel="stylesheet" href="/style.css" />
+  <link rel="icon" href="icons/icon-192.png" type="image/png" />
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+  <link rel="stylesheet" href="vendor/fonts/geist/geist.css" />
+  <link rel="stylesheet" href="vendor/katex/katex.min.css" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header class="topbar">
@@ -22,7 +22,7 @@
     </div>
     <nav class="nav">
       <a href="#how">How it works</a>
-      <a href="/benchmarks.html">Benchmarks</a>
+      <a href="benchmarks.html">Benchmarks</a>
       <a href="https://github.com/OlehZhyhinas/LatexGen" target="_blank" rel="noopener">GitHub</a>
       <button id="api-btn" class="icon-btn" title="Tab API" aria-label="Tab API" aria-expanded="false">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 3v4M15 3v4M7 7h10v4a5 5 0 0 1-10 0V7ZM12 16v5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -43,7 +43,7 @@
       <strong>Model settings</strong>
       <button id="settings-close" class="icon-btn" aria-label="Close">✕</button>
     </div>
-    <div class="settings-group">
+    <div class="settings-group" id="engine-group">
       <div class="settings-label">Where conversions run</div>
       <label class="radio">
         <input type="radio" name="engine" value="browser" checked />
@@ -212,7 +212,7 @@
       <p><strong>Does it really not upload anything?</strong> Text and images are processed in the tab. Open your browser's network panel while converting: the only requests are for model files. The one exception is the optional server model, which is off by default and clearly labelled when it is used.</p>
       <p><strong>How big is the download?</strong> Quick mode is about 340 MB of models, downloaded once. Full mode adds an on-device language model sized to your machine (1.4–6 GB), fetched in the background while you work.</p>
       <p><strong>Can it check LaTeX I already have?</strong> Yes. Switch the input to <em>Check LaTeX</em>, paste your code, and it is parsed, rendered, and repaired if it does not compile.</p>
-      <p><strong>Which models?</strong> IntelliTeX for text, Texo and Texify for images, Qwen3 models via WebLLM for complex input. The <a href="/benchmarks.html">benchmarks page</a> shows how each was chosen.</p>
+      <p><strong>Which models?</strong> IntelliTeX for text, Texo and Texify for images, Qwen3 models via WebLLM for complex input. The <a href="benchmarks.html">benchmarks page</a> shows how each was chosen.</p>
     </section>
   </main>
 
@@ -230,13 +230,13 @@
   <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
 
   <footer class="foot">
-    <span>Free, unlimited, and private: your text and images are processed on this device. Nothing is uploaded. <a href="/privacy.html" class="link-plain">Privacy</a></span>
+    <span>Free, unlimited, and private: your text and images are processed on this device. Nothing is uploaded. <a href="privacy.html" class="link-plain">Privacy</a></span>
     <span class="row gap-sm"><span id="model-status">On-device model: loading…</span><button id="change-model" class="link">Change</button></span>
   </footer>
 
-  <script defer src="/vendor/katex/katex.min.js"></script>
-  <script defer src="/vendor/katex/contrib/auto-render.min.js"></script>
-  <script defer src="/vendor/html-to-image/html-to-image.js"></script>
-  <script type="module" src="/app.js"></script>
+  <script defer src="vendor/katex/katex.min.js"></script>
+  <script defer src="vendor/katex/contrib/auto-render.min.js"></script>
+  <script defer src="vendor/html-to-image/html-to-image.js"></script>
+  <script type="module" src="app.js"></script>
 </body>
 </html>

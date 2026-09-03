@@ -15,7 +15,7 @@ export function pickRuntime(model) {
   return runtimePrefs()[model] === "wasm" ? cpu : gpu;
 }
 
-const worker = new Worker("/onnx-worker.js", { type: "module" });
+const worker = new Worker(new URL("onnx-worker.js", import.meta.url), { type: "module" });
 const pending = new Map();
 const progressListeners = new Map(); // key -> Set<fn>
 let seq = 0;

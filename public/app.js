@@ -1,10 +1,11 @@
 // LatexGen UI. All conversion logic lives in pipeline.js (headless); this
 // file wires DOM events to it and renders results. The Tab API at the bottom
 // calls the same pipeline without touching the UI.
-import * as webllm from "/vendor/webllm/index.js";
-import { validateLatex, checkSyntax } from "/validator.js";
-import { loadModel, onProgress as onModelProgress, runtimeUsed } from "/models.js";
-import { createPipeline, streamServerChat, toFormat, IMAGE_MODELS, MAX_REPAIR_ATTEMPTS, specialistEligible } from "/pipeline.js";
+import * as webllm from "./vendor/webllm/index.js";
+import { validateLatex, checkSyntax } from "./validator.js";
+import { loadModel, onProgress as onModelProgress, runtimeUsed } from "./models.js";
+import { createPipeline, streamServerChat, toFormat, IMAGE_MODELS, MAX_REPAIR_ATTEMPTS, specialistEligible } from "./pipeline.js";
+import { STATIC_BUILD } from "./config.js";
 
 window.__validate = validateLatex; // debugging hook
 window.__runtimeUsed = runtimeUsed; // debugging hook
@@ -245,7 +246,7 @@ async function backgroundJudge(text, latex) {
         const r = await pipe.repairLoop(text, latex, [`judge: ${j.reason}`], (l) => validateLatex(text, l), onDeltaUI, null, { maxAttempts: 2 });
         if (r.ok) fixed = r.latex;
       }
-      if (!fixed && serverAvailable) fixed = (await streamServerChat("/api/refine", { original: text, latex, instruction: `A reviewer says: ${j.reason}. Fix exactly that.` }, onDeltaUI)).latex;
+      if (!fixed && serverAvailable) fixed = (await streamServerChat("api/refine", { original: text, latex, instruction: `A reviewer says: ${j.reason}. Fix exactly that.` }, onDeltaUI)).latex;
       if (fixed) { outputCode.textContent = fixed; renderPreview(fixed); currentLatex = fixed; showChecks(validateLatex(text, fixed), "(corrected after a second opinion)"); recordHistory(text, fixed); }
       else fix.textContent = "could not fix automatically";
     } catch (e) { fix.textContent = `fix failed: ${String(e.message || e).slice(0, 40)}`; }
@@ -322,7 +323,7 @@ async function warmUp(eng) {
   } catch { /* best-effort */ }
 }
 async function loadEngine(modelId, onProgress) {
-  const eng = await webllm.CreateWebWorkerMLCEngine(new Worker("/webllm-worker.js", { type: "module" }), modelId, { initProgressCallback: onProgress }, { context_window_size: 2048 });
+  const eng = await webllm.CreateWebWorkerMLCEngine(new Worker(new URL("webllm-worker.js", import.meta.url), { type: "module" }), modelId, { initProgressCallback: onProgress }, { context_window_size: 2048 });
   await warmUp(eng);
   return eng;
 }
@@ -372,13 +373,22 @@ specialistReady.then(buildModelPicker, buildModelPicker);
 
 // ---- WebGPU availability ----
 if (!navigator.gpu) {
-  loadStatus.textContent = "WebGPU not available in this browser — use the server model.";
   loadBtn.disabled = true; ddBtn.disabled = true;
-  document.querySelector('input[value="server"]').checked = true;
+  if (STATIC_BUILD) {
+    loadStatus.textContent = "WebGPU not available in this browser — the specialist still runs on CPU.";
+  } else {
+    loadStatus.textContent = "WebGPU not available in this browser — use the server model.";
+    document.querySelector('input[value="server"]').checked = true;
+  }
 }
 
 // ---- server health ----
-fetch("/api/health").then((r) => r.json()).then(({ routes, ollama, serverKind: kind }) => {
+// The static build has no server tier, Tab API or mesh: hide the parts of the
+// UI that would only ever report "unavailable".
+if (STATIC_BUILD) {
+  $("engine-group").hidden = true;
+  $("api-btn").hidden = true;
+} else fetch("api/health").then((r) => r.json()).then(({ routes, ollama, serverKind: kind }) => {
   serverAvailable = !!routes?.convert;
   serverKind = kind ?? "cloud";
   if (routes?.convert) $("server-hint").textContent = `(${routes.convert.kind} · ${routes.convert.model.split("/").pop()})`;
@@ -551,7 +561,7 @@ async function copyAs(kind) {
 }
 
 // ---- installable + offline ----
-if ("serviceWorker" in navigator) window.addEventListener("load", () => navigator.serviceWorker.register("/sw.js").catch((e) => console.warn("sw:", e)));
+if ("serviceWorker" in navigator) window.addEventListener("load", () => navigator.serviceWorker.register(new URL("sw.js", import.meta.url)).catch((e) => console.warn("sw:", e)));
 
 // ---- shared link: LaTeX in the URL fragment (never sent to a server) ----
 {
@@ -572,7 +582,7 @@ if ("serviceWorker" in navigator) window.addEventListener("load", () => navigato
 // ---- MathLive visual editor ----
 let mathliveReady = null;
 function loadMathlive() {
-  mathliveReady ??= import("/vendor/mathlive/mathlive.min.mjs").then((mod) => { mod.MathfieldElement.fontsDirectory = "/vendor/mathlive/fonts"; mod.MathfieldElement.soundsDirectory = null; return mod; });
+  mathliveReady ??= import("./vendor/mathlive/mathlive.min.mjs").then((mod) => { mod.MathfieldElement.fontsDirectory = new URL("vendor/mathlive/fonts", import.meta.url).href; mod.MathfieldElement.soundsDirectory = null; return mod; });
   return mathliveReady;
 }
 function mathBodyOf(latex) { const t = latex.trim(); const m = t.match(/^(?:\$\$([\s\S]+)\$\$|\\\[([\s\S]+)\\\]|\\\(([\s\S]+)\\\)|\$([^$]+)\$)$/); if (m) return (m[1] ?? m[2] ?? m[3] ?? m[4]).trim(); return /\$|\\\[|\\\(/.test(t) ? null : t; }
@@ -621,8 +631,11 @@ async function setVisualEdit(on) {
 // Tab API: other apps use this tab through a relay. Jobs run headlessly on
 // the same pipeline as the UI — concurrently, without touching the screen —
 // and the API drawer shows the address, status, running jobs and a log.
+//
+// Both this and the compute mesh need the relay in server.js, so the whole
+// block is inert in the static build (mesh hooks stay at their "off" default).
 // =====================================================================
-{
+if (!STATIC_BUILD) {
   const TABAPI_KEY = "latexgen.tabapi", LOG_KEY = "latexgen.apilog", LOG_MAX = 50, MAX_CONCURRENT = 3;
   const toggle = $("tabapi-toggle"), details = $("tabapi-details"), urlEl = $("tabapi-url");
   const statusEl = $("tabapi-status"), dotEl = $("tabapi-dot"), exampleEl = $("tabapi-example");
@@ -652,7 +665,7 @@ async function setVisualEdit(on) {
       pool: state.pool ? { keys: [state.poolKey ? `k:${state.poolKey}` : "public"], images: !!state.poolImages, maxConcurrent: 1 } : null,
     };
     try {
-      const r = await fetch(`/api/relay/${state.id}/caps`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) });
+      const r = await fetch(`api/relay/${state.id}/caps`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) });
       const d = await r.json();
       poolStats.textContent = `served ${d.servedJobs} · used ${d.usedJobs} · ${d.peers} peer${d.peers === 1 ? "" : "s"} online`;
     } catch {}
@@ -663,7 +676,7 @@ async function setVisualEdit(on) {
   let log = (() => { try { return JSON.parse(sessionStorage.getItem(LOG_KEY) || "[]"); } catch { return []; } })();
 
   const render = () => {
-    const base = `${location.origin}/api/tab/${state.id}`;
+    const base = new URL(`api/tab/${state.id}`, location.href).href;
     urlEl.textContent = `${base}/convert`;
     exampleEl.textContent = [
       `# text -> LaTeX (same ladder, checks and repair as the Convert button)`,
@@ -756,7 +769,7 @@ async function setVisualEdit(on) {
     try { result = await runJob(job); } catch (e) { result = { error: String(e.message || e) }; }
     clearInterval(tick);
     result.ms ??= Math.round(performance.now() - started);
-    try { await fetch(`/api/relay/${state.id}/result/${job.jobId}`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(result) }); } catch {}
+    try { await fetch(`api/relay/${state.id}/result/${job.jobId}`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(result) }); } catch {}
     running.delete(job.jobId); renderRunning();
     logEntry({ t: Date.now(), kind: job.pool ? "peer job" : job.kind, summary: summarize(job), model: result.model, ms: result.ms, ok: !!result.ok && !result.error, error: result.error });
     statusEl.textContent = `answered ${job.pool ? "a peer's " : ""}${job.kind} in ${result.ms} ms · listening`;
@@ -769,7 +782,7 @@ async function setVisualEdit(on) {
         if (running.size >= MAX_CONCURRENT) { await new Promise((r) => setTimeout(r, 200)); continue; }
         if (!running.size) statusEl.textContent = "listening for requests…";
         dotEl.className = `dot-ind${running.size ? " busy" : " on"}`;
-        const r = await fetch(`/api/relay/${state.id}/next`, { cache: "no-store" });
+        const r = await fetch(`api/relay/${state.id}/next`, { cache: "no-store" });
         if (gen !== generation) break;
         if (r.status === 204) continue;
         if (!r.ok) { await new Promise((res) => setTimeout(res, 3000)); continue; }

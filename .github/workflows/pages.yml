@@ -1,0 +1,45 @@
+name: Pages
+
+# Deploys the static (server-less) build: the on-device app, with weights
+# streaming from Hugging Face. The server tier, Tab API and compute mesh are
+# not part of it — see docs/deploy.md for the self-hosted build.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deploy at a time; let a running one finish rather than cancelling it.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: false   # the static build excludes model weights
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/build-static.mjs
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - id: deploy
+        uses: actions/deploy-pages@v4

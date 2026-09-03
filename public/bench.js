@@ -30,7 +30,7 @@ const log = (cls, msg) => {
   document.getElementById("log").prepend(el);
 };
 const progress = (msg) => { document.getElementById("progress").textContent = msg; };
-const post = (row) => fetch("/api/bench", { method: "POST", body: JSON.stringify(row) });
+const post = (row) => fetch("api/bench", { method: "POST", body: JSON.stringify(row) });
 
 const stripThink = (t) => t.replace(/<think>[\s\S]*?<\/think>/g, "").trim();
 const stripFences = (t) => {
@@ -50,13 +50,13 @@ async function genWebllm(engine, system, user, maxTokens) {
 }
 
 async function main() {
-  const items = await fetch("/bench-data.json").then((r) => r.json());
+  const items = await fetch("bench-data.json").then((r) => r.json());
   progress(`loaded ${items.length} eval items`);
 
   // Specialist
   tjsEnv.allowRemoteModels = false;
   tjsEnv.allowLocalModels = true;
-  tjsEnv.localModelPath = "/models/";
+  tjsEnv.localModelPath = new URL("models/", import.meta.url).href;
   progress("loading specialist…");
   const specialist = await tjsPipeline("text2text-generation", "intellitex", { dtype: "q8" });
   await specialist(`${SPECIALIST_PREFIX}x squared`, { max_new_tokens: 16 });
