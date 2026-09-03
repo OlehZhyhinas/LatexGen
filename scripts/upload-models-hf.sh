@@ -21,8 +21,11 @@ hf auth whoami >/dev/null 2>&1 || { echo "not logged in: hf auth login (needs a 
 # The q4 variants are build artifacts (scripts/build-model-variants.sh) and are
 # gitignored, but the static build's WebGPU path needs them, so they must be
 # present locally before uploading.
+# The same script writes the .gz siblings and compressed.json manifests the
+# service worker uses to fetch int8 weights ~30% smaller.
 for f in intellitex/onnx/encoder_model_q4.onnx intellitex/onnx/decoder_model_merged_q4.onnx \
-         texify/onnx/encoder_model_q4.onnx texify/onnx/decoder_model_merged_q4.onnx; do
+         texify/onnx/encoder_model_q4.onnx texify/onnx/decoder_model_merged_q4.onnx \
+         intellitex/compressed.json texify/compressed.json texo/compressed.json; do
   [ -f "$SRC/$f" ] || { echo "missing $f — run scripts/build-model-variants.sh first" >&2; exit 1; }
 done
 
