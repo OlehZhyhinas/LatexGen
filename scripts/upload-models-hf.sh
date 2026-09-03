@@ -7,7 +7,7 @@
 #   scripts/upload-models-hf.sh
 #
 # Needs the Hugging Face CLI and a write token:
-#   pip install -U "huggingface_hub[cli]"
+#   brew install hf     (or: pipx install "huggingface_hub[cli]")
 #   hf auth login
 set -euo pipefail
 
@@ -15,7 +15,8 @@ REPO="${MODEL_REPO:-OlehZhyhinas/latexgen-models}"
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 SRC="$ROOT/public/models"
 
-command -v hf >/dev/null || { echo "hf CLI not found: pip install -U 'huggingface_hub[cli]'" >&2; exit 1; }
+command -v hf >/dev/null || { echo "hf CLI not found: brew install hf" >&2; exit 1; }
+hf auth whoami >/dev/null 2>&1 || { echo "not logged in: hf auth login (needs a write token)" >&2; exit 1; }
 
 # The q4 variants are build artifacts (scripts/build-model-variants.sh) and are
 # gitignored, but the static build's WebGPU path needs them, so they must be

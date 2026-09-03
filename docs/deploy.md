@@ -31,10 +31,13 @@ Two things make it more than a file copy:
   Hugging Face model repo instead. Publish them once:
 
   ```bash
-  pip install -U "huggingface_hub[cli]" && hf auth login
-  scripts/build-model-variants.sh   # the q4 variants the WebGPU path needs
-  scripts/upload-models-hf.sh       # MODEL_REPO=... to use another repo
+  brew install hf && hf auth login   # or: pipx install "huggingface_hub[cli]"
+  scripts/build-model-variants.sh    # the q4 variants the WebGPU path needs
+  scripts/upload-models-hf.sh        # MODEL_REPO=... to use another repo
   ```
+
+  The token needs write scope. Homebrew's Python is externally managed, so
+  `pip install` into it fails — use the formula or pipx.
 
 - **A project page is served under a prefix** (`/LatexGen/`), so no asset path
   may be root-absolute. Every path in `public/` is relative to the page or,
