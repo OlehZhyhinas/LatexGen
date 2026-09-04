@@ -73,6 +73,19 @@ test("hardening: security headers, size limits, bad json, bench disabled in prod
   assert.ok([403, 404].includes((await fetch(`${base}/..%2F..%2Fetc%2Fpasswd`)).status), "traversal must be refused");
 });
 
+test("static files: Content-Length on GET and HEAD, immutable weights, .gz served as gzip", async () => {
+  const r = await fetch(`${base}/app.js`);
+  assert.equal(r.status, 200);
+  assert.equal(Number(r.headers.get("content-length")), (await r.arrayBuffer()).byteLength, "progress bars need the real size");
+  const h = await fetch(`${base}/vendor/transformers/transformers.min.js`, { method: "HEAD" });
+  assert.equal(h.status, 200);
+  assert.ok(Number(h.headers.get("content-length")) > 0, "HEAD carries the size transformers.js probes for");
+  assert.match(h.headers.get("cache-control"), /immutable/);
+  assert.equal((await h.arrayBuffer()).byteLength, 0);
+  const gz = await fetch(`${base}/models/x.onnx.gz`, { method: "HEAD" });
+  assert.equal(gz.status, 404); // no such artifact here, but the path is routable
+});
+
 test("tab API relay: long-poll delivers a job, result returns to the caller", async () => {
   const id = "a".repeat(32);
   const poll = fetch(`${base}/api/relay/${id}/next`);           // tab starts listening

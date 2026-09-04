@@ -2,7 +2,8 @@
 // "server model" tier to any OpenAI-compatible API or Ollama, and hosts the
 // Tab API / compute-mesh relay.
 import { createServer } from "node:http";
-import { readFile } from "node:fs/promises";
+import { readFile, stat } from "node:fs/promises";
+import { createReadStream } from "node:fs";
 import { extname, join, normalize } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -51,6 +52,7 @@ const MIME = {
   ".ttf": "font/ttf",
   ".png": "image/png",
   ".webmanifest": "application/manifest+json",
+  ".gz": "application/gzip",
 };
 
 const SYSTEM_PROMPT = `You are a text-to-LaTeX transcriber. Convert the user's input (plain-language math, equations, or prose with math) into LaTeX.
@@ -572,15 +574,19 @@ const server = createServer(async (req, res) => {
         res.writeHead(403); res.end(); return;
       }
       try {
-        const content = await readFile(file);
+        const { size } = await stat(file);
         // Vendored libraries and model weights never change under a path;
         // the app shell must always revalidate so deploys show up immediately.
+        // Content-Length matters: transformers.js sizes its progress bar from
+        // it, and the service worker's .gz swap-in relies on knowing sizes.
         const immutable = filePath.startsWith("/vendor/") || filePath.startsWith("/models/") || filePath.startsWith("/icons/");
         res.writeHead(200, {
           "content-type": MIME[extname(file)] || "application/octet-stream",
+          "content-length": size,
           "cache-control": immutable ? "public, max-age=31536000, immutable" : "no-cache",
         });
-        res.end(req.method === "HEAD" ? undefined : content);
+        if (req.method === "HEAD") { res.end(); return; }
+        createReadStream(file).on("error", () => res.destroy()).pipe(res);
         return;
       } catch {
         res.writeHead(404, { "content-type": "text/plain" });

@@ -8,17 +8,19 @@ import {
 import { MODEL_HOST, MODEL_PATH_TEMPLATE } from "./config.js";
 
 // Weights come from this origin in the self-hosted build, and from a CDN in
-// the static build. Paths are resolved against this worker's own URL so the
-// app works under any deploy prefix (e.g. a GitHub Pages project path).
+// the static build. Both go through transformers.js's "remote" loader: with an
+// http localModelPath its tokenizer existence check never probes the server,
+// so pipelines came back without a tokenizer on a cold cache (issue #3).
+// Paths are resolved against this worker's own URL so the app works under any
+// deploy prefix (e.g. a GitHub Pages project path).
+env.allowRemoteModels = true;
+env.allowLocalModels = false;
 if (MODEL_HOST) {
-  env.allowRemoteModels = true;
-  env.allowLocalModels = false;
   env.remoteHost = MODEL_HOST;
   env.remotePathTemplate = MODEL_PATH_TEMPLATE;
 } else {
-  env.allowRemoteModels = false;
-  env.allowLocalModels = true;
-  env.localModelPath = new URL("models/", import.meta.url).href;
+  env.remoteHost = new URL("models/", import.meta.url).href;
+  env.remotePathTemplate = "{model}";
 }
 env.backends.onnx.wasm.wasmPaths = new URL("vendor/ort/", import.meta.url).href;
 env.backends.onnx.wasm.numThreads = 1; // multi-threaded ORT hung on load in testing

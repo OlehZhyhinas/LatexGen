@@ -5,3 +5,6 @@ node_modules/
 public/models/*/onnx/*_q4.onnx
 public/models/*/onnx/*_fp16.onnx
 dist/
+# Pre-compressed weights + manifest (see scripts/compress-models.mjs)
+public/models/*/**/*.gz
+public/models/*/compressed.json

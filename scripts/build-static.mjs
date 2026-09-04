@@ -21,6 +21,7 @@ const EXCLUDE = new Set([
   "bench.html", "bench.js", "bench-data.json",           // need api/bench
   "bench-images.html", "bench-images.js", "bench-images.json", "bench-images",
   "bench-runtime.html", "bench-runtime.js",
+  "bench-load.html", "bench-load.js", "bench-fetch-patch.js",
 ]);
 
 // Mirrors the CSP that server.js sends as a header; a static host cannot set
