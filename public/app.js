@@ -66,7 +66,7 @@ const pipe = createPipeline({
   mesh: meshHooks,
 });
 window.__repairLoop = pipe.repairLoop; // debugging hook
-const specialistReady = pipe.ensureSpecialist(); // start the 260MB specialist download immediately
+const specialistReady = pipe.ensureSpecialist(); // start the ~190MB specialist download immediately
 
 // ---- rendering helpers ----
 function renderPreview(latex) {

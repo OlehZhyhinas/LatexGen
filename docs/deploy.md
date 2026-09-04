@@ -32,9 +32,17 @@ Two things make it more than a file copy:
 
   ```bash
   brew install hf && hf auth login   # or: pipx install "huggingface_hub[cli]"
-  scripts/build-model-variants.sh    # the q4 variants the WebGPU path needs
+  scripts/build-model-variants.sh    # the q4 variants the WebGPU path needs, plus .gz siblings
   scripts/upload-models-hf.sh        # MODEL_REPO=... to use another repo
   ```
+
+  Neither Hugging Face nor `server.js` negotiates `Content-Encoding`, so the
+  weights that gain from it (the int8 files, ~30%; the JSON) ship with a
+  pre-compressed `.gz` sibling and a per-model `compressed.json` manifest,
+  written by `scripts/compress-models.mjs` (the variants script runs it). The
+  service worker fetches the `.gz` and inflates it in flight, so nothing else
+  in the app knows. Without the manifest the raw files are used, so a deploy
+  that skips the step still works, only larger.
 
   The token needs write scope. Homebrew's Python is externally managed, so
   `pip install` into it fails — use the formula or pipx.
