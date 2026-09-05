@@ -77,6 +77,16 @@ async function load(key, cfg, reqId) {
   } else if (key === "texify") {
     const p = await pipeline("image-to-text", "texify", { ...cfg, progress_callback });
     models.texify = async (blob) => (await p(blob, { max_new_tokens: 384 }))[0]?.generated_text?.trim() ?? "";
+  } else if (key === "texo" && cfg?.device === "webnn") {
+    // Hand-built WebNN graphs from the graph catalog (texo-webnn.js): 23 ms per
+    // image on Core ML against 0.77 s through ONNX Runtime, identical tokens.
+    // Throws on browsers without WebNN or with a non-Core ML backend; models.js
+    // remembers that and the next load takes the ONNX Runtime path below.
+    const { createTexoWebNN } = await import("./texo-webnn.js");
+    const texo = await createTexoWebNN({
+      onProgress: (p) => self.postMessage({ type: "progress", key, file: p.file, loaded: p.loaded, total: p.total }),
+    });
+    models.texo = async (blob) => texo.run(await texoPreprocess(blob));
   } else if (key === "texo") {
     const model = await VisionEncoderDecoderModel.from_pretrained("texo", { dtype: "fp32", progress_callback });
     const tokenizer = await PreTrainedTokenizer.from_pretrained("texo");

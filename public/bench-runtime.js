@@ -10,7 +10,7 @@ const progress = document.getElementById("progress"), logEl = document.getElemen
 const log = (m, c = "") => { const d = document.createElement("div"); d.className = c; d.textContent = m; logEl.appendChild(d); };
 const post = (row) => fetch("api/bench", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(row) });
 const withTimeout = (p, ms, label) => Promise.race([p, new Promise((_, rej) => setTimeout(() => rej(new Error(`${label} timeout ${ms}ms`)), ms))]);
-const hasGpu = !!navigator.gpu;
+const hasGpu = !!navigator.gpu; // WebNN configs are appended when navigator.ml exists
 
 const TEXT_ITEMS = [
   ["basel", "the sum from n equals 1 to infinity of 1 over n squared equals pi squared over 6"],
@@ -57,6 +57,11 @@ async function runConfig(model, cfg) {
     } else if (model === "texify") {
       const p = await withTimeout(pipeline("image-to-text", "texify", { device: cfg.device, dtype: cfg.dtype }), 90000, "load");
       predict = async (blob) => { const u = URL.createObjectURL(blob); try { return (await p(u, { max_new_tokens: 256 }))[0].generated_text.trim(); } finally { URL.revokeObjectURL(u); } }; kind = "image";
+    } else if (cfg.device === "webnn") {
+      // the graph-catalog path (texo-webnn.js), what the app uses when WebNN is present
+      const { createTexoWebNN } = await import("./texo-webnn.js");
+      const texo = await withTimeout(createTexoWebNN(), 90000, "load");
+      predict = async (blob) => texo.run(await texoPre(blob)); kind = "image";
     } else {
       const m = await withTimeout(VisionEncoderDecoderModel.from_pretrained("texo", { device: cfg.device, dtype: cfg.dtype }), 90000, "load");
       const tok = await PreTrainedTokenizer.from_pretrained("texo");
@@ -91,6 +96,7 @@ const plan = [
   ["intellitex-fused", { device: "wasm", dtype: "q8" }],
   ["texo", { device: "wasm", dtype: "fp32" }], ["texo", { device: "wasm", dtype: "q8" }], ["texo", { device: "wasm", dtype: "fp16" }],
   ...gpu(["texo", { device: "webgpu", dtype: "fp32" }], ["texo", { device: "webgpu", dtype: "fp16" }]),
+  ...(navigator.ml ? [["texo", { device: "webnn", dtype: "fp16" }]] : []),
   ["texify", { device: "wasm", dtype: "q8" }], ["texify", { device: "wasm", dtype: "q4" }],
   ...gpu(["texify", { device: "webgpu", dtype: "fp16" }], ["texify", { device: "webgpu", dtype: "q4" }]),
 ];

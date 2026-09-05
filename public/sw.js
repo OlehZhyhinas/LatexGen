@@ -20,7 +20,7 @@ const VERSION = "v3-gz";
 const SHELL_CACHE = `latexgen-shell-${VERSION}`;
 const VENDOR_CACHE = `latexgen-vendor-${VERSION}`;
 const SCOPE = new URL("./", location.href).pathname;
-const SHELL = ["./", "index.html", "style.css", "app.js", "config.js", "validator.js", "webllm-worker.js", "onnx-worker.js", "models.js", "pipeline.js", "manifest.webmanifest", "benchmarks.html"];
+const SHELL = ["./", "index.html", "style.css", "app.js", "config.js", "validator.js", "webllm-worker.js", "onnx-worker.js", "texo-webnn.js", "models.js", "pipeline.js", "manifest.webmanifest", "benchmarks.html"];
 
 self.addEventListener("install", (e) => {
   e.waitUntil(caches.open(SHELL_CACHE).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting()));
