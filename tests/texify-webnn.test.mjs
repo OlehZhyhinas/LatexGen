@@ -95,6 +95,7 @@ test("pickRuntime prefers WebNN for texify when navigator.ml exists", () => {
   assert.equal(webnnAvailable(), true);
   assert.deepEqual(pickRuntime("texify"), { device: "webnn", dtype: "fp16" });
   assert.deepEqual(pickRuntime("texo"), { device: "webnn", dtype: "fp16" });
+  assert.deepEqual(pickRuntime("intellitex"), { device: "webnn", dtype: "fp16" });
 });
 
 test("pickRuntime skips WebNN for texify after a remembered failure (WebGPU next)", () => {

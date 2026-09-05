@@ -1,8 +1,8 @@
 // Autonomous benchmark: runs every configured approach over the eval set,
 // posting one row per (approach, item) to /api/bench. Drives WebLLM models
 // sequentially (smallest first) and the transformers.js specialist.
-import * as webllm from "https://esm.run/@mlc-ai/web-llm";
-import { pipeline as tjsPipeline, env as tjsEnv } from "https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.2.0";
+// CDN imports are dynamic so `?only=intellitex-webnn` can run under CSP
+// (`script-src 'self'`) without loading Qwen or the transformers CDN.
 
 const SYSTEM_PROMPT = `You are a text-to-LaTeX transcriber. Convert the user's input (plain-language math, equations, or prose with math) into LaTeX.
 
@@ -54,6 +54,35 @@ async function genWebllm(engine, system, user, maxTokens) {
 async function main() {
   const items = await fetch("bench-data.json").then((r) => r.json());
   progress(`loaded ${items.length} eval items`);
+  const only = new URLSearchParams(location.search).get("only");
+  if (only === "intellitex-webnn") {
+    if (!navigator.ml) { progress("FAILED: navigator.ml missing"); log("err", "intellitex-webnn skipped"); return; }
+    await fetch("api/bench", { method: "DELETE" });
+    progress("loading IntelliTeX (WebNN graphs)…");
+    const { createIntelliTeXWebNN } = await import("./intellitex-webnn.js");
+    const tLoad = performance.now();
+    const specialist = await createIntelliTeXWebNN();
+    await post({ approach: "intellitex-webnn", item: "__load__", tier: "meta", ms: Math.round(performance.now() - tLoad), output: "" });
+    log("ok", `intellitex-webnn loaded in ${Math.round(performance.now() - tLoad)} ms (${specialist.stats.backend})`);
+    for (const it of items.filter((i) => i.tier !== "multiline")) {
+      const t0 = performance.now();
+      try {
+        const out = await specialist.run(it.input);
+        await post({ approach: "intellitex-webnn", item: it.id, tier: it.tier, ms: Math.round(performance.now() - t0), output: out });
+        log("ok", `intellitex-webnn ${it.id} ${Math.round(performance.now() - t0)}ms`);
+      } catch (e) {
+        await post({ approach: "intellitex-webnn", item: it.id, tier: it.tier, ms: -1, output: "", error: String(e) });
+        log("err", `intellitex-webnn ${it.id} FAILED ${e}`);
+      }
+    }
+    await post({ approach: "__done__", item: "__done__", tier: "meta", ms: 0, output: "" });
+    progress("BENCH COMPLETE");
+    log("ok", "all done");
+    return;
+  }
+
+  const webllm = await import("https://esm.run/@mlc-ai/web-llm");
+  const { pipeline: tjsPipeline, env: tjsEnv } = await import("https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.2.0");
 
   // Specialist
   tjsEnv.allowRemoteModels = false;

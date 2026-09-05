@@ -11,3 +11,4 @@ public/models/*/compressed.json
 # Texify WebNN constants (~597 MiB); recipes and manifest are in git. Link from
 # the workbench IR dir: node scripts/vendor-texify-webnn.mjs --link-bins
 public/models/texify-webnn/*.bin
+public/models/intellitex-webnn/*.bin
