@@ -90,6 +90,9 @@ test("static files: Content-Length on GET and HEAD, immutable weights, .gz serve
   const webnn = await (await fetch(`${base}/models/texify-webnn/entry.json`)).json();
   assert.equal(webnn.family, "texify-420");
   assert.equal(webnn.compat.requires["backend.name"], "coreml");
+  const itx = await (await fetch(`${base}/models/intellitex-webnn/entry.json`)).json();
+  assert.equal(itx.family, "intellitex-t5-220m");
+  assert.equal(itx.compat.requires["backend.name"], "coreml");
 });
 
 test("tab API relay: long-poll delivers a job, result returns to the caller", async () => {
