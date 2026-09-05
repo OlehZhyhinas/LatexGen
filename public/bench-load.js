@@ -1,30 +1,25 @@
-// Load benchmark: how long one in-browser model takes to become usable, from
-// a cold cache (network) and from the Cache API (disk), and what it outputs
-// on the bench items so a weight change can be checked for equivalence.
+// Load benchmark: cold start to first generation, ONNX or WebNN.
 //
-//   bench-load.html?model=intellitex&device=webgpu&dtype=q4&src=hf&mode=cold
+//   bench-load.html?model=intellitex&device=webgpu&dtype=q4&src=local&mode=cold&items=0
+//   bench-load.html?model=texo&device=webnn&dtype=fp16&src=hf&mode=cold&items=0
 //
 //   model  intellitex | texify | texo
-//   device webgpu | wasm          dtype q4 | q8 | fp32
-//   src    local (this origin) | hf (the Hugging Face repo the static build uses)
-//   rev    Hugging Face revision for src=hf (default main)
-//   mode   cold: drop the transformers.js cache and bypass the HTTP cache
-//          warm: load from whatever the previous run cached
-//   items  0 to skip the bench items (default: run them)
+//   device webgpu | wasm | webnn
+//   dtype  q4 | q8 | fp32 | fp16
+//   src    local | hf
+//   mode   cold | warm
+//   items  0 skips the full suite (still runs warmup + first/second fixture)
 //
-// Results land in #result as JSON and the title flips to "done" / "failed".
+// WebNN rows include per-graph constantsMs/emitMs/buildMs from the catalog loader.
 import { pipeline, env, VisionEncoderDecoderModel, PreTrainedTokenizer, Tensor, cat } from "./vendor/transformers/transformers.min.js";
 
 const q = new URLSearchParams(location.search);
-// A queue runs several configs back to back, one page load each (a failed
-// WebGPU session poisons the runtime for the page, and each run should start
-// from a fresh heap): queue=model,device,dtype,src,mode,items;model,...
 const queue = (q.get("queue") ?? "").split(";").filter(Boolean);
 const spec = queue.length ? Object.fromEntries(["model", "device", "dtype", "src", "mode", "items"].map((k, i) => [k, queue[0].split(",")[i]])) : {};
 const get = (k) => spec[k] || q.get(k);
 const model = get("model") ?? "intellitex";
 const device = get("device") ?? (model === "texo" ? "wasm" : "webgpu");
-const dtype = get("dtype") ?? (model === "texo" ? "fp32" : device === "webgpu" ? "q4" : "q8");
+const dtype = get("dtype") ?? (model === "texo" ? (device === "webnn" ? "fp16" : "fp32") : device === "webgpu" || device === "webnn" ? (device === "webnn" ? "fp16" : "q4") : "q8");
 const src = get("src") ?? "local";
 const rev = q.get("rev") ?? "main";
 const mode = get("mode") ?? "cold";
@@ -34,9 +29,6 @@ const label = q.get("label") ?? "";
 const out = document.getElementById("result"), progress = document.getElementById("progress");
 const show = (o) => { out.textContent = JSON.stringify(o, null, 2); };
 
-// Both sources go through the "remote" loader: with an http localModelPath
-// this transformers.js build skips the tokenizer existence check and loads
-// no tokenizer at all (see onnx-worker.js for the same arrangement).
 env.allowRemoteModels = true; env.allowLocalModels = false;
 if (src === "hf") {
   env.remoteHost = "https://huggingface.co/";
@@ -48,10 +40,14 @@ if (src === "hf") {
 env.backends.onnx.wasm.wasmPaths = new URL("vendor/ort/", import.meta.url).href;
 env.backends.onnx.wasm.numThreads = 1;
 
-const realFetch = globalThis.fetch; // already wrapped by bench-fetch-patch.js
+const realFetch = globalThis.fetch;
 const files = {}; let firstProgress = 0, lastProgress = 0;
 const progress_callback = (p) => {
   if (p.status === "progress" && p.total) {
+    const now = performance.now(); firstProgress ||= now; lastProgress = now;
+    files[p.file] = p.total;
+    progress.textContent = `${p.file} ${Math.round((p.loaded / p.total) * 100)}%`;
+  } else if (p.file && p.total) {
     const now = performance.now(); firstProgress ||= now; lastProgress = now;
     files[p.file] = p.total;
     progress.textContent = `${p.file} ${Math.round((p.loaded / p.total) * 100)}%`;
@@ -81,27 +77,87 @@ async function texoPre(blob) {
   for (let i = 0, p = 0; i < arr.length; i++, p += 4) arr[i] = (od[p] / 255 - TEXO_MEAN) / TEXO_STD; return arr;
 }
 
+function graphRows(stats) {
+  if (!stats?.graphs) return [];
+  return Object.entries(stats.graphs).map(([name, g]) => ({
+    name,
+    ops: g.ops,
+    constants: g.constants,
+    constantBytes: g.constantBytes,
+    constantsMs: g.constantsMs,
+    emitMs: g.emitMs,
+    buildMs: g.buildMs,
+  }));
+}
+
+async function fixtureFor(kind) {
+  if (kind === "text") {
+    const items = (await realFetch("bench-data.json").then((r) => r.json()));
+    const it = items.find((i) => i.id === "quadratic-formula") ?? items[0];
+    return { id: it.id, input: it.input, all: items.map((i) => [i.id, i.input]) };
+  }
+  const list = await realFetch("bench-images.json").then((r) => r.json());
+  const it = list.find((i) => i.id === "quadratic") ?? list[0];
+  const blob = await realFetch(it.image.replace(/^\//, "")).then((r) => r.blob());
+  const all = [];
+  if (runItems) {
+    for (const x of list) all.push([x.id, await realFetch(x.image.replace(/^\//, "")).then((r) => r.blob())]);
+  }
+  return { id: it.id, input: blob, all };
+}
+
 const result = { label, model, device, dtype, src, rev, mode, ua: navigator.userAgent, at: new Date().toISOString() };
 try {
   if (mode === "cold") {
     for (const k of await caches.keys()) if (/transformers/i.test(k)) await caches.delete(k);
   }
+  let predict, kind, webnnHandle = null;
   const t0 = performance.now();
-  let predict, items;
-  const cfg = { device, dtype, progress_callback };
-  if (model === "intellitex") {
-    const p = await pipeline("text2text-generation", "intellitex", cfg);
-    predict = async (text) => (await p(PREFIX + text, { max_new_tokens: 256 }))[0].generated_text.trim();
-    items = (await realFetch("bench-data.json").then((r) => r.json())).map((i) => [i.id, i.input]);
-  } else if (model === "texify") {
-    const p = await pipeline("image-to-text", "texify", cfg);
-    predict = async (blob) => (await p(blob, { max_new_tokens: 384 }))[0].generated_text.trim(); // a Blob, as the app does: blob: URLs are outside connect-src
-    items = await imageItems();
+  if (device === "webnn") {
+    const webnnOpts = {
+      skipWarmup: true,
+      preferLocalConstants: src === "local",
+      preserveModelSource: src === "hf",
+      onProgress: progress_callback,
+    };
+    if (model === "intellitex") {
+      const { createIntelliTeXWebNN } = await import("./intellitex-webnn.js");
+      webnnHandle = await createIntelliTeXWebNN(webnnOpts);
+      predict = (text) => webnnHandle.run(text);
+      kind = "text";
+    } else if (model === "texify") {
+      const { createTexifyWebNN } = await import("./texify-webnn.js");
+      webnnHandle = await createTexifyWebNN(webnnOpts);
+      predict = (blob) => webnnHandle.run(blob);
+      kind = "image";
+    } else {
+      const { createTexoWebNN } = await import("./texo-webnn.js");
+      webnnHandle = await createTexoWebNN(webnnOpts);
+      predict = async (blob) => webnnHandle.run(await texoPre(blob));
+      kind = "image";
+    }
+    result.backend = webnnHandle.stats.backend;
+    result.graphs = graphRows(webnnHandle.stats);
+    result.entry = webnnHandle.stats.entry;
+    result.buildMsReported = webnnHandle.stats.buildMs;
+    result.constantsMsReported = result.graphs.reduce((sum, graph) => sum + (graph.constantsMs || 0), 0);
+    result.compileMsReported = result.graphs.reduce((sum, graph) => sum + (graph.buildMs || 0), 0);
   } else {
-    const m = await VisionEncoderDecoderModel.from_pretrained("texo", cfg);
-    const tok = await PreTrainedTokenizer.from_pretrained("texo");
-    predict = async (blob) => { const a = await texoPre(blob); const t = new Tensor("float32", a, [1, 1, S, S]); const r = await m.generate({ inputs: cat([t, t, t], 1), max_new_tokens: 512 }); return tok.batch_decode(r, { skip_special_tokens: true })[0].trim(); };
-    items = await imageItems();
+    const cfg = { device, dtype, progress_callback };
+    if (model === "intellitex") {
+      const p = await pipeline("text2text-generation", "intellitex", cfg);
+      predict = async (text) => (await p(PREFIX + text, { max_new_tokens: 256 }))[0].generated_text.trim();
+      kind = "text";
+    } else if (model === "texify") {
+      const p = await pipeline("image-to-text", "texify", cfg);
+      predict = async (blob) => (await p(blob, { max_new_tokens: 384 }))[0].generated_text.trim();
+      kind = "image";
+    } else {
+      const m = await VisionEncoderDecoderModel.from_pretrained("texo", cfg);
+      const tok = await PreTrainedTokenizer.from_pretrained("texo");
+      predict = async (blob) => { const a = await texoPre(blob); const t = new Tensor("float32", a, [1, 1, S, S]); const r = await m.generate({ inputs: cat([t, t, t], 1), max_new_tokens: 512 }); return tok.batch_decode(r, { skip_special_tokens: true })[0].trim(); };
+      kind = "image";
+    }
   }
   const t1 = performance.now();
   result.loadMs = Math.round(t1 - t0);
@@ -111,13 +167,37 @@ try {
   result.totalBytes = Object.values(files).reduce((a, b) => a + b, 0);
   result.network = globalThis.__benchNet;
 
+  const fixture = await fixtureFor(kind);
+  const dummy = device === "webnn"
+    ? (kind === "text" ? "x squared" : fixture.input)
+    : fixture.input;
+
   progress.textContent = "warm-up";
   const w0 = performance.now();
-  await predict(items[0][1]);
+  if (device === "webnn" && model === "texo") {
+    await webnnHandle.run(new Float32Array(384 * 384).fill(-4.5628));
+  } else if (device === "webnn" && model === "texify") {
+    await webnnHandle.runPixels(new Float32Array(3 * 420 * 420));
+  } else {
+    await predict(dummy);
+  }
   result.warmupMs = Math.round(performance.now() - w0);
+
+  progress.textContent = `first-gen ${fixture.id}`;
+  const f0 = performance.now();
+  result.firstOutput = await predict(fixture.input);
+  result.firstGenMs = Math.round(performance.now() - f0);
+  result.fixtureId = fixture.id;
+  result.coldToFirstMs = result.loadMs + result.warmupMs + result.firstGenMs;
+
+  progress.textContent = `second-gen ${fixture.id}`;
+  const s0 = performance.now();
+  result.secondOutput = await predict(fixture.input);
+  result.secondGenMs = Math.round(performance.now() - s0);
 
   if (runItems) {
     result.items = [];
+    const items = kind === "text" ? fixture.all : fixture.all;
     for (const [id, input] of items) {
       progress.textContent = id;
       const s = performance.now(); let output = "", err = "";
@@ -130,8 +210,7 @@ try {
 } catch (e) {
   result.error = String(e?.stack || e); show(result); document.title = "failed";
 }
-// transformers.js writes to the Cache API after resolving the load; leaving
-// the page too early aborts the write and the next "warm" run is not warm.
+
 async function cacheSettled(names, ms = 120000) {
   const t0 = performance.now();
   while (performance.now() - t0 < ms) {
@@ -144,19 +223,11 @@ async function cacheSettled(names, ms = 120000) {
   }
   return false;
 }
-if (!result.error) result.cacheSettled = await cacheSettled(Object.keys(files));
+if (!result.error && device !== "webnn") result.cacheSettled = await cacheSettled(Object.keys(files));
 
-// Persist (the server keeps rows in memory; GET api/bench reads them back).
-try { await realFetch("api/bench", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ tier: "load", ...result }) }); } catch { /* static build: no collector */ }
+try { await realFetch("api/bench", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ tier: "load", ...result }) }); } catch { /* no collector */ }
 if (queue.length > 1) {
   const next = new URL(location.href);
   next.searchParams.set("queue", queue.slice(1).join(";"));
   setTimeout(() => location.replace(next), 1500);
 } else if (queue.length) document.title = "queue-done";
-
-async function imageItems() {
-  const list = await realFetch("bench-images.json").then((r) => r.json());
-  const items = [];
-  for (const it of list) items.push([it.id, await realFetch(it.image.replace(/^\//, "")).then((r) => r.blob())]);
-  return items;
-}

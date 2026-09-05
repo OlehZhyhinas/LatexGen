@@ -88,9 +88,9 @@ function pointTokenizerAtOrigin() {
  *   run(text)  plain-English math (no prefix); the specialist prefix is added
  *              here, matching onnx-worker.js. Resolves to decoded LaTeX.
  */
-export async function createIntelliTeXWebNN({ baseUrl = INTELLITEX_WEBNN_BASE, onProgress = null, deviceType = "gpu" } = {}) {
+export async function createIntelliTeXWebNN({ baseUrl = INTELLITEX_WEBNN_BASE, onProgress = null, deviceType = "gpu", skipWarmup = false, preferLocalConstants = false, preserveModelSource = false } = {}) {
   if (!webnnAvailable()) throw new Error("WebNN is not available (navigator.ml missing)");
-  pointTokenizerAtOrigin();
+  if (!preserveModelSource) pointTokenizerAtOrigin();
   const t0 = performance.now();
   const j = async (u) => { const r = await fetch(u); if (!r.ok) throw new Error(`${u}: HTTP ${r.status}`); return r.json(); };
   const [entry, family] = await Promise.all([j(`${baseUrl}entry.json`), j(`${baseUrl}family.json`)]);
@@ -99,6 +99,7 @@ export async function createIntelliTeXWebNN({ baseUrl = INTELLITEX_WEBNN_BASE, o
 
   const tokenizerP = AutoTokenizer.from_pretrained("intellitex");
   const manifest = await j(`${baseUrl}${entry.constants}`);
+  if (preferLocalConstants) for (const c of Object.values(manifest.constants)) c.url = null;
   const graphNames = Object.keys(entry.graphs).filter((k) => k !== "chain");
   const recipes = Object.fromEntries(await Promise.all(graphNames.map(async (g) => [g, await j(`${baseUrl}${entry.graphs[g].recipe}`)])));
 
@@ -172,7 +173,7 @@ export async function createIntelliTeXWebNN({ baseUrl = INTELLITEX_WEBNN_BASE, o
 
   const run = async (text) => runIds(encode(text));
 
-  await run("x squared");
+  if (!skipWarmup) await run("x squared");
 
   return {
     run,

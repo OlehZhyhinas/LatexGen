@@ -84,6 +84,8 @@ test("manifest hashes the two constants blobs and both recipes", () => {
   assert.match(manifest.constants.decoder.sha256, /^[0-9a-f]{64}$/);
   assert.ok(manifest.constants.encoder.bytes > 100e6);
   assert.ok(manifest.constants.decoder.bytes > 400e6);
+  assert.match(manifest.constants.encoder.url, /\/texify-encoder\.bin$/);
+  assert.match(manifest.constants.decoder.url, /\/texify-decode\.bin$/);
   assert.ok(manifest.recipeHashes["recipe.encoder.json"].sha256);
   assert.ok(manifest.recipeHashes["recipe.decoder.json"].sha256);
 });

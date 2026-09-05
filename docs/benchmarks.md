@@ -95,4 +95,6 @@ Three things changed, and one thing was found:
 
 Reproduce: `public/bench-load.html?label=x&queue=intellitex,webgpu,q4,hf,cold,1;...` with the local server running (see the file header for the queue syntax), then `curl -s localhost:8000/api/bench > bench/results-load-<date>.json` and `python3 bench/summarize-load.py` on it. The rows behind this table are `bench/results-load-2026-09-03.json`.
 
+Local cold start → first generation (ONNX fallbacks and WebNN per graph), including host loadavg on a shared machine: [docs/load/README.md](load/README.md).
+
 Raw results live in `bench/results-*.json`; a static, crawlable summary is generated into `public/benchmarks.html` by `python3 bench/build-benchmarks-page.py`.

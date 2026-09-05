@@ -141,7 +141,7 @@ export async function donutPreprocess(blob) {
  *              resolves to the decoded LaTeX string (skip_special_tokens).
  * onProgress({file, loaded, total}) mirrors transformers.js's progress events.
  */
-export async function createTexifyWebNN({ baseUrl = TEXIFY_WEBNN_BASE, onProgress = null, deviceType = "gpu" } = {}) {
+export async function createTexifyWebNN({ baseUrl = TEXIFY_WEBNN_BASE, onProgress = null, deviceType = "gpu", skipWarmup = false, preferLocalConstants = false, preserveModelSource = false } = {}) {
   if (!webnnAvailable()) throw new Error("WebNN is not available (navigator.ml missing)");
   // Same rule as onnx-worker.js: an http localModelPath never probes the
   // server for tokenizer.json (issue #3). Always point transformers.js at
@@ -149,7 +149,9 @@ export async function createTexifyWebNN({ baseUrl = TEXIFY_WEBNN_BASE, onProgres
   // default remoteHost is Hugging Face, which 401s for these files.
   env.allowRemoteModels = true;
   env.allowLocalModels = false;
-  if (MODEL_HOST) {
+  if (preserveModelSource) {
+    // The benchmark has already selected its remote model host.
+  } else if (MODEL_HOST) {
     env.remoteHost = MODEL_HOST;
     env.remotePathTemplate = MODEL_PATH_TEMPLATE;
   } else {
@@ -165,6 +167,7 @@ export async function createTexifyWebNN({ baseUrl = TEXIFY_WEBNN_BASE, onProgres
   const fp = assertCoreMLFingerprint(ctx);
 
   const manifest = await j(`${baseUrl}${entry.constants}`);
+  if (preferLocalConstants) for (const c of Object.values(manifest.constants)) c.url = null;
   const graphNames = Object.keys(entry.graphs).filter((k) => k !== "chain");
   const recipes = Object.fromEntries(await Promise.all(graphNames.map(async (g) => [g, await j(`${baseUrl}${entry.graphs[g].recipe}`)])));
   for (const g of graphNames) {
@@ -213,7 +216,7 @@ export async function createTexifyWebNN({ baseUrl = TEXIFY_WEBNN_BASE, onProgres
 
   const run = async (blob) => runPixels(await donutPreprocess(blob));
 
-  await runPixels(new Float32Array(PIXELS));
+  if (!skipWarmup) await runPixels(new Float32Array(PIXELS));
 
   return {
     run,
