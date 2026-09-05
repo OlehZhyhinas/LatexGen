@@ -17,6 +17,9 @@ const TEXT_ITEMS = [
   ["quadratic", "the quadratic formula: x equals minus b plus or minus the square root of b squared minus 4ac, all over 2a"],
   ["schrodinger", "i h bar partial psi over partial t equals minus h bar squared over 2m laplacian psi plus V psi"],
 ];
+const ALL_TEXT = (await fetch("bench-data.json").then((r) => r.json()))
+  .filter((i) => i.tier !== "multiline")
+  .map((i) => [i.id, i.input]);
 const images = (await fetch("bench-images.json").then((r) => r.json())).filter((i) => ["quadratic", "gaussian", "schrodinger", "newton-text"].includes(i.id));
 const blobs = new Map();
 for (const it of images) blobs.set(it.id, await fetch(it.image).then((r) => r.blob()));
@@ -51,9 +54,17 @@ async function runConfig(model, cfg) {
   const t0 = performance.now();
   let predict, kind;
   try {
-    if (model.startsWith("intellitex")) {
+    if (model.startsWith("intellitex") && cfg.device === "webnn") {
+      const { createIntelliTeXWebNN } = await import("./intellitex-webnn.js");
+      const specialist = await withTimeout(createIntelliTeXWebNN(), 180000, "load");
+      predict = async (text) => specialist.run(text); kind = "text";
+    } else if (model.startsWith("intellitex")) {
       const p = await withTimeout(pipeline("text2text-generation", model, { device: cfg.device, dtype: cfg.dtype }), 90000, "load");
       predict = async (text) => (await p(PREFIX + text, { max_new_tokens: 128 }))[0].generated_text.trim(); kind = "text";
+    } else if (cfg.device === "webnn" && model === "texify") {
+      const { createTexifyWebNN } = await import("./texify-webnn.js");
+      const texify = await withTimeout(createTexifyWebNN(), 180000, "load");
+      predict = async (blob) => texify.run(blob); kind = "image";
     } else if (model === "texify") {
       const p = await withTimeout(pipeline("image-to-text", "texify", { device: cfg.device, dtype: cfg.dtype }), 90000, "load");
       predict = async (blob) => { const u = URL.createObjectURL(blob); try { return (await p(u, { max_new_tokens: 256 }))[0].generated_text.trim(); } finally { URL.revokeObjectURL(u); } }; kind = "image";
@@ -73,7 +84,9 @@ async function runConfig(model, cfg) {
     return;
   }
   const loadMs = Math.round(performance.now() - t0);
-  const items = kind === "text" ? TEXT_ITEMS : images.map((i) => [i.id, blobs.get(i.id)]);
+  const items = kind === "text"
+    ? ((cfg.device === "webnn" && model === "intellitex") ? ALL_TEXT : TEXT_ITEMS)
+    : images.map((i) => [i.id, blobs.get(i.id)]);
   try { await withTimeout(predict(items[0][1]), 60000, "warmup"); } catch (e) { log(`${tag}  WARMUP FAILED: ${String(e).slice(0, 140)}`, "err"); await post({ approach: tag, item: "__load__", tier: "runtime", output: "", ms: loadMs, err: "warmup: " + String(e).slice(0, 300) }); return; }
   await post({ approach: tag, item: "__load__", tier: "runtime", output: "", ms: loadMs });
   log(`${tag}  loaded ${loadMs}ms`);
@@ -93,12 +106,14 @@ const gpu = (...c) => (hasGpu ? c : []);
 const plan = [
   ["intellitex", { device: "wasm", dtype: "q8" }], ["intellitex", { device: "wasm", dtype: "q4" }],
   ...gpu(["intellitex", { device: "webgpu", dtype: "q4" }], ["intellitex", { device: "webgpu", dtype: "fp16" }]),
+  ...(navigator.ml ? [["intellitex", { device: "webnn", dtype: "fp16" }]] : []),
   ["intellitex-fused", { device: "wasm", dtype: "q8" }],
   ["texo", { device: "wasm", dtype: "fp32" }], ["texo", { device: "wasm", dtype: "q8" }], ["texo", { device: "wasm", dtype: "fp16" }],
   ...gpu(["texo", { device: "webgpu", dtype: "fp32" }], ["texo", { device: "webgpu", dtype: "fp16" }]),
   ...(navigator.ml ? [["texo", { device: "webnn", dtype: "fp16" }]] : []),
   ["texify", { device: "wasm", dtype: "q8" }], ["texify", { device: "wasm", dtype: "q4" }],
   ...gpu(["texify", { device: "webgpu", dtype: "fp16" }], ["texify", { device: "webgpu", dtype: "q4" }]),
+  ...(navigator.ml ? [["texify", { device: "webnn", dtype: "fp16" }]] : []),
 ];
 const params = new URLSearchParams(location.search);
 const i = Number(params.get("i") ?? "0");

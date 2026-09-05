@@ -42,31 +42,38 @@ Every device and precision the runtime offers, one configuration per page load (
 
 | Model | CPU int8 | WebGPU int4 | Notes |
 |---|---|---|---|
-| IntelliTeX | 1.28 s | **0.45 s** | identical outputs; fp16 on GPU corrupted a formula |
-| Texify | 8.0 s | **0.81 s** | fp16 on GPU produced garbage; int4 correct |
+| IntelliTeX | 1.28 s | **0.45 s** | identical outputs; fp16 on GPU corrupted a formula; see the WebNN row |
+| IntelliTeX, hand-built WebNN graphs (graph catalog `intellitex-t5-220m`) | | **141 ms** median on 12 single-line text items | Core ML backend only; measured in this repo (`bench.html?only=intellitex-webnn`, 2026-09-05). Catalog workbench figure was 146.2 ms on 15 items. Graph build ~124 s once (one MLContext per length bucket 32/64/128). |
+| Texify | 8.0 s | **0.81 s** | fp16 on GPU produced garbage; int4 correct; see the WebNN row |
+| Texify, hand-built WebNN graphs (graph catalog `texify-420`) | | **204 ms** median per image | Core ML backend only; measured in this repo (`bench-images.html?only=texify-webnn`, 2026-09-05, 18 images). Catalog workbench figure was 146 ms. Sparse images still hit the token-cap repeat; the app collapses those. |
 | Texo | 0.77 s fp32 | 0.78 s | overhead-bound on ONNX Runtime; see the WebNN row |
 | Texo, hand-built WebNN graphs (graph catalog `texo-384`) | | **31 ms** median per image, 19 ms warm in the worker | Core ML backend only; identical output to the fp32 reference on 18/18 images |
 
 int4 on the CPU was 10x slower than int8 (no fast WASM kernel), so int4 is GPU-only. Graph fusion (O2) produced contrib ops the browser runtime cannot load.
 
-The WebNN row is not ONNX Runtime at all: `public/texo-webnn.js` replays two
-recipes from the graph catalog (`webnn-catalog`, family `texo-384`: an HGNetv2
-encoder that also emits the decoder's cross-attention K/V, and a decode graph
-that runs 16 greedy steps per dispatch over static caches) through the
-catalog's vendored loader. The 31 ms is `bench-images.html?only=texo-webnn`,
-one pass over the 18 benchmark images including the canvas preprocessing
-(20 to 73 ms per image, 3.8 s to build the graphs once per page load); the
-19 ms is a warm second call through the product's worker. The graphs were
-built and measured in `webnn-workbench` (its `docs/texo.md` has the floor,
-the levers and the verification: tokens identical to fp32 ONNX Runtime on all
-18 images, 22.7 ms median per image on a quiet M5 Pro). Chrome 152 with the
-WebNN flags and a persistent profile; an off-the-record profile silently lands
-on a TFLite CPU path, which `texo-webnn.js` rejects so the app falls back to
-ONNX Runtime and remembers to.
+The WebNN rows are not ONNX Runtime at all: `public/texo-webnn.js`,
+`public/texify-webnn.js` and `public/intellitex-webnn.js` replay recipes from
+the graph catalog through the catalog's vendored loader. Texo (`texo-384`) is
+an HGNetv2 encoder that also emits the decoder's cross-attention K/V plus a
+decode graph of 16 greedy steps per dispatch; Texify (`texify-420`) is a
+Donut-Swin encoder with the same K/V hoist plus one greedy decode step per
+dispatch over a cache of 384; IntelliTeX (`intellitex-t5-220m`) is a T5
+encoder-decoder with three static input-length buckets. The 31 ms Texo figure
+is `bench-images.html?only=texo-webnn` (canvas preprocess included,
+3.8 s to build the graphs once per page load); the 19 ms is a warm second call
+through the product's worker. The 204 ms Texify figure is this repo's
+`bench-images.html?only=texify-webnn` over the 18 images (workbench e2e was
+146 ms). The 141 ms IntelliTeX figure is `bench.html?only=intellitex-webnn` on
+the 12 single-line specialist items (catalog e2e was 146.2 ms on 15). All three
+families were built in `webnn-workbench`. Chrome 152 with the WebNN flags and a
+persistent profile; an off-the-record profile silently lands on a TFLite CPU
+path, which the loaders reject so the app falls back to ONNX Runtime and
+remembers to.
 
-Reproduce: open `public/bench-runtime.html?i=0` (the WebNN config is appended
-when `navigator.ml` exists), or `public/bench-images.html?only=texo-webnn` for
-all 18 images against the recorded fp32 outputs.
+Reproduce: open `public/bench-runtime.html?i=0` (the WebNN configs are appended
+when `navigator.ml` exists), or `public/bench-images.html?only=texo-webnn` /
+`?only=texify-webnn` for all 18 images, or `public/bench.html?only=intellitex-webnn`
+for the 15 text items.
 
 ## Loading: getting the weights into the browser
 

@@ -70,10 +70,32 @@ async function load(key, cfg, reqId) {
   const progress_callback = (p) => {
     if (p.status === "progress" && p.total) self.postMessage({ type: "progress", key, file: p.file, loaded: p.loaded, total: p.total });
   };
-  if (key === "intellitex") {
+  if (key === "intellitex" && cfg?.device === "webnn") {
+    // Hand-built WebNN graphs from the graph catalog (intellitex-webnn.js):
+    // ~146 ms median on Core ML against 0.45 s through ONNX Runtime WebGPU
+    // int4, identical greedy tokens. Throws on browsers without WebNN or with
+    // a non-Core ML backend; models.js remembers that and the next load takes
+    // the ONNX Runtime path below.
+    const { createIntelliTeXWebNN } = await import("./intellitex-webnn.js");
+    const specialist = await createIntelliTeXWebNN({
+      onProgress: (p) => self.postMessage({ type: "progress", key, file: p.file, loaded: p.loaded, total: p.total }),
+    });
+    models.intellitex = (text) => specialist.run(text);
+  } else if (key === "intellitex") {
     const p = await pipeline("text2text-generation", "intellitex", { ...cfg, progress_callback });
     await p(`${SPECIALIST_PREFIX}x squared`, { max_new_tokens: 16 }); // warm-up (shader compile etc.)
     models.intellitex = async (text) => (await p(SPECIALIST_PREFIX + text, { max_new_tokens: 256 }))[0]?.generated_text?.trim() ?? "";
+  } else if (key === "texify" && cfg?.device === "webnn") {
+    // Hand-built WebNN graphs from the graph catalog (texify-webnn.js): ~146 ms
+    // per image on Core ML against 0.81 s through ONNX Runtime WebGPU int4,
+    // identical greedy tokens. Throws on browsers without WebNN or with a
+    // non-Core ML backend; models.js remembers that and the next load takes
+    // the ONNX Runtime path below.
+    const { createTexifyWebNN } = await import("./texify-webnn.js");
+    const texify = await createTexifyWebNN({
+      onProgress: (p) => self.postMessage({ type: "progress", key, file: p.file, loaded: p.loaded, total: p.total }),
+    });
+    models.texify = (blob) => texify.run(blob);
   } else if (key === "texify") {
     const p = await pipeline("image-to-text", "texify", { ...cfg, progress_callback });
     models.texify = async (blob) => (await p(blob, { max_new_tokens: 384 }))[0]?.generated_text?.trim() ?? "";
