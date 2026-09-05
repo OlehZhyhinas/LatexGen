@@ -161,15 +161,37 @@ async function runTexoWebNN() {
   }
 }
 
+// ---------------- Texify through the graph catalog (WebNN / Core ML) ----------------
+async function runTexifyWebNN() {
+  if (!navigator.ml) { log("texify-webnn: navigator.ml missing, skipped", "err"); return; }
+  progress.textContent = "loading Texify (WebNN graphs)…";
+  const { createTexifyWebNN } = await import("./texify-webnn.js");
+  const t0 = performance.now();
+  const texify = await createTexifyWebNN();
+  const loadMs = Math.round(performance.now() - t0);
+  await post({ approach: "texify-webnn", item: "__load__", tier: "meta", output: "", ms: loadMs });
+  log(`texify-webnn loaded in ${loadMs} ms (${texify.stats.backend}; encoder ${texify.stats.graphs.encoder.ops} ops, decoder ${texify.stats.graphs.decoder.ops} ops)`);
+  for (const it of items) {
+    progress.textContent = `texify-webnn · ${it.id}`;
+    const t = performance.now();
+    let output = "", err = "";
+    try { output = await texify.run(blobs.get(it.id)); } catch (e) { err = String(e); }
+    const ms = Math.round(performance.now() - t);
+    await post({ approach: "texify-webnn", item: it.id, tier: it.tier, output, ms, err });
+    log(`<img src="${it.image}"> texify-webnn ${it.id} ${ms}ms → <code>${escapeHtml(output || err).slice(0, 90)}</code>`, err ? "err" : "");
+  }
+}
+
 function escapeHtml(s) { return s.replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c])); }
 
 try {
-  // ?only=texo-webnn (or texo, texify; comma-separated) restricts the run
+  // ?only=texo-webnn (or texo, texify, texify-webnn; comma-separated) restricts the run
   const only = new URLSearchParams(location.search).get("only")?.split(",");
   const want = (k) => !only || only.includes(k);
   if (want("texify")) await runTexify();
   if (want("texo")) await runTexo();
   if (want("texo-webnn")) await runTexoWebNN();
+  if (want("texify-webnn")) await runTexifyWebNN();
   await post({ approach: "__done__", item: "__done__", tier: "meta", output: "", ms: 0 });
   progress.textContent = "DONE";
   log("DONE", "ok");

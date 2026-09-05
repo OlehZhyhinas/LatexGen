@@ -61,12 +61,15 @@ for (const entry of await readdir(SRC)) {
   await cp(join(SRC, entry), join(OUT, entry), { recursive: true });
 }
 
-// The Texo graph-catalog entry (models/texo-webnn/) is small data, not weights:
-// recipes, manifest, tokenizer, half a megabyte. It ships with the site; the
-// two constants blobs do not, and are fetched from the URLs the entry's
+// Graph-catalog entries (models/texo-webnn/, models/texify-webnn/) are small
+// data, not weights: recipes, manifest, tokenizer. They ship with the site;
+// the constants blobs do not, and are fetched from the URLs the entry's
 // manifest names once the catalog publishes them (until then the WebNN load
 // fails, is remembered, and the ONNX Runtime path is used as before).
 await cp(join(SRC, "models", "texo-webnn"), join(OUT, "models", "texo-webnn"), {
+  recursive: true, filter: (src) => !src.endsWith(".bin"),
+});
+await cp(join(SRC, "models", "texify-webnn"), join(OUT, "models", "texify-webnn"), {
   recursive: true, filter: (src) => !src.endsWith(".bin"),
 });
 
