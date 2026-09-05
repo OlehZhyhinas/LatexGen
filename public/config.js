@@ -15,3 +15,7 @@ export const STATIC_BUILD = false;
 // that turns a model key ("intellitex") into a URL on it.
 export const MODEL_HOST = null;
 export const MODEL_PATH_TEMPLATE = null;
+// Where the graph-catalog entry for Texo (recipes, manifest, constants blobs)
+// is served from; null means models/texo-webnn/ on this origin. The static
+// build points it at the published catalog instead.
+export const WEBNN_CATALOG_BASE = null;
