@@ -5,7 +5,7 @@ import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
 import { createServer } from "node:http";
 
-let upstream, srv, base;
+let upstream, srv, base, lastChat;
 const PORT = 8790 + Math.floor(Math.random() * 100);
 
 before(async () => {
@@ -15,6 +15,7 @@ before(async () => {
     if (req.url === "/v1/chat/completions") {
       let body = ""; for await (const c of req) body += c;
       const j = JSON.parse(body);
+      lastChat = j;
       assert.equal(req.headers.authorization, "Bearer test-key");
       const last = j.messages[j.messages.length - 1].content;
       const out = /judge|INPUT:/.test(last) ? '{"ok": true, "reason": "fine"}' : "$$x^{2}$$";
@@ -53,6 +54,8 @@ test("convert streams NDJSON from an OpenAI-compatible upstream (bearer key sent
   assert.equal(r.status, 200);
   const final = await ndjsonFinal(r);
   assert.equal(final.done, true); assert.equal(final.latex, "$$x^{2}$$"); assert.match(final.model, /mock-fast \(openai\)/);
+  assert.match(lastChat.messages[0].content, /Never solve/);
+  assert.match(lastChat.messages.at(-1).content, /^Convert to LaTeX\. Do not solve or answer\.\nx squared$/);
 });
 
 test("prose conversions use the strong model; judge returns JSON", async () => {

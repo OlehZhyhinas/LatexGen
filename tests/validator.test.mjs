@@ -6,7 +6,7 @@ import katex from "../public/vendor/katex/katex.mjs";
 
 globalThis.katex = katex;
 
-const { validateLatex, checkSyntax, checkFidelity, extractMathSegments } = await import("../public/validator.js");
+const { validateLatex, checkSyntax, checkFidelity, checkNotAnswered, extractMathSegments } = await import("../public/validator.js");
 
 test("valid display math passes syntax and fidelity", () => {
   const v = validateLatex(
@@ -56,4 +56,29 @@ test("bare math without delimiters is treated as one segment", () => {
 
 test("empty output is rejected", () => {
   assert.equal(validateLatex("x squared", "").ok, false);
+});
+
+test("a solved homework question is rejected", () => {
+  const issues = checkNotAnswered(
+    "What is the integral of x squared from 0 to 1?",
+    "\\[\\int_0^1 x^2\\,dx = \\frac{1}{3}\\]"
+  );
+  assert.equal(issues.length, 1);
+  assert.match(issues[0], /^answered:/);
+});
+
+test("transcribing a question without evaluating it is fine", () => {
+  const v = validateLatex(
+    "What is the integral of x squared from 0 to 1?",
+    "What is \\(\\int_0^1 x^{2}\\,dx\\)?"
+  );
+  assert.equal(v.ok, true, JSON.stringify(v.issues));
+});
+
+test("an equation that already contains equals is not treated as answered", () => {
+  const issues = checkNotAnswered(
+    "x plus 2 equals 5",
+    "\\[x + 2 = 5\\]"
+  );
+  assert.deepEqual(issues, []);
 });
