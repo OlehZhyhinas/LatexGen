@@ -1,12 +1,16 @@
 // Image-OCR benchmark: Texify (current, ~305MB int8) vs Texo (~77MB fp32),
 // both fully in-browser via transformers.js. Posts rows to /api/bench.
+// The vendored transformers.js, like bench-runtime.js: the page's CSP is
+// script-src 'self', so the CDN import this page started with no longer loads.
 import {
   pipeline, env, VisionEncoderDecoderModel, PreTrainedTokenizer, Tensor, cat,
-} from "https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.2.0";
+} from "./vendor/transformers/transformers.min.js";
 
 env.allowRemoteModels = false;
 env.allowLocalModels = true;
 env.localModelPath = new URL("models/", import.meta.url).href;
+env.backends.onnx.wasm.wasmPaths = new URL("vendor/ort/", import.meta.url).href;
+env.backends.onnx.wasm.numThreads = 1;
 
 const progress = document.getElementById("progress");
 const logEl = document.getElementById("log");
@@ -136,11 +140,36 @@ async function runTexo() {
   }
 }
 
+// ---------------- Texo through the graph catalog (WebNN / Core ML) ----------------
+async function runTexoWebNN() {
+  if (!navigator.ml) { log("texo-webnn: navigator.ml missing, skipped", "err"); return; }
+  progress.textContent = "loading Texo (WebNN graphs)…";
+  const { createTexoWebNN } = await import("./texo-webnn.js");
+  const t0 = performance.now();
+  const texo = await createTexoWebNN();
+  const loadMs = Math.round(performance.now() - t0);
+  await post({ approach: "texo-webnn", item: "__load__", tier: "meta", output: "", ms: loadMs });
+  log(`texo-webnn loaded in ${loadMs} ms (${texo.stats.backend}; encoder ${texo.stats.graphs.encoder.ops} ops, decoder ${texo.stats.graphs.decoder.ops} ops)`);
+  for (const it of items) {
+    progress.textContent = `texo-webnn · ${it.id}`;
+    const t = performance.now();
+    let output = "", err = "";
+    try { output = await texo.run(await texoPreprocess(blobs.get(it.id))); } catch (e) { err = String(e); }
+    const ms = Math.round(performance.now() - t);
+    await post({ approach: "texo-webnn", item: it.id, tier: it.tier, output, ms, err });
+    log(`<img src="${it.image}"> texo-webnn ${it.id} ${ms}ms → <code>${escapeHtml(output || err).slice(0, 90)}</code>`, err ? "err" : "");
+  }
+}
+
 function escapeHtml(s) { return s.replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c])); }
 
 try {
-  await runTexify();
-  await runTexo();
+  // ?only=texo-webnn (or texo, texify; comma-separated) restricts the run
+  const only = new URLSearchParams(location.search).get("only")?.split(",");
+  const want = (k) => !only || only.includes(k);
+  if (want("texify")) await runTexify();
+  if (want("texo")) await runTexo();
+  if (want("texo-webnn")) await runTexoWebNN();
   await post({ approach: "__done__", item: "__done__", tier: "meta", output: "", ms: 0 });
   progress.textContent = "DONE";
   log("DONE", "ok");
