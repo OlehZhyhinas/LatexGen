@@ -11,11 +11,13 @@ function rememberRuntime(model, device, ok) { try { const p = runtimePrefs(); p[
 // 0.78 s WebGPU), so it takes the hand-built WebNN graphs from the graph
 // catalog when WebNN is present (23 ms per image on Core ML with identical
 // tokens, docs/benchmarks.md) and stays CPU fp32 otherwise. Texify does the
-// same once its catalog recipes are present (~146 ms vs 0.81 s). Only the
-// Core ML backend is accepted: the worker asserts the fingerprint and a
-// mismatch (the silent TFLite CPU fallback) is remembered like a failed
-// WebGPU session. A failed Texify WebNN load falls back to WebGPU int4, not
-// all the way to CPU — WebGPU still wins for this model.
+// same once its catalog recipes are present (~146 ms vs 0.81 s). IntelliTeX
+// prefers the catalog family `intellitex-t5-220m` the same way (~146 ms vs
+// 0.45 s WebGPU int4). Only the Core ML backend is accepted: the worker
+// asserts the fingerprint and a mismatch (the silent TFLite CPU fallback) is
+// remembered like a failed WebGPU session. A failed Texify or IntelliTeX
+// WebNN load falls back to WebGPU int4, not all the way to CPU — WebGPU still
+// wins for those models.
 export const webnnAvailable = () => typeof navigator !== "undefined" && !!navigator.ml;
 export function pickRuntime(model) {
   const pref = runtimePrefs()[model];
@@ -25,7 +27,7 @@ export function pickRuntime(model) {
     return webnn;
   }
   const gpu = { device: "webgpu", dtype: "q4" }, cpu = { device: "wasm", dtype: "q8" };
-  if (model === "texify") {
+  if (model === "texify" || model === "intellitex") {
     if (webnnAvailable() && pref !== "wasm" && pref !== "webgpu") return { device: "webnn", dtype: "fp16" };
     if (!navigator.gpu || pref === "wasm") return cpu;
     return gpu;
@@ -62,8 +64,9 @@ export function loadModel(key, onProgress) {
       runtimeUsed[key] = cfg; loaded[key] = true;
     } catch (err) {
       if (cfg.device === "webnn") {
-        rememberRuntime(key, key === "texify" ? "webgpu" : "wasm", key === "texify");
-        console.warn(`${key}: WebNN failed, ${key === "texify" ? "WebGPU" : "CPU"} on next load`, err);
+        const toGpu = key === "texify" || key === "intellitex";
+        rememberRuntime(key, toGpu ? "webgpu" : "wasm", toGpu);
+        console.warn(`${key}: WebNN failed, ${toGpu ? "WebGPU" : "CPU"} on next load`, err);
       } else if (cfg.device === "webgpu") { rememberRuntime(key, cfg.device, false); console.warn(`${key}: WebGPU failed, CPU on next load`, err); }
       delete loaders[key];
       throw err;
