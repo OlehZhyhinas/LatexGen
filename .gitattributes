@@ -2,3 +2,4 @@ public/models/intellitex/onnx/*.onnx filter=lfs diff=lfs merge=lfs -text
 public/models/texify/onnx/*.onnx filter=lfs diff=lfs merge=lfs -text
 public/models/texo/onnx/*.onnx filter=lfs diff=lfs merge=lfs -text
 public/models/texo-webnn/*.bin filter=lfs diff=lfs merge=lfs -text
+public/models/texify-webnn/*.bin filter=lfs diff=lfs merge=lfs -text

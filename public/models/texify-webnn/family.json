@@ -1,0 +1,811 @@
+{
+ "id": "texify-420",
+ "name": "Texify (Donut-Swin + mBART, 300M), 420x420 equation OCR",
+ "summary": "Texify, LatexGen's second-pass equation OCR: a Donut-Swin encoder over a 420x420 RGB image and an 8-layer mBART decoder that emits LaTeX tokens greedily. Two WebNN graphs: the encoder, which also computes the decoder's cross-attention K/V once per image, and a decode-step graph that runs one greedy step per dispatch over static self-attention caches of length 384. float16 throughout. A preprocessed image goes in, a token sequence comes out.",
+ "task": "image-to-latex",
+ "source": {
+  "model": "vikp/texify (fp32); LatexGen ships the Xenova/texify ONNX export as public/models/texify",
+  "revision": null,
+  "components": {
+   "encoder": {
+    "model": "donut-swin (depths [2,2,14,2], heads [4,8,16,32], window 5, patch 4, 420 -> 14x14 = 196 tokens x 1024)",
+    "role": "image encoder; hoists decoder EncDecAttention K/V"
+   },
+   "decoder": {
+    "model": "mbart (8 layers, d_model 1024, 16 heads x 64, ffn 4096, vocab 50000, max positions 1536, scale_embedding)",
+    "role": "autoregressive LaTeX token decoder, one step per dispatch, cache 384"
+   }
+  },
+  "precision": "float16 throughout; LayerNorm is the native op (a hand-rolled fp16 sum-of-squares overflows at Donut-Swin stage 2). Greedy tokens identical to fp32 on 18/18 LatexGen benchmark images.",
+  "resolution": 420,
+  "steps": null
+ },
+ "contract": {
+  "graphs": {
+   "encoder": {
+    "role": "Donut-Swin encoder + the decoder's cross-attention K/V for all 8 layers, computed once per image",
+    "inputs": {
+     "pixel_values": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       3,
+       420,
+       420
+      ],
+      "layout": "nchw",
+      "source": "Donut 4.36: shortest-edge resize 420, thumbnail into 420x420, center pad 0, /255, ImageNet mean/std. Preprocessing stays in the consumer."
+     }
+    },
+    "outputs": {
+     "dec0_k": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       196,
+       64
+      ],
+      "role": "cross-attention K, decoder layer 0",
+      "readable": true
+     },
+     "dec0_v": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       196,
+       64
+      ],
+      "role": "cross-attention V, decoder layer 0",
+      "readable": false
+     },
+     "dec1_k": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       196,
+       64
+      ],
+      "role": "cross-attention K, decoder layer 1",
+      "readable": false
+     },
+     "dec1_v": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       196,
+       64
+      ],
+      "role": "cross-attention V, decoder layer 1",
+      "readable": false
+     },
+     "dec2_k": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       196,
+       64
+      ],
+      "role": "cross-attention K, decoder layer 2",
+      "readable": false
+     },
+     "dec2_v": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       196,
+       64
+      ],
+      "role": "cross-attention V, decoder layer 2",
+      "readable": false
+     },
+     "dec3_k": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       196,
+       64
+      ],
+      "role": "cross-attention K, decoder layer 3",
+      "readable": false
+     },
+     "dec3_v": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       196,
+       64
+      ],
+      "role": "cross-attention V, decoder layer 3",
+      "readable": false
+     },
+     "dec4_k": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       196,
+       64
+      ],
+      "role": "cross-attention K, decoder layer 4",
+      "readable": false
+     },
+     "dec4_v": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       196,
+       64
+      ],
+      "role": "cross-attention V, decoder layer 4",
+      "readable": false
+     },
+     "dec5_k": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       196,
+       64
+      ],
+      "role": "cross-attention K, decoder layer 5",
+      "readable": false
+     },
+     "dec5_v": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       196,
+       64
+      ],
+      "role": "cross-attention V, decoder layer 5",
+      "readable": false
+     },
+     "dec6_k": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       196,
+       64
+      ],
+      "role": "cross-attention K, decoder layer 6",
+      "readable": false
+     },
+     "dec6_v": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       196,
+       64
+      ],
+      "role": "cross-attention V, decoder layer 6",
+      "readable": false
+     },
+     "dec7_k": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       196,
+       64
+      ],
+      "role": "cross-attention K, decoder layer 7",
+      "readable": false
+     },
+     "dec7_v": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       196,
+       64
+      ],
+      "role": "cross-attention V, decoder layer 7",
+      "readable": false
+     }
+    }
+   },
+   "decoder": {
+    "role": "one greedy decode step: embedding, 8 mBART layers over static self-attention caches and the encoder K/V, final LayerNorm, lm head, argMax",
+    "inputs": {
+     "token": {
+      "dataType": "int32",
+      "shape": [
+       1
+      ]
+     },
+     "step": {
+      "dataType": "int32",
+      "shape": [
+       1
+      ]
+     },
+     "dec0_k": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       196,
+       64
+      ]
+     },
+     "dec0_v": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       196,
+       64
+      ]
+     },
+     "self0_k": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       384,
+       64
+      ]
+     },
+     "self0_v": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       384,
+       64
+      ]
+     },
+     "dec1_k": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       196,
+       64
+      ]
+     },
+     "dec1_v": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       196,
+       64
+      ]
+     },
+     "self1_k": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       384,
+       64
+      ]
+     },
+     "self1_v": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       384,
+       64
+      ]
+     },
+     "dec2_k": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       196,
+       64
+      ]
+     },
+     "dec2_v": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       196,
+       64
+      ]
+     },
+     "self2_k": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       384,
+       64
+      ]
+     },
+     "self2_v": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       384,
+       64
+      ]
+     },
+     "dec3_k": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       196,
+       64
+      ]
+     },
+     "dec3_v": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       196,
+       64
+      ]
+     },
+     "self3_k": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       384,
+       64
+      ]
+     },
+     "self3_v": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       384,
+       64
+      ]
+     },
+     "dec4_k": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       196,
+       64
+      ]
+     },
+     "dec4_v": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       196,
+       64
+      ]
+     },
+     "self4_k": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       384,
+       64
+      ]
+     },
+     "self4_v": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       384,
+       64
+      ]
+     },
+     "dec5_k": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       196,
+       64
+      ]
+     },
+     "dec5_v": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       196,
+       64
+      ]
+     },
+     "self5_k": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       384,
+       64
+      ]
+     },
+     "self5_v": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       384,
+       64
+      ]
+     },
+     "dec6_k": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       196,
+       64
+      ]
+     },
+     "dec6_v": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       196,
+       64
+      ]
+     },
+     "self6_k": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       384,
+       64
+      ]
+     },
+     "self6_v": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       384,
+       64
+      ]
+     },
+     "dec7_k": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       196,
+       64
+      ]
+     },
+     "dec7_v": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       196,
+       64
+      ]
+     },
+     "self7_k": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       384,
+       64
+      ]
+     },
+     "self7_v": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       384,
+       64
+      ]
+     }
+    },
+    "outputs": {
+     "tokens": {
+      "dataType": "int32",
+      "shape": [
+       1
+      ],
+      "readable": true,
+      "role": "argMax token of this decode step; the only output a consumer reads"
+     },
+     "self0_k_out": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       384,
+       64
+      ],
+      "readable": false,
+      "role": "updated self0_k (bind as next dispatch's input)"
+     },
+     "self0_v_out": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       384,
+       64
+      ],
+      "readable": false,
+      "role": "updated self0_v (bind as next dispatch's input)"
+     },
+     "self1_k_out": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       384,
+       64
+      ],
+      "readable": false,
+      "role": "updated self1_k (bind as next dispatch's input)"
+     },
+     "self1_v_out": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       384,
+       64
+      ],
+      "readable": false,
+      "role": "updated self1_v (bind as next dispatch's input)"
+     },
+     "self2_k_out": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       384,
+       64
+      ],
+      "readable": false,
+      "role": "updated self2_k (bind as next dispatch's input)"
+     },
+     "self2_v_out": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       384,
+       64
+      ],
+      "readable": false,
+      "role": "updated self2_v (bind as next dispatch's input)"
+     },
+     "self3_k_out": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       384,
+       64
+      ],
+      "readable": false,
+      "role": "updated self3_k (bind as next dispatch's input)"
+     },
+     "self3_v_out": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       384,
+       64
+      ],
+      "readable": false,
+      "role": "updated self3_v (bind as next dispatch's input)"
+     },
+     "self4_k_out": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       384,
+       64
+      ],
+      "readable": false,
+      "role": "updated self4_k (bind as next dispatch's input)"
+     },
+     "self4_v_out": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       384,
+       64
+      ],
+      "readable": false,
+      "role": "updated self4_v (bind as next dispatch's input)"
+     },
+     "self5_k_out": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       384,
+       64
+      ],
+      "readable": false,
+      "role": "updated self5_k (bind as next dispatch's input)"
+     },
+     "self5_v_out": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       384,
+       64
+      ],
+      "readable": false,
+      "role": "updated self5_v (bind as next dispatch's input)"
+     },
+     "self6_k_out": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       384,
+       64
+      ],
+      "readable": false,
+      "role": "updated self6_k (bind as next dispatch's input)"
+     },
+     "self6_v_out": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       384,
+       64
+      ],
+      "readable": false,
+      "role": "updated self6_v (bind as next dispatch's input)"
+     },
+     "self7_k_out": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       384,
+       64
+      ],
+      "readable": false,
+      "role": "updated self7_k (bind as next dispatch's input)"
+     },
+     "self7_v_out": {
+      "dataType": "float16",
+      "shape": [
+       1,
+       16,
+       384,
+       64
+      ],
+      "readable": false,
+      "role": "updated self7_v (bind as next dispatch's input)"
+     }
+    }
+   }
+  },
+  "chaining": {
+   "contexts": "ONE MLContext for both graphs. navigator.ml.createContext({deviceType: 'gpu'}).",
+   "autoregressive": {
+    "graph": "decoder",
+    "tokenInput": "token",
+    "positionInput": "step",
+    "tokensOutput": "tokens",
+    "caches": [
+     [
+      "self0_k",
+      "self0_k_out"
+     ],
+     [
+      "self0_v",
+      "self0_v_out"
+     ],
+     [
+      "self1_k",
+      "self1_k_out"
+     ],
+     [
+      "self1_v",
+      "self1_v_out"
+     ],
+     [
+      "self2_k",
+      "self2_k_out"
+     ],
+     [
+      "self2_v",
+      "self2_v_out"
+     ],
+     [
+      "self3_k",
+      "self3_k_out"
+     ],
+     [
+      "self3_v",
+      "self3_v_out"
+     ],
+     [
+      "self4_k",
+      "self4_k_out"
+     ],
+     [
+      "self4_v",
+      "self4_v_out"
+     ],
+     [
+      "self5_k",
+      "self5_k_out"
+     ],
+     [
+      "self5_v",
+      "self5_v_out"
+     ],
+     [
+      "self6_k",
+      "self6_k_out"
+     ],
+     [
+      "self6_v",
+      "self6_v_out"
+     ],
+     [
+      "self7_k",
+      "self7_k_out"
+     ],
+     [
+      "self7_v",
+      "self7_v_out"
+     ]
+    ],
+    "zeroCachesPerSequence": true,
+    "bos": 0,
+    "eos": 2,
+    "maxNewTokens": 384,
+    "forcedEosTokenId": 2,
+    "note": "runtime/loader.js autoregressive() implements the loop from these fields; forced_eos at the 384 cap is applied by the consumer (texify-webnn.js)."
+   }
+  }
+ },
+ "tokenizer": {
+  "algorithm": "BPE ByteLevel (NougatTokenizer), vocab 50000; decoding is transformers.js AutoTokenizer skip_special_tokens, matching the ONNX Runtime path",
+  "files": [
+   "../texify/tokenizer.json",
+   "../texify/tokenizer_config.json"
+  ],
+  "maxLength": 384,
+  "produces": "decoder.tokens is what it DECODES; nothing is encoded at inference"
+ },
+ "constants": {
+  "scope": "per-entry",
+  "note": "Encoder blob (~174 MiB) and decoder blob (~423 MiB) are the entry's; they are not in git."
+ },
+ "verification": {
+  "case": "LatexGen's 18 image-OCR benchmark items",
+  "bar": "greedy token ids identical to the fp32 reference on every image",
+  "runner": "public/bench-images.html?only=texify-webnn"
+ }
+}

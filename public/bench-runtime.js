@@ -54,6 +54,10 @@ async function runConfig(model, cfg) {
     if (model.startsWith("intellitex")) {
       const p = await withTimeout(pipeline("text2text-generation", model, { device: cfg.device, dtype: cfg.dtype }), 90000, "load");
       predict = async (text) => (await p(PREFIX + text, { max_new_tokens: 128 }))[0].generated_text.trim(); kind = "text";
+    } else if (cfg.device === "webnn" && model === "texify") {
+      const { createTexifyWebNN } = await import("./texify-webnn.js");
+      const texify = await withTimeout(createTexifyWebNN(), 180000, "load");
+      predict = async (blob) => texify.run(blob); kind = "image";
     } else if (model === "texify") {
       const p = await withTimeout(pipeline("image-to-text", "texify", { device: cfg.device, dtype: cfg.dtype }), 90000, "load");
       predict = async (blob) => { const u = URL.createObjectURL(blob); try { return (await p(u, { max_new_tokens: 256 }))[0].generated_text.trim(); } finally { URL.revokeObjectURL(u); } }; kind = "image";
@@ -99,6 +103,7 @@ const plan = [
   ...(navigator.ml ? [["texo", { device: "webnn", dtype: "fp16" }]] : []),
   ["texify", { device: "wasm", dtype: "q8" }], ["texify", { device: "wasm", dtype: "q4" }],
   ...gpu(["texify", { device: "webgpu", dtype: "fp16" }], ["texify", { device: "webgpu", dtype: "q4" }]),
+  ...(navigator.ml ? [["texify", { device: "webnn", dtype: "fp16" }]] : []),
 ];
 const params = new URLSearchParams(location.search);
 const i = Number(params.get("i") ?? "0");
