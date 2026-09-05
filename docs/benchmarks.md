@@ -44,11 +44,29 @@ Every device and precision the runtime offers, one configuration per page load (
 |---|---|---|---|
 | IntelliTeX | 1.28 s | **0.45 s** | identical outputs; fp16 on GPU corrupted a formula |
 | Texify | 8.0 s | **0.81 s** | fp16 on GPU produced garbage; int4 correct |
-| Texo | 0.77 s fp32 | 0.78 s | overhead-bound, stays on CPU |
+| Texo | 0.77 s fp32 | 0.78 s | overhead-bound on ONNX Runtime; see the WebNN row |
+| Texo, hand-built WebNN graphs (graph catalog `texo-384`) | | **31 ms** median per image, 19 ms warm in the worker | Core ML backend only; identical output to the fp32 reference on 18/18 images |
 
 int4 on the CPU was 10x slower than int8 (no fast WASM kernel), so int4 is GPU-only. Graph fusion (O2) produced contrib ops the browser runtime cannot load.
 
-Reproduce: open `public/bench-runtime.html?i=0`.
+The WebNN row is not ONNX Runtime at all: `public/texo-webnn.js` replays two
+recipes from the graph catalog (`webnn-catalog`, family `texo-384`: an HGNetv2
+encoder that also emits the decoder's cross-attention K/V, and a decode graph
+that runs 16 greedy steps per dispatch over static caches) through the
+catalog's vendored loader. The 31 ms is `bench-images.html?only=texo-webnn`,
+one pass over the 18 benchmark images including the canvas preprocessing
+(20 to 73 ms per image, 3.8 s to build the graphs once per page load); the
+19 ms is a warm second call through the product's worker. The graphs were
+built and measured in `webnn-workbench` (its `docs/texo.md` has the floor,
+the levers and the verification: tokens identical to fp32 ONNX Runtime on all
+18 images, 22.7 ms median per image on a quiet M5 Pro). Chrome 152 with the
+WebNN flags and a persistent profile; an off-the-record profile silently lands
+on a TFLite CPU path, which `texo-webnn.js` rejects so the app falls back to
+ONNX Runtime and remembers to.
+
+Reproduce: open `public/bench-runtime.html?i=0` (the WebNN config is appended
+when `navigator.ml` exists), or `public/bench-images.html?only=texo-webnn` for
+all 18 images against the recorded fp32 outputs.
 
 ## Loading: getting the weights into the browser
 
