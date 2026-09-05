@@ -1,6 +1,7 @@
 // Client-side output validation: (1) syntax — every math segment must parse
 // with KaTeX; (2) fidelity — numbers and math concepts named in the input
-// must show up in the LaTeX. Used to decide when to escalate from the tiny
+// must show up in the LaTeX; (3) transcription — a homework question must
+// not come back solved. Used to decide when to escalate from the tiny
 // browser model to the server model.
 
 const DELIM_RE = /\$\$([\s\S]+?)\$\$|\\\[([\s\S]+?)\\\]|\\\(([\s\S]+?)\\\)|\$([^$\n]+?)\$/g;
@@ -82,8 +83,22 @@ export function checkFidelity(input, latex) {
   return issues;
 }
 
+const QUESTION_LEAD = /^(what(?:'s| is| are)?|find|solve|evaluate|compute|calculate)\b/i;
+const EQUALS_IN_INPUT = /=|\bequals?\b|\bis equal to\b/i;
+
+// Chat models treat a pasted homework question as something to answer.
+// A new "=" that was not in the input is the usual tell (they converted
+// the integral and then appended the value).
+export function checkNotAnswered(input, latex) {
+  const t = input.trim();
+  if (!QUESTION_LEAD.test(t) && !/\?\s*$/.test(t)) return [];
+  if (EQUALS_IN_INPUT.test(t)) return [];
+  if (!/=/.test(latex)) return [];
+  return ["answered: output solves the question; convert the question text, do not evaluate"];
+}
+
 export function validateLatex(input, latex) {
   if (!latex || !latex.trim()) return { ok: false, issues: ["empty output"] };
-  const issues = [...checkSyntax(latex), ...checkFidelity(input, latex)];
+  const issues = [...checkSyntax(latex), ...checkFidelity(input, latex), ...checkNotAnswered(input, latex)];
   return { ok: issues.length === 0, issues };
 }

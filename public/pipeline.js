@@ -7,10 +7,11 @@ import { validateLatex, checkSyntax } from "./validator.js";
 import { loadModel, runModel, loaded } from "./models.js";
 
 // Kept terse: every token is prefilled on every on-device call.
-const SYSTEM_PROMPT = `Convert the text to LaTeX. Output only LaTeX, no commentary or fences. Pure math: \\[ ... \\]. Prose with math: keep the prose, wrap math in \\( ... \\). Standard amsmath only.`;
-const REPAIR_PROMPT = `Your LaTeX failed checks. Fix every listed issue, stay faithful to the original text, output only the corrected LaTeX. "syntax:" = does not parse; "missing:" = something from the text was dropped.`;
+const SYSTEM_PROMPT = `Convert the text to LaTeX. Never solve, evaluate, or answer — if the text is a question, transcribe the question. Output only LaTeX, no commentary or fences. Pure math: \\[ ... \\]. Prose with math: keep the prose, wrap math in \\( ... \\). Standard amsmath only.`;
+const REPAIR_PROMPT = `Your LaTeX failed checks. Fix every listed issue, stay faithful to the original text, output only the corrected LaTeX. "syntax:" = does not parse; "missing:" = something from the text was dropped. "answered:" = you solved the question; transcribe the question, do not evaluate.`;
+const CONVERT_USER = (text) => `Convert to LaTeX. Do not solve or answer.\n${text}`;
 const REFINE_PROMPT = `The user gives feedback on your previous LaTeX. The feedback is about the LaTeX, never content to transcribe. Output only the corrected LaTeX; change only what the feedback concerns and keep the delimiters. If vague, fix your best guess.`;
-const JUDGE_PROMPT = `You verify text-to-LaTeX conversions. Given the user's plain-English input and the produced LaTeX, decide whether the LaTeX expresses exactly what the text describes (same operations, grouping, exponents, limits, variables). Reply with ONLY a JSON object: {"ok": true/false, "reason": "<max 12 words>"}`;
+const JUDGE_PROMPT = `You verify text-to-LaTeX conversions. Given the user's plain-English input and the produced LaTeX, decide whether the LaTeX expresses exactly what the text describes (same operations, grouping, exponents, limits, variables). Solving or answering instead of transcribing is not ok. Reply with ONLY a JSON object: {"ok": true/false, "reason": "<max 12 words>"}`;
 
 export const MAX_REPAIR_ATTEMPTS = 5;
 const REPAIR_BUDGET_MS = 8000;
@@ -142,10 +143,10 @@ export function createPipeline(ctx) {
       return { latex: stripFences(stripThink(full)), model: ctx.getEngineName() };
     });
   }
-  const convertBrowser = (text, onDelta) => streamBrowserChat([{ role: "system", content: SYSTEM_PROMPT }, { role: "user", content: text }], onDelta);
+  const convertBrowser = (text, onDelta) => streamBrowserChat([{ role: "system", content: SYSTEM_PROMPT }, { role: "user", content: CONVERT_USER(text) }], onDelta);
   const repairBrowser = (text, badLatex, issues, onDelta) => streamBrowserChat([
     { role: "system", content: REPAIR_PROMPT },
-    { role: "user", content: `Convert to LaTeX:\n${text}` },
+    { role: "user", content: CONVERT_USER(text) },
     { role: "assistant", content: badLatex },
     { role: "user", content: `Checks failed:\n- ${issues.join("\n- ")}\nOutput the corrected LaTeX.` },
   ], onDelta);

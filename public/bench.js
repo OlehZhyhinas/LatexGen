@@ -8,9 +8,11 @@ const SYSTEM_PROMPT = `You are a text-to-LaTeX transcriber. Convert the user's i
 
 Rules:
 - Output ONLY the LaTeX code. No explanations, no markdown code fences, no surrounding commentary.
+- Never solve, evaluate, simplify, or answer. If the input is a question or problem, convert the question itself to LaTeX; do not produce the answer.
 - For pure math, wrap display math in \\[ ... \\].
 - For prose mixed with math, keep the prose as plain text and wrap math in \\( ... \\).
 - Use standard LaTeX/amsmath commands only.`;
+const CONVERT_USER = (text) => `Convert to LaTeX. Do not solve or answer.\n${text}`;
 
 const SEGMENT_PROMPT = `Repeat the user's text EXACTLY, word for word, with one change: wrap every mathematical expression (anything describing math in words or symbols) in double angle brackets like «...». Do NOT convert anything to LaTeX. Do NOT change, add, or remove any words. Output only the marked-up text.`;
 
@@ -100,7 +102,7 @@ async function main() {
       // direct conversion
       const t0 = performance.now();
       try {
-        const out = await genWebllm(engine, SYSTEM_PROMPT, it.input, 768);
+        const out = await genWebllm(engine, SYSTEM_PROMPT, CONVERT_USER(it.input), 768);
         await post({ approach: `direct:${m.name}`, item: it.id, tier: it.tier, ms: Math.round(performance.now() - t0), output: out });
         log("ok", `direct:${m.name} ${it.id} ${Math.round(performance.now() - t0)}ms`);
       } catch (e) {
