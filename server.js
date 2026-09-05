@@ -59,11 +59,13 @@ const SYSTEM_PROMPT = `You are a text-to-LaTeX transcriber. Convert the user's i
 
 Rules:
 - Output ONLY the LaTeX code. No explanations, no markdown code fences, no surrounding commentary.
+- Never solve, evaluate, simplify, or answer. If the input is a question or problem, convert the question itself to LaTeX; do not produce the answer.
 - For pure math, wrap display math in \\[ ... \\].
 - For prose mixed with math, keep the prose as plain text and wrap math in \\( ... \\).
 - Use standard LaTeX/amsmath commands only.`;
+const CONVERT_USER = (text) => `Convert to LaTeX. Do not solve or answer.\n${text}`;
 
-const JUDGE_PROMPT = `You verify text-to-LaTeX conversions. Given the user's plain-English input and the produced LaTeX, decide whether the LaTeX expresses exactly what the text describes (same operations, grouping, exponents, limits, variables). Reply with ONLY a JSON object: {"ok": true/false, "reason": "<max 12 words>"}`;
+const JUDGE_PROMPT = `You verify text-to-LaTeX conversions. Given the user's plain-English input and the produced LaTeX, decide whether the LaTeX expresses exactly what the text describes (same operations, grouping, exponents, limits, variables). Solving or answering instead of transcribing is not ok. Reply with ONLY a JSON object: {"ok": true/false, "reason": "<max 12 words>"}`;
 
 const REFINE_PROMPT = `You are a text-to-LaTeX transcriber in a feedback loop. You previously converted the user's text to LaTeX. The user now gives feedback on your conversion. Produce a corrected version of YOUR PREVIOUS LaTeX.
 
@@ -560,7 +562,7 @@ const server = createServer(async (req, res) => {
       }
       await streamChat(res, route, [
         { role: "system", content: SYSTEM_PROMPT },
-        { role: "user", content: text },
+        { role: "user", content: CONVERT_USER(text) },
       ]);
       return;
     }
