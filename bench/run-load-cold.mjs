@@ -18,6 +18,7 @@ const FLAGS = [
   "--no-default-browser-check",
   "--disable-sync",
   "--disable-background-networking",
+  "--enable-precise-memory-info",
   "--enable-unsafe-webgpu",
   "--enable-features=WebMachineLearningNeuralNetwork,WebMachineLearningNeuralNetworkExperimentalFeatures,WebNNCoreML,WebGPUExperimentalFeatures",
   "--enable-dawn-features=allow_unsafe_apis",
@@ -31,10 +32,33 @@ const ALL_JOBS = [
   { label: "cold-hf", model: "texify", device: "webnn", dtype: "fp16", timeoutMs: 600_000 },
   { label: "cold-hf", model: "intellitex", device: "webnn", dtype: "fp16", timeoutMs: 900_000 },
 ];
+const tripleFetchJobs = Array.from({ length: 3 }, (_, block) =>
+  [false, true, true, false].map((shareConstants, position) => ({
+    label: shareConstants ? "shared" : "baseline",
+    model: "intellitex",
+    device: "webnn",
+    dtype: "fp16",
+    timeoutMs: 900_000,
+    shareConstants,
+    abbaBlock: block + 1,
+    abbaPosition: position + 1,
+  })),
+).flat();
 const only = new Set((process.env.ONLY || "").split(",").filter(Boolean));
-const JOBS = only.size
+const JOBS = process.env.TRIPLE_FETCH === "1"
+  ? tripleFetchJobs
+  : only.size
   ? ALL_JOBS.filter((job) => only.has(`${job.model}:${job.device}`))
   : ALL_JOBS;
+if (process.env.SHARE_CONSTANTS != null) {
+  const enabled = process.env.SHARE_CONSTANTS !== "0";
+  for (const job of JOBS) {
+    if (job.model === "intellitex" && job.device === "webnn") {
+      job.shareConstants = enabled;
+      job.label = enabled ? "shared" : "baseline";
+    }
+  }
+}
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const hostSnap = () => {
@@ -69,8 +93,9 @@ function urlFor(job) {
     dtype: job.dtype,
     src: "hf",
     mode: "cold",
-    items: "0",
+    items: process.env.RUN_ITEMS ?? "0",
   });
+  if (job.shareConstants != null) p.set("shareConstants", job.shareConstants ? "1" : "0");
   return `${ORIGIN}/bench-load.html?${p}`;
 }
 
@@ -120,6 +145,10 @@ for (const job of JOBS) {
   } catch (e) {
     row = { tier: "load", ...job, src: "hf", mode: "cold", error: String(e) };
   }
+  if (job.abbaBlock) {
+    row.abbaBlock = job.abbaBlock;
+    row.abbaPosition = job.abbaPosition;
+  }
   const after = hostSnap();
   row.runnerHost = { before, after, isolation: "new regular Chrome user-data-dir per row" };
   collected.push(row);
@@ -142,6 +171,6 @@ stopChrome();
 
 const out = process.env.LOAD_BENCH_OUT
   ? join(ROOT, process.env.LOAD_BENCH_OUT)
-  : join(ROOT, "bench", `results-load-cold-hf-${new Date().toISOString().slice(0, 10)}.json`);
+  : join(ROOT, "bench", `${process.env.TRIPLE_FETCH === "1" ? "results-triple-fetch" : "results-load-cold-hf"}-${new Date().toISOString().slice(0, 10)}.json`);
 writeFileSync(out, JSON.stringify(collected, null, 1) + "\n");
 console.log("wrote", out);

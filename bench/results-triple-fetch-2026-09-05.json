@@ -1,0 +1,3482 @@
+[
+ {
+  "tier": "load",
+  "label": "baseline",
+  "model": "intellitex",
+  "device": "webnn",
+  "dtype": "fp16",
+  "src": "hf",
+  "rev": "main",
+  "mode": "cold",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36",
+  "at": "2026-09-06T00:49:17.701Z",
+  "shareConstants": false,
+  "jsHeapAtStartBytes": 2919000,
+  "backend": "coreml",
+  "graphs": [
+   {
+    "name": "decode32",
+    "ops": 753,
+    "constants": 189,
+    "constantBytes": 298684504,
+    "constantsMs": 12180,
+    "emitMs": 1.1,
+    "buildMs": 9014.4
+   },
+   {
+    "name": "encoder32",
+    "ops": 553,
+    "constants": 149,
+    "constantBytes": 247549840,
+    "constantsMs": 4657.7,
+    "emitMs": 0.7,
+    "buildMs": 6920.4
+   },
+   {
+    "name": "decode64",
+    "ops": 753,
+    "constants": 189,
+    "constantBytes": 298684504,
+    "constantsMs": 14660.7,
+    "emitMs": 1,
+    "buildMs": 8439.9
+   },
+   {
+    "name": "encoder64",
+    "ops": 553,
+    "constants": 149,
+    "constantBytes": 247623568,
+    "constantsMs": 3867.8,
+    "emitMs": 0.8,
+    "buildMs": 6808.5
+   },
+   {
+    "name": "decode128",
+    "ops": 753,
+    "constants": 189,
+    "constantBytes": 298684504,
+    "constantsMs": 13200.6,
+    "emitMs": 1,
+    "buildMs": 8408.4
+   },
+   {
+    "name": "encoder128",
+    "ops": 553,
+    "constants": 149,
+    "constantBytes": 247918480,
+    "constantsMs": 12982.3,
+    "emitMs": 0.8,
+    "buildMs": 6707.7
+   }
+  ],
+  "entry": "intellitex-t5-220m/coreml-apple-m5-pro-macos26-chrome152",
+  "buildMsReported": 107897.5,
+  "constantsMsReported": 61549.100000000006,
+  "compileMsReported": 46299.299999999996,
+  "peakJSHeapBytes": 557270129,
+  "jsHeapAtLoadEndBytes": 258227049,
+  "loadMs": 107902,
+  "downloadMs": 88983,
+  "sessionMs": 6715,
+  "files": {
+   "intellitex-decode-L32.bin": 298684504,
+   "intellitex-encoder-L32.bin": 247549840,
+   "intellitex-encoder-L64.bin": 247623568,
+   "intellitex-encoder-L128.bin": 247918480
+  },
+  "totalBytes": 1041776392,
+  "network": {
+   "requests": 17,
+   "bytes": 1640572655,
+   "files": [
+    {
+     "file": "intellitex-webnn/entry.json",
+     "len": 81057,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/family.json",
+     "len": 59960,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/manifest.json",
+     "len": 3648,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.encoder32.json",
+     "len": 181774,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.decode32.json",
+     "len": 245480,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.encoder64.json",
+     "len": 181774,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.decode64.json",
+     "len": 245480,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.encoder128.json",
+     "len": 182522,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.decode128.json",
+     "len": 245560,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex/tokenizer_config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "intellitex/tokenizer.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-decode-L32.bin",
+     "len": 298684504,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-encoder-L32.bin",
+     "len": 247549840,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-decode-L32.bin",
+     "len": 298684504,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-encoder-L64.bin",
+     "len": 247623568,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-decode-L32.bin",
+     "len": 298684504,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-encoder-L128.bin",
+     "len": 247918480,
+     "encoding": null,
+     "type": "application/octet-stream"
+    }
+   ]
+  },
+  "warmupMs": 146,
+  "firstOutput": "$$x=\\frac{-b\\pm\\sqrt{b^{2}-4ac}}{2a}$$",
+  "firstTokens": [
+   1,
+   16547,
+   92,
+   18206,
+   22187,
+   95,
+   17,
+   70,
+   64,
+   7755,
+   64,
+   24492,
+   95,
+   70,
+   66,
+   95,
+   22,
+   14023,
+   24,
+   1077,
+   97,
+   8637,
+   22,
+   69,
+   97,
+   16547,
+   2
+  ],
+  "firstGenMs": 214,
+  "fixtureId": "quadratic-formula",
+  "coldToFirstMs": 108262,
+  "secondOutput": "$$x=\\frac{-b\\pm\\sqrt{b^{2}-4ac}}{2a}$$",
+  "secondTokens": [
+   1,
+   16547,
+   92,
+   18206,
+   22187,
+   95,
+   17,
+   70,
+   64,
+   7755,
+   64,
+   24492,
+   95,
+   70,
+   66,
+   95,
+   22,
+   14023,
+   24,
+   1077,
+   97,
+   8637,
+   22,
+   69,
+   97,
+   16547,
+   2
+  ],
+  "secondGenMs": 188,
+  "host": {
+   "loadavg": [
+    17.07177734375,
+    19.3349609375,
+    18.43603515625
+   ],
+   "memUsedFrac": 0.9869470596313477,
+   "at": "2026-09-06T00:51:06.176Z"
+  },
+  "abbaBlock": 1,
+  "abbaPosition": 1,
+  "runnerHost": {
+   "before": {
+    "at": "2026-09-06T00:49:17.131Z",
+    "loadavg": [
+     24.609375,
+     20.92333984375,
+     18.80078125
+    ],
+    "cpuCount": 18,
+    "chromeHelpers": 38,
+    "contended": true
+   },
+   "after": {
+    "at": "2026-09-06T00:51:07.268Z",
+    "loadavg": [
+     17.07177734375,
+     19.3349609375,
+     18.43603515625
+    ],
+    "cpuCount": 18,
+    "chromeHelpers": 44,
+    "contended": true
+   },
+   "isolation": "new regular Chrome user-data-dir per row"
+  }
+ },
+ {
+  "tier": "load",
+  "label": "shared",
+  "model": "intellitex",
+  "device": "webnn",
+  "dtype": "fp16",
+  "src": "hf",
+  "rev": "main",
+  "mode": "cold",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36",
+  "at": "2026-09-06T00:51:09.941Z",
+  "shareConstants": true,
+  "jsHeapAtStartBytes": 2909349,
+  "backend": "coreml",
+  "graphs": [
+   {
+    "name": "decode32",
+    "ops": 753,
+    "constants": 189,
+    "constantBytes": 298684504,
+    "constantsMs": 12414.8,
+    "emitMs": 1.4,
+    "buildMs": 8492.1
+   },
+   {
+    "name": "encoder32",
+    "ops": 553,
+    "constants": 149,
+    "constantBytes": 247549840,
+    "constantsMs": 10727,
+    "emitMs": 0.8,
+    "buildMs": 6879.1
+   },
+   {
+    "name": "decode64",
+    "ops": 753,
+    "constants": 189,
+    "constantBytes": 298684504,
+    "constantsMs": 24.5,
+    "emitMs": 0.6,
+    "buildMs": 9056.8
+   },
+   {
+    "name": "encoder64",
+    "ops": 553,
+    "constants": 149,
+    "constantBytes": 247623568,
+    "constantsMs": 14166.7,
+    "emitMs": 1.1,
+    "buildMs": 6952.5
+   },
+   {
+    "name": "decode128",
+    "ops": 753,
+    "constants": 189,
+    "constantBytes": 298684504,
+    "constantsMs": 23.4,
+    "emitMs": 0.6,
+    "buildMs": 8772.9
+   },
+   {
+    "name": "encoder128",
+    "ops": 553,
+    "constants": 149,
+    "constantBytes": 247918480,
+    "constantsMs": 14456.5,
+    "emitMs": 1,
+    "buildMs": 7486.5
+   }
+  ],
+  "entry": "intellitex-t5-220m/coreml-apple-m5-pro-macos26-chrome152",
+  "buildMsReported": 99495.7,
+  "constantsMsReported": 51812.9,
+  "compileMsReported": 47639.9,
+  "peakJSHeapBytes": 557225026,
+  "jsHeapAtLoadEndBytes": 556913304,
+  "loadMs": 99501,
+  "downloadMs": 79572,
+  "sessionMs": 7496,
+  "files": {
+   "intellitex-decode-L32.bin": 298684504,
+   "intellitex-encoder-L32.bin": 247549840,
+   "intellitex-encoder-L64.bin": 247623568,
+   "intellitex-encoder-L128.bin": 247918480
+  },
+  "totalBytes": 1041776392,
+  "network": {
+   "requests": 15,
+   "bytes": 1043203647,
+   "files": [
+    {
+     "file": "intellitex-webnn/entry.json",
+     "len": 81057,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/family.json",
+     "len": 59960,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/manifest.json",
+     "len": 3648,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.decode32.json",
+     "len": 245480,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.encoder32.json",
+     "len": 181774,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.encoder64.json",
+     "len": 181774,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.decode64.json",
+     "len": 245480,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.encoder128.json",
+     "len": 182522,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.decode128.json",
+     "len": 245560,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex/tokenizer_config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "intellitex/tokenizer.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-decode-L32.bin",
+     "len": 298684504,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-encoder-L32.bin",
+     "len": 247549840,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-encoder-L64.bin",
+     "len": 247623568,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-encoder-L128.bin",
+     "len": 247918480,
+     "encoding": null,
+     "type": "application/octet-stream"
+    }
+   ]
+  },
+  "warmupMs": 182,
+  "firstOutput": "$$x=\\frac{-b\\pm\\sqrt{b^{2}-4ac}}{2a}$$",
+  "firstTokens": [
+   1,
+   16547,
+   92,
+   18206,
+   22187,
+   95,
+   17,
+   70,
+   64,
+   7755,
+   64,
+   24492,
+   95,
+   70,
+   66,
+   95,
+   22,
+   14023,
+   24,
+   1077,
+   97,
+   8637,
+   22,
+   69,
+   97,
+   16547,
+   2
+  ],
+  "firstGenMs": 292,
+  "fixtureId": "quadratic-formula",
+  "coldToFirstMs": 99975,
+  "secondOutput": "$$x=\\frac{-b\\pm\\sqrt{b^{2}-4ac}}{2a}$$",
+  "secondTokens": [
+   1,
+   16547,
+   92,
+   18206,
+   22187,
+   95,
+   17,
+   70,
+   64,
+   7755,
+   64,
+   24492,
+   95,
+   70,
+   66,
+   95,
+   22,
+   14023,
+   24,
+   1077,
+   97,
+   8637,
+   22,
+   69,
+   97,
+   16547,
+   2
+  ],
+  "secondGenMs": 203,
+  "host": {
+   "loadavg": [
+    15.53271484375,
+    18.2021484375,
+    18.09912109375
+   ],
+   "memUsedFrac": 0.979184627532959,
+   "at": "2026-09-06T00:52:50.139Z"
+  },
+  "abbaBlock": 1,
+  "abbaPosition": 2,
+  "runnerHost": {
+   "before": {
+    "at": "2026-09-06T00:51:09.399Z",
+    "loadavg": [
+     17.14599609375,
+     19.3125,
+     18.43310546875
+    ],
+    "cpuCount": 18,
+    "chromeHelpers": 38,
+    "contended": true
+   },
+   "after": {
+    "at": "2026-09-06T00:52:51.530Z",
+    "loadavg": [
+     15.53271484375,
+     18.2021484375,
+     18.09912109375
+    ],
+    "cpuCount": 18,
+    "chromeHelpers": 44,
+    "contended": true
+   },
+   "isolation": "new regular Chrome user-data-dir per row"
+  }
+ },
+ {
+  "tier": "load",
+  "label": "shared",
+  "model": "intellitex",
+  "device": "webnn",
+  "dtype": "fp16",
+  "src": "hf",
+  "rev": "main",
+  "mode": "cold",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36",
+  "at": "2026-09-06T00:52:54.138Z",
+  "shareConstants": true,
+  "jsHeapAtStartBytes": 2916817,
+  "backend": "coreml",
+  "graphs": [
+   {
+    "name": "decode32",
+    "ops": 753,
+    "constants": 189,
+    "constantBytes": 298684504,
+    "constantsMs": 15338.9,
+    "emitMs": 1.5,
+    "buildMs": 8929.7
+   },
+   {
+    "name": "encoder32",
+    "ops": 553,
+    "constants": 149,
+    "constantBytes": 247549840,
+    "constantsMs": 9996.4,
+    "emitMs": 0.9,
+    "buildMs": 7143.6
+   },
+   {
+    "name": "decode64",
+    "ops": 753,
+    "constants": 189,
+    "constantBytes": 298684504,
+    "constantsMs": 27.7,
+    "emitMs": 0.5,
+    "buildMs": 10158.3
+   },
+   {
+    "name": "encoder64",
+    "ops": 553,
+    "constants": 149,
+    "constantBytes": 247623568,
+    "constantsMs": 3676.8,
+    "emitMs": 0.9,
+    "buildMs": 7147.6
+   },
+   {
+    "name": "decode128",
+    "ops": 753,
+    "constants": 189,
+    "constantBytes": 298684504,
+    "constantsMs": 36.5,
+    "emitMs": 0.7,
+    "buildMs": 8583.1
+   },
+   {
+    "name": "encoder128",
+    "ops": 553,
+    "constants": 149,
+    "constantBytes": 247918480,
+    "constantsMs": 10898.6,
+    "emitMs": 0.8,
+    "buildMs": 6787.6
+   }
+  ],
+  "entry": "intellitex-t5-220m/coreml-apple-m5-pro-macos26-chrome152",
+  "buildMsReported": 88771.6,
+  "constantsMsReported": 39974.9,
+  "compileMsReported": 48749.899999999994,
+  "peakJSHeapBytes": 557224814,
+  "jsHeapAtLoadEndBytes": 556953944,
+  "loadMs": 88779,
+  "downloadMs": 66620,
+  "sessionMs": 6795,
+  "files": {
+   "intellitex-decode-L32.bin": 298684504,
+   "intellitex-encoder-L32.bin": 247549840,
+   "intellitex-encoder-L64.bin": 247623568,
+   "intellitex-encoder-L128.bin": 247918480
+  },
+  "totalBytes": 1041776392,
+  "network": {
+   "requests": 15,
+   "bytes": 1043203647,
+   "files": [
+    {
+     "file": "intellitex-webnn/entry.json",
+     "len": 81057,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/family.json",
+     "len": 59960,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/manifest.json",
+     "len": 3648,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.decode32.json",
+     "len": 245480,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.encoder32.json",
+     "len": 181774,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.decode64.json",
+     "len": 245480,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.encoder64.json",
+     "len": 181774,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.encoder128.json",
+     "len": 182522,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.decode128.json",
+     "len": 245560,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex/tokenizer_config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "intellitex/tokenizer.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-decode-L32.bin",
+     "len": 298684504,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-encoder-L32.bin",
+     "len": 247549840,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-encoder-L64.bin",
+     "len": 247623568,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-encoder-L128.bin",
+     "len": 247918480,
+     "encoding": null,
+     "type": "application/octet-stream"
+    }
+   ]
+  },
+  "warmupMs": 226,
+  "firstOutput": "$$x=\\frac{-b\\pm\\sqrt{b^{2}-4ac}}{2a}$$",
+  "firstTokens": [
+   1,
+   16547,
+   92,
+   18206,
+   22187,
+   95,
+   17,
+   70,
+   64,
+   7755,
+   64,
+   24492,
+   95,
+   70,
+   66,
+   95,
+   22,
+   14023,
+   24,
+   1077,
+   97,
+   8637,
+   22,
+   69,
+   97,
+   16547,
+   2
+  ],
+  "firstGenMs": 219,
+  "fixtureId": "quadratic-formula",
+  "coldToFirstMs": 89224,
+  "secondOutput": "$$x=\\frac{-b\\pm\\sqrt{b^{2}-4ac}}{2a}$$",
+  "secondTokens": [
+   1,
+   16547,
+   92,
+   18206,
+   22187,
+   95,
+   17,
+   70,
+   64,
+   7755,
+   64,
+   24492,
+   95,
+   70,
+   66,
+   95,
+   22,
+   14023,
+   24,
+   1077,
+   97,
+   8637,
+   22,
+   69,
+   97,
+   16547,
+   2
+  ],
+  "secondGenMs": 210,
+  "host": {
+   "loadavg": [
+    18.0546875,
+    18.3388671875,
+    18.1572265625
+   ],
+   "memUsedFrac": 0.9929485321044922,
+   "at": "2026-09-06T00:54:23.599Z"
+  },
+  "abbaBlock": 1,
+  "abbaPosition": 3,
+  "runnerHost": {
+   "before": {
+    "at": "2026-09-06T00:52:53.649Z",
+    "loadavg": [
+     15.53271484375,
+     18.2021484375,
+     18.09912109375
+    ],
+    "cpuCount": 18,
+    "chromeHelpers": 45,
+    "contended": true
+   },
+   "after": {
+    "at": "2026-09-06T00:54:23.768Z",
+    "loadavg": [
+     18.13037109375,
+     18.349609375,
+     18.162109375
+    ],
+    "cpuCount": 18,
+    "chromeHelpers": 44,
+    "contended": true
+   },
+   "isolation": "new regular Chrome user-data-dir per row"
+  }
+ },
+ {
+  "tier": "load",
+  "label": "baseline",
+  "model": "intellitex",
+  "device": "webnn",
+  "dtype": "fp16",
+  "src": "hf",
+  "rev": "main",
+  "mode": "cold",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36",
+  "at": "2026-09-06T00:54:26.403Z",
+  "shareConstants": false,
+  "jsHeapAtStartBytes": 2918944,
+  "backend": "coreml",
+  "graphs": [
+   {
+    "name": "decode32",
+    "ops": 753,
+    "constants": 189,
+    "constantBytes": 298684504,
+    "constantsMs": 18608.7,
+    "emitMs": 1.3,
+    "buildMs": 8449.8
+   },
+   {
+    "name": "encoder32",
+    "ops": 553,
+    "constants": 149,
+    "constantBytes": 247549840,
+    "constantsMs": 10194.9,
+    "emitMs": 0.9,
+    "buildMs": 6599.3
+   },
+   {
+    "name": "decode64",
+    "ops": 753,
+    "constants": 189,
+    "constantBytes": 298684504,
+    "constantsMs": 4163.6,
+    "emitMs": 0.9,
+    "buildMs": 8791.4
+   },
+   {
+    "name": "encoder64",
+    "ops": 553,
+    "constants": 149,
+    "constantBytes": 247623568,
+    "constantsMs": 9413.1,
+    "emitMs": 0.8,
+    "buildMs": 6777.5
+   },
+   {
+    "name": "decode128",
+    "ops": 753,
+    "constants": 189,
+    "constantBytes": 298684504,
+    "constantsMs": 11544.5,
+    "emitMs": 1.1,
+    "buildMs": 8811
+   },
+   {
+    "name": "encoder128",
+    "ops": 553,
+    "constants": 149,
+    "constantBytes": 247918480,
+    "constantsMs": 6784.5,
+    "emitMs": 0.9,
+    "buildMs": 7314.2
+   }
+  ],
+  "entry": "intellitex-t5-220m/coreml-apple-m5-pro-macos26-chrome152",
+  "buildMsReported": 107493.6,
+  "constantsMsReported": 60709.299999999996,
+  "compileMsReported": 46743.2,
+  "peakJSHeapBytes": 318646562,
+  "jsHeapAtLoadEndBytes": 258272233,
+  "loadMs": 107499,
+  "downloadMs": 81551,
+  "sessionMs": 7322,
+  "files": {
+   "intellitex-decode-L32.bin": 298684504,
+   "intellitex-encoder-L32.bin": 247549840,
+   "intellitex-encoder-L64.bin": 247623568,
+   "intellitex-encoder-L128.bin": 247918480
+  },
+  "totalBytes": 1041776392,
+  "network": {
+   "requests": 17,
+   "bytes": 1640572655,
+   "files": [
+    {
+     "file": "intellitex-webnn/family.json",
+     "len": 59960,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/entry.json",
+     "len": 81057,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/manifest.json",
+     "len": 3648,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.encoder32.json",
+     "len": 181774,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.decode32.json",
+     "len": 245480,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.encoder64.json",
+     "len": 181774,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.encoder128.json",
+     "len": 182522,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.decode64.json",
+     "len": 245480,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.decode128.json",
+     "len": 245560,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex/tokenizer_config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "intellitex/tokenizer.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-decode-L32.bin",
+     "len": 298684504,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-encoder-L32.bin",
+     "len": 247549840,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-decode-L32.bin",
+     "len": 298684504,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-encoder-L64.bin",
+     "len": 247623568,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-decode-L32.bin",
+     "len": 298684504,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-encoder-L128.bin",
+     "len": 247918480,
+     "encoding": null,
+     "type": "application/octet-stream"
+    }
+   ]
+  },
+  "warmupMs": 210,
+  "firstOutput": "$$x=\\frac{-b\\pm\\sqrt{b^{2}-4ac}}{2a}$$",
+  "firstTokens": [
+   1,
+   16547,
+   92,
+   18206,
+   22187,
+   95,
+   17,
+   70,
+   64,
+   7755,
+   64,
+   24492,
+   95,
+   70,
+   66,
+   95,
+   22,
+   14023,
+   24,
+   1077,
+   97,
+   8637,
+   22,
+   69,
+   97,
+   16547,
+   2
+  ],
+  "firstGenMs": 242,
+  "fixtureId": "quadratic-formula",
+  "coldToFirstMs": 107951,
+  "secondOutput": "$$x=\\frac{-b\\pm\\sqrt{b^{2}-4ac}}{2a}$$",
+  "secondTokens": [
+   1,
+   16547,
+   92,
+   18206,
+   22187,
+   95,
+   17,
+   70,
+   64,
+   7755,
+   64,
+   24492,
+   95,
+   70,
+   66,
+   95,
+   22,
+   14023,
+   24,
+   1077,
+   97,
+   8637,
+   22,
+   69,
+   97,
+   16547,
+   2
+  ],
+  "secondGenMs": 208,
+  "host": {
+   "loadavg": [
+    16.2490234375,
+    17.47265625,
+    17.82763671875
+   ],
+   "memUsedFrac": 0.9893381595611572,
+   "at": "2026-09-06T00:56:14.584Z"
+  },
+  "abbaBlock": 1,
+  "abbaPosition": 4,
+  "runnerHost": {
+   "before": {
+    "at": "2026-09-06T00:54:25.924Z",
+    "loadavg": [
+     18.13037109375,
+     18.349609375,
+     18.162109375
+    ],
+    "cpuCount": 18,
+    "chromeHelpers": 38,
+    "contended": true
+   },
+   "after": {
+    "at": "2026-09-06T00:56:16.052Z",
+    "loadavg": [
+     16.2490234375,
+     17.47265625,
+     17.82763671875
+    ],
+    "cpuCount": 18,
+    "chromeHelpers": 44,
+    "contended": true
+   },
+   "isolation": "new regular Chrome user-data-dir per row"
+  }
+ },
+ {
+  "tier": "load",
+  "label": "baseline",
+  "model": "intellitex",
+  "device": "webnn",
+  "dtype": "fp16",
+  "src": "hf",
+  "rev": "main",
+  "mode": "cold",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36",
+  "at": "2026-09-06T00:56:18.673Z",
+  "shareConstants": false,
+  "jsHeapAtStartBytes": 2890108,
+  "backend": "coreml",
+  "graphs": [
+   {
+    "name": "decode32",
+    "ops": 753,
+    "constants": 189,
+    "constantBytes": 298684504,
+    "constantsMs": 12276.3,
+    "emitMs": 1.3,
+    "buildMs": 9401.7
+   },
+   {
+    "name": "encoder32",
+    "ops": 553,
+    "constants": 149,
+    "constantBytes": 247549840,
+    "constantsMs": 4803.2,
+    "emitMs": 0.7,
+    "buildMs": 6789.3
+   },
+   {
+    "name": "decode64",
+    "ops": 753,
+    "constants": 189,
+    "constantBytes": 298684504,
+    "constantsMs": 12642.9,
+    "emitMs": 0.9,
+    "buildMs": 9096.9
+   },
+   {
+    "name": "encoder64",
+    "ops": 553,
+    "constants": 149,
+    "constantBytes": 247623568,
+    "constantsMs": 3558.4,
+    "emitMs": 0.9,
+    "buildMs": 6967.6
+   },
+   {
+    "name": "decode128",
+    "ops": 753,
+    "constants": 189,
+    "constantBytes": 298684504,
+    "constantsMs": 9849.1,
+    "emitMs": 1.2,
+    "buildMs": 8723.8
+   },
+   {
+    "name": "encoder128",
+    "ops": 553,
+    "constants": 149,
+    "constantBytes": 247918480,
+    "constantsMs": 3711.9,
+    "emitMs": 1,
+    "buildMs": 6904.4
+   }
+  ],
+  "entry": "intellitex-t5-220m/coreml-apple-m5-pro-macos26-chrome152",
+  "buildMsReported": 94767.9,
+  "constantsMsReported": 46841.8,
+  "compileMsReported": 47883.700000000004,
+  "peakJSHeapBytes": 556855229,
+  "jsHeapAtLoadEndBytes": 258269917,
+  "loadMs": 94773,
+  "downloadMs": 75566,
+  "sessionMs": 6912,
+  "files": {
+   "intellitex-decode-L32.bin": 298684504,
+   "intellitex-encoder-L32.bin": 247549840,
+   "intellitex-encoder-L64.bin": 247623568,
+   "intellitex-encoder-L128.bin": 247918480
+  },
+  "totalBytes": 1041776392,
+  "network": {
+   "requests": 17,
+   "bytes": 1640572655,
+   "files": [
+    {
+     "file": "intellitex-webnn/family.json",
+     "len": 59960,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/entry.json",
+     "len": 81057,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/manifest.json",
+     "len": 3648,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.decode32.json",
+     "len": 245480,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.encoder32.json",
+     "len": 181774,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.encoder64.json",
+     "len": 181774,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.decode64.json",
+     "len": 245480,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.encoder128.json",
+     "len": 182522,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.decode128.json",
+     "len": 245560,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-decode-L32.bin",
+     "len": 298684504,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "intellitex/tokenizer.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "intellitex/tokenizer_config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-encoder-L32.bin",
+     "len": 247549840,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-decode-L32.bin",
+     "len": 298684504,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-encoder-L64.bin",
+     "len": 247623568,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-decode-L32.bin",
+     "len": 298684504,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-encoder-L128.bin",
+     "len": 247918480,
+     "encoding": null,
+     "type": "application/octet-stream"
+    }
+   ]
+  },
+  "warmupMs": 136,
+  "firstOutput": "$$x=\\frac{-b\\pm\\sqrt{b^{2}-4ac}}{2a}$$",
+  "firstTokens": [
+   1,
+   16547,
+   92,
+   18206,
+   22187,
+   95,
+   17,
+   70,
+   64,
+   7755,
+   64,
+   24492,
+   95,
+   70,
+   66,
+   95,
+   22,
+   14023,
+   24,
+   1077,
+   97,
+   8637,
+   22,
+   69,
+   97,
+   16547,
+   2
+  ],
+  "firstGenMs": 214,
+  "fixtureId": "quadratic-formula",
+  "coldToFirstMs": 95123,
+  "secondOutput": "$$x=\\frac{-b\\pm\\sqrt{b^{2}-4ac}}{2a}$$",
+  "secondTokens": [
+   1,
+   16547,
+   92,
+   18206,
+   22187,
+   95,
+   17,
+   70,
+   64,
+   7755,
+   64,
+   24492,
+   95,
+   70,
+   66,
+   95,
+   22,
+   14023,
+   24,
+   1077,
+   97,
+   8637,
+   22,
+   69,
+   97,
+   16547,
+   2
+  ],
+  "secondGenMs": 202,
+  "host": {
+   "loadavg": [
+    16.52099609375,
+    17.50830078125,
+    17.81982421875
+   ],
+   "memUsedFrac": 0.9811525344848633,
+   "at": "2026-09-06T00:57:54.030Z"
+  },
+  "abbaBlock": 2,
+  "abbaPosition": 1,
+  "runnerHost": {
+   "before": {
+    "at": "2026-09-06T00:56:18.199Z",
+    "loadavg": [
+     16.2490234375,
+     17.47265625,
+     17.82763671875
+    ],
+    "cpuCount": 18,
+    "chromeHelpers": 39,
+    "contended": true
+   },
+   "after": {
+    "at": "2026-09-06T00:57:54.314Z",
+    "loadavg": [
+     16.52099609375,
+     17.50830078125,
+     17.81982421875
+    ],
+    "cpuCount": 18,
+    "chromeHelpers": 44,
+    "contended": true
+   },
+   "isolation": "new regular Chrome user-data-dir per row"
+  }
+ },
+ {
+  "tier": "load",
+  "label": "shared",
+  "model": "intellitex",
+  "device": "webnn",
+  "dtype": "fp16",
+  "src": "hf",
+  "rev": "main",
+  "mode": "cold",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36",
+  "at": "2026-09-06T00:57:56.938Z",
+  "shareConstants": true,
+  "jsHeapAtStartBytes": 2905377,
+  "backend": "coreml",
+  "graphs": [
+   {
+    "name": "decode32",
+    "ops": 753,
+    "constants": 189,
+    "constantBytes": 298684504,
+    "constantsMs": 9950,
+    "emitMs": 1.3,
+    "buildMs": 8516.2
+   },
+   {
+    "name": "encoder32",
+    "ops": 553,
+    "constants": 149,
+    "constantBytes": 247549840,
+    "constantsMs": 4244.3,
+    "emitMs": 0.9,
+    "buildMs": 6668.9
+   },
+   {
+    "name": "decode64",
+    "ops": 753,
+    "constants": 189,
+    "constantBytes": 298684504,
+    "constantsMs": 23.1,
+    "emitMs": 0.5,
+    "buildMs": 8662.2
+   },
+   {
+    "name": "encoder64",
+    "ops": 553,
+    "constants": 149,
+    "constantBytes": 247623568,
+    "constantsMs": 9622.6,
+    "emitMs": 0.8,
+    "buildMs": 6864.2
+   },
+   {
+    "name": "decode128",
+    "ops": 753,
+    "constants": 189,
+    "constantBytes": 298684504,
+    "constantsMs": 23.9,
+    "emitMs": 0.7,
+    "buildMs": 8716.1
+   },
+   {
+    "name": "encoder128",
+    "ops": 553,
+    "constants": 149,
+    "constantBytes": 247918480,
+    "constantsMs": 4046.6,
+    "emitMs": 0.9,
+    "buildMs": 7135.5
+   }
+  ],
+  "entry": "intellitex-t5-220m/coreml-apple-m5-pro-macos26-chrome152",
+  "buildMsReported": 74515.8,
+  "constantsMsReported": 27910.5,
+  "compileMsReported": 46563.100000000006,
+  "peakJSHeapBytes": 557225122,
+  "jsHeapAtLoadEndBytes": 556909308,
+  "loadMs": 74521,
+  "downloadMs": 57409,
+  "sessionMs": 7143,
+  "files": {
+   "intellitex-decode-L32.bin": 298684504,
+   "intellitex-encoder-L32.bin": 247549840,
+   "intellitex-encoder-L64.bin": 247623568,
+   "intellitex-encoder-L128.bin": 247918480
+  },
+  "totalBytes": 1041776392,
+  "network": {
+   "requests": 15,
+   "bytes": 1043203647,
+   "files": [
+    {
+     "file": "intellitex-webnn/entry.json",
+     "len": 81057,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/family.json",
+     "len": 59960,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/manifest.json",
+     "len": 3648,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.encoder32.json",
+     "len": 181774,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.decode32.json",
+     "len": 245480,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.decode64.json",
+     "len": 245480,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.encoder64.json",
+     "len": 181774,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.encoder128.json",
+     "len": 182522,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.decode128.json",
+     "len": 245560,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex/tokenizer.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "intellitex/tokenizer_config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-decode-L32.bin",
+     "len": 298684504,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-encoder-L32.bin",
+     "len": 247549840,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-encoder-L64.bin",
+     "len": 247623568,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-encoder-L128.bin",
+     "len": 247918480,
+     "encoding": null,
+     "type": "application/octet-stream"
+    }
+   ]
+  },
+  "warmupMs": 153,
+  "firstOutput": "$$x=\\frac{-b\\pm\\sqrt{b^{2}-4ac}}{2a}$$",
+  "firstTokens": [
+   1,
+   16547,
+   92,
+   18206,
+   22187,
+   95,
+   17,
+   70,
+   64,
+   7755,
+   64,
+   24492,
+   95,
+   70,
+   66,
+   95,
+   22,
+   14023,
+   24,
+   1077,
+   97,
+   8637,
+   22,
+   69,
+   97,
+   16547,
+   2
+  ],
+  "firstGenMs": 279,
+  "fixtureId": "quadratic-formula",
+  "coldToFirstMs": 74953,
+  "secondOutput": "$$x=\\frac{-b\\pm\\sqrt{b^{2}-4ac}}{2a}$$",
+  "secondTokens": [
+   1,
+   16547,
+   92,
+   18206,
+   22187,
+   95,
+   17,
+   70,
+   64,
+   7755,
+   64,
+   24492,
+   95,
+   70,
+   66,
+   95,
+   22,
+   14023,
+   24,
+   1077,
+   97,
+   8637,
+   22,
+   69,
+   97,
+   16547,
+   2
+  ],
+  "secondGenMs": 161,
+  "host": {
+   "loadavg": [
+    16.5771484375,
+    17.23193359375,
+    17.6826171875
+   ],
+   "memUsedFrac": 0.9878549575805664,
+   "at": "2026-09-06T00:59:12.071Z"
+  },
+  "abbaBlock": 2,
+  "abbaPosition": 2,
+  "runnerHost": {
+   "before": {
+    "at": "2026-09-06T00:57:56.432Z",
+    "loadavg": [
+     16.52099609375,
+     17.50830078125,
+     17.81982421875
+    ],
+    "cpuCount": 18,
+    "chromeHelpers": 38,
+    "contended": true
+   },
+   "after": {
+    "at": "2026-09-06T00:59:12.529Z",
+    "loadavg": [
+     16.5771484375,
+     17.23193359375,
+     17.6826171875
+    ],
+    "cpuCount": 18,
+    "chromeHelpers": 44,
+    "contended": true
+   },
+   "isolation": "new regular Chrome user-data-dir per row"
+  }
+ },
+ {
+  "tier": "load",
+  "label": "shared",
+  "model": "intellitex",
+  "device": "webnn",
+  "dtype": "fp16",
+  "src": "hf",
+  "rev": "main",
+  "mode": "cold",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36",
+  "at": "2026-09-06T00:59:15.257Z",
+  "shareConstants": true,
+  "jsHeapAtStartBytes": 2911093,
+  "backend": "coreml",
+  "graphs": [
+   {
+    "name": "decode32",
+    "ops": 753,
+    "constants": 189,
+    "constantBytes": 298684504,
+    "constantsMs": 8425.7,
+    "emitMs": 1.7,
+    "buildMs": 9001.1
+   },
+   {
+    "name": "encoder32",
+    "ops": 553,
+    "constants": 149,
+    "constantBytes": 247549840,
+    "constantsMs": 5209.5,
+    "emitMs": 0.8,
+    "buildMs": 6873.1
+   },
+   {
+    "name": "decode64",
+    "ops": 753,
+    "constants": 189,
+    "constantBytes": 298684504,
+    "constantsMs": 23.4,
+    "emitMs": 0.6,
+    "buildMs": 8802.7
+   },
+   {
+    "name": "encoder64",
+    "ops": 553,
+    "constants": 149,
+    "constantBytes": 247623568,
+    "constantsMs": 5827.9,
+    "emitMs": 0.9,
+    "buildMs": 6696.5
+   },
+   {
+    "name": "decode128",
+    "ops": 753,
+    "constants": 189,
+    "constantBytes": 298684504,
+    "constantsMs": 23.5,
+    "emitMs": 0.5,
+    "buildMs": 8885.9
+   },
+   {
+    "name": "encoder128",
+    "ops": 553,
+    "constants": 149,
+    "constantBytes": 247918480,
+    "constantsMs": 3484.2,
+    "emitMs": 0.9,
+    "buildMs": 6764.5
+   }
+  ],
+  "entry": "intellitex-t5-220m/coreml-apple-m5-pro-macos26-chrome152",
+  "buildMsReported": 70061.6,
+  "constantsMsReported": 22994.2,
+  "compileMsReported": 47023.8,
+  "peakJSHeapBytes": 557224654,
+  "jsHeapAtLoadEndBytes": 556910944,
+  "loadMs": 70067,
+  "downloadMs": 54849,
+  "sessionMs": 6772,
+  "files": {
+   "intellitex-decode-L32.bin": 298684504,
+   "intellitex-encoder-L32.bin": 247549840,
+   "intellitex-encoder-L64.bin": 247623568,
+   "intellitex-encoder-L128.bin": 247918480
+  },
+  "totalBytes": 1041776392,
+  "network": {
+   "requests": 15,
+   "bytes": 1043203647,
+   "files": [
+    {
+     "file": "intellitex-webnn/entry.json",
+     "len": 81057,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/family.json",
+     "len": 59960,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/manifest.json",
+     "len": 3648,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.decode32.json",
+     "len": 245480,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.encoder32.json",
+     "len": 181774,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.encoder64.json",
+     "len": 181774,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.decode64.json",
+     "len": 245480,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.encoder128.json",
+     "len": 182522,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.decode128.json",
+     "len": 245560,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex/tokenizer_config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "intellitex/tokenizer.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-decode-L32.bin",
+     "len": 298684504,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-encoder-L32.bin",
+     "len": 247549840,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-encoder-L64.bin",
+     "len": 247623568,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-encoder-L128.bin",
+     "len": 247918480,
+     "encoding": null,
+     "type": "application/octet-stream"
+    }
+   ]
+  },
+  "warmupMs": 147,
+  "firstOutput": "$$x=\\frac{-b\\pm\\sqrt{b^{2}-4ac}}{2a}$$",
+  "firstTokens": [
+   1,
+   16547,
+   92,
+   18206,
+   22187,
+   95,
+   17,
+   70,
+   64,
+   7755,
+   64,
+   24492,
+   95,
+   70,
+   66,
+   95,
+   22,
+   14023,
+   24,
+   1077,
+   97,
+   8637,
+   22,
+   69,
+   97,
+   16547,
+   2
+  ],
+  "firstGenMs": 239,
+  "fixtureId": "quadratic-formula",
+  "coldToFirstMs": 70453,
+  "secondOutput": "$$x=\\frac{-b\\pm\\sqrt{b^{2}-4ac}}{2a}$$",
+  "secondTokens": [
+   1,
+   16547,
+   92,
+   18206,
+   22187,
+   95,
+   17,
+   70,
+   64,
+   7755,
+   64,
+   24492,
+   95,
+   70,
+   66,
+   95,
+   22,
+   14023,
+   24,
+   1077,
+   97,
+   8637,
+   22,
+   69,
+   97,
+   16547,
+   2
+  ],
+  "secondGenMs": 216,
+  "host": {
+   "loadavg": [
+    16.080078125,
+    16.91650390625,
+    17.5205078125
+   ],
+   "memUsedFrac": 0.9917051792144775,
+   "at": "2026-09-06T01:00:25.949Z"
+  },
+  "abbaBlock": 2,
+  "abbaPosition": 3,
+  "runnerHost": {
+   "before": {
+    "at": "2026-09-06T00:59:14.698Z",
+    "loadavg": [
+     16.37060546875,
+     17.17822265625,
+     17.66064453125
+    ],
+    "cpuCount": 18,
+    "chromeHelpers": 38,
+    "contended": true
+   },
+   "after": {
+    "at": "2026-09-06T01:00:26.799Z",
+    "loadavg": [
+     16.080078125,
+     16.91650390625,
+     17.5205078125
+    ],
+    "cpuCount": 18,
+    "chromeHelpers": 44,
+    "contended": true
+   },
+   "isolation": "new regular Chrome user-data-dir per row"
+  }
+ },
+ {
+  "tier": "load",
+  "label": "baseline",
+  "model": "intellitex",
+  "device": "webnn",
+  "dtype": "fp16",
+  "src": "hf",
+  "rev": "main",
+  "mode": "cold",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36",
+  "at": "2026-09-06T01:00:29.500Z",
+  "shareConstants": false,
+  "jsHeapAtStartBytes": 2931232,
+  "backend": "coreml",
+  "graphs": [
+   {
+    "name": "decode32",
+    "ops": 753,
+    "constants": 189,
+    "constantBytes": 298684504,
+    "constantsMs": 7297.3,
+    "emitMs": 1.2,
+    "buildMs": 8639.1
+   },
+   {
+    "name": "encoder32",
+    "ops": 553,
+    "constants": 149,
+    "constantBytes": 247549840,
+    "constantsMs": 3923,
+    "emitMs": 0.9,
+    "buildMs": 6825.3
+   },
+   {
+    "name": "decode64",
+    "ops": 753,
+    "constants": 189,
+    "constantBytes": 298684504,
+    "constantsMs": 4961.4,
+    "emitMs": 1.2,
+    "buildMs": 8808.3
+   },
+   {
+    "name": "encoder64",
+    "ops": 553,
+    "constants": 149,
+    "constantBytes": 247623568,
+    "constantsMs": 6012.6,
+    "emitMs": 0.9,
+    "buildMs": 7187.8
+   },
+   {
+    "name": "decode128",
+    "ops": 753,
+    "constants": 189,
+    "constantBytes": 298684504,
+    "constantsMs": 6833,
+    "emitMs": 1.1,
+    "buildMs": 9061.1
+   },
+   {
+    "name": "encoder128",
+    "ops": 553,
+    "constants": 149,
+    "constantBytes": 247918480,
+    "constantsMs": 7603.4,
+    "emitMs": 0.8,
+    "buildMs": 7088.9
+   }
+  ],
+  "entry": "intellitex-t5-220m/coreml-apple-m5-pro-macos26-chrome152",
+  "buildMsReported": 84283,
+  "constantsMsReported": 36630.7,
+  "compileMsReported": 47610.5,
+  "peakJSHeapBytes": 556854221,
+  "jsHeapAtLoadEndBytes": 258270117,
+  "loadMs": 84288,
+  "downloadMs": 69877,
+  "sessionMs": 7096,
+  "files": {
+   "intellitex-decode-L32.bin": 298684504,
+   "intellitex-encoder-L32.bin": 247549840,
+   "intellitex-encoder-L64.bin": 247623568,
+   "intellitex-encoder-L128.bin": 247918480
+  },
+  "totalBytes": 1041776392,
+  "network": {
+   "requests": 17,
+   "bytes": 1640572655,
+   "files": [
+    {
+     "file": "intellitex-webnn/entry.json",
+     "len": 81057,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/family.json",
+     "len": 59960,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/manifest.json",
+     "len": 3648,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.encoder32.json",
+     "len": 181774,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.decode32.json",
+     "len": 245480,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.encoder64.json",
+     "len": 181774,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.encoder128.json",
+     "len": 182522,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.decode64.json",
+     "len": 245480,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.decode128.json",
+     "len": 245560,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex/tokenizer.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "intellitex/tokenizer_config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-decode-L32.bin",
+     "len": 298684504,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-encoder-L32.bin",
+     "len": 247549840,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-decode-L32.bin",
+     "len": 298684504,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-encoder-L64.bin",
+     "len": 247623568,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-decode-L32.bin",
+     "len": 298684504,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-encoder-L128.bin",
+     "len": 247918480,
+     "encoding": null,
+     "type": "application/octet-stream"
+    }
+   ]
+  },
+  "warmupMs": 139,
+  "firstOutput": "$$x=\\frac{-b\\pm\\sqrt{b^{2}-4ac}}{2a}$$",
+  "firstTokens": [
+   1,
+   16547,
+   92,
+   18206,
+   22187,
+   95,
+   17,
+   70,
+   64,
+   7755,
+   64,
+   24492,
+   95,
+   70,
+   66,
+   95,
+   22,
+   14023,
+   24,
+   1077,
+   97,
+   8637,
+   22,
+   69,
+   97,
+   16547,
+   2
+  ],
+  "firstGenMs": 203,
+  "fixtureId": "quadratic-formula",
+  "coldToFirstMs": 84630,
+  "secondOutput": "$$x=\\frac{-b\\pm\\sqrt{b^{2}-4ac}}{2a}$$",
+  "secondTokens": [
+   1,
+   16547,
+   92,
+   18206,
+   22187,
+   95,
+   17,
+   70,
+   64,
+   7755,
+   64,
+   24492,
+   95,
+   70,
+   66,
+   95,
+   22,
+   14023,
+   24,
+   1077,
+   97,
+   8637,
+   22,
+   69,
+   97,
+   16547,
+   2
+  ],
+  "secondGenMs": 199,
+  "host": {
+   "loadavg": [
+    16.9658203125,
+    16.982421875,
+    17.482421875
+   ],
+   "memUsedFrac": 0.9845314025878906,
+   "at": "2026-09-06T01:01:54.353Z"
+  },
+  "abbaBlock": 2,
+  "abbaPosition": 4,
+  "runnerHost": {
+   "before": {
+    "at": "2026-09-06T01:00:28.931Z",
+    "loadavg": [
+     15.8330078125,
+     16.85107421875,
+     17.49365234375
+    ],
+    "cpuCount": 18,
+    "chromeHelpers": 38,
+    "contended": true
+   },
+   "after": {
+    "at": "2026-09-06T01:01:55.043Z",
+    "loadavg": [
+     16.9658203125,
+     16.982421875,
+     17.482421875
+    ],
+    "cpuCount": 18,
+    "chromeHelpers": 44,
+    "contended": true
+   },
+   "isolation": "new regular Chrome user-data-dir per row"
+  }
+ },
+ {
+  "tier": "load",
+  "label": "baseline",
+  "model": "intellitex",
+  "device": "webnn",
+  "dtype": "fp16",
+  "src": "hf",
+  "rev": "main",
+  "mode": "cold",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36",
+  "at": "2026-09-06T01:01:57.719Z",
+  "shareConstants": false,
+  "jsHeapAtStartBytes": 2916204,
+  "backend": "coreml",
+  "graphs": [
+   {
+    "name": "decode32",
+    "ops": 753,
+    "constants": 189,
+    "constantBytes": 298684504,
+    "constantsMs": 10448,
+    "emitMs": 1.5,
+    "buildMs": 8537.7
+   },
+   {
+    "name": "encoder32",
+    "ops": 553,
+    "constants": 149,
+    "constantBytes": 247549840,
+    "constantsMs": 3679.9,
+    "emitMs": 0.8,
+    "buildMs": 7005.1
+   },
+   {
+    "name": "decode64",
+    "ops": 753,
+    "constants": 189,
+    "constantBytes": 298684504,
+    "constantsMs": 4435.8,
+    "emitMs": 1,
+    "buildMs": 8938.8
+   },
+   {
+    "name": "encoder64",
+    "ops": 553,
+    "constants": 149,
+    "constantBytes": 247623568,
+    "constantsMs": 6976.7,
+    "emitMs": 0.8,
+    "buildMs": 6874.6
+   },
+   {
+    "name": "decode128",
+    "ops": 753,
+    "constants": 189,
+    "constantBytes": 298684504,
+    "constantsMs": 18826.7,
+    "emitMs": 1.2,
+    "buildMs": 8674.4
+   },
+   {
+    "name": "encoder128",
+    "ops": 553,
+    "constants": 149,
+    "constantBytes": 247918480,
+    "constantsMs": 4209.9,
+    "emitMs": 1,
+    "buildMs": 6801.8
+   }
+  ],
+  "entry": "intellitex-t5-220m/coreml-apple-m5-pro-macos26-chrome152",
+  "buildMsReported": 95450.8,
+  "constantsMsReported": 48577.00000000001,
+  "compileMsReported": 46832.4,
+  "peakJSHeapBytes": 556853673,
+  "jsHeapAtLoadEndBytes": 258226937,
+  "loadMs": 95456,
+  "downloadMs": 78180,
+  "sessionMs": 6809,
+  "files": {
+   "intellitex-decode-L32.bin": 298684504,
+   "intellitex-encoder-L32.bin": 247549840,
+   "intellitex-encoder-L64.bin": 247623568,
+   "intellitex-encoder-L128.bin": 247918480
+  },
+  "totalBytes": 1041776392,
+  "network": {
+   "requests": 17,
+   "bytes": 1640572655,
+   "files": [
+    {
+     "file": "intellitex-webnn/entry.json",
+     "len": 81057,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/family.json",
+     "len": 59960,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/manifest.json",
+     "len": 3648,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.encoder32.json",
+     "len": 181774,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.decode32.json",
+     "len": 245480,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.encoder64.json",
+     "len": 181774,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.decode64.json",
+     "len": 245480,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.encoder128.json",
+     "len": 182522,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.decode128.json",
+     "len": 245560,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex/tokenizer.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "intellitex/tokenizer_config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-decode-L32.bin",
+     "len": 298684504,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-encoder-L32.bin",
+     "len": 247549840,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-decode-L32.bin",
+     "len": 298684504,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-encoder-L64.bin",
+     "len": 247623568,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-decode-L32.bin",
+     "len": 298684504,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-encoder-L128.bin",
+     "len": 247918480,
+     "encoding": null,
+     "type": "application/octet-stream"
+    }
+   ]
+  },
+  "warmupMs": 138,
+  "firstOutput": "$$x=\\frac{-b\\pm\\sqrt{b^{2}-4ac}}{2a}$$",
+  "firstTokens": [
+   1,
+   16547,
+   92,
+   18206,
+   22187,
+   95,
+   17,
+   70,
+   64,
+   7755,
+   64,
+   24492,
+   95,
+   70,
+   66,
+   95,
+   22,
+   14023,
+   24,
+   1077,
+   97,
+   8637,
+   22,
+   69,
+   97,
+   16547,
+   2
+  ],
+  "firstGenMs": 217,
+  "fixtureId": "quadratic-formula",
+  "coldToFirstMs": 95811,
+  "secondOutput": "$$x=\\frac{-b\\pm\\sqrt{b^{2}-4ac}}{2a}$$",
+  "secondTokens": [
+   1,
+   16547,
+   92,
+   18206,
+   22187,
+   95,
+   17,
+   70,
+   64,
+   7755,
+   64,
+   24492,
+   95,
+   70,
+   66,
+   95,
+   22,
+   14023,
+   24,
+   1077,
+   97,
+   8637,
+   22,
+   69,
+   97,
+   16547,
+   2
+  ],
+  "secondGenMs": 209,
+  "host": {
+   "loadavg": [
+    15.68359375,
+    16.568359375,
+    17.26953125
+   ],
+   "memUsedFrac": 0.9896588325500488,
+   "at": "2026-09-06T01:03:33.764Z"
+  },
+  "abbaBlock": 3,
+  "abbaPosition": 1,
+  "runnerHost": {
+   "before": {
+    "at": "2026-09-06T01:01:57.181Z",
+    "loadavg": [
+     16.9658203125,
+     16.982421875,
+     17.482421875
+    ],
+    "cpuCount": 18,
+    "chromeHelpers": 38,
+    "contended": true
+   },
+   "after": {
+    "at": "2026-09-06T01:03:35.302Z",
+    "loadavg": [
+     15.38818359375,
+     16.4921875,
+     17.23828125
+    ],
+    "cpuCount": 18,
+    "chromeHelpers": 44,
+    "contended": true
+   },
+   "isolation": "new regular Chrome user-data-dir per row"
+  }
+ },
+ {
+  "tier": "load",
+  "label": "shared",
+  "model": "intellitex",
+  "device": "webnn",
+  "dtype": "fp16",
+  "src": "hf",
+  "rev": "main",
+  "mode": "cold",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36",
+  "at": "2026-09-06T01:03:37.929Z",
+  "shareConstants": true,
+  "jsHeapAtStartBytes": 2902885,
+  "backend": "coreml",
+  "graphs": [
+   {
+    "name": "decode32",
+    "ops": 753,
+    "constants": 189,
+    "constantBytes": 298684504,
+    "constantsMs": 4601.8,
+    "emitMs": 1.4,
+    "buildMs": 8615.6
+   },
+   {
+    "name": "encoder32",
+    "ops": 553,
+    "constants": 149,
+    "constantBytes": 247549840,
+    "constantsMs": 3562.1,
+    "emitMs": 0.6,
+    "buildMs": 6742.1
+   },
+   {
+    "name": "decode64",
+    "ops": 753,
+    "constants": 189,
+    "constantBytes": 298684504,
+    "constantsMs": 22.7,
+    "emitMs": 0.6,
+    "buildMs": 8678
+   },
+   {
+    "name": "encoder64",
+    "ops": 553,
+    "constants": 149,
+    "constantBytes": 247623568,
+    "constantsMs": 9164.2,
+    "emitMs": 0.8,
+    "buildMs": 6818.5
+   },
+   {
+    "name": "decode128",
+    "ops": 753,
+    "constants": 189,
+    "constantBytes": 298684504,
+    "constantsMs": 22.4,
+    "emitMs": 0.6,
+    "buildMs": 8765.9
+   },
+   {
+    "name": "encoder128",
+    "ops": 553,
+    "constants": 149,
+    "constantBytes": 247918480,
+    "constantsMs": 3687.1,
+    "emitMs": 0.8,
+    "buildMs": 6987.5
+   }
+  ],
+  "entry": "intellitex-t5-220m/coreml-apple-m5-pro-macos26-chrome152",
+  "buildMsReported": 67710.8,
+  "constantsMsReported": 21060.3,
+  "compileMsReported": 46607.6,
+  "peakJSHeapBytes": 557224654,
+  "jsHeapAtLoadEndBytes": 556911100,
+  "loadMs": 67716,
+  "downloadMs": 56098,
+  "sessionMs": 6995,
+  "files": {
+   "intellitex-decode-L32.bin": 298684504,
+   "intellitex-encoder-L32.bin": 247549840,
+   "intellitex-encoder-L64.bin": 247623568,
+   "intellitex-encoder-L128.bin": 247918480
+  },
+  "totalBytes": 1041776392,
+  "network": {
+   "requests": 15,
+   "bytes": 1043203647,
+   "files": [
+    {
+     "file": "intellitex-webnn/family.json",
+     "len": 59960,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/entry.json",
+     "len": 81057,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/manifest.json",
+     "len": 3648,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.encoder32.json",
+     "len": 181774,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.decode32.json",
+     "len": 245480,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.encoder64.json",
+     "len": 181774,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.decode64.json",
+     "len": 245480,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.encoder128.json",
+     "len": 182522,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.decode128.json",
+     "len": 245560,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex/tokenizer_config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "intellitex/tokenizer.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-decode-L32.bin",
+     "len": 298684504,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-encoder-L32.bin",
+     "len": 247549840,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-encoder-L64.bin",
+     "len": 247623568,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-encoder-L128.bin",
+     "len": 247918480,
+     "encoding": null,
+     "type": "application/octet-stream"
+    }
+   ]
+  },
+  "warmupMs": 171,
+  "firstOutput": "$$x=\\frac{-b\\pm\\sqrt{b^{2}-4ac}}{2a}$$",
+  "firstTokens": [
+   1,
+   16547,
+   92,
+   18206,
+   22187,
+   95,
+   17,
+   70,
+   64,
+   7755,
+   64,
+   24492,
+   95,
+   70,
+   66,
+   95,
+   22,
+   14023,
+   24,
+   1077,
+   97,
+   8637,
+   22,
+   69,
+   97,
+   16547,
+   2
+  ],
+  "firstGenMs": 221,
+  "fixtureId": "quadratic-formula",
+  "coldToFirstMs": 68108,
+  "secondOutput": "$$x=\\frac{-b\\pm\\sqrt{b^{2}-4ac}}{2a}$$",
+  "secondTokens": [
+   1,
+   16547,
+   92,
+   18206,
+   22187,
+   95,
+   17,
+   70,
+   64,
+   7755,
+   64,
+   24492,
+   95,
+   70,
+   66,
+   95,
+   22,
+   14023,
+   24,
+   1077,
+   97,
+   8637,
+   22,
+   69,
+   97,
+   16547,
+   2
+  ],
+  "secondGenMs": 204,
+  "host": {
+   "loadavg": [
+    14.76123046875,
+    16.10888671875,
+    17.03515625
+   ],
+   "memUsedFrac": 0.9920718669891357,
+   "at": "2026-09-06T01:04:46.262Z"
+  },
+  "abbaBlock": 3,
+  "abbaPosition": 2,
+  "runnerHost": {
+   "before": {
+    "at": "2026-09-06T01:03:37.427Z",
+    "loadavg": [
+     15.38818359375,
+     16.4921875,
+     17.23828125
+    ],
+    "cpuCount": 18,
+    "chromeHelpers": 38,
+    "contended": true
+   },
+   "after": {
+    "at": "2026-09-06T01:04:47.523Z",
+    "loadavg": [
+     14.76123046875,
+     16.10888671875,
+     17.03515625
+    ],
+    "cpuCount": 18,
+    "chromeHelpers": 44,
+    "contended": true
+   },
+   "isolation": "new regular Chrome user-data-dir per row"
+  }
+ },
+ {
+  "tier": "load",
+  "label": "shared",
+  "model": "intellitex",
+  "device": "webnn",
+  "dtype": "fp16",
+  "src": "hf",
+  "rev": "main",
+  "mode": "cold",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36",
+  "at": "2026-09-06T01:04:50.186Z",
+  "shareConstants": true,
+  "jsHeapAtStartBytes": 2900425,
+  "backend": "coreml",
+  "graphs": [
+   {
+    "name": "decode32",
+    "ops": 753,
+    "constants": 189,
+    "constantBytes": 298684504,
+    "constantsMs": 17539.1,
+    "emitMs": 1.5,
+    "buildMs": 8649.1
+   },
+   {
+    "name": "encoder32",
+    "ops": 553,
+    "constants": 149,
+    "constantBytes": 247549840,
+    "constantsMs": 10403.3,
+    "emitMs": 0.9,
+    "buildMs": 7110.1
+   },
+   {
+    "name": "decode64",
+    "ops": 753,
+    "constants": 189,
+    "constantBytes": 298684504,
+    "constantsMs": 33.7,
+    "emitMs": 0.6,
+    "buildMs": 9390.7
+   },
+   {
+    "name": "encoder64",
+    "ops": 553,
+    "constants": 149,
+    "constantBytes": 247623568,
+    "constantsMs": 6742.1,
+    "emitMs": 0.8,
+    "buildMs": 7239.3
+   },
+   {
+    "name": "decode128",
+    "ops": 753,
+    "constants": 189,
+    "constantBytes": 298684504,
+    "constantsMs": 23.6,
+    "emitMs": 0.8,
+    "buildMs": 9038.8
+   },
+   {
+    "name": "encoder128",
+    "ops": 553,
+    "constants": 149,
+    "constantBytes": 247918480,
+    "constantsMs": 4067.7,
+    "emitMs": 0.9,
+    "buildMs": 7067.5
+   }
+  ],
+  "entry": "intellitex-t5-220m/coreml-apple-m5-pro-macos26-chrome152",
+  "buildMsReported": 87347.8,
+  "constantsMsReported": 38809.49999999999,
+  "compileMsReported": 48495.5,
+  "peakJSHeapBytes": 557224826,
+  "jsHeapAtLoadEndBytes": 556953956,
+  "loadMs": 87354,
+  "downloadMs": 62719,
+  "sessionMs": 7075,
+  "files": {
+   "intellitex-decode-L32.bin": 298684504,
+   "intellitex-encoder-L32.bin": 247549840,
+   "intellitex-encoder-L64.bin": 247623568,
+   "intellitex-encoder-L128.bin": 247918480
+  },
+  "totalBytes": 1041776392,
+  "network": {
+   "requests": 15,
+   "bytes": 1043203647,
+   "files": [
+    {
+     "file": "intellitex-webnn/family.json",
+     "len": 59960,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/entry.json",
+     "len": 81057,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/manifest.json",
+     "len": 3648,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.encoder32.json",
+     "len": 181774,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.decode32.json",
+     "len": 245480,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.encoder64.json",
+     "len": 181774,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.decode64.json",
+     "len": 245480,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.encoder128.json",
+     "len": 182522,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.decode128.json",
+     "len": 245560,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex/tokenizer.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "intellitex/tokenizer_config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-decode-L32.bin",
+     "len": 298684504,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-encoder-L32.bin",
+     "len": 247549840,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-encoder-L64.bin",
+     "len": 247623568,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-encoder-L128.bin",
+     "len": 247918480,
+     "encoding": null,
+     "type": "application/octet-stream"
+    }
+   ]
+  },
+  "warmupMs": 160,
+  "firstOutput": "$$x=\\frac{-b\\pm\\sqrt{b^{2}-4ac}}{2a}$$",
+  "firstTokens": [
+   1,
+   16547,
+   92,
+   18206,
+   22187,
+   95,
+   17,
+   70,
+   64,
+   7755,
+   64,
+   24492,
+   95,
+   70,
+   66,
+   95,
+   22,
+   14023,
+   24,
+   1077,
+   97,
+   8637,
+   22,
+   69,
+   97,
+   16547,
+   2
+  ],
+  "firstGenMs": 247,
+  "fixtureId": "quadratic-formula",
+  "coldToFirstMs": 87761,
+  "secondOutput": "$$x=\\frac{-b\\pm\\sqrt{b^{2}-4ac}}{2a}$$",
+  "secondTokens": [
+   1,
+   16547,
+   92,
+   18206,
+   22187,
+   95,
+   17,
+   70,
+   64,
+   7755,
+   64,
+   24492,
+   95,
+   70,
+   66,
+   95,
+   22,
+   14023,
+   24,
+   1077,
+   97,
+   8637,
+   22,
+   69,
+   97,
+   16547,
+   2
+  ],
+  "secondGenMs": 164,
+  "host": {
+   "loadavg": [
+    17.87451171875,
+    16.68603515625,
+    17.154296875
+   ],
+   "memUsedFrac": 0.9898796081542969,
+   "at": "2026-09-06T01:06:18.123Z"
+  },
+  "abbaBlock": 3,
+  "abbaPosition": 3,
+  "runnerHost": {
+   "before": {
+    "at": "2026-09-06T01:04:49.651Z",
+    "loadavg": [
+     14.8603515625,
+     16.10693359375,
+     17.02880859375
+    ],
+    "cpuCount": 18,
+    "chromeHelpers": 38,
+    "contended": true
+   },
+   "after": {
+    "at": "2026-09-06T01:06:19.752Z",
+    "loadavg": [
+     18.36474609375,
+     16.80712890625,
+     17.1943359375
+    ],
+    "cpuCount": 18,
+    "chromeHelpers": 44,
+    "contended": true
+   },
+   "isolation": "new regular Chrome user-data-dir per row"
+  }
+ },
+ {
+  "tier": "load",
+  "label": "baseline",
+  "model": "intellitex",
+  "device": "webnn",
+  "dtype": "fp16",
+  "src": "hf",
+  "rev": "main",
+  "mode": "cold",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36",
+  "at": "2026-09-06T01:06:22.449Z",
+  "shareConstants": false,
+  "jsHeapAtStartBytes": 2912188,
+  "backend": "coreml",
+  "graphs": [
+   {
+    "name": "decode32",
+    "ops": 753,
+    "constants": 189,
+    "constantBytes": 298684504,
+    "constantsMs": 4480.7,
+    "emitMs": 1.5,
+    "buildMs": 8856.5
+   },
+   {
+    "name": "encoder32",
+    "ops": 553,
+    "constants": 149,
+    "constantBytes": 247549840,
+    "constantsMs": 3707.7,
+    "emitMs": 0.8,
+    "buildMs": 7112.3
+   },
+   {
+    "name": "decode64",
+    "ops": 753,
+    "constants": 189,
+    "constantBytes": 298684504,
+    "constantsMs": 4425.3,
+    "emitMs": 0.7,
+    "buildMs": 9304.4
+   },
+   {
+    "name": "encoder64",
+    "ops": 553,
+    "constants": 149,
+    "constantBytes": 247623568,
+    "constantsMs": 3579.1,
+    "emitMs": 0.8,
+    "buildMs": 7104.8
+   },
+   {
+    "name": "decode128",
+    "ops": 753,
+    "constants": 189,
+    "constantBytes": 298684504,
+    "constantsMs": 5393.9,
+    "emitMs": 1.1,
+    "buildMs": 9290.2
+   },
+   {
+    "name": "encoder128",
+    "ops": 553,
+    "constants": 149,
+    "constantBytes": 247918480,
+    "constantsMs": 3791.4,
+    "emitMs": 0.9,
+    "buildMs": 7647.7
+   }
+  ],
+  "entry": "intellitex-t5-220m/coreml-apple-m5-pro-macos26-chrome152",
+  "buildMsReported": 74735.9,
+  "constantsMsReported": 25378.100000000002,
+  "compileMsReported": 49315.899999999994,
+  "peakJSHeapBytes": 557138643,
+  "jsHeapAtLoadEndBytes": 258229781,
+  "loadMs": 74742,
+  "downloadMs": 62587,
+  "sessionMs": 7655,
+  "files": {
+   "intellitex-decode-L32.bin": 298684504,
+   "intellitex-encoder-L32.bin": 247549840,
+   "intellitex-encoder-L64.bin": 247623568,
+   "intellitex-encoder-L128.bin": 247918480
+  },
+  "totalBytes": 1041776392,
+  "network": {
+   "requests": 17,
+   "bytes": 1640572655,
+   "files": [
+    {
+     "file": "intellitex-webnn/entry.json",
+     "len": 81057,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/family.json",
+     "len": 59960,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/manifest.json",
+     "len": 3648,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.encoder32.json",
+     "len": 181774,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.decode32.json",
+     "len": 245480,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.encoder64.json",
+     "len": 181774,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.decode64.json",
+     "len": 245480,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.encoder128.json",
+     "len": 182522,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.decode128.json",
+     "len": 245560,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex/tokenizer.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "intellitex/tokenizer_config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-decode-L32.bin",
+     "len": 298684504,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-encoder-L32.bin",
+     "len": 247549840,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-decode-L32.bin",
+     "len": 298684504,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-encoder-L64.bin",
+     "len": 247623568,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-decode-L32.bin",
+     "len": 298684504,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-encoder-L128.bin",
+     "len": 247918480,
+     "encoding": null,
+     "type": "application/octet-stream"
+    }
+   ]
+  },
+  "warmupMs": 142,
+  "firstOutput": "$$x=\\frac{-b\\pm\\sqrt{b^{2}-4ac}}{2a}$$",
+  "firstTokens": [
+   1,
+   16547,
+   92,
+   18206,
+   22187,
+   95,
+   17,
+   70,
+   64,
+   7755,
+   64,
+   24492,
+   95,
+   70,
+   66,
+   95,
+   22,
+   14023,
+   24,
+   1077,
+   97,
+   8637,
+   22,
+   69,
+   97,
+   16547,
+   2
+  ],
+  "firstGenMs": 209,
+  "fixtureId": "quadratic-formula",
+  "coldToFirstMs": 75093,
+  "secondOutput": "$$x=\\frac{-b\\pm\\sqrt{b^{2}-4ac}}{2a}$$",
+  "secondTokens": [
+   1,
+   16547,
+   92,
+   18206,
+   22187,
+   95,
+   17,
+   70,
+   64,
+   7755,
+   64,
+   24492,
+   95,
+   70,
+   66,
+   95,
+   22,
+   14023,
+   24,
+   1077,
+   97,
+   8637,
+   22,
+   69,
+   97,
+   16547,
+   2
+  ],
+  "secondGenMs": 189,
+  "host": {
+   "loadavg": [
+    17.3271484375,
+    16.85400390625,
+    17.17919921875
+   ],
+   "memUsedFrac": 0.9841821193695068,
+   "at": "2026-09-06T01:07:37.758Z"
+  },
+  "abbaBlock": 3,
+  "abbaPosition": 4,
+  "runnerHost": {
+   "before": {
+    "at": "2026-09-06T01:06:21.877Z",
+    "loadavg": [
+     18.36474609375,
+     16.80712890625,
+     17.1943359375
+    ],
+    "cpuCount": 18,
+    "chromeHelpers": 38,
+    "contended": true
+   },
+   "after": {
+    "at": "2026-09-06T01:07:37.981Z",
+    "loadavg": [
+     17.3271484375,
+     16.85400390625,
+     17.17919921875
+    ],
+    "cpuCount": 18,
+    "chromeHelpers": 44,
+    "contended": true
+   },
+   "isolation": "new regular Chrome user-data-dir per row"
+  }
+ }
+]

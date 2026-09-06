@@ -25,6 +25,7 @@ const rev = q.get("rev") ?? "main";
 const mode = get("mode") ?? "cold";
 const runItems = get("items") !== "0";
 const label = q.get("label") ?? "";
+const shareConstants = q.get("shareConstants") !== "0";
 
 const out = document.getElementById("result"), progress = document.getElementById("progress");
 const show = (o) => { out.textContent = JSON.stringify(o, null, 2); };
@@ -107,6 +108,12 @@ async function fixtureFor(kind) {
 }
 
 const result = { label, model, device, dtype, src, rev, mode, ua: navigator.userAgent, at: new Date().toISOString() };
+result.shareConstants = shareConstants;
+let peakJSHeapBytes = performance.memory?.usedJSHeapSize ?? null;
+result.jsHeapAtStartBytes = peakJSHeapBytes;
+const heapTimer = peakJSHeapBytes == null ? null : setInterval(() => {
+  peakJSHeapBytes = Math.max(peakJSHeapBytes, performance.memory.usedJSHeapSize);
+}, 25);
 try {
   if (mode === "cold") {
     for (const k of await caches.keys()) if (/transformers/i.test(k)) await caches.delete(k);
@@ -119,6 +126,7 @@ try {
       preferLocalConstants: src === "local",
       preserveModelSource: src === "hf",
       onProgress: progress_callback,
+      shareConstants,
     };
     if (model === "intellitex") {
       const { createIntelliTeXWebNN } = await import("./intellitex-webnn.js");
@@ -160,6 +168,9 @@ try {
     }
   }
   const t1 = performance.now();
+  if (heapTimer) clearInterval(heapTimer);
+  result.peakJSHeapBytes = peakJSHeapBytes;
+  result.jsHeapAtLoadEndBytes = performance.memory?.usedJSHeapSize ?? null;
   result.loadMs = Math.round(t1 - t0);
   result.downloadMs = firstProgress ? Math.round(lastProgress - firstProgress) : 0;
   result.sessionMs = Math.round(t1 - (lastProgress || t0));
@@ -186,6 +197,7 @@ try {
   progress.textContent = `first-gen ${fixture.id}`;
   const f0 = performance.now();
   result.firstOutput = await predict(fixture.input);
+  if (webnnHandle?.lastRun) result.firstTokens = Array.from(webnnHandle.lastRun().tokens);
   result.firstGenMs = Math.round(performance.now() - f0);
   result.fixtureId = fixture.id;
   result.coldToFirstMs = result.loadMs + result.warmupMs + result.firstGenMs;
@@ -193,6 +205,7 @@ try {
   progress.textContent = `second-gen ${fixture.id}`;
   const s0 = performance.now();
   result.secondOutput = await predict(fixture.input);
+  if (webnnHandle?.lastRun) result.secondTokens = Array.from(webnnHandle.lastRun().tokens);
   result.secondGenMs = Math.round(performance.now() - s0);
 
   if (runItems) {
@@ -200,14 +213,20 @@ try {
     const items = kind === "text" ? fixture.all : fixture.all;
     for (const [id, input] of items) {
       progress.textContent = id;
-      const s = performance.now(); let output = "", err = "";
-      try { output = await predict(input); } catch (e) { err = String(e).slice(0, 200); }
-      result.items.push({ id, ms: Math.round(performance.now() - s), output, err });
+      const s = performance.now(); let output = "", err = "", tokens = null;
+      try {
+        output = await predict(input);
+        if (webnnHandle?.lastRun) tokens = Array.from(webnnHandle.lastRun().tokens);
+      } catch (e) { err = String(e).slice(0, 200); }
+      result.items.push({ id, ms: Math.round(performance.now() - s), output, tokens, err });
     }
   }
   progress.textContent = "done";
   show(result); document.title = "done";
 } catch (e) {
+  if (heapTimer) clearInterval(heapTimer);
+  result.peakJSHeapBytes = peakJSHeapBytes;
+  result.jsHeapAtLoadEndBytes = performance.memory?.usedJSHeapSize ?? null;
   result.error = String(e?.stack || e); show(result); document.title = "failed";
 }
 
