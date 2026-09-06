@@ -1,0 +1,108 @@
+[
+ {
+  "tier": "load",
+  "label": "cold-hf",
+  "model": "texo",
+  "device": "wasm",
+  "dtype": "fp32",
+  "src": "hf",
+  "rev": "main",
+  "mode": "cold",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36",
+  "at": "2026-09-05T22:11:16.721Z",
+  "loadMs": 14991,
+  "downloadMs": 14180,
+  "sessionMs": 483,
+  "files": {
+   "config.json": 5066,
+   "generation_config.json": 213,
+   "onnx/decoder_model_merged.onnx": 25946296,
+   "onnx/encoder_model.onnx": 54168533
+  },
+  "totalBytes": 80120108,
+  "network": {
+   "requests": 6,
+   "bytes": 80115978,
+   "files": [
+    {
+     "file": "texo/config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "onnx/decoder_model_merged.onnx",
+     "len": 25946296,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "onnx/encoder_model.onnx",
+     "len": 54168533,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "texo/generation_config.json",
+     "len": 213,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "texo/tokenizer_config.json",
+     "len": 936,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "texo/tokenizer.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    }
+   ]
+  },
+  "warmupMs": 451,
+  "firstOutput": "x = { \\frac { - b \\pm { \\sqrt { b ^ { 2 } - 4 a c } } } { 2 a } }",
+  "firstGenMs": 412,
+  "fixtureId": "quadratic",
+  "coldToFirstMs": 15854,
+  "secondOutput": "x = { \\frac { - b \\pm { \\sqrt { b ^ { 2 } - 4 a c } } } { 2 a } }",
+  "secondGenMs": 411,
+  "cacheSettled": true,
+  "host": {
+   "loadavg": [
+    36.685546875,
+    32.03125,
+    24.8837890625
+   ],
+   "memUsedFrac": 0.9716696739196777,
+   "at": "2026-09-05T22:11:33.022Z"
+  },
+  "runnerHost": {
+   "before": {
+    "at": "2026-09-05T22:11:15.979Z",
+    "loadavg": [
+     34.44091796875,
+     31.28173828125,
+     24.45458984375
+    ],
+    "cpuCount": 18,
+    "chromeHelpers": 38,
+    "contended": true
+   },
+   "after": {
+    "at": "2026-09-05T22:11:34.095Z",
+    "loadavg": [
+     36.685546875,
+     32.03125,
+     24.8837890625
+    ],
+    "cpuCount": 18,
+    "chromeHelpers": 45,
+    "contended": true
+   },
+   "isolation": "new regular Chrome user-data-dir per row"
+  }
+ }
+]

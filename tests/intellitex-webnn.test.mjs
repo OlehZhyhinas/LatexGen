@@ -22,7 +22,7 @@ const nav = { ml: { createContext() {} }, gpu: {}, userAgent: "Node.js", vendor:
 Object.defineProperty(globalThis, "navigator", { configurable: true, get: () => nav, set: () => {} });
 
 const { pickRuntime, webnnAvailable } = await import("../public/models.js");
-const { toFloat16, bucketFor, padIds } = await import("../public/intellitex-webnn.js");
+const { toFloat16, bucketFor, padIds, createSharedConstantSource } = await import("../public/intellitex-webnn.js");
 
 const family = read("family.json");
 const entry = read("entry.json");
@@ -88,6 +88,28 @@ test("manifest hashes encoder blobs per bucket and shared decode constants", () 
   assert.match(manifest.constants.encoder32.sha256, /^[0-9a-f]{64}$/);
   assert.equal(entry.graphs.decode64.constants, "decode32");
   assert.equal(entry.graphs.decode128.constants, "decode32");
+});
+
+test("shared constants resolver returns one source for a repeated manifest key", async () => {
+  let fetches = 0;
+  const bytes = Uint8Array.from([1, 2, 3, 4]);
+  const sourceFor = createSharedConstantSource("https://example.test/catalog", async (url) => {
+    fetches++;
+    assert.equal(url, "https://example.test/catalog/decode.bin");
+    return { ok: true, arrayBuffer: async () => bytes.buffer };
+  }, new Set(["decode32"]));
+  const record = { file: "decode.bin", bytes: bytes.byteLength, url: null };
+  const first = sourceFor("decode32", record);
+  const second = sourceFor("decode32", record);
+
+  assert.equal(first, second);
+  assert.notEqual(sourceFor("encoder32", record), sourceFor("encoder32", record));
+  assert.deepEqual([...await first.fetchRange(0, 4)], [1, 2, 3, 4]);
+  assert.deepEqual([...await second.fetchRange(1, 2)], [2, 3]);
+  assert.equal(fetches, 1);
+
+  sourceFor.release();
+  assert.notEqual(sourceFor("decode32", record), first);
 });
 
 test("pickRuntime prefers WebNN for intellitex when navigator.ml exists", () => {

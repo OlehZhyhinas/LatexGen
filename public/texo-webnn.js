@@ -66,7 +66,7 @@ export function toFloat16(f32) {
  *                    returns), and .tokens on the returned string's `last` field.
  * onProgress({file, loaded, total}) mirrors transformers.js's progress events.
  */
-export async function createTexoWebNN({ baseUrl = TEXO_WEBNN_BASE, onProgress = null, deviceType = "gpu" } = {}) {
+export async function createTexoWebNN({ baseUrl = TEXO_WEBNN_BASE, onProgress = null, deviceType = "gpu", skipWarmup = false, preferLocalConstants = false } = {}) {
   if (!webnnAvailable()) throw new Error("WebNN is not available (navigator.ml missing)");
   const t0 = performance.now();
   const j = async (u) => { const r = await fetch(u); if (!r.ok) throw new Error(`${u}: HTTP ${r.status}`); return r.json(); };
@@ -77,6 +77,7 @@ export async function createTexoWebNN({ baseUrl = TEXO_WEBNN_BASE, onProgress = 
   const fp = assertCoreMLFingerprint(ctx); // throws on the TFLite/XNNPACK fallback
 
   const manifest = await j(`${baseUrl}${entry.constants}`);
+  if (preferLocalConstants) for (const c of Object.values(manifest.constants)) c.url = null;
   const graphNames = Object.keys(entry.graphs).filter((k) => k !== "chain");
   const recipes = Object.fromEntries(await Promise.all(graphNames.map(async (g) => [g, await j(`${baseUrl}${entry.graphs[g].recipe}`)])));
   for (const g of graphNames) {
@@ -121,7 +122,7 @@ export async function createTexoWebNN({ baseUrl = TEXO_WEBNN_BASE, onProgress = 
   };
 
   // one warm-up: the first dispatch of a freshly built Core ML graph is slow
-  await run(new Float32Array(384 * 384).fill(-4.5628));
+  if (!skipWarmup) await run(new Float32Array(384 * 384).fill(-4.5628));
 
   return {
     run,

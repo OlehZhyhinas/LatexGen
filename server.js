@@ -6,6 +6,7 @@ import { readFile, stat } from "node:fs/promises";
 import { createReadStream } from "node:fs";
 import { extname, join, normalize } from "node:path";
 import { fileURLToPath } from "node:url";
+import { loadavg, totalmem, freemem } from "node:os";
 
 const PORT = process.env.PORT || 8000;
 const PROD = process.env.NODE_ENV === "production" || process.env.LATEXGEN_PROD === "1";
@@ -496,7 +497,9 @@ const server = createServer(async (req, res) => {
     // reads them back for judging. In-memory only.
     if (PROD && path === "/api/bench") return json(res, 404, { error: "not found" });
     if (req.method === "POST" && path === "/api/bench") {
-      benchRows.push(await readJson(req, BODY_LIMIT_IMAGE));
+      const row = await readJson(req, BODY_LIMIT_IMAGE);
+      row.host = { loadavg: loadavg(), memUsedFrac: 1 - freemem() / totalmem(), at: new Date().toISOString() };
+      benchRows.push(row);
       res.writeHead(204); res.end();
       return;
     }

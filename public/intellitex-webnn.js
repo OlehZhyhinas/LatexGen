@@ -70,6 +70,43 @@ export function padIds(ids, L, padId = 0, maskValue = -1e4) {
   return { ids: out, padBias: toFloat16(bias32) };
 }
 
+/**
+ * Reuse one in-flight/full constants buffer for every graph naming the same
+ * manifest key. release() deliberately makes this eager-build-only: a future
+ * lazy bucket must create a new resolver (and therefore refetch after release).
+ */
+export function createSharedConstantSource(baseUrl, fetchImpl = fetch, sharedKeys = null) {
+  const base = baseUrl.replace(/\/$/, "");
+  const sources = new Map();
+  const makeSource = (record) => {
+    const url = record.url ?? `${base}/${record.file}`;
+    let bufferPromise = null;
+    return {
+      kind: "http-shared",
+      totalBytes: record.bytes,
+      ranges: [{ byteOffset: 0, byteLength: record.bytes }],
+      async fetchRange(byteOffset, byteLength) {
+        bufferPromise ??= fetchImpl(url).then((response) => {
+          if (!response.ok) throw new Error(`${url} -> HTTP ${response.status}`);
+          return response.arrayBuffer();
+        });
+        return new Uint8Array(await bufferPromise).subarray(byteOffset, byteOffset + byteLength);
+      },
+      release() { bufferPromise = null; },
+    };
+  };
+  const resolve = (key, record) => {
+    if (sharedKeys && !sharedKeys.has(key)) return makeSource(record);
+    if (!sources.has(key)) sources.set(key, makeSource(record));
+    return sources.get(key);
+  };
+  resolve.release = () => {
+    for (const source of sources.values()) source.release();
+    sources.clear();
+  };
+  return resolve;
+}
+
 function pointTokenizerAtOrigin() {
   env.allowRemoteModels = true;
   env.allowLocalModels = false;
@@ -88,9 +125,9 @@ function pointTokenizerAtOrigin() {
  *   run(text)  plain-English math (no prefix); the specialist prefix is added
  *              here, matching onnx-worker.js. Resolves to decoded LaTeX.
  */
-export async function createIntelliTeXWebNN({ baseUrl = INTELLITEX_WEBNN_BASE, onProgress = null, deviceType = "gpu" } = {}) {
+export async function createIntelliTeXWebNN({ baseUrl = INTELLITEX_WEBNN_BASE, onProgress = null, deviceType = "gpu", skipWarmup = false, preferLocalConstants = false, preserveModelSource = false, shareConstants = true } = {}) {
   if (!webnnAvailable()) throw new Error("WebNN is not available (navigator.ml missing)");
-  pointTokenizerAtOrigin();
+  if (!preserveModelSource) pointTokenizerAtOrigin();
   const t0 = performance.now();
   const j = async (u) => { const r = await fetch(u); if (!r.ok) throw new Error(`${u}: HTTP ${r.status}`); return r.json(); };
   const [entry, family] = await Promise.all([j(`${baseUrl}entry.json`), j(`${baseUrl}family.json`)]);
@@ -99,6 +136,7 @@ export async function createIntelliTeXWebNN({ baseUrl = INTELLITEX_WEBNN_BASE, o
 
   const tokenizerP = AutoTokenizer.from_pretrained("intellitex");
   const manifest = await j(`${baseUrl}${entry.constants}`);
+  if (preferLocalConstants) for (const c of Object.values(manifest.constants)) c.url = null;
   const graphNames = Object.keys(entry.graphs).filter((k) => k !== "chain");
   const recipes = Object.fromEntries(await Promise.all(graphNames.map(async (g) => [g, await j(`${baseUrl}${entry.graphs[g].recipe}`)])));
 
@@ -106,42 +144,53 @@ export async function createIntelliTeXWebNN({ baseUrl = INTELLITEX_WEBNN_BASE, o
   const loaded = {};
   const graphStats = {};
   let fp = null;
+  const keyUses = graphNames.reduce((counts, name) => {
+    const key = entry.graphs[name].constants;
+    counts.set(key, (counts.get(key) ?? 0) + 1);
+    return counts;
+  }, new Map());
+  const sharedKeys = new Set([...keyUses].filter(([, uses]) => uses > 1).map(([key]) => key));
+  const constants = shareConstants ? createSharedConstantSource(baseUrl, fetch, sharedKeys) : baseUrl.replace(/\/$/, "");
 
-  for (const L of buckets) {
-    const names = [family.contract.chaining.buckets[String(L)].encoder, family.contract.chaining.buckets[String(L)].decode];
-    const ctx = await navigator.ml.createContext({ deviceType });
-    fp = assertCoreMLFingerprint(ctx);
-    if (L === buckets[0]) {
-      for (const g of graphNames) {
-        const s = checkOpSupport(recipes[g], ctx);
-        if (s.missing.length) throw new Error(`WebNN in this browser lacks ${s.missing.join(", ")} (needed by the ${g} recipe)`);
-      }
-    }
-    const rig = await loadEntry(entry, baseUrl.replace(/\/$/, ""), ctx, {
-      baseUrl: baseUrl.replace(/\/$/, ""),
-      manifest,
-      recipes,
-      only: names,
-      onProgress: onProgress
-        ? (p) => {
-          if (p.phase === "constants") {
-            const rec = manifest.constants[entry.graphs[p.graph].constants];
-            onProgress({ file: rec.file, loaded: p.bytesRead, total: totals[entry.graphs[p.graph].constants] });
-          }
+  try {
+    for (const L of buckets) {
+      const names = [family.contract.chaining.buckets[String(L)].encoder, family.contract.chaining.buckets[String(L)].decode];
+      const ctx = await navigator.ml.createContext({ deviceType });
+      fp = assertCoreMLFingerprint(ctx);
+      if (L === buckets[0]) {
+        for (const g of graphNames) {
+          const s = checkOpSupport(recipes[g], ctx);
+          if (s.missing.length) throw new Error(`WebNN in this browser lacks ${s.missing.join(", ")} (needed by the ${g} recipe)`);
         }
-        : undefined,
-    });
-    rig.chain = rig.chain.filter((l) => rig.graphs[l.from.graph] && rig.graphs[l.to.graph]);
-    const tensors = await createEntryTensors(ctx, rig);
-    const spec = { ...ar, graph: names[1] };
-    const encoderName = names[0];
-    const idsT = tensors.get(encoderName, "input_ids");
-    const encPad = tensors.get(encoderName, "pad_bias");
-    const decPad = tensors.get(spec.graph, "pad_bias");
-    const encIn = tensors.inputsFor(encoderName), encOut = tensors.outputsFor(encoderName);
-    const tokensView = new Int32Array(rig.graphs[spec.graph].outputs[spec.tokensOutput].shape.reduce((a, b) => a * b, 1));
-    Object.assign(graphStats, rig.stats);
-    loaded[L] = { ctx, rig, tensors, spec, idsT, encPad, decPad, encIn, encOut, encoderName, tokensView };
+      }
+      const rig = await loadEntry(entry, constants, ctx, {
+        baseUrl: baseUrl.replace(/\/$/, ""),
+        manifest,
+        recipes,
+        only: names,
+        onProgress: onProgress
+          ? (p) => {
+            if (p.phase === "constants") {
+              const rec = manifest.constants[entry.graphs[p.graph].constants];
+              onProgress({ file: rec.file, loaded: p.bytesRead, total: totals[entry.graphs[p.graph].constants] });
+            }
+          }
+          : undefined,
+      });
+      rig.chain = rig.chain.filter((l) => rig.graphs[l.from.graph] && rig.graphs[l.to.graph]);
+      const tensors = await createEntryTensors(ctx, rig);
+      const spec = { ...ar, graph: names[1] };
+      const encoderName = names[0];
+      const idsT = tensors.get(encoderName, "input_ids");
+      const encPad = tensors.get(encoderName, "pad_bias");
+      const decPad = tensors.get(spec.graph, "pad_bias");
+      const encIn = tensors.inputsFor(encoderName), encOut = tensors.outputsFor(encoderName);
+      const tokensView = new Int32Array(rig.graphs[spec.graph].outputs[spec.tokensOutput].shape.reduce((a, b) => a * b, 1));
+      Object.assign(graphStats, rig.stats);
+      loaded[L] = { ctx, rig, tensors, spec, idsT, encPad, decPad, encIn, encOut, encoderName, tokensView };
+    }
+  } finally {
+    if (typeof constants === "function") constants.release();
   }
 
   const tokenizer = await tokenizerP;
@@ -172,7 +221,7 @@ export async function createIntelliTeXWebNN({ baseUrl = INTELLITEX_WEBNN_BASE, o
 
   const run = async (text) => runIds(encode(text));
 
-  await run("x squared");
+  if (!skipWarmup) await run("x squared");
 
   return {
     run,
