@@ -75,6 +75,53 @@ when `navigator.ml` exists), or `public/bench-images.html?only=texo-webnn` /
 `?only=texify-webnn` for all 18 images, or `public/bench.html?only=intellitex-webnn`
 for the 15 text items.
 
+### WebLLM: Qwen3 through the graph catalog's WebGPU runtime
+
+The same Qwen3 q4f16_1 weights, decoded by the catalog's patched WebLLM 0.2.84
+(family `qwen3-webllm`: device-resident greedy argmax, K-token decode bursts,
+batched command encoding with periodic flushes, optional lookahead) with a
+per-model subgroup-32 model lib, against stock WebLLM 0.2.84. Both sides
+greedy (`temperature: 0`), streamed, the 15 text items, two rounds, arms
+interleaved per round, fresh engine per arm. Decode is (wall − first token) /
+(tokens − 1); medians over the 30 runs. M5 Pro, Chrome 152, 2026-09-07,
+`bench-webllm.html`.
+
+| Model | Variant | Decode ms/token | Speed-up | First token | Same output as stock |
+|---|---|---|---|---|---|
+| Qwen3 0.6B | stock WebLLM | 7.0 | | 42 ms | |
+| | catalog `sg32-burst4` | 4.2 | 1.69x | 42 ms | 14/15 items |
+| | catalog `sg32-burst4-flush64` **(default)** | **3.5** | **2.01x** | 40 ms | 14/15 items |
+| Qwen3 1.7B | stock WebLLM | 9.8 | | 103 ms | |
+| | catalog `sg32-burst4-flush32` | 6.2 | 1.58x | 102 ms | 13/15 items |
+| | catalog `sg32-burst1-flush32-lookahead1` **(default)** | **5.8** | **1.68x** | 105 ms | 13/15 items |
+| Qwen3 4B | stock WebLLM | 17.7 | | 254 ms | |
+| | catalog `sg32-burst4-flush32` | **12.2** | **1.45x** | 252 ms | 15/15 items |
+| Qwen3 8B | stock WebLLM | 25.3 | | 457 ms | |
+| | catalog `sg32-burst4-flush32` | **20.8** | **1.22x** | 466 ms | 14/15 items |
+
+What the router took from this: every size is faster through the catalog, most
+where it matters least (0.6B) and least where it matters most (8B), because the
+tricks remove per-token overhead rather than compute. The sibling pairs were
+settled here: `flush64` over plain `burst4` at 0.6B, and `lookahead1` over
+`burst4-flush32` at 1.7B, where the workbench's +3.9 ms first-token cost did
+not show (105 vs 102 ms) and per-token streaming comes back for free. The
+losing siblings stay in the catalog and can be forced with
+`?webllm=catalog:<variant>`.
+
+The output differences are not the decode tricks: the two 1.7B variants agree
+with each other on all 30 runs and differ from stock on the same two items, so
+the divergence comes from the subgroup model lib producing slightly different
+logits, which flips one near-tie token (0.6B: `\hat{\lambda}` vs `\lambda`;
+8B: `k = 0` vs `k` equals zero`). Every divergence reproduced identically in
+both rounds. Judged by the 27B (`bench/judge.py`,
+`bench/results-qwen3-webllm-2026-09-07.json`), the catalog and stock arms
+score identically on every item for every size (0.6B 6/15, 1.7B 8/15, 4B 9/15,
+8B 9/15): the flipped tokens change wording, not correctness.
+
+Reproduce: `public/bench-webllm.html?model=Qwen3-1.7B-q4f16_1-MLC&rounds=2`
+(arms default to stock plus every catalog variant for the model), then
+`python3 bench/judge.py` for the accuracy column.
+
 ## Loading: getting the weights into the browser
 
 Cold means an empty Cache API and a bypassed HTTP cache, weights streamed from the Hugging Face repo the static build uses; warm means the Cache API. Median of three cold runs for the WebGPU rows, single runs elsewhere. M5 Pro, Chromium 148, one evening, both sides measured within the same two hours.

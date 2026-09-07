@@ -132,7 +132,8 @@ export function createPipeline(ctx) {
     const inputChars = messages[messages.length - 1].content.length;
     const maxTokens = Math.min(1024, Math.max(256, Math.ceil(inputChars / 3) * 2 + 128));
     return withEngine(async () => {
-      const chunks = await engine.chat.completions.create({ messages, temperature: 0.2, max_tokens: maxTokens, stream: true, extra_body: { enable_thinking: false } });
+      // The catalog runtime fast path needs greedy decode, which also keeps runs reproducible.
+      const chunks = await engine.chat.completions.create({ messages, temperature: 0, max_tokens: maxTokens, stream: true, extra_body: { enable_thinking: false } });
       let full = "", sinceCheck = 0;
       for await (const c of chunks) {
         const delta = c.choices[0]?.delta?.content ?? "";
