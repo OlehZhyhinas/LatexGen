@@ -11,6 +11,7 @@ from tokenizers import Tokenizer
 
 ROOT = Path(__file__).resolve().parent
 BENCH_PATH = ROOT / "bench-data.json"
+PDF_PASTES_PATH = ROOT / "pdf-pastes.json"
 RESULTS_PATH = ROOT / "results-2026-09-01.json"
 OUT_PATH = ROOT / "results-vocab-coverage.json"
 TOKENIZER_GLOB = str(
@@ -18,7 +19,7 @@ TOKENIZER_GLOB = str(
     / ".cache/huggingface/hub/models--Qwen--Qwen3-0.6B/snapshots/*/tokenizer.json"
 )
 ORIG_VOCAB_SIZE = 151_936
-PAD_MULTIPLE = 32_768
+PAD_MULTIPLE = 4_096
 DEFAULT_PAD_VALUES = [0, 8192, 16384, 32768, 65536]
 
 
@@ -153,7 +154,7 @@ def aggregate_loo(rows):
         return [r for r in rows if r["tier"] == name]
 
     agg = {}
-    for name in ["easy", "medium", "hard", "multiline", "overall"]:
+    for name in ["easy", "medium", "hard", "multiline", "pdf-paste", "overall"]:
         rs = group_rows(name)
         total_eval = sum(r["eval_tokens"] for r in rs)
         total_chars = sum(r["eval_chars"] for r in rs)
@@ -283,8 +284,29 @@ def main():
     args = parse_args()
     pad_values = resolve_pad_values(args.pad)
     tok, tok_path = load_tokenizer()
-    items = json.load(open(BENCH_PATH))
-    results = json.load(open(RESULTS_PATH))
+    bench_items = json.load(open(BENCH_PATH))
+    pdf_items = []
+    if PDF_PASTES_PATH.exists():
+        pdf_items = json.load(open(PDF_PASTES_PATH))
+    all_items = bench_items + pdf_items
+    skipped_items = sum(1 for it in all_items if it.get("ok") is False)
+    items = [it for it in all_items if it.get("ok", True)]
+    item_ids = {it["id"] for it in items}
+    raw_results = json.load(open(RESULTS_PATH))
+    skipped_results_item = sum(1 for r in raw_results if r.get("item") not in item_ids)
+    skipped_results_filter = sum(
+        1
+        for r in raw_results
+        if r.get("item") in item_ids
+        and (not r.get("approach", "").startswith("direct:Qwen3-") or r.get("correct") is not True)
+    )
+    results = [
+        r
+        for r in raw_results
+        if r.get("item") in item_ids
+        and r.get("approach", "").startswith("direct:Qwen3-")
+        and r.get("correct") is True
+    ]
 
     all_seqs, by_item = build_sequences(tok, items, results)
     all_counts = collections.Counter()
@@ -305,6 +327,12 @@ def main():
     base_keep_ids = seen_ids | byte_ids | added_ids | special_ids
     keep_size = len(base_keep_ids)
     padded_keep = ((keep_size + PAD_MULTIPLE - 1) // PAD_MULTIPLE) * PAD_MULTIPLE
+    keep_size_by_pad = {}
+    padded_keep_by_pad = {}
+    for n in pad_values:
+        keep_n = len(base_keep_ids | set(regular_ids[:n]))
+        keep_size_by_pad[str(n)] = keep_n
+        padded_keep_by_pad[str(n)] = ((keep_n + PAD_MULTIPLE - 1) // PAD_MULTIPLE) * PAD_MULTIPLE
 
     fertility_full = total_tokens / total_chars if total_chars else 0.0
 
@@ -328,20 +356,32 @@ def main():
         ("Qwen3-4B", 2560),
     ]
     memory = []
-    for name, h in dims:
-        row = {"model": name, "hidden": h}
-        for dtype, bpp in [("fp16", 2.0), ("int4", 0.5)]:
-            orig = int(ORIG_VOCAB_SIZE * h * bpp)
-            pruned = int(padded_keep * h * bpp)
-            row[dtype] = {
-                "orig_bytes": orig,
-                "pruned_bytes": pruned,
-                "saved_bytes": orig - pruned,
+    for n in pad_values:
+        keep_n = keep_size_by_pad[str(n)]
+        padded_n = padded_keep_by_pad[str(n)]
+        for name, h in dims:
+            row = {
+                "pad_n": n,
+                "keep_size": keep_n,
+                "padded_keep_size": padded_n,
+                "model": name,
+                "hidden": h,
             }
-        memory.append(row)
+            for dtype, bpp in [("fp16", 2.0), ("int4", 0.5)]:
+                orig = int(ORIG_VOCAB_SIZE * h * bpp)
+                pruned = int(padded_n * h * bpp)
+                row[dtype] = {
+                    "orig_bytes": orig,
+                    "pruned_bytes": pruned,
+                    "saved_bytes": orig - pruned,
+                }
+            memory.append(row)
 
     print(f"tokenizer: {tok_path}")
     print(f"corpus texts: {len(all_seqs)}")
+    print(f"items skipped (ok=false): {skipped_items}")
+    print(f"outputs skipped (item filtered out): {skipped_results_item}")
+    print(f"outputs skipped (approach/correct filter): {skipped_results_filter}")
     print(f"tokenizer vocab size: {tok.get_vocab_size()}")
     print(f"token ids seen in corpus: {len(seen_ids)}")
     print(f"base keep-set size (seen + 256 bytes + specials/added): {keep_size}")
@@ -350,15 +390,16 @@ def main():
     print(f"fertility full corpus (tokens/char): {fertility_full:.4f}")
 
     print("\nLeave-one-item-out by head padding")
-    print("| pad_n | oos_micro_overall | oos_micro_easy | oos_micro_medium | oos_micro_hard | oos_micro_multiline | fert_pruned_micro_overall | ref_bit_exact_frac |")
-    print("|---:|---:|---:|---:|---:|---:|---:|---:|")
+    print("| pad_n | oos_micro_overall | oos_micro_easy | oos_micro_medium | oos_micro_hard | oos_micro_multiline | oos_micro_pdf_paste | fert_pruned_micro_overall | ref_bit_exact_frac |")
+    print("|---:|---:|---:|---:|---:|---:|---:|---:|---:|")
     for n in pad_values:
         block = loo_by_pad[str(n)]
         s = block["summary"]
         print(
             f"| {n} | {s['overall']['oos_rate_micro']:.4f} | {s['easy']['oos_rate_micro']:.4f} | "
             f"{s['medium']['oos_rate_micro']:.4f} | {s['hard']['oos_rate_micro']:.4f} | "
-            f"{s['multiline']['oos_rate_micro']:.4f} | {s['overall']['fertility_pruned_sim_micro']:.4f} | "
+            f"{s['multiline']['oos_rate_micro']:.4f} | {s['pdf-paste']['oos_rate_micro']:.4f} | "
+            f"{s['overall']['fertility_pruned_sim_micro']:.4f} | "
             f"{block['reference_bit_exact_fraction']:.4f} |"
         )
 
@@ -369,11 +410,12 @@ def main():
         print(f"\nN={n} top-30 out-of-set decoded tokens: {joined}")
 
     print("\nEmbedding bytes (tied vocab matrix)")
-    print("| model | hidden | fp16 orig | fp16 pruned | fp16 saved | int4 orig | int4 pruned | int4 saved |")
-    print("|---|---:|---:|---:|---:|---:|---:|---:|")
+    print("| pad_n | keep_size | padded_keep | model | hidden | fp16 orig | fp16 pruned | fp16 saved | int4 orig | int4 pruned | int4 saved |")
+    print("|---:|---:|---:|---|---:|---:|---:|---:|---:|---:|---:|")
     for r in memory:
         print(
-            f"| {r['model']} | {r['hidden']} | {fmt_bytes(r['fp16']['orig_bytes'])} | {fmt_bytes(r['fp16']['pruned_bytes'])} | "
+            f"| {r['pad_n']} | {r['keep_size']} | {r['padded_keep_size']} | {r['model']} | {r['hidden']} | "
+            f"{fmt_bytes(r['fp16']['orig_bytes'])} | {fmt_bytes(r['fp16']['pruned_bytes'])} | "
             f"{fmt_bytes(r['fp16']['saved_bytes'])} | {fmt_bytes(r['int4']['orig_bytes'])} | "
             f"{fmt_bytes(r['int4']['pruned_bytes'])} | {fmt_bytes(r['int4']['saved_bytes'])} |"
         )
@@ -397,6 +439,8 @@ def main():
         "keep_set": {
             "size": keep_size,
             "padded_size": padded_keep,
+            "size_by_pad": keep_size_by_pad,
+            "padded_size_by_pad": padded_keep_by_pad,
             "byte_token_ids": sorted(byte_ids),
             "added_token_ids": sorted(added_ids),
             "special_token_ids": sorted(special_ids),

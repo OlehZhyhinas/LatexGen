@@ -1,0 +1,828 @@
+[
+  {
+    "id": "mechanics-homework-passage-pdf-clean",
+    "tier": "pdf-paste",
+    "profile": "clean",
+    "knobs": [],
+    "input": "A block is pushed across a frictionless table. Newton's second law tells us that F = ma, so\nthe net force is the mass times the acceleration. The speed comes from v = ds\n, the\ndt\n​\n\nderivative of position with respect to time. Once we know the speed, the kinetic energy of the\nblock is Ek = 12 mv 2 .\n​\n\n​",
+    "reference": "A block is pushed across a frictionless table. Newton's second law tells us that \\( \\mathbf{F} = m\\mathbf{a} \\), so the net force is the mass times the acceleration. The speed comes from \\( v = \\frac{\\mathrm{d}s}{\\mathrm{d}t} \\), the derivative of position with respect to time. Once we know the speed, the kinetic energy of the block is \\( E_\\text{k} = \\frac{1}{2} mv^2 \\).",
+    "spans": [
+      {
+        "start": 81,
+        "end": 87,
+        "latex": "\\mathbf{F} = m\\mathbf{a}",
+        "kind": "pdf"
+      },
+      {
+        "start": 163,
+        "end": 170,
+        "latex": "v = \\frac{\\mathrm{d}s}{\\mathrm{d}t}",
+        "kind": "pdf",
+        "partial": true
+      },
+      {
+        "start": 286,
+        "end": 299,
+        "latex": "E_\\text{k} = \\frac{1}{2} mv^2",
+        "kind": "pdf"
+      }
+    ],
+    "source": "https://en.wikipedia.org/wiki/Newton%27s_laws_of_motion, https://en.wikipedia.org/wiki/Kinetic_energy",
+    "ok": false,
+    "reason": "partial span"
+  },
+  {
+    "id": "euler-formula-passage-pdf-clean",
+    "tier": "pdf-paste",
+    "profile": "clean",
+    "knobs": [],
+    "input": "Euler's formula states that eix = cos x + i sin x for any real number x. If we substitute x\nequals pi, the right-hand side collapses to negative one, and we obtain the celebrated identity\n\n\neiπ + 1 = 0\n which ties together five fundamental constants in a single equation.",
+    "reference": "Euler's formula states that \\( e^{ix} = \\cos x + i\\sin x \\) for any real number x. If we substitute x equals pi, the right-hand side collapses to negative one, and we obtain the celebrated identity \\[ e^{i \\pi} + 1 = 0 \\] which ties together five fundamental constants in a single equation.",
+    "spans": [
+      {
+        "start": 28,
+        "end": 49,
+        "latex": "e^{ix} = \\cos x + i\\sin x",
+        "kind": "pdf"
+      },
+      {
+        "start": 188,
+        "end": 202,
+        "latex": "e^{i \\pi} + 1 = 0",
+        "kind": "pdf"
+      }
+    ],
+    "source": "https://en.wikipedia.org/wiki/Euler%27s_identity",
+    "ok": true,
+    "reason": ""
+  },
+  {
+    "id": "analysis-classics-passage-pdf-clean",
+    "tier": "pdf-paste",
+    "profile": "clean",
+    "knobs": [],
+    "input": "Two classic results come up again and again in analysis. First, the Basel problem: \n∞\n\n1\nπ2\n∑ 2 =\nn\n6\nn=1\n​\n\n​\n\n​\n\n Second, the Gaussian integral: \n\n∫\n\n∞\n\n2\n\n​\n\ne−x dx =\n\nπ\n\n​\n\n−∞\n\n Both answers involve pi even though neither problem mentions a circle.",
+    "reference": "Two classic results come up again and again in analysis. First, the Basel problem: \\[ \\sum_{n=1}^{\\infty}\\frac{1}{n^2} = \\frac{\\pi^2}{6} \\] Second, the Gaussian integral: \\[ \\int_{-\\infty}^\\infty e^{-x^2}\\,dx = \\sqrt{\\pi} \\] Both answers involve pi even though neither problem mentions a circle.",
+    "spans": [
+      {
+        "start": 83,
+        "end": 115,
+        "latex": "\\sum_{n=1}^{\\infty}\\frac{1}{n^2} = \\frac{\\pi^2}{6}",
+        "kind": "pdf"
+      },
+      {
+        "start": 147,
+        "end": 181,
+        "latex": "\\int_{-\\infty}^\\infty e^{-x^2}\\,dx = \\sqrt{\\pi}",
+        "kind": "pdf"
+      }
+    ],
+    "source": "https://en.wikipedia.org/wiki/Basel_problem, https://en.wikipedia.org/wiki/Gaussian_integral",
+    "ok": true,
+    "reason": ""
+  },
+  {
+    "id": "probability-mixture-pdf-clean",
+    "tier": "pdf-paste",
+    "profile": "clean",
+    "knobs": [],
+    "input": "In the 2024 cohort, we estimated posterior odds with P (A∣B) =\n\nP (B∣A)P (A)\n. The same\nP (B)\n​\n\nreport also tracks calibration drift over monthly windows. For normalization we keep \n\nf (x) =\n as the baseline density.\n\n1\nσ 2π\n\n(x−μ)2\n\n​\n\n​\n\ne− 2σ2\n\n​",
+    "reference": "In the 2024 cohort, we estimated posterior odds with \\( P(A\\vert B) = \\frac{P(B \\vert A) P(A)}{P(B)} \\). The same report also tracks calibration drift over monthly windows. For normalization we keep \\[ f(x) = \\frac{1}{\\sigma\\sqrt{2\\pi}} e^{-\\frac{(x-\\mu)^2}{2\\sigma^2}} \\] as the baseline density.",
+    "spans": [
+      {
+        "start": 53,
+        "end": 77,
+        "latex": "P(A\\vert B) = \\frac{P(B \\vert A) P(A)}{P(B)}",
+        "kind": "pdf"
+      },
+      {
+        "start": 182,
+        "end": 192,
+        "latex": "f(x) = \\frac{1}{\\sigma\\sqrt{2\\pi}} e^{-\\frac{(x-\\mu)^2}{2\\sigma^2}}",
+        "kind": "pdf",
+        "partial": true
+      }
+    ],
+    "source": "https://en.wikipedia.org/wiki/Bayes%27_theorem, https://en.wikipedia.org/wiki/Normal_distribution",
+    "ok": false,
+    "reason": "partial span"
+  },
+  {
+    "id": "series-and-limit-pdf-clean",
+    "tier": "pdf-paste",
+    "profile": "clean",
+    "knobs": [],
+    "input": "Two identities appear in the margin notes and are reused in later proofs. First, \n∞\n\na\n∑k=0 ark = 1−r\n. Second, \n​\n\n​\n\n1\ne = lim (1 + )\nn→∞\nn\n​\n\n when the compounding step is refined.\n\n​\n\nn",
+    "reference": "Two identities appear in the margin notes and are reused in later proofs. First, \\( \\sum_{k=0}^{\\infty} ar^k = \\frac{a}{1-r} \\). Second, \\[ e = \\lim_{n \\to \\infty} \\left(1 + \\frac{1}{n}\\right)^n \\] when the compounding step is refined.",
+    "spans": [
+      {
+        "start": 81,
+        "end": 102,
+        "latex": "\\sum_{k=0}^{\\infty} ar^k = \\frac{a}{1-r}",
+        "kind": "pdf"
+      },
+      {
+        "start": 112,
+        "end": 145,
+        "latex": "e = \\lim_{n \\to \\infty} \\left(1 + \\frac{1}{n}\\right)^n",
+        "kind": "pdf"
+      }
+    ],
+    "source": "https://en.wikipedia.org/wiki/E_(mathematical_constant), https://en.wikipedia.org/wiki/Geometric_series",
+    "ok": true,
+    "reason": ""
+  },
+  {
+    "id": "determinant-appendix-pdf-clean",
+    "tier": "pdf-paste",
+    "profile": "clean",
+    "knobs": [],
+    "input": "Appendix B computes a local Jacobian before the nonlinear update. The determinant identity\nis written as \n\ndet (\n\na b\n) = ad − bc\nc d\n​\n\n. This section then compares signs across neighboring cells.",
+    "reference": "Appendix B computes a local Jacobian before the nonlinear update. The determinant identity is written as \\[ \\det\\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix} = ad - bc \\]. This section then compares signs across neighboring cells.",
+    "spans": [
+      {
+        "start": 105,
+        "end": 137,
+        "latex": "\\det\\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix} = ad - bc",
+        "kind": "pdf"
+      }
+    ],
+    "source": "https://en.wikipedia.org/wiki/Determinant",
+    "ok": true,
+    "reason": ""
+  },
+  {
+    "id": "maxwell-note-pdf-clean",
+    "tier": "pdf-paste",
+    "profile": "clean",
+    "knobs": [],
+    "input": "A short electrodynamics note summarizes the field equations in one block. We copy the pair\ndirectly as \n\n∇⋅E=\n\nρ\nε0\n\n​\n\n​\n\n∂E\n∇ × B = μ0 J + μ0 ε 0\n∂t\n​\n\n​\n\n​\n\n​\n\n​\n\n​\n\n. The follow-up sentence comments on boundary conditions in vacuum.",
+    "reference": "A short electrodynamics note summarizes the field equations in one block. We copy the pair directly as \\[ \\begin{aligned} \\nabla \\cdot \\mathbf{E} &= \\frac{\\rho}{\\varepsilon_0} \\\\ \\nabla \\times \\mathbf{B} &= \\mu_0 \\mathbf{J} + \\mu_0 \\varepsilon_0 \\frac{\\partial \\mathbf{E}}{\\partial t} \\end{aligned} \\]. The follow-up sentence comments on boundary conditions in vacuum.",
+    "spans": [
+      {
+        "start": 103,
+        "end": 169,
+        "latex": "\\begin{aligned} \\nabla \\cdot \\mathbf{E} &= \\frac{\\rho}{\\varepsilon_0} \\\\ \\nabla \\times \\mathbf{B} &= \\mu_0 \\mathbf{J} + \\mu_0 \\varepsilon_0 \\frac{\\partial \\mathbf{E}}{\\partial t} \\end{aligned}",
+        "kind": "pdf"
+      }
+    ],
+    "source": "https://en.wikipedia.org/wiki/Maxwell%27s_equations",
+    "ok": true,
+    "reason": ""
+  },
+  {
+    "id": "kinematics-lab-pdf-clean",
+    "tier": "pdf-paste",
+    "profile": "clean",
+    "knobs": [],
+    "input": "On 2026-03-18, the lab sheet used 10 milliliters of dye and a 2 hour run. The velocity\nf (x+h)−f (x)\n\n1\n\nestimate was f ′ (x) = limh→0\n, then energy was computed with Ek = 2 mv 2\nh\n. The prose numbers are part of setup notes, not symbolic inputs.\n​\n\n​\n\n​\n\n​",
+    "reference": "On 2026-03-18, the lab sheet used 10 milliliters of dye and a 2 hour run. The velocity estimate was \\( f'(x) = \\lim_{h \\to 0} \\frac{f(x+h) - f(x)}{h} \\), then energy was computed with \\( E_\\text{k} = \\frac{1}{2} mv^2 \\). The prose numbers are part of setup notes, not symbolic inputs.",
+    "spans": [
+      {
+        "start": 118,
+        "end": 135,
+        "latex": "f'(x) = \\lim_{h \\to 0} \\frac{f(x+h) - f(x)}{h}",
+        "kind": "pdf",
+        "partial": true
+      },
+      {
+        "start": 167,
+        "end": 181,
+        "latex": "E_\\text{k} = \\frac{1}{2} mv^2",
+        "kind": "pdf"
+      }
+    ],
+    "source": "https://en.wikipedia.org/wiki/Derivative, https://en.wikipedia.org/wiki/Kinetic_energy",
+    "ok": false,
+    "reason": "partial span"
+  },
+  {
+    "id": "waves-lecture-pdf-clean",
+    "tier": "pdf-paste",
+    "profile": "clean",
+    "knobs": [],
+    "input": "The lecture transitions from local oscillation to spectral analysis. It first states (cos θ +\n\ni sin θ)n = cos(nθ) + i sin(nθ). The transform convention on the next line is \nf^(ξ) = ∫\n\n∞\n\n​\n\n.\n\n​\n\n−∞\n\nf (x)e−2πixξ dx",
+    "reference": "The lecture transitions from local oscillation to spectral analysis. It first states \\( (\\cos\\theta + i\\sin\\theta)^n = \\cos(n\\theta) + i\\sin(n\\theta) \\). The transform convention on the next line is \\[ \\hat f(\\xi) = \\int_{-\\infty}^{\\infty} f(x) e^{-2\\pi i x \\xi}\\,dx \\].",
+    "spans": [
+      {
+        "start": 85,
+        "end": 126,
+        "latex": "(\\cos\\theta + i\\sin\\theta)^n = \\cos(n\\theta) + i\\sin(n\\theta)",
+        "kind": "pdf"
+      },
+      {
+        "start": 173,
+        "end": 191,
+        "latex": "\\hat f(\\xi) = \\int_{-\\infty}^{\\infty} f(x) e^{-2\\pi i x \\xi}\\,dx",
+        "kind": "pdf",
+        "partial": true
+      }
+    ],
+    "source": "https://en.wikipedia.org/wiki/De_Moivre%27s_formula, https://en.wikipedia.org/wiki/Fourier_transform",
+    "ok": false,
+    "reason": "partial span"
+  },
+  {
+    "id": "calculus-derivatives-pdf-clean",
+    "tier": "pdf-paste",
+    "profile": "clean",
+    "knobs": [],
+    "input": "For the chain of substitutions we repeatedly invoke  dx = du ⋅ du\n and (f g)′ = f ′ g + f g ′\ndx\ndy\n\ndy\n\n​\n\n​\n\n​\n\nf (b)−f (a)\n. At the endpoint check, the slope estimate is f ′ (c) =\n.\nb−a\n​",
+    "reference": "For the chain of substitutions we repeatedly invoke \\( \\frac{dy}{dx} = \\frac{dy}{du}\\cdot\\frac{du}{dx} \\) and \\( (fg)' = f'g + fg' \\). At the endpoint check, the slope estimate is \\( f'(c) = \\frac{f(b)-f(a)}{b-a} \\).",
+    "spans": [
+      {
+        "start": 52,
+        "end": 66,
+        "latex": "\\frac{dy}{dx} = \\frac{dy}{du}\\cdot\\frac{du}{dx}",
+        "kind": "pdf",
+        "partial": true
+      },
+      {
+        "start": 71,
+        "end": 126,
+        "latex": "(fg)' = f'g + fg'",
+        "kind": "pdf"
+      },
+      {
+        "start": 173,
+        "end": 183,
+        "latex": "f'(c) = \\frac{f(b)-f(a)}{b-a}",
+        "kind": "pdf",
+        "partial": true,
+        "interleaved": true
+      }
+    ],
+    "source": "https://en.wikipedia.org/wiki/Chain_rule, https://en.wikipedia.org/wiki/Mean_value_theorem, https://en.wikipedia.org/wiki/Product_rule",
+    "ok": false,
+    "reason": "interleaved order"
+  },
+  {
+    "id": "physics-constants-pdf-clean",
+    "tier": "pdf-paste",
+    "profile": "clean",
+    "knobs": [],
+    "input": "The constants table starts from E = mc2  and compares it with E = hν . A later\nq q\n\nparagraph rewrites field strength as F = ke r1 2 2 .\n​\n\n​\n\n​\n\n​",
+    "reference": "The constants table starts from \\( E = mc^2 \\) and compares it with \\( E = h\\nu \\). A later paragraph rewrites field strength as \\( F = k_e \\frac{q_1 q_2}{r^2} \\).",
+    "spans": [
+      {
+        "start": 32,
+        "end": 40,
+        "latex": "E = mc^2",
+        "kind": "pdf"
+      },
+      {
+        "start": 62,
+        "end": 69,
+        "latex": "E = h\\nu",
+        "kind": "pdf"
+      },
+      {
+        "start": 121,
+        "end": 135,
+        "latex": "F = k_e \\frac{q_1 q_2}{r^2}",
+        "kind": "pdf"
+      }
+    ],
+    "source": "https://en.wikipedia.org/wiki/Coulomb%27s_law, https://en.wikipedia.org/wiki/Mass%E2%80%93energy_equivalence, https://en.wikipedia.org/wiki/Planck%E2%80%93Einstein_relation",
+    "ok": true,
+    "reason": ""
+  },
+  {
+    "id": "thermo-note-pdf-clean",
+    "tier": "pdf-paste",
+    "profile": "clean",
+    "knobs": [],
+    "input": "A compact thermodynamics summary keeps the ideal gas relation explicit: P V = nRT . It\nthen states entropy as S = kB ln Ω before discussing units.\n​",
+    "reference": "A compact thermodynamics summary keeps the ideal gas relation explicit: \\( PV = nRT \\). It then states entropy as \\( S = k_B \\ln \\Omega \\) before discussing units.",
+    "spans": [
+      {
+        "start": 72,
+        "end": 82,
+        "latex": "PV = nRT",
+        "kind": "pdf"
+      },
+      {
+        "start": 110,
+        "end": 121,
+        "latex": "S = k_B \\ln \\Omega",
+        "kind": "pdf"
+      }
+    ],
+    "source": "https://en.wikipedia.org/wiki/Boltzmann%27s_entropy_formula, https://en.wikipedia.org/wiki/Ideal_gas_law",
+    "ok": true,
+    "reason": ""
+  },
+  {
+    "id": "triangle-geometry-pdf-clean",
+    "tier": "pdf-paste",
+    "profile": "clean",
+    "knobs": [],
+    "input": "The geometry section alternates between metric and angle viewpoints. The side relation is \n\nc2 = a2 + b2 − 2ab cos C , while the norm bound is ∣a + b∣ ≤ ∣a∣ + ∣b∣. These are used\nto bound rounding error in a later estimate.",
+    "reference": "The geometry section alternates between metric and angle viewpoints. The side relation is \\( c^2 = a^2 + b^2 - 2ab\\cos C \\), while the norm bound is \\( |a + b| \\le |a| + |b| \\). These are used to bound rounding error in a later estimate.",
+    "spans": [
+      {
+        "start": 90,
+        "end": 117,
+        "latex": "c^2 = a^2 + b^2 - 2ab\\cos C",
+        "kind": "pdf"
+      },
+      {
+        "start": 143,
+        "end": 162,
+        "latex": "|a + b| \\le |a| + |b|",
+        "kind": "pdf"
+      }
+    ],
+    "source": "https://en.wikipedia.org/wiki/Law_of_cosines, https://en.wikipedia.org/wiki/Triangle_inequality",
+    "ok": true,
+    "reason": ""
+  },
+  {
+    "id": "probability-gradient-pdf-clean",
+    "tier": "pdf-paste",
+    "profile": "clean",
+    "knobs": [],
+    "input": "1\nTo compare two classifiers, the notes write the logistic link σ(x) = 1+e\n−x . An uncertainty\n​\n\n2\n∞\ncorrection adds ∫−∞ e−x dx =\n​\n\nπ  in the derivation.\n​",
+    "reference": "To compare two classifiers, the notes write the logistic link \\( \\sigma(x) = \\frac{1}{1+e^{-x}} \\). An uncertainty correction adds \\( \\int_{-\\infty}^{\\infty} e^{-x^2}\\,dx = \\sqrt{\\pi} \\) in the derivation.",
+    "spans": [
+      {
+        "start": 64,
+        "end": 78,
+        "latex": "\\sigma(x) = \\frac{1}{1+e^{-x}}",
+        "kind": "pdf"
+      },
+      {
+        "start": 118,
+        "end": 136,
+        "latex": "\\int_{-\\infty}^{\\infty} e^{-x^2}\\,dx = \\sqrt{\\pi}",
+        "kind": "pdf"
+      }
+    ],
+    "source": "https://en.wikipedia.org/wiki/Gaussian_integral, https://en.wikipedia.org/wiki/Logistic_function",
+    "ok": true,
+    "reason": ""
+  },
+  {
+    "id": "financial-model-pdf-clean",
+    "tier": "pdf-paste",
+    "profile": "clean",
+    "knobs": [],
+    "input": "In the December 2025 worksheet, a nominal rate of 7 percent is compounded monthly. The\nnt\n\nm m\n\ngrowth rule is A = P (1 + nr ) , and the reserve estimate includes F = G r1 2 2  as a toy\nstress term. The date and percentage belong to prose metadata.\n​\n\n​\n\n​\n\n​",
+    "reference": "In the December 2025 worksheet, a nominal rate of 7 percent is compounded monthly. The growth rule is \\( A = P\\left(1 + \\frac{r}{n}\\right)^{nt} \\), and the reserve estimate includes \\( F = G\\frac{m_1 m_2}{r^2} \\) as a toy stress term. The date and percentage belong to prose metadata.",
+    "spans": [
+      {
+        "start": 111,
+        "end": 127,
+        "latex": "A = P\\left(1 + \\frac{r}{n}\\right)^{nt}",
+        "kind": "pdf"
+      },
+      {
+        "start": 163,
+        "end": 176,
+        "latex": "F = G\\frac{m_1 m_2}{r^2}",
+        "kind": "pdf",
+        "partial": true
+      }
+    ],
+    "source": "https://en.wikipedia.org/wiki/Compound_interest, https://en.wikipedia.org/wiki/Newton%27s_law_of_universal_gravitation",
+    "ok": false,
+    "reason": "partial span"
+  },
+  {
+    "id": "mechanics-homework-passage-pdf-dirty",
+    "tier": "pdf-paste",
+    "profile": "dirty",
+    "knobs": [
+      "footnote",
+      "layout_mode",
+      "two_column"
+    ],
+    "input": "A block is pushed across a                        speed comes from v = ds  dt , the\n                                                                                 ​\n\n\n\n\nfrictionless table.¹ Newton's                     derivative of position with\nsecond law tells us that F =                     respect to time. Once we know\nma, so the net force is the mass                 the speed, the kinetic energy of\ntimes the acceleration. The                       the block is Ek = 12 mv 2 .\n                                                                         ​   ​\n\n\n\n\n1. Footnote note: in print/PDF, this line is separated from body flow.",
+    "reference": "A block is pushed across a frictionless table. Newton's second law tells us that \\( \\mathbf{F} = m\\mathbf{a} \\), so the net force is the mass times the acceleration. The speed comes from \\( v = \\frac{\\mathrm{d}s}{\\mathrm{d}t} \\), the derivative of position with respect to time. Once we know the speed, the kinetic energy of the block is \\( E_\\text{k} = \\frac{1}{2} mv^2 \\).",
+    "spans": [
+      {
+        "start": 67,
+        "end": 78,
+        "latex": "\\mathbf{F} = m\\mathbf{a}",
+        "kind": "pdf",
+        "partial": true,
+        "interleaved": true
+      },
+      {
+        "start": 274,
+        "end": 330,
+        "latex": "v = \\frac{\\mathrm{d}s}{\\mathrm{d}t}",
+        "kind": "pdf",
+        "interleaved": true,
+        "partial": true
+      },
+      {
+        "start": 473,
+        "end": 486,
+        "latex": "E_\\text{k} = \\frac{1}{2} mv^2",
+        "kind": "pdf"
+      }
+    ],
+    "source": "https://en.wikipedia.org/wiki/Newton%27s_laws_of_motion, https://en.wikipedia.org/wiki/Kinetic_energy",
+    "ok": false,
+    "reason": "interleaved order"
+  },
+  {
+    "id": "euler-formula-passage-pdf-dirty",
+    "tier": "pdf-paste",
+    "profile": "dirty",
+    "knobs": [
+      "citations",
+      "footnote",
+      "ligatures"
+    ],
+    "input": "Euler's formula states that eix = cos x + i sin x for any real number\nx.¹[12] If we substitute x equals pi, the right-hand side collapses to negative\none, and we obtain the celebrated identity \n\neiπ + 1 = 0\n which ties together five fundamental constants in a single equation.[3, 7]\n\n1. Footnote note: in print/PDF, this line is separated from body flow.",
+    "reference": "Euler's formula states that \\( e^{ix} = \\cos x + i\\sin x \\) for any real number x. If we substitute x equals pi, the right-hand side collapses to negative one, and we obtain the celebrated identity \\[ e^{i \\pi} + 1 = 0 \\] which ties together five fundamental constants in a single equation.",
+    "spans": [
+      {
+        "start": 28,
+        "end": 49,
+        "latex": "e^{ix} = \\cos x + i\\sin x",
+        "kind": "pdf"
+      },
+      {
+        "start": 193,
+        "end": 207,
+        "latex": "e^{i \\pi} + 1 = 0",
+        "kind": "pdf"
+      }
+    ],
+    "source": "https://en.wikipedia.org/wiki/Euler%27s_identity",
+    "ok": true,
+    "reason": ""
+  },
+  {
+    "id": "analysis-classics-passage-pdf-dirty",
+    "tier": "pdf-paste",
+    "profile": "dirty",
+    "knobs": [
+      "citations",
+      "footnote",
+      "running_head"
+    ],
+    "input": "P roceedings N ote - S ample A uthor\n\nTwo classic results come up again and again in analysis.¹[12] First, the Basel\nproblem: \n∞\n\n1\nπ2\n=\nn2\n6\nn=1\n\n∑\n\n​\n\n​\n\n​\n\n1. Footnote note: in print/PDF, this line is separated from body flow.\n\n0\n\n\n Second, the Gaussian integral:\n\nP roceedings N ote - S ample A uthor\n\n∫\n\n∞\n\n2\n\n​\n\ne−x dx =\n\nπ\n\n​\n\n−∞\n\n Both answers involve pi even though neither problem mentions a circle.[3, 7]\n\n1. Footnote note: in print/PDF, this line is separated from body flow.\n\n0\n\n\nP roceedings N ote - S ample A uthor\n\n1. Footnote note: in print/PDF, this line is separated from body flow.\n\n0",
+    "reference": "Two classic results come up again and again in analysis. First, the Basel problem: \\[ \\sum_{n=1}^{\\infty}\\frac{1}{n^2} = \\frac{\\pi^2}{6} \\] Second, the Gaussian integral: \\[ \\int_{-\\infty}^\\infty e^{-x^2}\\,dx = \\sqrt{\\pi} \\] Both answers involve pi even though neither problem mentions a circle.",
+    "spans": [
+      {
+        "start": 126,
+        "end": 235,
+        "latex": "\\sum_{n=1}^{\\infty}\\frac{1}{n^2} = \\frac{\\pi^2}{6}",
+        "kind": "pdf",
+        "prose_like": true,
+        "partial": true
+      },
+      {
+        "start": 267,
+        "end": 338,
+        "latex": "\\int_{-\\infty}^\\infty e^{-x^2}\\,dx = \\sqrt{\\pi}",
+        "kind": "pdf"
+      }
+    ],
+    "source": "https://en.wikipedia.org/wiki/Basel_problem, https://en.wikipedia.org/wiki/Gaussian_integral",
+    "ok": false,
+    "reason": "prose span"
+  },
+  {
+    "id": "probability-mixture-pdf-dirty",
+    "tier": "pdf-paste",
+    "profile": "dirty",
+    "knobs": [
+      "citations",
+      "narrow_justified"
+    ],
+    "input": "In the 2024 cohort, we estimated posterior odds with P (A∣B) =\nP (B∣A)P (A)\n.[12] The same report also tracks calibration drift over monthP (B)\n​\n\nly windows.[3, 7] For normalization we keep \n\nf (x) =\n\n(x−μ)2\n1\ne − 2σ 2\nσ 2π\n​\n\n​\n\n as the baseline density.\n\n​",
+    "reference": "In the 2024 cohort, we estimated posterior odds with \\( P(A\\vert B) = \\frac{P(B \\vert A) P(A)}{P(B)} \\). The same report also tracks calibration drift over monthly windows. For normalization we keep \\[ f(x) = \\frac{1}{\\sigma\\sqrt{2\\pi}} e^{-\\frac{(x-\\mu)^2}{2\\sigma^2}} \\] as the baseline density.",
+    "spans": [
+      {
+        "start": 53,
+        "end": 76,
+        "latex": "P(A\\vert B) = \\frac{P(B \\vert A) P(A)}{P(B)}",
+        "kind": "pdf"
+      },
+      {
+        "start": 191,
+        "end": 231,
+        "latex": "f(x) = \\frac{1}{\\sigma\\sqrt{2\\pi}} e^{-\\frac{(x-\\mu)^2}{2\\sigma^2}}",
+        "kind": "pdf"
+      }
+    ],
+    "source": "https://en.wikipedia.org/wiki/Bayes%27_theorem, https://en.wikipedia.org/wiki/Normal_distribution",
+    "ok": true,
+    "reason": ""
+  },
+  {
+    "id": "series-and-limit-pdf-dirty",
+    "tier": "pdf-paste",
+    "profile": "dirty",
+    "knobs": [
+      "citations",
+      "narrow_justified",
+      "two_column"
+    ],
+    "input": "Two identities appear in the\nmargin notes and are reused in\nlater\nproofs.[12]\nFirst,\n\nk\na\n∑∞\nk=0 ar = 1−r .[3,\n​\n\n​\n\nSecond, \n\n1 n\ne = lim (1 + )\nn→∞\nn\n​\n\n7]\n\n​\n\n when the compounding step is\nrefined.",
+    "reference": "Two identities appear in the margin notes and are reused in later proofs. First, \\( \\sum_{k=0}^{\\infty} ar^k = \\frac{a}{1-r} \\). Second, \\[ e = \\lim_{n \\to \\infty} \\left(1 + \\frac{1}{n}\\right)^n \\] when the compounding step is refined.",
+    "spans": [
+      {
+        "start": 85,
+        "end": 106,
+        "latex": "\\sum_{k=0}^{\\infty} ar^k = \\frac{a}{1-r}",
+        "kind": "pdf"
+      },
+      {
+        "start": 125,
+        "end": 162,
+        "latex": "e = \\lim_{n \\to \\infty} \\left(1 + \\frac{1}{n}\\right)^n",
+        "kind": "pdf"
+      }
+    ],
+    "source": "https://en.wikipedia.org/wiki/E_(mathematical_constant), https://en.wikipedia.org/wiki/Geometric_series",
+    "ok": true,
+    "reason": ""
+  },
+  {
+    "id": "determinant-appendix-pdf-dirty",
+    "tier": "pdf-paste",
+    "profile": "dirty",
+    "knobs": [
+      "citations",
+      "layout_mode",
+      "ligatures"
+    ],
+    "input": "Appendix B computes a local Jacobian before the nonlinear update.[12] The\ndeterminant identity is written as \n\n\n                          det (       ) = ad − bc\n                                  a b\n                                  c d\n                                   ​   ​\n\n\n\n\n.[3, 7] This section then compares signs across neighboring cells.",
+    "reference": "Appendix B computes a local Jacobian before the nonlinear update. The determinant identity is written as \\[ \\det\\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix} = ad - bc \\]. This section then compares signs across neighboring cells.",
+    "spans": [
+      {
+        "start": 109,
+        "end": 283,
+        "latex": "\\det\\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix} = ad - bc",
+        "kind": "pdf"
+      }
+    ],
+    "source": "https://en.wikipedia.org/wiki/Determinant",
+    "ok": true,
+    "reason": ""
+  },
+  {
+    "id": "maxwell-note-pdf-dirty",
+    "tier": "pdf-paste",
+    "profile": "dirty",
+    "knobs": [
+      "running_head",
+      "two_column"
+    ],
+    "input": "P roceedings N ote - S ample A uthor\n\nA short electrodynamics note\nsummarizes the field equations\nin one block. We copy the pair\ndirectly as \n\n∇⋅E=\n\nρ\nε0\n\n. The follow-up sentence\ncomments on boundary\nconditions in vacuum.\n\n​\n\n​\n\n∂E\n∇ × B = μ0 J + μ0 ε 0\n∂t\n​\n\n​\n\n​\n\n​\n\n​\n\n​\n\n0",
+    "reference": "A short electrodynamics note summarizes the field equations in one block. We copy the pair directly as \\[ \\begin{aligned} \\nabla \\cdot \\mathbf{E} &= \\frac{\\rho}{\\varepsilon_0} \\\\ \\nabla \\times \\mathbf{B} &= \\mu_0 \\mathbf{J} + \\mu_0 \\varepsilon_0 \\frac{\\partial \\mathbf{E}}{\\partial t} \\end{aligned} \\]. The follow-up sentence comments on boundary conditions in vacuum.",
+    "spans": [
+      {
+        "start": 141,
+        "end": 155,
+        "latex": "\\begin{aligned} \\nabla \\cdot \\mathbf{E} &= \\frac{\\rho}{\\varepsilon_0} \\\\ \\nabla \\times \\mathbf{B} &= \\mu_0 \\mathbf{J} + \\mu_0 \\varepsilon_0 \\frac{\\partial \\mathbf{E}}{\\partial t} \\end{aligned}",
+        "kind": "pdf",
+        "partial": true
+      }
+    ],
+    "source": "https://en.wikipedia.org/wiki/Maxwell%27s_equations",
+    "ok": false,
+    "reason": "partial span"
+  },
+  {
+    "id": "kinematics-lab-pdf-dirty",
+    "tier": "pdf-paste",
+    "profile": "dirty",
+    "knobs": [
+      "footnote",
+      "ligatures",
+      "running_head",
+      "two_column"
+    ],
+    "input": "Proceedings Note - Sample Author\n\nOn 2026-03-18, the lab sheet used\n10 milliliters of dye and a 2 hour\nrun.¹ The velocity estimate was \n\nthen energy was computed with ⦃\n\nEk = 12 mv 2 . The prose\n​\n\nnumbers are part of setup notes,\nnot symbolic inputs.\n\n(x)\n⦄,\nf (x) = limh→0 f (x+h)−f\nh\n′\n\n​\n\n​\n\n​\n\n1. Footnote note: in print/PDF, this line is separated from body flow.\n\n0",
+    "reference": "On 2026-03-18, the lab sheet used 10 milliliters of dye and a 2 hour run. The velocity estimate was \\( f'(x) = \\lim_{h \\to 0} \\frac{f(x+h) - f(x)}{h} \\), then energy was computed with \\( E_\\text{k} = \\frac{1}{2} mv^2 \\). The prose numbers are part of setup notes, not symbolic inputs.",
+    "spans": [
+      {
+        "start": 135,
+        "end": 183,
+        "latex": "f'(x) = \\lim_{h \\to 0} \\frac{f(x+h) - f(x)}{h}",
+        "kind": "pdf",
+        "interleaved": true,
+        "partial": true
+      }
+    ],
+    "source": "https://en.wikipedia.org/wiki/Derivative, https://en.wikipedia.org/wiki/Kinetic_energy",
+    "ok": false,
+    "reason": "sentinel_count expected=2 left=2 right=2 found=1"
+  },
+  {
+    "id": "waves-lecture-pdf-dirty",
+    "tier": "pdf-paste",
+    "profile": "dirty",
+    "knobs": [
+      "footnote",
+      "ligatures",
+      "running_head",
+      "two_column"
+    ],
+    "input": "Proceedings Note - Sample Author\n\nThe lecture transitions from local\noscillation to spectral analysis.¹ It\n\nconvention on the next line is \n\nf^(ξ) = ∫\n\nfirst states ⦃(cos θ +\n\n∞\n\n​\n\ni sin θ)n = cos(nθ) +\ni sin(nθ). The transform\n\n​\n\n−∞\n\n⦄.\n\n1. Footnote note: in print/PDF, this line is separated from body flow.\n\n0\n\nf (x)e−2πixξ dx\n\n\nProceedings Note - Sample Author\n\n1. Footnote note: in print/PDF, this line is separated from body flow.\n\n0",
+    "reference": "The lecture transitions from local oscillation to spectral analysis. It first states \\( (\\cos\\theta + i\\sin\\theta)^n = \\cos(n\\theta) + i\\sin(n\\theta) \\). The transform convention on the next line is \\[ \\hat f(\\xi) = \\int_{-\\infty}^{\\infty} f(x) e^{-2\\pi i x \\xi}\\,dx \\].",
+    "spans": [
+      {
+        "start": 139,
+        "end": 213,
+        "latex": "(\\cos\\theta + i\\sin\\theta)^n = \\cos(n\\theta) + i\\sin(n\\theta)",
+        "kind": "pdf",
+        "interleaved": true
+      }
+    ],
+    "source": "https://en.wikipedia.org/wiki/De_Moivre%27s_formula, https://en.wikipedia.org/wiki/Fourier_transform",
+    "ok": false,
+    "reason": "sentinel_count expected=2 left=2 right=2 found=1"
+  },
+  {
+    "id": "calculus-derivatives-pdf-dirty",
+    "tier": "pdf-paste",
+    "profile": "dirty",
+    "knobs": [
+      "citations",
+      "footnote",
+      "ligatures",
+      "narrow_justified"
+    ],
+    "input": "dy\n\ndy\n\nFor the chain of substitutions we repeatedly invoke  dx = du ⋅ du\n and \ndx\n​\n\n​\n\n​\n\n(f g)′ = f ′ g + f g ′ .¹[12] At the endpoint check, the slope estimate is \n(a)\nf ′ (c) = f (b)−f\n.[3, 7]\nb−a\n​\n\n1. Footnote note: in print/PDF, this line is separated from body flow.",
+    "reference": "For the chain of substitutions we repeatedly invoke \\( \\frac{dy}{dx} = \\frac{dy}{du}\\cdot\\frac{du}{dx} \\) and \\( (fg)' = f'g + fg' \\). At the endpoint check, the slope estimate is \\( f'(c) = \\frac{f(b)-f(a)}{b-a} \\).",
+    "spans": [
+      {
+        "start": 60,
+        "end": 74,
+        "latex": "\\frac{dy}{dx} = \\frac{dy}{du}\\cdot\\frac{du}{dx}",
+        "kind": "pdf",
+        "partial": true
+      },
+      {
+        "start": 79,
+        "end": 115,
+        "latex": "(fg)' = f'g + fg'",
+        "kind": "pdf"
+      },
+      {
+        "start": 167,
+        "end": 190,
+        "latex": "f'(c) = \\frac{f(b)-f(a)}{b-a}",
+        "kind": "pdf"
+      }
+    ],
+    "source": "https://en.wikipedia.org/wiki/Chain_rule, https://en.wikipedia.org/wiki/Mean_value_theorem, https://en.wikipedia.org/wiki/Product_rule",
+    "ok": false,
+    "reason": "partial span"
+  },
+  {
+    "id": "physics-constants-pdf-dirty",
+    "tier": "pdf-paste",
+    "profile": "dirty",
+    "knobs": [
+      "citations",
+      "layout_mode",
+      "running_head"
+    ],
+    "input": "P roceedings N ote - S ample A uthor\nThe constants table starts from E = mc2  and compares it with E = hν .[12]\n                                                                  q q\nA later paragraph rewrites field strength as F = ke r1 2 2 .[3, 7]\n                                                                   ​\n\n\n\n\n                                                              ​\n\n\n\n\n                                              0",
+    "reference": "The constants table starts from \\( E = mc^2 \\) and compares it with \\( E = h\\nu \\). A later paragraph rewrites field strength as \\( F = k_e \\frac{q_1 q_2}{r^2} \\).",
+    "spans": [
+      {
+        "start": 69,
+        "end": 77,
+        "latex": "E = mc^2",
+        "kind": "pdf"
+      },
+      {
+        "start": 99,
+        "end": 106,
+        "latex": "E = h\\nu",
+        "kind": "pdf"
+      },
+      {
+        "start": 227,
+        "end": 241,
+        "latex": "F = k_e \\frac{q_1 q_2}{r^2}",
+        "kind": "pdf"
+      }
+    ],
+    "source": "https://en.wikipedia.org/wiki/Coulomb%27s_law, https://en.wikipedia.org/wiki/Mass%E2%80%93energy_equivalence, https://en.wikipedia.org/wiki/Planck%E2%80%93Einstein_relation",
+    "ok": true,
+    "reason": ""
+  },
+  {
+    "id": "thermo-note-pdf-dirty",
+    "tier": "pdf-paste",
+    "profile": "dirty",
+    "knobs": [
+      "citations",
+      "layout_mode"
+    ],
+    "input": "A compact thermodynamics summary keeps the ideal gas relation explicit:\nP V = nRT .[12] It then states entropy as S = kB ln Ω before\n                                                    ​\n\n\n\n\ndiscussing units.[3, 7]",
+    "reference": "A compact thermodynamics summary keeps the ideal gas relation explicit: \\( PV = nRT \\). It then states entropy as \\( S = k_B \\ln \\Omega \\) before discussing units.",
+    "spans": [
+      {
+        "start": 72,
+        "end": 82,
+        "latex": "PV = nRT",
+        "kind": "pdf"
+      },
+      {
+        "start": 114,
+        "end": 125,
+        "latex": "S = k_B \\ln \\Omega",
+        "kind": "pdf"
+      }
+    ],
+    "source": "https://en.wikipedia.org/wiki/Boltzmann%27s_entropy_formula, https://en.wikipedia.org/wiki/Ideal_gas_law",
+    "ok": true,
+    "reason": ""
+  },
+  {
+    "id": "triangle-geometry-pdf-dirty",
+    "tier": "pdf-paste",
+    "profile": "dirty",
+    "knobs": [
+      "ligatures",
+      "two_column"
+    ],
+    "input": "The geometry section alternates\nbetween metric and angle\nviewpoints. The side relation is \n\nc2 = a2 + b2 − 2ab cos C ,\n\nwhile the norm bound is ∣a +\n\nb∣ ≤ ∣a∣ + ∣b∣. These are used\nto bound rounding error in a later\nestimate.",
+    "reference": "The geometry section alternates between metric and angle viewpoints. The side relation is \\( c^2 = a^2 + b^2 - 2ab\\cos C \\), while the norm bound is \\( |a + b| \\le |a| + |b| \\). These are used to bound rounding error in a later estimate.",
+    "spans": [
+      {
+        "start": 90,
+        "end": 117,
+        "latex": "c^2 = a^2 + b^2 - 2ab\\cos C",
+        "kind": "pdf"
+      },
+      {
+        "start": 144,
+        "end": 164,
+        "latex": "|a + b| \\le |a| + |b|",
+        "kind": "pdf"
+      }
+    ],
+    "source": "https://en.wikipedia.org/wiki/Law_of_cosines, https://en.wikipedia.org/wiki/Triangle_inequality",
+    "ok": true,
+    "reason": ""
+  },
+  {
+    "id": "probability-gradient-pdf-dirty",
+    "tier": "pdf-paste",
+    "profile": "dirty",
+    "knobs": [
+      "layout_mode",
+      "ligatures",
+      "two_column"
+    ],
+    "input": "To compare two classifiers, the    correction adds \n                                    ∞       2\nnotes write the logistic link ⦃    ∫−∞ e−x dx =\n                                        ​              π  in the\n                                                        ​\n\n\n\n\nσ(x) = 1+e1 −x ⦄. An uncertainty\n               ​\n\n                                   derivation.",
+    "reference": "To compare two classifiers, the notes write the logistic link \\( \\sigma(x) = \\frac{1}{1+e^{-x}} \\). An uncertainty correction adds \\( \\int_{-\\infty}^{\\infty} e^{-x^2}\\,dx = \\sqrt{\\pi} \\) in the derivation.",
+    "spans": [
+      {
+        "start": 51,
+        "end": 203,
+        "latex": "\\sigma(x) = \\frac{1}{1+e^{-x}}",
+        "kind": "pdf",
+        "interleaved": true,
+        "partial": true
+      }
+    ],
+    "source": "https://en.wikipedia.org/wiki/Gaussian_integral, https://en.wikipedia.org/wiki/Logistic_function",
+    "ok": false,
+    "reason": "sentinel_count expected=2 left=2 right=2 found=1"
+  },
+  {
+    "id": "financial-model-pdf-dirty",
+    "tier": "pdf-paste",
+    "profile": "dirty",
+    "knobs": [
+      "footnote",
+      "ligatures",
+      "narrow_justified",
+      "running_head"
+    ],
+    "input": "Proceedings Note - Sample Author\n\nIn the December 2025 worksheet, a nominal rate of 7 percent is compounded\nnt\n\nmonthly.¹ The growth rule is A = P (1 + nr ) , and the reserve estimate in​\n\n1. Footnote note: in print/PDF, this line is separated from body flow.\n\n0\n\n\nm m\n\ncludes F = G r1 2 2  as aProceedings\ntoy stress term.\ndate\nand percentage belong to\nNote -The\nSample\nAuthor\nprose metadata.\n​\n\n​\n\n​\n\n1. Footnote note: in print/PDF, this line is separated from body flow.\n\n0",
+    "reference": "In the December 2025 worksheet, a nominal rate of 7 percent is compounded monthly. The growth rule is \\( A = P\\left(1 + \\frac{r}{n}\\right)^{nt} \\), and the reserve estimate includes \\( F = G\\frac{m_1 m_2}{r^2} \\) as a toy stress term. The date and percentage belong to prose metadata.",
+    "spans": [
+      {
+        "start": 141,
+        "end": 157,
+        "latex": "A = P\\left(1 + \\frac{r}{n}\\right)^{nt}",
+        "kind": "pdf"
+      },
+      {
+        "start": 277,
+        "end": 290,
+        "latex": "F = G\\frac{m_1 m_2}{r^2}",
+        "kind": "pdf",
+        "partial": true
+      }
+    ],
+    "source": "https://en.wikipedia.org/wiki/Compound_interest, https://en.wikipedia.org/wiki/Newton%27s_law_of_universal_gravitation",
+    "ok": false,
+    "reason": "partial span"
+  }
+]

@@ -1,21 +1,19 @@
 #!/usr/bin/env python3
-"""Synthesize prose+math passages with char-level span labels, for Avenue A
-(issue #27): a BIO tagger that marks math spans inside pasted English prose
-so a specialist model converts only the spans. Data synthesis only, no
-training here.
+"""Synthesize prose+math passages with char-level span labels.
 
-Math is pasted in the three forms users actually use, mixed at random:
-  spoken  - "the sum from n equals one to infinity of one over n squared"
-  unicode - "∑ 1/n² = π²/6" (plain-text/unicode, no LaTeX markup)
-  latex   - "$\\frac{a}{b}$" or bare "\\frac{a}{b}"
+Math appears in three supported forms:
+  pdf     - PDF copy/paste artifacts produced from LaTeX passage rendering
+  unicode - plain-text/unicode math
+  latex   - "$...$" or bare LaTeX math
 
-Each example: {"id", "text", "spans": [{"start","end","latex","kind"}], "source"}.
-Also emits a token/tag view (tokens split on whitespace + punctuation
-boundaries, tags B-MATH/I-MATH/O) for training a token classifier directly.
+Each example: {"id", "text", "reference", "spans": [{"start","end","latex","kind"}], "source", "ok"}.
+Also emits a token/tag view (B-MATH/I-MATH/O).
 """
 import argparse, collections, json, random, re, sys
 
-# ~40 Wikipedia-verified classics: (id, latex, spoken, unicode, wiki source).
+import pdf_paste
+
+# ~40 Wikipedia-verified classics: (id, latex, spoken_legacy, unicode, wiki source).
 FORMULAS = [
     ("quadratic-formula", r"x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}",
      "x equals negative b plus or minus the square root of b squared minus four a c, all over two a",
@@ -89,6 +87,14 @@ FORMULAS = [
      "the curl of B equals mu naught J plus mu naught epsilon naught times the partial derivative of E with respect to t",
      "∇×B = μ₀J + μ₀ε₀ ∂E/∂t",
      "https://en.wikipedia.org/wiki/Amp%C3%A8re%27s_circuital_law"),
+    ("determinant-2x2", r"\det\begin{pmatrix} a & b \\ c & d \end{pmatrix} = ad - bc",
+     "the determinant of the two by two matrix a b c d equals a d minus b c",
+     "det([[a,b],[c,d]]) = ad-bc",
+     "https://en.wikipedia.org/wiki/Determinant"),
+    ("maxwell-aligned-pair", r"\begin{aligned} \nabla \cdot \mathbf{E} &= \frac{\rho}{\varepsilon_0} \\ \nabla \times \mathbf{B} &= \mu_0 \mathbf{J} + \mu_0 \varepsilon_0 \frac{\partial \mathbf{E}}{\partial t} \end{aligned}",
+     "the divergence of E equals rho over epsilon naught and the curl of B equals mu naught J plus mu naught epsilon naught partial E partial t",
+     "∇·E = ρ/ε₀; ∇×B = μ₀J + μ₀ε₀ ∂E/∂t",
+     "https://en.wikipedia.org/wiki/Maxwell%27s_equations"),
     ("law-of-cosines", r"c^2 = a^2 + b^2 - 2ab\cos C",
      "c squared equals a squared plus b squared minus two a b cosine C",
      "c² = a² + b² - 2ab·cos C",
@@ -235,25 +241,67 @@ NEGATIVES = [
     "The room number was 214, right next to the lab.",
 ]
 
-KINDS = ("spoken", "unicode", "latex")
+KINDS = ("pdf", "unicode", "latex")
 
 # tokens: runs of unicode word chars, runs of digits, or single other chars
 TOKEN_RE = re.compile(r"\w+|[^\w\s]", re.UNICODE)
+PROSE_RUN_RE = re.compile(r"\b[a-z]{4,}(?: [a-z]{4,}){2,}\b")
 
 
-def render_math(rng, formula):
-    _id, latex, spoken, unicode_, _src = formula
-    kind = rng.choice(KINDS)
-    if kind == "spoken":
-        s = spoken
-    elif kind == "unicode":
-        s = unicode_
+def formula_fields(formula):
+    if len(formula) == 5:
+        fid, latex, _spoken, unicode_, source = formula
     else:
-        s = f"${latex}$" if rng.random() < 0.5 else latex
-    return s, kind, latex
+        fid, latex, unicode_, source = formula
+    return fid, latex, unicode_, source
 
 
-def gen_example(rng, idx):
+def parse_mix(s):
+    out = {k: 0.0 for k in KINDS}
+    parts = [x.strip() for x in s.split(",") if x.strip()]
+    if not parts:
+        raise SystemExit("empty --mix")
+    for part in parts:
+        if "=" not in part:
+            raise SystemExit(f"bad --mix segment: {part}")
+        key, value = part.split("=", 1)
+        key = key.strip()
+        if key not in out:
+            raise SystemExit(f"unknown kind in --mix: {key}")
+        try:
+            out[key] = float(value.strip())
+        except ValueError as exc:
+            raise SystemExit(f"bad weight for {key}: {value}") from exc
+    total = sum(out.values())
+    if total <= 0:
+        raise SystemExit("--mix weights sum to zero")
+    for key in out:
+        out[key] /= total
+    return out
+
+
+def choose_kind(rng, mix):
+    keys = list(mix.keys())
+    weights = [mix[k] for k in keys]
+    return rng.choices(keys, weights=weights, k=1)[0]
+
+
+def render_non_pdf_math(rng, formula, kind):
+    _fid, latex, unicode_, _source = formula_fields(formula)
+    if kind == "unicode":
+        return unicode_, latex
+    if kind == "latex":
+        return (f"${latex}$" if rng.random() < 0.5 else latex), latex
+    raise ValueError(f"unexpected kind: {kind}")
+
+
+def render_pdf_math(rng, latex):
+    if rng.random() < 0.35:
+        return f"\\[ {latex} \\]"
+    return f"\\( {latex} \\)"
+
+
+def gen_example_spec(rng, idx, kind):
     n_parts = rng.randint(1, 3)
     text = ""
     spans = []
@@ -267,18 +315,25 @@ def gen_example(rng, idx):
         else:
             tmpl = rng.choice(TEMPLATES)
             formula = rng.choice(FORMULAS)
-            mathstr, kind, latex = render_math(rng, formula)
+            _fid, latex, _unicode, source = formula_fields(formula)
+            if kind == "pdf":
+                mathstr = render_pdf_math(rng, latex)
+            else:
+                mathstr, latex = render_non_pdf_math(rng, formula, kind)
             prefix, _, suffix = tmpl.partition("{math}")
             sentence = prefix + mathstr + suffix
-            start = len(text) + (1 if text else 0) + len(prefix)
-            end = start + len(mathstr)
-            spans.append({"start": start, "end": end, "latex": latex, "kind": kind})
-            sources.append(formula[4])
+            if kind != "pdf":
+                start = len(text) + (1 if text else 0) + len(prefix)
+                end = start + len(mathstr)
+                spans.append({"start": start, "end": end, "latex": latex, "kind": kind})
+            sources.append(source)
         text = f"{text} {sentence}" if text else sentence
     return {
         "id": f"synth-{idx:05d}",
         "text": text,
-        "spans": spans,
+        "spans": spans if kind != "pdf" else [],
+        "needs_pdf": kind == "pdf",
+        "kind": kind,
         "source": ", ".join(sources) if sources else "synthetic (no math, hard negative)",
     }
 
@@ -300,41 +355,286 @@ def bio_tags(text, spans):
     return [t for t, _, _ in tokens], tags
 
 
-def generate(n, seed):
+def render_expected_output(text, spans):
+    out = []
+    cursor = 0
+    for span in sorted(spans, key=lambda x: x["start"]):
+        start = int(span["start"])
+        end = int(span["end"])
+        out.append(text[cursor:start])
+        out.append(f"\\( {span['latex']} \\)")
+        cursor = end
+    out.append(text[cursor:])
+    return "".join(out)
+
+
+def _run_pdf_batch(batch, profile, layout, seed, knob_rows=None):
+    passages = [x["text"] for x in batch]
+    extracted, stats = pdf_paste.pdf_paste(
+        passages,
+        profile=profile,
+        layout=layout,
+        seed=seed,
+        knob_rows=knob_rows,
+    )
+    out = {}
+    for spec, ex in zip(batch, extracted):
+        out[spec["id"]] = {
+            "id": spec["id"],
+            "text": ex["text"],
+            "reference": spec["text"],
+            "spans": ex["spans"],
+            "kind": "pdf",
+            "profile": profile,
+            "knobs": ex.get("knobs", []),
+            "source": spec["source"],
+            "ok": bool(ex.get("ok", True)),
+            "reason": ex.get("reason", ""),
+        }
+    return out, stats
+
+
+def _seed_for_example(seed, ex_id, salt=0):
+    idx = int(ex_id.split("-")[-1])
+    return ((seed * 1_000_003) + (idx * 9_173) + salt) & 0xFFFFFFFF
+
+
+def _dirty_knobs_for_example(seed, ex_id):
+    rng = random.Random(_seed_for_example(seed, ex_id, salt=73))
+    n = rng.randint(2, 4)
+    return sorted(rng.sample(pdf_paste.DIRTY_KNOBS, k=n))
+
+
+def generate(n, seed, mix, pdf_chunk_size, layout, dirty_frac):
     rng = random.Random(seed)
+    specs = []
+    for i in range(n):
+        specs.append(gen_example_spec(rng, i, choose_kind(rng, mix)))
+
+    finalized = {}
+    bad_pdf = 0
+    bad_pdf_by_profile = collections.Counter()
+    pdf_attempted_by_profile = collections.Counter()
+    dirty_knob_total = collections.Counter()
+    dirty_knob_span_total = collections.Counter()
+    dirty_knob_bad = collections.Counter()
+    dirty_knob_extended = collections.Counter()
+    dirty_knob_partial = collections.Counter()
+
+    for spec in specs:
+        if spec["needs_pdf"]:
+            continue
+        reference = render_expected_output(spec["text"], spec["spans"])
+        finalized[spec["id"]] = {
+            "id": spec["id"],
+            "text": spec["text"],
+            "reference": reference,
+            "spans": spec["spans"],
+            "kind": spec["kind"],
+            "profile": None,
+            "knobs": [],
+            "source": spec["source"],
+            "ok": True,
+            "reason": "",
+        }
+
+    pdf_specs = [s for s in specs if s["needs_pdf"]]
+    clean_specs = []
+    dirty_specs = []
+    for spec in pdf_specs:
+        if rng.random() < dirty_frac:
+            dirty_specs.append(spec)
+        else:
+            clean_specs.append(spec)
+
+    for i in range(0, len(clean_specs), pdf_chunk_size):
+        chunk = clean_specs[i : i + pdf_chunk_size]
+        pdf_attempted_by_profile["clean"] += len(chunk)
+        chunk_seed = _seed_for_example(seed, chunk[0]["id"], salt=101) if chunk else seed + 101
+        batch_out, _stats = _run_pdf_batch(
+            chunk,
+            profile="clean",
+            layout=layout,
+            seed=chunk_seed,
+        )
+        finalized.update(batch_out)
+        bad = sum(1 for ex in batch_out.values() if not ex.get("ok", True))
+        bad_pdf += bad
+        bad_pdf_by_profile["clean"] += bad
+
+    for i in range(0, len(dirty_specs), pdf_chunk_size):
+        chunk = dirty_specs[i : i + pdf_chunk_size]
+        pdf_attempted_by_profile["dirty"] += len(chunk)
+        chunk_knobs = [_dirty_knobs_for_example(seed, spec["id"]) for spec in chunk]
+        chunk_seed = _seed_for_example(seed, chunk[0]["id"], salt=10001) if chunk else seed + 10001
+        batch_out, stats = _run_pdf_batch(
+            chunk,
+            profile="dirty",
+            layout=layout,
+            seed=chunk_seed,
+            knob_rows=chunk_knobs,
+        )
+        finalized.update(batch_out)
+        bad = sum(1 for ex in batch_out.values() if not ex.get("ok", True))
+        bad_pdf += bad
+        bad_pdf_by_profile["dirty"] += bad
+        for knob, row in stats["drop_rate_by_knob"].items():
+            dirty_knob_total[knob] += row["total"]
+            dirty_knob_span_total[knob] += row.get("span_total", 0)
+            dirty_knob_bad[knob] += row["failed"]
+            dirty_knob_extended[knob] += row.get("extended_spans", 0)
+            dirty_knob_partial[knob] += row.get("partial_spans", 0)
+
     examples = []
     for i in range(n):
-        ex = gen_example(rng, i)
+        ex_id = f"synth-{i:05d}"
+        ex = finalized.get(ex_id)
+        if ex is None:
+            continue
         toks, tags = bio_tags(ex["text"], ex["spans"])
         ex["tokens"] = toks
         ex["tags"] = tags
         examples.append(ex)
-    return examples
+    stats = {
+        "pdf_attempted": int(sum(pdf_attempted_by_profile.values())),
+        "pdf_bad": int(bad_pdf),
+        "pdf_attempted_by_profile": dict(pdf_attempted_by_profile),
+        "pdf_bad_by_profile": dict(bad_pdf_by_profile),
+        "dirty_knob_total": dict(dirty_knob_total),
+        "dirty_knob_span_total": dict(dirty_knob_span_total),
+        "dirty_knob_bad": dict(dirty_knob_bad),
+        "dirty_knob_extended": dict(dirty_knob_extended),
+        "dirty_knob_partial": dict(dirty_knob_partial),
+    }
+    return examples, stats
 
 
-def check(examples):
-    kind_counts = collections.Counter()
+def _mark_empty_spans(examples):
+    for ex in examples:
+        text = ex.get("text", "")
+        for sp in ex.get("spans", []):
+            piece = text[sp["start"]:sp["end"]]
+            if piece.replace("\u200b", "").strip():
+                continue
+            ex["ok"] = False
+            ex["reason"] = "empty span"
+            break
+
+
+def check(examples, pdf_stats):
+    span_kind_counts = collections.Counter()
+    example_kind_counts = collections.Counter()
+    example_profile_counts = collections.Counter()
+    bad_reason_counts = collections.Counter()
     math_tokens = 0
     total_tokens = 0
     bad = 0
     for ex in examples:
+        kind = ex.get("kind", "unknown")
+        profile = ex.get("profile") or "-"
+        example_kind_counts[kind] += 1
+        example_profile_counts[(kind, profile)] += 1
         text = ex["text"]
+        token_bounds = {0, len(text)}
+        for _tok, t_start, t_end in tokenize(text):
+            token_bounds.add(t_start)
+            token_bounds.add(t_end)
         spans = sorted(ex["spans"], key=lambda s: s["start"])
         for i, sp in enumerate(spans):
             piece = text[sp["start"]:sp["end"]]
-            if not piece.strip():
+            stripped = piece.replace("\u200b", "").strip()
+            if sp["start"] not in token_bounds or sp["end"] not in token_bounds:
+                print(
+                    f"BAD {ex['id']}: span not on token boundary start={sp['start']} end={sp['end']}",
+                    file=sys.stderr,
+                )
+                bad += 1
+            if not stripped:
+                ex["ok"] = False
+                ex["reason"] = "empty span"
                 print(f"BAD {ex['id']}: empty span slice", file=sys.stderr)
+                bad += 1
+            compact = re.sub(r"\s+", " ", piece.replace("\u200b", " ")).strip()
+            latex = sp.get("latex", "")
+            if compact and PROSE_RUN_RE.search(compact) and "\\text" not in latex:
+                print(
+                    f"BAD {ex['id']}: prose-like span slice without \\text ({compact!r})",
+                    file=sys.stderr,
+                )
                 bad += 1
             if i > 0 and sp["start"] < spans[i - 1]["end"]:
                 print(f"BAD {ex['id']}: overlapping spans", file=sys.stderr)
                 bad += 1
-            kind_counts[sp["kind"]] += 1
+            span_kind_counts[sp["kind"]] += 1
         for tag in ex["tags"]:
             total_tokens += 1
             if tag != "O":
                 math_tokens += 1
+        if not ex.get("ok", True):
+            bad_reason_counts[ex.get("reason") or "unspecified"] += 1
+    ok_false = sum(1 for ex in examples if not ex.get("ok", True))
     print(f"examples: {len(examples)}", file=sys.stderr)
-    print(f"spans by kind: {dict(kind_counts)}", file=sys.stderr)
+    print(f"examples ok=false: {ok_false}", file=sys.stderr)
+    print(f"ok=false by reason: {dict(bad_reason_counts)}", file=sys.stderr)
+    print(f"example counts by kind: {dict(example_kind_counts)}", file=sys.stderr)
+    prof_counts = {f"{k}/{p}": c for (k, p), c in sorted(example_profile_counts.items())}
+    print(f"example counts by kind/profile: {prof_counts}", file=sys.stderr)
+    print(f"spans by kind: {dict(span_kind_counts)}", file=sys.stderr)
+    attempted = pdf_stats["pdf_attempted"]
+    bad_pdf = pdf_stats["pdf_bad"]
+    bad_rate = (bad_pdf / attempted) if attempted else 0.0
+    print(
+        f"pdf ok=false: {bad_pdf}/{attempted} ({bad_rate:.1%})",
+        file=sys.stderr,
+    )
+    by_prof = {}
+    for prof, n in sorted(pdf_stats["pdf_attempted_by_profile"].items()):
+        d = pdf_stats["pdf_bad_by_profile"].get(prof, 0)
+        by_prof[prof] = {
+            "attempted": n,
+            "bad": d,
+            "bad_rate": (d / n) if n else 0.0,
+        }
+    print(f"pdf ok=false by profile: {by_prof}", file=sys.stderr)
+    knob_drop = {}
+    for knob, n in sorted(pdf_stats["dirty_knob_total"].items()):
+        d = pdf_stats["dirty_knob_bad"].get(knob, 0)
+        span_n = pdf_stats["dirty_knob_span_total"].get(knob, 0)
+        ext = pdf_stats["dirty_knob_extended"].get(knob, 0)
+        part = pdf_stats["dirty_knob_partial"].get(knob, 0)
+        knob_drop[knob] = {
+            "total_examples": n,
+            "bad": d,
+            "bad_rate": (d / n) if n else 0.0,
+            "total_spans": span_n,
+            "extended_spans": ext,
+            "extended_rate": (ext / span_n) if span_n else 0.0,
+            "partial_spans": part,
+            "partial_rate": (part / span_n) if span_n else 0.0,
+        }
+    print(f"pdf dirty ok=false by knob: {knob_drop}", file=sys.stderr)
+    ext_partial_by_profile = {}
+    for prof in ("clean", "dirty"):
+        prof_rows = [
+            ex
+            for ex in examples
+            if ex.get("kind") == "pdf" and ex.get("profile") == prof
+        ]
+        total_spans = sum(len(ex.get("spans", [])) for ex in prof_rows)
+        ext_spans = sum(
+            1 for ex in prof_rows for sp in ex.get("spans", []) if sp.get("extended")
+        )
+        part_spans = sum(
+            1 for ex in prof_rows for sp in ex.get("spans", []) if sp.get("partial")
+        )
+        ext_partial_by_profile[prof] = {
+            "total_spans": total_spans,
+            "extended_spans": ext_spans,
+            "extended_rate": (ext_spans / total_spans) if total_spans else 0.0,
+            "partial_spans": part_spans,
+            "partial_rate": (part_spans / total_spans) if total_spans else 0.0,
+        }
+    print(f"pdf extended/partial by profile: {ext_partial_by_profile}", file=sys.stderr)
     frac = math_tokens / total_tokens if total_tokens else 0.0
     print(f"tokens tagged math: {math_tokens}/{total_tokens} ({frac:.1%})", file=sys.stderr)
     print(f"bad spans: {bad}", file=sys.stderr)
@@ -346,17 +646,38 @@ def main():
     ap.add_argument("--n", type=int, default=500)
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--out", default="bench/synth-spans.jsonl")
+    ap.add_argument("--mix", default="pdf=0.5,unicode=0.25,latex=0.25")
+    ap.add_argument("--dirty-frac", type=float, default=0.5)
+    ap.add_argument("--pdf-chunk-size", type=int, default=100)
+    ap.add_argument("--layout", action="store_true")
+    ap.add_argument("--drop-bad", action="store_true", help="omit examples with ok=false from output JSONL")
     ap.add_argument("--check", action="store_true")
     args = ap.parse_args()
+    if not (0.0 <= args.dirty_frac <= 1.0):
+        raise SystemExit("--dirty-frac must be in [0,1]")
 
-    examples = generate(args.n, args.seed)
+    mix = parse_mix(args.mix)
+    examples, pdf_stats = generate(
+        args.n,
+        args.seed,
+        mix=mix,
+        pdf_chunk_size=args.pdf_chunk_size,
+        layout=args.layout,
+        dirty_frac=args.dirty_frac,
+    )
+    _mark_empty_spans(examples)
+    to_write = [ex for ex in examples if ex.get("ok", True)] if args.drop_bad else examples
     with open(args.out, "w") as f:
-        for ex in examples:
+        for ex in to_write:
             f.write(json.dumps(ex, ensure_ascii=False) + "\n")
-    print(f"{len(examples)} examples -> {args.out}", file=sys.stderr)
+    print(f"{len(to_write)} examples -> {args.out}", file=sys.stderr)
+    if args.drop_bad:
+        print(f"dropped ok=false examples: {len(examples) - len(to_write)}", file=sys.stderr)
+    print(f"mix: {mix}", file=sys.stderr)
+    print(f"pdf dirty_frac: {args.dirty_frac}", file=sys.stderr)
 
     if args.check:
-        ok = check(examples)
+        ok = check(examples, pdf_stats=pdf_stats)
         sys.exit(0 if ok else 1)
 
 

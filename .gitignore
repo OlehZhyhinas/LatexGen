@@ -1,6 +1,7 @@
 node_modules/
 .venv/
 .DS_Store
+__pycache__/
 
 # WebGPU int4 variants are build artifacts (see scripts/build-model-variants.sh)
 public/models/*/onnx/*_q4.onnx
