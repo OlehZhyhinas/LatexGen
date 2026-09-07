@@ -16,7 +16,7 @@
 //
 // Every path here is relative to the worker's own URL, so the app works both
 // at a domain root and under a deploy prefix such as /LatexGen/.
-const VERSION = "v8-activity-log";
+const VERSION = "v9-activity-scroll";
 const SHELL_CACHE = `latexgen-shell-${VERSION}`;
 const VENDOR_CACHE = `latexgen-vendor-${VERSION}`;
 const SCOPE = new URL("./", location.href).pathname;
