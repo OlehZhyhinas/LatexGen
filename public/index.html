@@ -69,6 +69,11 @@
       <label class="check"><input type="checkbox" id="llm-enabled" /> <span>On-device language model <span class="hint">handles complex and multi-line input locally · 1.4–6 GB one-time download</span></span></label>
       <label class="check"><input type="checkbox" id="strict-mode" /> <span>Strict mode <span class="hint">slower: a model double-checks the LaTeX says what you typed</span></span></label>
     </div>
+    <div class="settings-group" id="webnn-settings" hidden>
+      <div class="settings-label">WebNN</div>
+      <p class="hint" id="webnn-settings-hint">Chrome flags for Apple’s neural engine are off. Conversions still work, just slower.</p>
+      <button id="webnn-settings-open" class="btn secondary" type="button">How to enable</button>
+    </div>
   </aside>
 
   <aside id="api" class="settings api" hidden>
@@ -225,6 +230,23 @@
         <button class="consent-opt primary" data-consent="full"><strong>Full</strong><span>Adds an on-device language model for complex and multi-line input · 1.4–6 GB depending on your device · downloads in the background</span></button>
       </div>
       <p class="hint">Change this any time in settings (⚙).</p>
+    </div>
+  </div>
+  <div id="webnn-prompt" class="modal-backdrop" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="webnn-title" aria-describedby="webnn-desc">
+      <h2 id="webnn-title">For the best experience, enable WebNN</h2>
+      <p id="webnn-desc">On this Mac, Chrome can run the models on Apple’s neural engine — several times faster than the default path. It stays off until you enable a few flags and relaunch.</p>
+      <ol class="flag-list">
+        <li><strong>WebNN API</strong><code>#web-machine-learning-neural-network</code></li>
+        <li><strong>Experimental WebNN API features</strong><code>#experimental-web-machine-learning-neural-network</code></li>
+        <li><strong>Core ML backend for WebNN</strong><code>#webnn-coreml</code></li>
+      </ol>
+      <p class="hint">Set each to Enabled. Use a regular window, not Incognito — Incognito silently skips the neural engine.</p>
+      <p id="webnn-paste" class="webnn-paste" hidden>Chrome blocks sites from opening that page. Paste this into the address bar:<code id="webnn-flags-url"></code></p>
+      <div class="modal-actions">
+        <button id="webnn-open" class="btn primary" type="button">Open Chrome flags</button>
+        <button id="webnn-dismiss" class="btn secondary" type="button">Not now</button>
+      </div>
     </div>
   </div>
   <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
