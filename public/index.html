@@ -118,6 +118,8 @@
   </aside>
 
   <main class="column">
+    <div class="workspace">
+    <div class="workspace-main">
     <section class="card" id="input-card" data-mode="text">
       <div class="row between">
         <div class="segmented" role="tablist">
@@ -181,6 +183,18 @@
         </div>
       </div>
     </section>
+    </div>
+
+    <aside id="activity" class="card activity" aria-label="Activity log">
+      <div class="activity-head">
+        <strong class="title">Activity</strong>
+        <span class="hint" id="activity-idle">Idle</span>
+      </div>
+      <div id="activity-log" class="activity-log" role="log" aria-live="polite" aria-relevant="additions">
+        <div class="activity-empty">Each conversion lists the steps here — what ran, what it returned, and whether it checked out. The log is kept for this visit and never rewritten.</div>
+      </div>
+    </aside>
+    </div>
 
     <section class="card refine">
       <div id="chat-log"></div>
