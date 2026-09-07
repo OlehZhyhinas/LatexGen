@@ -6,6 +6,16 @@
 
 const DELIM_RE = /\$\$([\s\S]+?)\$\$|\\\[([\s\S]+?)\\\]|\\\(([\s\S]+?)\\\)|\$([^$\n]+?)\$/g;
 
+// Small models sometimes emit JSON-escaped LaTeX (`$\\mathbf{F}$`). KaTeX still
+// parses it, reading `\\` as a line break, so the syntax check cannot catch it.
+// When every command in the output is double-escaped and none is single, the
+// escaping is systematic and safe to undo; mixed output is left alone.
+export function unescapeDoubledBackslashes(latex) {
+  if (!/\\\\[A-Za-z([\]){]/.test(latex)) return latex;
+  if (/(^|[^\\])\\(?!\\)[A-Za-z([\]){]/.test(latex)) return latex;
+  return latex.replace(/\\\\/g, "\\");
+}
+
 export function extractMathSegments(latex) {
   const segments = [];
   let m;

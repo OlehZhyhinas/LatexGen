@@ -8,7 +8,7 @@ services:
       OLLAMA_URL: http://host.docker.internal:11434
       # Tiny model is plenty for text->LaTeX transcription; swap for a bigger
       # installed model (e.g. qwen3.8:27b-q8_0) if quality disappoints.
-      OLLAMA_MODEL: qwen3:1.7b
+      OLLAMA_MODEL: qwen3.5:4b
       # Provider-agnostic API backend (OpenAI-compatible). Local MLX by default; for
       # AWS set OPENAI_BASE_URL=https://openrouter.ai/api/v1 + OPENAI_API_KEY + models.
       OPENAI_BASE_URL: http://host.docker.internal:8080/v1

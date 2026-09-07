@@ -5,7 +5,7 @@ import json, sys, urllib.request, statistics, collections
 
 BENCH_URL = "http://localhost:8013/api/bench"
 OLLAMA = "http://localhost:11434/api/chat"
-MODEL = "qwen3.8:27b-q8_0"
+MODEL = "qwen-local"
 
 JUDGE_PROMPT = """You judge text-to-LaTeX conversions. Given the original spoken-English input, a REFERENCE LaTeX answer, and a CANDIDATE output, decide if the candidate is mathematically equivalent to the reference (notation differences like \\frac vs \\dfrac, delimiter style, spacing, $$ vs \\[, or equivalent orderings are all fine). For multiline passages, the candidate must also keep the prose meaning and convert ALL the math. An empty candidate, or one that drops or mangles part of the math, is wrong.
 Reply with ONLY a JSON object: {"correct": true/false, "reason": "<max 12 words>"}"""
@@ -35,23 +35,43 @@ def judge(inp, ref, cand):
         return False, f"unparseable verdict: {txt[:50]}"
 
 def main():
-    rows = json.load(urllib.request.urlopen(BENCH_URL))
-    items = {i["id"]: i for i in json.load(open("/Users/oleh/personal/latexgen/bench-data.json"))}
+    # Rows come from the dev server's collector by default; `--rows FILE`
+    # judges a saved run instead (bench/run-ollama-text.mjs writes one).
+    args = sys.argv[1:]
+    rows_file = None
+    if "--rows" in args:
+        i = args.index("--rows"); rows_file = args[i + 1]; del args[i:i + 2]
+    here = __import__("os").path.dirname(__import__("os").path.abspath(__file__))
+    data_file = f"{here}/bench-data.json"
+    if "--data" in args:
+        i = args.index("--data"); data_file = args[i + 1]; del args[i:i + 2]
+    rows = json.load(open(rows_file)) if rows_file else json.load(urllib.request.urlopen(BENCH_URL))
+    items = {i["id"]: i for i in json.load(open(data_file))}
     rows = [r for r in rows if r["item"] in items]
     print(f"{len(rows)} rows to judge", file=sys.stderr)
 
     judged = []
+    # Resume: rows that already carry a verdict (from a previous judge pass) are kept as-is.
+    prior = {}
+    out_path = args[0] if args else "judged.json"
+    if __import__("os").path.exists(out_path):
+        for r in json.load(open(out_path)):
+            if "correct" in r: prior[(r["approach"], r["item"])] = r
     for n, r in enumerate(rows):
+        if (r["approach"], r["item"]) in prior:
+            judged.append(prior[(r["approach"], r["item"])]); continue
         it = items[r["item"]]
         ok, why = judge(it["input"], it["reference"], r.get("output", ""))
         judged.append({**r, "correct": ok, "why": why})
         print(f"[{n+1}/{len(rows)}] {r['approach']:28s} {r['item']:22s} {'OK ' if ok else 'BAD'} {why}", file=sys.stderr)
+        if n % 10 == 0:  # partial verdicts are useful while a long pass runs
+            json.dump(judged, open(out_path, "w"), indent=1)
 
-    with open(sys.argv[1] if len(sys.argv) > 1 else "judged.json", "w") as f:
+    with open(out_path, "w") as f:
         json.dump(judged, f, indent=1)
 
     # payoff matrix
-    tiers = ["easy", "medium", "hard", "multiline"]
+    tiers = [t for t in ["easy", "medium", "hard", "multiline", "pdf-paste", "synth-pdf", "synth-unicode", "synth-latex"] if any(r["tier"] == t for r in judged)]
     by = collections.defaultdict(lambda: collections.defaultdict(list))
     for r in judged:
         by[r["approach"]][r["tier"]].append(r)

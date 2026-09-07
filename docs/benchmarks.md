@@ -20,6 +20,29 @@ What the router took from this: the specialist goes first for single equations; 
 
 Reproduce: open `public/bench.html` in a browser with the local server running, then `python3 bench/judge.py`.
 
+## Text, second pass: size-matched candidates against the shipped Qwen3 (2026-09-07)
+
+The first table only had 15 items, all clean spoken math. The second pass adds the inputs people actually paste: 30 PDF pastes of the reference passages (15 clean, 15 with two-column, footnote, ligature and running-head garbling from `pdftotext`) and 60 synthetic prose-with-math passages (PDF-style, Unicode-style and LaTeX-style math; ten are prose only, where the right answer is to change nothing). 105 items, 12 models, one greedy run each with the pipeline's exact prompts and thinking off, through Ollama at 4-bit, judged by Qwen3.8 27B. Each shipped size is compared only with candidates of its own size.
+
+| Class | Model | easy | medium | hard | prose | PDF paste (30) | synth PDF (24) | synth unicode (18) | synth LaTeX (18) | all |
+|---|---|---|---|---|---|---|---|---|---|---|
+| ~1B | Qwen3 0.6B (was shipped) | 4/4 | 2/4 | 0/4 | 0/3 | 0 | 1 | 2 | 2 | 10% |
+| ~1B | **Qwen3.5 0.8B** (ships) | 3/4 | 3/4 | 1/4 | 1/3 | 4 | 6 | 7 | 11 | **34%** |
+| ~1B | MiniCPM5 1B | 3/4 | 4/4 | 0/4 | 1/3 | 4 | 4 | 7 | 8 | 30% |
+| ~1B | Gemma 3 1B | 2/4 | 0/4 | 0/4 | 0/3 | 0 | 0 | 1 | 0 | 3% |
+| ~2B | Qwen3 1.7B (was shipped) | 4/4 | 4/4 | 1/4 | 1/3 | 2 | 0 | 2 | 0 | 13% |
+| ~2B | **Qwen3.5 2B** (ships) | 3/4 | 3/4 | 1/4 | 1/3 | 4 | 4 | 8 | 3 | **26%** |
+| ~2B | MiniCPM5 2B | 4/4 | 1/4 | 1/4 | 3/3 | 6 | 8 | 15 | 17 | 52% |
+| ~2B | Gemma 4 E2B | 2/4 | 2/4 | 3/4 | 1/3 | 9 | 10 | 16 | 18 | 58% |
+| ~4B | Qwen3 4B (was shipped) | 3/4 | 1/4 | 3/4 | 2/3 | 10 | 10 | 15 | 18 | 59% |
+| ~4B | **Qwen3.5 4B** (ships) | 2/4 | 2/4 | 4/4 | 2/3 | 15 | 9 | 15 | 18 | **64%** |
+| ~4B | Gemma 4 E4B | 4/4 | 4/4 | 4/4 | 2/3 | 13 | 9 | 16 | 18 | 67% |
+| ~4B | Gemma 3 4B | 3/4 | 3/4 | 3/4 | 2/3 | 3 | 3 | 3 | 3 | 22% |
+
+What changed because of this: the browser ladder is now Qwen3.5 0.8B / MiniCPM5 2B / Qwen3.5 4B / Qwen3.5 9B and the server's default Ollama model is `qwen3.5:4b`. Qwen3.5 gives up a few easy single equations, which the IntelliTeX specialist answers before the LLM is asked, and gains on hard equations, prose and PDF pastes. MiniCPM5 2B had no WebLLM build, so it was quantized to q4f16_1 and compiled for WebGPU here and published at [ozhyhinas/MiniCPM5-2B-q4f16_1-MLC](https://huggingface.co/ozhyhinas/MiniCPM5-2B-q4f16_1-MLC) (build notes in that repo's card). Gemma 4 E2B scores higher still but is 5.1B raw parameters, about 3 GB at 4-bit, and needs a new MLC model type; at that size Qwen3.5 4B is the better pick. Gemma 3 4B wraps whole prose sentences in math mode, so its public instruction-following score does not carry over. Ollama's `qwen3:4b` tag resolves to the 262K-context 2507 Thinking build, not the shipped model; the Qwen3 4B row uses the original weights from the official Qwen GGUF with the `qwen3:1.7b` tag's template (`ollama create qwen3-4b-orig`).
+
+Reproduce: `node bench/run-ollama-text.mjs --data bench/bench-data-extended.json --models <ollama tags> --out bench/results-x.json`, then `python3 bench/judge.py --rows bench/results-x.json --data bench/bench-data-extended.json bench/judged-x.json` and `python3 bench/summarize-text-tiers.py bench/judged-x.json`. Raw rows and verdicts for this run: `bench/results-text-tiers-2026-09-07.json`, `bench/judged-text-tiers-2026-09-07.json`.
+
 ## Images: which OCR model reads rendered math
 
 18 rendered images (KaTeX via headless Chrome) across easy, medium, hard, mixed prose and degraded (tiny font, dark background).

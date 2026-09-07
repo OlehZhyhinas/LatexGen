@@ -5,7 +5,7 @@
 Requires Docker. Optional: [Ollama](https://ollama.com) and/or an OpenAI-compatible local server for the server-model tier.
 
 ```bash
-ollama pull qwen3:1.7b     # fast tier
+ollama pull qwen3.5:4b     # fast tier (64% on the 2026-09-07 tier bench vs 13% for qwen3:1.7b)
 ollama pull qwen3:8b       # strong tier: refinements, prose, strict-mode judge
 docker compose up --build  # http://localhost:8013
 scripts/run-mlx.sh         # optional: MLX fast tier on Apple Silicon

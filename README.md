@@ -77,7 +77,7 @@ The full ladder, the validation and repair rules, and the runtime choices are in
 
 - [IntelliTeX](https://huggingface.co/duanxianpi/IntelliTex), the text specialist, trained on [MathBridge](https://huggingface.co/datasets/Kyudan/MathBridge)
 - [Texo / FormulaNet](https://github.com/alephpi/Texo) and [Texify](https://github.com/VikParuchuri/texify) (via [Xenova/texify](https://huggingface.co/Xenova/texify)) for images
-- Qwen3 models through [WebLLM](https://github.com/mlc-ai/web-llm); [transformers.js](https://github.com/huggingface/transformers.js) and ONNX Runtime Web; [KaTeX](https://katex.org); [MathLive](https://cortexjs.io/mathlive/)
+- Qwen3.5 and [MiniCPM5](https://huggingface.co/openbmb/MiniCPM5-2B) models through [WebLLM](https://github.com/mlc-ai/web-llm); [transformers.js](https://github.com/huggingface/transformers.js) and ONNX Runtime Web; [KaTeX](https://katex.org); [MathLive](https://cortexjs.io/mathlive/)
 
 ## Status
 
