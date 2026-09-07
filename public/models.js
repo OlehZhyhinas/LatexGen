@@ -77,4 +77,7 @@ export function loadModel(key, onProgress) {
   return loaders[key];
 }
 export function onProgress(key, fn) { if (!progressListeners.has(key)) progressListeners.set(key, new Set()); progressListeners.get(key).add(fn); return () => progressListeners.get(key)?.delete(fn); }
-export const runModel = async (key, input) => (await call({ type: "run", key, input })).output;
+export const runModel = async (key, input) => {
+  const data = await call({ type: "run", key, input });
+  return { output: data.output, ms: data.ms, tokens: data.tokens };
+};

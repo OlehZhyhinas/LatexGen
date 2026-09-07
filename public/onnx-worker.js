@@ -27,6 +27,14 @@ env.backends.onnx.wasm.numThreads = 1; // multi-threaded ORT hung on load in tes
 
 const SPECIALIST_PREFIX = "Convert natural-language math into a STRICT LaTeX equation\n";
 const models = {};      // key -> async run(input) => string
+const lastRunOf = {};   // key -> () => { tokens, ms } from the last inference
+function tokenCount(pipe, text) {
+  try {
+    const ids = pipe.tokenizer?.(text, { add_special_tokens: false })?.input_ids;
+    const n = Number(ids?.data?.length ?? ids?.length ?? 0);
+    return n > 0 ? { tokens: { length: n } } : null;
+  } catch { return null; }
+}
 const loading = {};     // key -> promise
 const queues = {};      // key -> promise chain (serialize runs per model)
 
@@ -81,10 +89,15 @@ async function load(key, cfg, reqId) {
       onProgress: (p) => self.postMessage({ type: "progress", key, file: p.file, loaded: p.loaded, total: p.total }),
     });
     models.intellitex = (text) => specialist.run(text);
+    lastRunOf.intellitex = () => specialist.lastRun();
   } else if (key === "intellitex") {
     const p = await pipeline("text2text-generation", "intellitex", { ...cfg, progress_callback });
     await p(`${SPECIALIST_PREFIX}x squared`, { max_new_tokens: 16 }); // warm-up (shader compile etc.)
-    models.intellitex = async (text) => (await p(SPECIALIST_PREFIX + text, { max_new_tokens: 256 }))[0]?.generated_text?.trim() ?? "";
+    models.intellitex = async (text) => {
+      const out = (await p(SPECIALIST_PREFIX + text, { max_new_tokens: 256 }))[0]?.generated_text?.trim() ?? "";
+      lastRunOf.intellitex = () => tokenCount(p, out);
+      return out;
+    };
   } else if (key === "texify" && cfg?.device === "webnn") {
     // Hand-built WebNN graphs from the graph catalog (texify-webnn.js): ~146 ms
     // per image on Core ML against 0.81 s through ONNX Runtime WebGPU int4,
@@ -96,9 +109,14 @@ async function load(key, cfg, reqId) {
       onProgress: (p) => self.postMessage({ type: "progress", key, file: p.file, loaded: p.loaded, total: p.total }),
     });
     models.texify = (blob) => texify.run(blob);
+    lastRunOf.texify = () => texify.lastRun();
   } else if (key === "texify") {
     const p = await pipeline("image-to-text", "texify", { ...cfg, progress_callback });
-    models.texify = async (blob) => (await p(blob, { max_new_tokens: 384 }))[0]?.generated_text?.trim() ?? "";
+    models.texify = async (blob) => {
+      const out = (await p(blob, { max_new_tokens: 384 }))[0]?.generated_text?.trim() ?? "";
+      lastRunOf.texify = () => tokenCount(p, out);
+      return out;
+    };
   } else if (key === "texo" && cfg?.device === "webnn") {
     // Hand-built WebNN graphs from the graph catalog (texo-webnn.js): 23 ms per
     // image on Core ML against 0.77 s through ONNX Runtime, identical tokens.
@@ -109,6 +127,7 @@ async function load(key, cfg, reqId) {
       onProgress: (p) => self.postMessage({ type: "progress", key, file: p.file, loaded: p.loaded, total: p.total }),
     });
     models.texo = async (blob) => texo.run(await texoPreprocess(blob));
+    lastRunOf.texo = () => texo.lastRun();
   } else if (key === "texo") {
     const model = await VisionEncoderDecoderModel.from_pretrained("texo", { dtype: "fp32", progress_callback });
     const tokenizer = await PreTrainedTokenizer.from_pretrained("texo");
@@ -116,6 +135,8 @@ async function load(key, cfg, reqId) {
       const arr = await texoPreprocess(blob);
       const t = new Tensor("float32", arr, [1, 1, TEXO_SIZE, TEXO_SIZE]);
       const outputs = await model.generate({ inputs: cat([t, t, t], 1), max_new_tokens: 512 });
+      const n = Number(outputs.dims?.[outputs.dims.length - 1]);
+      lastRunOf.texo = () => (n > 0 ? { tokens: { length: n } } : null);
       return tokenizer.batch_decode(outputs, { skip_special_tokens: true })[0].trim();
     };
   } else throw new Error(`unknown model ${key}`);
@@ -130,12 +151,22 @@ self.onmessage = async ({ data }) => {
       self.postMessage({ type: "loaded", id, key });
     } else if (type === "run") {
       if (!models[key]) throw new Error(`${key} not loaded`);
-      // serialize per model
+      // serialize per model; time only this inference, not time spent queued
       const prev = queues[key] ?? Promise.resolve();
-      const run = prev.catch(() => {}).then(() => models[key](data.input));
+      const run = prev.catch(() => {}).then(async () => {
+        const t0 = performance.now();
+        const output = await models[key](data.input);
+        const last = lastRunOf[key]?.();
+        const tokens = last?.tokens?.length;
+        return {
+          output,
+          ms: last?.ms != null ? Number(last.ms) : performance.now() - t0,
+          tokens: Number.isFinite(tokens) ? tokens : null,
+        };
+      });
       queues[key] = run;
-      const output = await run;
-      self.postMessage({ type: "result", id, key, output });
+      const result = await run;
+      self.postMessage({ type: "result", id, key, ...result });
     }
   } catch (err) {
     if (type === "load") delete loading[key];
