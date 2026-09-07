@@ -1,0 +1,1294 @@
+[
+ {
+  "id": "quadratic-formula",
+  "tier": "easy",
+  "input": "x equals negative b plus or minus the square root of b squared minus four a c, all over two a",
+  "reference": "x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}",
+  "source": "https://en.wikipedia.org/wiki/Quadratic_formula"
+ },
+ {
+  "id": "eulers-identity",
+  "tier": "easy",
+  "input": "e to the power of i pi, plus one, equals zero",
+  "reference": "e^{i \\pi} + 1 = 0",
+  "source": "https://en.wikipedia.org/wiki/Euler%27s_identity"
+ },
+ {
+  "id": "pythagorean-theorem",
+  "tier": "easy",
+  "input": "a squared plus b squared equals c squared",
+  "reference": "a^2 + b^2 = c^2",
+  "source": "https://en.wikipedia.org/wiki/Pythagorean_theorem"
+ },
+ {
+  "id": "circle-area",
+  "tier": "easy",
+  "input": "the area A equals pi times r to the power of 2",
+  "reference": "A = \\pi r^2",
+  "source": "https://en.wikipedia.org/wiki/Area_of_a_circle"
+ },
+ {
+  "id": "gaussian-integral",
+  "tier": "medium",
+  "input": "the integral from minus infinity to infinity of e to the minus x squared dx equals the square root of pi",
+  "reference": "\\int_{-\\infty}^\\infty e^{-x^2}\\,dx = \\sqrt{\\pi}",
+  "source": "https://en.wikipedia.org/wiki/Gaussian_integral"
+ },
+ {
+  "id": "basel-problem",
+  "tier": "medium",
+  "input": "the sum from n equals one to infinity of one over n squared equals pi squared over six",
+  "reference": "\\sum_{n=1}^{\\infty}\\frac{1}{n^2} = \\frac{\\pi^2}{6}",
+  "source": "https://en.wikipedia.org/wiki/Basel_problem"
+ },
+ {
+  "id": "binomial-theorem",
+  "tier": "medium",
+  "input": "the quantity x plus y, raised to the n, equals the sum from k equals zero to n of n choose k, times x to the power of n minus k, times y to the k",
+  "reference": "(x+y)^n = \\sum_{k=0}^n {\\binom{n}{k}}x^{n-k}y^k",
+  "source": "https://en.wikipedia.org/wiki/Binomial_theorem"
+ },
+ {
+  "id": "bayes-theorem",
+  "tier": "medium",
+  "input": "the probability of A given B equals the probability of B given A times the probability of A, all divided by the probability of B",
+  "reference": "P(A\\vert B) = \\frac{P(B \\vert A) P(A)}{P(B)}",
+  "source": "https://en.wikipedia.org/wiki/Bayes%27_theorem"
+ },
+ {
+  "id": "schrodinger-time-dependent",
+  "tier": "hard",
+  "input": "i times h-bar times the derivative with respect to t of ket Psi of t, equals the Hamiltonian operator H hat applied to ket Psi of t",
+  "reference": "i \\hbar \\frac{d}{d t}\\vert\\Psi(t)\\rangle = \\hat H\\vert\\Psi(t)\\rangle",
+  "source": "https://en.wikipedia.org/wiki/Schr%C3%B6dinger_equation"
+ },
+ {
+  "id": "cauchy-integral-formula",
+  "tier": "hard",
+  "input": "f of a equals one over two pi i, times the closed contour integral over gamma of f of z divided by z minus a, d z",
+  "reference": "f(a) = \\frac{1}{2\\pi i} \\oint_\\gamma \\frac{f(z)}{z-a}\\,dz",
+  "source": "https://en.wikipedia.org/wiki/Cauchy%27s_integral_formula"
+ },
+ {
+  "id": "riemann-zeta-functional-equation",
+  "tier": "hard",
+  "input": "zeta of s equals two to the power of s, times pi to the power of s minus one, times sine of pi s over two, times the gamma function of one minus s, times zeta of one minus s",
+  "reference": "\\zeta(s) = 2^s \\pi^{s-1}\\ \\sin\\left( \\frac{\\pi s}{2} \\right)\\ \\Gamma(1-s)\\ \\zeta(1-s)",
+  "source": "https://en.wikipedia.org/wiki/Riemann_zeta_function"
+ },
+ {
+  "id": "einstein-field-equations",
+  "tier": "hard",
+  "input": "G mu nu plus capital lambda times g mu nu equals kappa times T mu nu",
+  "reference": "G_{\\mu \\nu} + \\Lambda g_{\\mu \\nu} = \\kappa T_{\\mu \\nu}",
+  "source": "https://en.wikipedia.org/wiki/Einstein_field_equations"
+ },
+ {
+  "id": "mechanics-homework-passage",
+  "tier": "multiline",
+  "input": "A block is pushed across a frictionless table. Newton's second law tells us that the vector F equals m times the vector a, so the net force is the mass times the acceleration. The speed comes from v equals d s by d t, the derivative of position with respect to time. Once we know the speed, the kinetic energy of the block is E sub k equals one half m v squared.",
+  "reference": "A block is pushed across a frictionless table. Newton's second law tells us that \\( \\mathbf{F} = m\\mathbf{a} \\), so the net force is the mass times the acceleration. The speed comes from \\( v = \\frac{\\mathrm{d}s}{\\mathrm{d}t} \\), the derivative of position with respect to time. Once we know the speed, the kinetic energy of the block is \\( E_\\text{k} = \\frac{1}{2} mv^2 \\).",
+  "source": "https://en.wikipedia.org/wiki/Newton%27s_laws_of_motion, https://en.wikipedia.org/wiki/Kinetic_energy"
+ },
+ {
+  "id": "euler-formula-passage",
+  "tier": "multiline",
+  "input": "Euler's formula states that e to the i x equals cosine of x plus i times sine of x for any real number x. If we substitute x equals pi, the right-hand side collapses to negative one, and we obtain the celebrated identity e to the i pi plus one equals zero, which ties together five fundamental constants in a single equation.",
+  "reference": "Euler's formula states that \\( e^{ix} = \\cos x + i\\sin x \\) for any real number x. If we substitute x equals pi, the right-hand side collapses to negative one, and we obtain the celebrated identity \\[ e^{i \\pi} + 1 = 0 \\] which ties together five fundamental constants in a single equation.",
+  "source": "https://en.wikipedia.org/wiki/Euler%27s_identity"
+ },
+ {
+  "id": "analysis-classics-passage",
+  "tier": "multiline",
+  "input": "Two classic results come up again and again in analysis. First, the Basel problem: the sum from n equals one to infinity of one over n squared equals pi squared over six. Second, the Gaussian integral: the integral from minus infinity to infinity of e to the minus x squared d x equals the square root of pi. Both answers involve pi even though neither problem mentions a circle.",
+  "reference": "Two classic results come up again and again in analysis. First, the Basel problem: \\[ \\sum_{n=1}^{\\infty}\\frac{1}{n^2} = \\frac{\\pi^2}{6} \\] Second, the Gaussian integral: \\[ \\int_{-\\infty}^\\infty e^{-x^2}\\,dx = \\sqrt{\\pi} \\] Both answers involve pi even though neither problem mentions a circle.",
+  "source": "https://en.wikipedia.org/wiki/Basel_problem, https://en.wikipedia.org/wiki/Gaussian_integral"
+ },
+ {
+  "id": "mechanics-homework-passage-pdf-clean",
+  "tier": "pdf-paste",
+  "input": "A block is pushed across a frictionless table. Newton's second law tells us that F = ma, so\nthe net force is the mass times the acceleration. The speed comes from v = ds\n, the\ndt\n​\n\nderivative of position with respect to time. Once we know the speed, the kinetic energy of the\nblock is Ek = 12 mv 2 .\n​\n\n​",
+  "reference": "A block is pushed across a frictionless table. Newton's second law tells us that \\( \\mathbf{F} = m\\mathbf{a} \\), so the net force is the mass times the acceleration. The speed comes from \\( v = \\frac{\\mathrm{d}s}{\\mathrm{d}t} \\), the derivative of position with respect to time. Once we know the speed, the kinetic energy of the block is \\( E_\\text{k} = \\frac{1}{2} mv^2 \\).",
+  "source": "https://en.wikipedia.org/wiki/Newton%27s_laws_of_motion, https://en.wikipedia.org/wiki/Kinetic_energy",
+  "profile": "clean",
+  "knobs": [],
+  "spans": 3,
+  "ok": true,
+  "origin": "text-gates/pdf-pastes.json"
+ },
+ {
+  "id": "euler-formula-passage-pdf-clean",
+  "tier": "pdf-paste",
+  "input": "Euler's formula states that eix = cos x + i sin x for any real number x. If we substitute x\nequals pi, the right-hand side collapses to negative one, and we obtain the celebrated identity\n\n\neiπ + 1 = 0\n which ties together five fundamental constants in a single equation.",
+  "reference": "Euler's formula states that \\( e^{ix} = \\cos x + i\\sin x \\) for any real number x. If we substitute x equals pi, the right-hand side collapses to negative one, and we obtain the celebrated identity \\[ e^{i \\pi} + 1 = 0 \\] which ties together five fundamental constants in a single equation.",
+  "source": "https://en.wikipedia.org/wiki/Euler%27s_identity",
+  "profile": "clean",
+  "knobs": [],
+  "spans": 2,
+  "ok": true,
+  "origin": "text-gates/pdf-pastes.json"
+ },
+ {
+  "id": "analysis-classics-passage-pdf-clean",
+  "tier": "pdf-paste",
+  "input": "Two classic results come up again and again in analysis. First, the Basel problem: \n∞\n\n1\nπ2\n∑ 2 =\nn\n6\nn=1\n​\n\n​\n\n​\n\n Second, the Gaussian integral: \n\n∫\n\n∞\n\n2\n\n​\n\ne−x dx =\n\nπ\n\n​\n\n−∞\n\n Both answers involve pi even though neither problem mentions a circle.",
+  "reference": "Two classic results come up again and again in analysis. First, the Basel problem: \\[ \\sum_{n=1}^{\\infty}\\frac{1}{n^2} = \\frac{\\pi^2}{6} \\] Second, the Gaussian integral: \\[ \\int_{-\\infty}^\\infty e^{-x^2}\\,dx = \\sqrt{\\pi} \\] Both answers involve pi even though neither problem mentions a circle.",
+  "source": "https://en.wikipedia.org/wiki/Basel_problem, https://en.wikipedia.org/wiki/Gaussian_integral",
+  "profile": "clean",
+  "knobs": [],
+  "spans": 2,
+  "ok": true,
+  "origin": "text-gates/pdf-pastes.json"
+ },
+ {
+  "id": "probability-mixture-pdf-clean",
+  "tier": "pdf-paste",
+  "input": "In the 2024 cohort, we estimated posterior odds with P (A∣B) =\n\nP (B∣A)P (A)\n. The same\nP (B)\n​\n\nreport also tracks calibration drift over monthly windows. For normalization we keep \n\nf (x) =\n as the baseline density.\n\n1\nσ 2π\n\n(x−μ)2\n\n​\n\n​\n\ne− 2σ2\n\n​",
+  "reference": "In the 2024 cohort, we estimated posterior odds with \\( P(A\\vert B) = \\frac{P(B \\vert A) P(A)}{P(B)} \\). The same report also tracks calibration drift over monthly windows. For normalization we keep \\[ f(x) = \\frac{1}{\\sigma\\sqrt{2\\pi}} e^{-\\frac{(x-\\mu)^2}{2\\sigma^2}} \\] as the baseline density.",
+  "source": "https://en.wikipedia.org/wiki/Bayes%27_theorem, https://en.wikipedia.org/wiki/Normal_distribution",
+  "profile": "clean",
+  "knobs": [],
+  "spans": 2,
+  "ok": false,
+  "origin": "text-gates/pdf-pastes.json"
+ },
+ {
+  "id": "series-and-limit-pdf-clean",
+  "tier": "pdf-paste",
+  "input": "Two identities appear in the margin notes and are reused in later proofs. First, \n∞\n\na\n∑k=0 ark = 1−r\n. Second, \n​\n\n​\n\n1\ne = lim (1 + )\nn→∞\nn\n​\n\n when the compounding step is refined.\n\n​\n\nn",
+  "reference": "Two identities appear in the margin notes and are reused in later proofs. First, \\( \\sum_{k=0}^{\\infty} ar^k = \\frac{a}{1-r} \\). Second, \\[ e = \\lim_{n \\to \\infty} \\left(1 + \\frac{1}{n}\\right)^n \\] when the compounding step is refined.",
+  "source": "https://en.wikipedia.org/wiki/E_(mathematical_constant), https://en.wikipedia.org/wiki/Geometric_series",
+  "profile": "clean",
+  "knobs": [],
+  "spans": 2,
+  "ok": true,
+  "origin": "text-gates/pdf-pastes.json"
+ },
+ {
+  "id": "determinant-appendix-pdf-clean",
+  "tier": "pdf-paste",
+  "input": "Appendix B computes a local Jacobian before the nonlinear update. The determinant identity\nis written as \n\ndet (\n\na b\n) = ad − bc\nc d\n​\n\n. This section then compares signs across neighboring cells.",
+  "reference": "Appendix B computes a local Jacobian before the nonlinear update. The determinant identity is written as \\[ \\det\\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix} = ad - bc \\]. This section then compares signs across neighboring cells.",
+  "source": "https://en.wikipedia.org/wiki/Determinant",
+  "profile": "clean",
+  "knobs": [],
+  "spans": 1,
+  "ok": true,
+  "origin": "text-gates/pdf-pastes.json"
+ },
+ {
+  "id": "maxwell-note-pdf-clean",
+  "tier": "pdf-paste",
+  "input": "A short electrodynamics note summarizes the field equations in one block. We copy the pair\ndirectly as \n\n∇⋅E=\n\nρ\nε0\n\n​\n\n​\n\n∂E\n∇ × B = μ0 J + μ0 ε 0\n∂t\n​\n\n​\n\n​\n\n​\n\n​\n\n​\n\n. The follow-up sentence comments on boundary conditions in vacuum.",
+  "reference": "A short electrodynamics note summarizes the field equations in one block. We copy the pair directly as \\[ \\begin{aligned} \\nabla \\cdot \\mathbf{E} &= \\frac{\\rho}{\\varepsilon_0} \\\\ \\nabla \\times \\mathbf{B} &= \\mu_0 \\mathbf{J} + \\mu_0 \\varepsilon_0 \\frac{\\partial \\mathbf{E}}{\\partial t} \\end{aligned} \\]. The follow-up sentence comments on boundary conditions in vacuum.",
+  "source": "https://en.wikipedia.org/wiki/Maxwell%27s_equations",
+  "profile": "clean",
+  "knobs": [],
+  "spans": 1,
+  "ok": true,
+  "origin": "text-gates/pdf-pastes.json"
+ },
+ {
+  "id": "kinematics-lab-pdf-clean",
+  "tier": "pdf-paste",
+  "input": "On 2026-03-18, the lab sheet used 10 milliliters of dye and a 2 hour run. The velocity\nf (x+h)−f (x)\n\n1\n\nestimate was f ′ (x) = limh→0\n, then energy was computed with Ek = 2 mv 2\nh\n. The prose numbers are part of setup notes, not symbolic inputs.\n​\n\n​\n\n​\n\n​",
+  "reference": "On 2026-03-18, the lab sheet used 10 milliliters of dye and a 2 hour run. The velocity estimate was \\( f'(x) = \\lim_{h \\to 0} \\frac{f(x+h) - f(x)}{h} \\), then energy was computed with \\( E_\\text{k} = \\frac{1}{2} mv^2 \\). The prose numbers are part of setup notes, not symbolic inputs.",
+  "source": "https://en.wikipedia.org/wiki/Derivative, https://en.wikipedia.org/wiki/Kinetic_energy",
+  "profile": "clean",
+  "knobs": [],
+  "spans": 2,
+  "ok": false,
+  "origin": "text-gates/pdf-pastes.json"
+ },
+ {
+  "id": "waves-lecture-pdf-clean",
+  "tier": "pdf-paste",
+  "input": "The lecture transitions from local oscillation to spectral analysis. It first states (cos θ +\n\ni sin θ)n = cos(nθ) + i sin(nθ). The transform convention on the next line is \nf^(ξ) = ∫\n\n∞\n\n​\n\n.\n\n​\n\n−∞\n\nf (x)e−2πixξ dx",
+  "reference": "The lecture transitions from local oscillation to spectral analysis. It first states \\( (\\cos\\theta + i\\sin\\theta)^n = \\cos(n\\theta) + i\\sin(n\\theta) \\). The transform convention on the next line is \\[ \\hat f(\\xi) = \\int_{-\\infty}^{\\infty} f(x) e^{-2\\pi i x \\xi}\\,dx \\].",
+  "source": "https://en.wikipedia.org/wiki/De_Moivre%27s_formula, https://en.wikipedia.org/wiki/Fourier_transform",
+  "profile": "clean",
+  "knobs": [],
+  "spans": 2,
+  "ok": false,
+  "origin": "text-gates/pdf-pastes.json"
+ },
+ {
+  "id": "calculus-derivatives-pdf-clean",
+  "tier": "pdf-paste",
+  "input": "For the chain of substitutions we repeatedly invoke  dx = du ⋅ du\n and (f g)′ = f ′ g + f g ′\ndx\ndy\n\ndy\n\n​\n\n​\n\n​\n\nf (b)−f (a)\n. At the endpoint check, the slope estimate is f ′ (c) =\n.\nb−a\n​",
+  "reference": "For the chain of substitutions we repeatedly invoke \\( \\frac{dy}{dx} = \\frac{dy}{du}\\cdot\\frac{du}{dx} \\) and \\( (fg)' = f'g + fg' \\). At the endpoint check, the slope estimate is \\( f'(c) = \\frac{f(b)-f(a)}{b-a} \\).",
+  "source": "https://en.wikipedia.org/wiki/Chain_rule, https://en.wikipedia.org/wiki/Mean_value_theorem, https://en.wikipedia.org/wiki/Product_rule",
+  "profile": "clean",
+  "knobs": [],
+  "spans": 3,
+  "ok": false,
+  "origin": "text-gates/pdf-pastes.json"
+ },
+ {
+  "id": "physics-constants-pdf-clean",
+  "tier": "pdf-paste",
+  "input": "The constants table starts from E = mc2  and compares it with E = hν . A later\nq q\n\nparagraph rewrites field strength as F = ke r1 2 2 .\n​\n\n​\n\n​\n\n​",
+  "reference": "The constants table starts from \\( E = mc^2 \\) and compares it with \\( E = h\\nu \\). A later paragraph rewrites field strength as \\( F = k_e \\frac{q_1 q_2}{r^2} \\).",
+  "source": "https://en.wikipedia.org/wiki/Coulomb%27s_law, https://en.wikipedia.org/wiki/Mass%E2%80%93energy_equivalence, https://en.wikipedia.org/wiki/Planck%E2%80%93Einstein_relation",
+  "profile": "clean",
+  "knobs": [],
+  "spans": 3,
+  "ok": true,
+  "origin": "text-gates/pdf-pastes.json"
+ },
+ {
+  "id": "thermo-note-pdf-clean",
+  "tier": "pdf-paste",
+  "input": "A compact thermodynamics summary keeps the ideal gas relation explicit: P V = nRT . It\nthen states entropy as S = kB ln Ω before discussing units.\n​",
+  "reference": "A compact thermodynamics summary keeps the ideal gas relation explicit: \\( PV = nRT \\). It then states entropy as \\( S = k_B \\ln \\Omega \\) before discussing units.",
+  "source": "https://en.wikipedia.org/wiki/Boltzmann%27s_entropy_formula, https://en.wikipedia.org/wiki/Ideal_gas_law",
+  "profile": "clean",
+  "knobs": [],
+  "spans": 2,
+  "ok": true,
+  "origin": "text-gates/pdf-pastes.json"
+ },
+ {
+  "id": "triangle-geometry-pdf-clean",
+  "tier": "pdf-paste",
+  "input": "The geometry section alternates between metric and angle viewpoints. The side relation is \n\nc2 = a2 + b2 − 2ab cos C , while the norm bound is ∣a + b∣ ≤ ∣a∣ + ∣b∣. These are used\nto bound rounding error in a later estimate.",
+  "reference": "The geometry section alternates between metric and angle viewpoints. The side relation is \\( c^2 = a^2 + b^2 - 2ab\\cos C \\), while the norm bound is \\( |a + b| \\le |a| + |b| \\). These are used to bound rounding error in a later estimate.",
+  "source": "https://en.wikipedia.org/wiki/Law_of_cosines, https://en.wikipedia.org/wiki/Triangle_inequality",
+  "profile": "clean",
+  "knobs": [],
+  "spans": 2,
+  "ok": true,
+  "origin": "text-gates/pdf-pastes.json"
+ },
+ {
+  "id": "probability-gradient-pdf-clean",
+  "tier": "pdf-paste",
+  "input": "1\nTo compare two classifiers, the notes write the logistic link σ(x) = 1+e\n−x . An uncertainty\n​\n\n2\n∞\ncorrection adds ∫−∞ e−x dx =\n​\n\nπ  in the derivation.\n​",
+  "reference": "To compare two classifiers, the notes write the logistic link \\( \\sigma(x) = \\frac{1}{1+e^{-x}} \\). An uncertainty correction adds \\( \\int_{-\\infty}^{\\infty} e^{-x^2}\\,dx = \\sqrt{\\pi} \\) in the derivation.",
+  "source": "https://en.wikipedia.org/wiki/Gaussian_integral, https://en.wikipedia.org/wiki/Logistic_function",
+  "profile": "clean",
+  "knobs": [],
+  "spans": 2,
+  "ok": true,
+  "origin": "text-gates/pdf-pastes.json"
+ },
+ {
+  "id": "financial-model-pdf-clean",
+  "tier": "pdf-paste",
+  "input": "In the December 2025 worksheet, a nominal rate of 7 percent is compounded monthly. The\nnt\n\nm m\n\ngrowth rule is A = P (1 + nr ) , and the reserve estimate includes F = G r1 2 2  as a\ntoy stress term. The date and percentage belong to prose metadata.\n​\n\n​\n\n​\n\n​",
+  "reference": "In the December 2025 worksheet, a nominal rate of 7 percent is compounded monthly. The growth rule is \\( A = P\\left(1 + \\frac{r}{n}\\right)^{nt} \\), and the reserve estimate includes \\( F = G\\frac{m_1 m_2}{r^2} \\) as a toy stress term. The date and percentage belong to prose metadata.",
+  "source": "https://en.wikipedia.org/wiki/Compound_interest, https://en.wikipedia.org/wiki/Newton%27s_law_of_universal_gravitation",
+  "profile": "clean",
+  "knobs": [],
+  "spans": 2,
+  "ok": false,
+  "origin": "text-gates/pdf-pastes.json"
+ },
+ {
+  "id": "mechanics-homework-passage-pdf-dirty",
+  "tier": "pdf-paste",
+  "input": "A block is pushed across a                        speed comes from v = ds  dt , the\n                                                                                 ​\n\n\n\n\nfrictionless table.¹ Newton's                     derivative of position with\nsecond law tells us that F =                     respect to time. Once we know\nma, so the net force is the                      the speed, the kinetic energy of\nmass times the acceleration. The                  the block is Ek = 12 mv 2 .\n                                                                         ​   ​\n\n\n\n\n1. Footnote note: in print/PDF, this line is separated from body flow.",
+  "reference": "A block is pushed across a frictionless table. Newton's second law tells us that \\( \\mathbf{F} = m\\mathbf{a} \\), so the net force is the mass times the acceleration. The speed comes from \\( v = \\frac{\\mathrm{d}s}{\\mathrm{d}t} \\), the derivative of position with respect to time. Once we know the speed, the kinetic energy of the block is \\( E_\\text{k} = \\frac{1}{2} mv^2 \\).",
+  "source": "https://en.wikipedia.org/wiki/Newton%27s_laws_of_motion, https://en.wikipedia.org/wiki/Kinetic_energy",
+  "profile": "dirty",
+  "knobs": [
+   "footnote",
+   "layout_mode",
+   "two_column"
+  ],
+  "spans": 3,
+  "ok": false,
+  "origin": "text-gates/pdf-pastes.json"
+ },
+ {
+  "id": "euler-formula-passage-pdf-dirty",
+  "tier": "pdf-paste",
+  "input": "Euler's formula states that eix = cos x + i sin x for any real number\nx.¹[12] If we substitute x equals pi, the right-hand side collapses to negative\none, and we obtain the celebrated identity \n\neiπ + 1 = 0\n which ties together five fundamental constants in a single equation.[3, 7]\n\n1. Footnote note: in print/PDF, this line is separated from body flow.",
+  "reference": "Euler's formula states that \\( e^{ix} = \\cos x + i\\sin x \\) for any real number x. If we substitute x equals pi, the right-hand side collapses to negative one, and we obtain the celebrated identity \\[ e^{i \\pi} + 1 = 0 \\] which ties together five fundamental constants in a single equation.",
+  "source": "https://en.wikipedia.org/wiki/Euler%27s_identity",
+  "profile": "dirty",
+  "knobs": [
+   "citations",
+   "footnote",
+   "ligatures"
+  ],
+  "spans": 2,
+  "ok": true,
+  "origin": "text-gates/pdf-pastes.json"
+ },
+ {
+  "id": "analysis-classics-passage-pdf-dirty",
+  "tier": "pdf-paste",
+  "input": "P roceedings N ote - S ample A uthor\n\nTwo classic results come up again and again in analysis.¹[12] First, the Basel\nproblem: \n∞\n\n1\nπ2\n=\nn2\n6\nn=1\n\n∑\n\n​\n\n​\n\n​\n\n1. Footnote note: in print/PDF, this line is separated from body flow.\n\n0\n\n\n Second, the Gaussian integral:\n\nP roceedings N ote - S ample A uthor\n\n∫\n\n∞\n\n2\n\n​\n\ne−x dx =\n\nπ\n\n​\n\n−∞\n\n Both answers involve pi even though neither problem mentions a circle.[3, 7]\n\n1. Footnote note: in print/PDF, this line is separated from body flow.\n\n0\n\n\nP roceedings N ote - S ample A uthor\n\n1. Footnote note: in print/PDF, this line is separated from body flow.\n\n0",
+  "reference": "Two classic results come up again and again in analysis. First, the Basel problem: \\[ \\sum_{n=1}^{\\infty}\\frac{1}{n^2} = \\frac{\\pi^2}{6} \\] Second, the Gaussian integral: \\[ \\int_{-\\infty}^\\infty e^{-x^2}\\,dx = \\sqrt{\\pi} \\] Both answers involve pi even though neither problem mentions a circle.",
+  "source": "https://en.wikipedia.org/wiki/Basel_problem, https://en.wikipedia.org/wiki/Gaussian_integral",
+  "profile": "dirty",
+  "knobs": [
+   "citations",
+   "footnote",
+   "running_head"
+  ],
+  "spans": 2,
+  "ok": true,
+  "origin": "text-gates/pdf-pastes.json"
+ },
+ {
+  "id": "probability-mixture-pdf-dirty",
+  "tier": "pdf-paste",
+  "input": "In the 2024 cohort, we estimated posterior odds with P (A∣B) =\nP (B∣A)P (A)\n.[12] The same report also tracks calibration drift over monthP (B)\n​\n\nly windows.[3, 7] For normalization we keep \n\nf (x) =\n\n(x−μ)2\n1\ne − 2σ 2\nσ 2π\n​\n\n​\n\n as the baseline density.\n\n​",
+  "reference": "In the 2024 cohort, we estimated posterior odds with \\( P(A\\vert B) = \\frac{P(B \\vert A) P(A)}{P(B)} \\). The same report also tracks calibration drift over monthly windows. For normalization we keep \\[ f(x) = \\frac{1}{\\sigma\\sqrt{2\\pi}} e^{-\\frac{(x-\\mu)^2}{2\\sigma^2}} \\] as the baseline density.",
+  "source": "https://en.wikipedia.org/wiki/Bayes%27_theorem, https://en.wikipedia.org/wiki/Normal_distribution",
+  "profile": "dirty",
+  "knobs": [
+   "citations",
+   "narrow_justified"
+  ],
+  "spans": 2,
+  "ok": true,
+  "origin": "text-gates/pdf-pastes.json"
+ },
+ {
+  "id": "series-and-limit-pdf-dirty",
+  "tier": "pdf-paste",
+  "input": "Two identities appear in the\nmargin notes and are reused in\nlater\nproofs.[12]\nFirst,\n\nk\na\n∑∞\nk=0 ar = 1−r .[3,\n​\n\n​\n\nSecond, \n\n1 n\ne = lim (1 + )\nn→∞\nn\n​\n\n7]\n\n​\n\n when the compounding step is\nrefined.",
+  "reference": "Two identities appear in the margin notes and are reused in later proofs. First, \\( \\sum_{k=0}^{\\infty} ar^k = \\frac{a}{1-r} \\). Second, \\[ e = \\lim_{n \\to \\infty} \\left(1 + \\frac{1}{n}\\right)^n \\] when the compounding step is refined.",
+  "source": "https://en.wikipedia.org/wiki/E_(mathematical_constant), https://en.wikipedia.org/wiki/Geometric_series",
+  "profile": "dirty",
+  "knobs": [
+   "citations",
+   "narrow_justified",
+   "two_column"
+  ],
+  "spans": 2,
+  "ok": true,
+  "origin": "text-gates/pdf-pastes.json"
+ },
+ {
+  "id": "determinant-appendix-pdf-dirty",
+  "tier": "pdf-paste",
+  "input": "Appendix B computes a local Jacobian before the nonlinear update.[12] The\ndeterminant identity is written as \n\n\n                          det (       ) = ad − bc\n                                  a b\n                                  c d\n                                   ​   ​\n\n\n\n\n.[3, 7] This section then compares signs across neighboring cells.",
+  "reference": "Appendix B computes a local Jacobian before the nonlinear update. The determinant identity is written as \\[ \\det\\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix} = ad - bc \\]. This section then compares signs across neighboring cells.",
+  "source": "https://en.wikipedia.org/wiki/Determinant",
+  "profile": "dirty",
+  "knobs": [
+   "citations",
+   "layout_mode",
+   "ligatures"
+  ],
+  "spans": 1,
+  "ok": true,
+  "origin": "text-gates/pdf-pastes.json"
+ },
+ {
+  "id": "maxwell-note-pdf-dirty",
+  "tier": "pdf-paste",
+  "input": "P roceedings N ote - S ample A uthor\n\nA short electrodynamics note\nsummarizes the field equations\nin one block. We copy the pair\ndirectly as \n\n∇⋅E=\n\nρ\nε0\n\n. The follow-up sentence\ncomments on boundary\nconditions in vacuum.\n\n​\n\n​\n\n∂E\n∇ × B = μ0 J + μ0 ε 0\n∂t\n​\n\n​\n\n​\n\n​\n\n​\n\n​\n\n0",
+  "reference": "A short electrodynamics note summarizes the field equations in one block. We copy the pair directly as \\[ \\begin{aligned} \\nabla \\cdot \\mathbf{E} &= \\frac{\\rho}{\\varepsilon_0} \\\\ \\nabla \\times \\mathbf{B} &= \\mu_0 \\mathbf{J} + \\mu_0 \\varepsilon_0 \\frac{\\partial \\mathbf{E}}{\\partial t} \\end{aligned} \\]. The follow-up sentence comments on boundary conditions in vacuum.",
+  "source": "https://en.wikipedia.org/wiki/Maxwell%27s_equations",
+  "profile": "dirty",
+  "knobs": [
+   "running_head",
+   "two_column"
+  ],
+  "spans": 1,
+  "ok": false,
+  "origin": "text-gates/pdf-pastes.json"
+ },
+ {
+  "id": "kinematics-lab-pdf-dirty",
+  "tier": "pdf-paste",
+  "input": "Proceedings Note - Sample Author\n\nOn 2026-03-18, the lab sheet used\n10 milliliters of dye and a 2 hour\nrun.¹ The velocity estimate was \n\nthen energy was computed with ⟪\n\nEk = 12 mv 2 . The prose\n​\n\nnumbers are part of setup notes,\nnot symbolic inputs.\n\n(x)\n⟫,\nf (x) = limh→0 f (x+h)−f\nh\n′\n\n​\n\n​\n\n​\n\n1. Footnote note: in print/PDF, this line is separated from body flow.\n\n0",
+  "reference": "On 2026-03-18, the lab sheet used 10 milliliters of dye and a 2 hour run. The velocity estimate was \\( f'(x) = \\lim_{h \\to 0} \\frac{f(x+h) - f(x)}{h} \\), then energy was computed with \\( E_\\text{k} = \\frac{1}{2} mv^2 \\). The prose numbers are part of setup notes, not symbolic inputs.",
+  "source": "https://en.wikipedia.org/wiki/Derivative, https://en.wikipedia.org/wiki/Kinetic_energy",
+  "profile": "dirty",
+  "knobs": [
+   "footnote",
+   "ligatures",
+   "running_head",
+   "two_column"
+  ],
+  "spans": 1,
+  "ok": false,
+  "origin": "text-gates/pdf-pastes.json"
+ },
+ {
+  "id": "waves-lecture-pdf-dirty",
+  "tier": "pdf-paste",
+  "input": "Proceedings Note - Sample Author\n\nThe lecture transitions from local\noscillation to spectral analysis.¹ It\n\nconvention on the next line is \n\nf^(ξ) = ∫\n\nfirst states ⟪(cos θ +\n\n∞\n\n​\n\ni sin θ)n = cos(nθ) +\ni sin(nθ). The transform\n\n​\n\n−∞\n\n⟫.\n\n1. Footnote note: in print/PDF, this line is separated from body flow.\n\n0\n\nf (x)e−2πixξ dx\n\n\nProceedings Note - Sample Author\n\n1. Footnote note: in print/PDF, this line is separated from body flow.\n\n0",
+  "reference": "The lecture transitions from local oscillation to spectral analysis. It first states \\( (\\cos\\theta + i\\sin\\theta)^n = \\cos(n\\theta) + i\\sin(n\\theta) \\). The transform convention on the next line is \\[ \\hat f(\\xi) = \\int_{-\\infty}^{\\infty} f(x) e^{-2\\pi i x \\xi}\\,dx \\].",
+  "source": "https://en.wikipedia.org/wiki/De_Moivre%27s_formula, https://en.wikipedia.org/wiki/Fourier_transform",
+  "profile": "dirty",
+  "knobs": [
+   "footnote",
+   "ligatures",
+   "running_head",
+   "two_column"
+  ],
+  "spans": 1,
+  "ok": false,
+  "origin": "text-gates/pdf-pastes.json"
+ },
+ {
+  "id": "calculus-derivatives-pdf-dirty",
+  "tier": "pdf-paste",
+  "input": "dy\n\ndy\n\nFor the chain of substitutions we repeatedly invoke  dx = du ⋅ du\n and \ndx\n​\n\n​\n\n​\n\n(f g)′ = f ′ g + f g ′ .¹[12] At the endpoint check, the slope estimate is \n(a)\nf ′ (c) = f (b)−f\n.[3, 7]\nb−a\n​\n\n1. Footnote note: in print/PDF, this line is separated from body flow.",
+  "reference": "For the chain of substitutions we repeatedly invoke \\( \\frac{dy}{dx} = \\frac{dy}{du}\\cdot\\frac{du}{dx} \\) and \\( (fg)' = f'g + fg' \\). At the endpoint check, the slope estimate is \\( f'(c) = \\frac{f(b)-f(a)}{b-a} \\).",
+  "source": "https://en.wikipedia.org/wiki/Chain_rule, https://en.wikipedia.org/wiki/Mean_value_theorem, https://en.wikipedia.org/wiki/Product_rule",
+  "profile": "dirty",
+  "knobs": [
+   "citations",
+   "footnote",
+   "ligatures",
+   "narrow_justified"
+  ],
+  "spans": 3,
+  "ok": false,
+  "origin": "text-gates/pdf-pastes.json"
+ },
+ {
+  "id": "physics-constants-pdf-dirty",
+  "tier": "pdf-paste",
+  "input": "P roceedings N ote - S ample A uthor\nThe constants table starts from E = mc2  and compares it with E = hν .[12]\n                                                                  q q\nA later paragraph rewrites field strength as F = ke r1 2 2 .[3, 7]\n                                                                   ​\n\n\n\n\n                                                              ​\n\n\n\n\n                                              0",
+  "reference": "The constants table starts from \\( E = mc^2 \\) and compares it with \\( E = h\\nu \\). A later paragraph rewrites field strength as \\( F = k_e \\frac{q_1 q_2}{r^2} \\).",
+  "source": "https://en.wikipedia.org/wiki/Coulomb%27s_law, https://en.wikipedia.org/wiki/Mass%E2%80%93energy_equivalence, https://en.wikipedia.org/wiki/Planck%E2%80%93Einstein_relation",
+  "profile": "dirty",
+  "knobs": [
+   "citations",
+   "layout_mode",
+   "running_head"
+  ],
+  "spans": 3,
+  "ok": true,
+  "origin": "text-gates/pdf-pastes.json"
+ },
+ {
+  "id": "thermo-note-pdf-dirty",
+  "tier": "pdf-paste",
+  "input": "A compact thermodynamics summary keeps the ideal gas relation explicit:\nP V = nRT .[12] It then states entropy as S = kB ln Ω before\n                                                    ​\n\n\n\n\ndiscussing units.[3, 7]",
+  "reference": "A compact thermodynamics summary keeps the ideal gas relation explicit: \\( PV = nRT \\). It then states entropy as \\( S = k_B \\ln \\Omega \\) before discussing units.",
+  "source": "https://en.wikipedia.org/wiki/Boltzmann%27s_entropy_formula, https://en.wikipedia.org/wiki/Ideal_gas_law",
+  "profile": "dirty",
+  "knobs": [
+   "citations",
+   "layout_mode"
+  ],
+  "spans": 2,
+  "ok": true,
+  "origin": "text-gates/pdf-pastes.json"
+ },
+ {
+  "id": "triangle-geometry-pdf-dirty",
+  "tier": "pdf-paste",
+  "input": "The geometry section alternates\nbetween metric and angle\nviewpoints. The side relation is \n\nc2 = a2 + b2 − 2ab cos C ,\n\nwhile the norm bound is ∣a +\n\nb∣ ≤ ∣a∣ + ∣b∣. These are used\nto bound rounding error in a later\nestimate.",
+  "reference": "The geometry section alternates between metric and angle viewpoints. The side relation is \\( c^2 = a^2 + b^2 - 2ab\\cos C \\), while the norm bound is \\( |a + b| \\le |a| + |b| \\). These are used to bound rounding error in a later estimate.",
+  "source": "https://en.wikipedia.org/wiki/Law_of_cosines, https://en.wikipedia.org/wiki/Triangle_inequality",
+  "profile": "dirty",
+  "knobs": [
+   "ligatures",
+   "two_column"
+  ],
+  "spans": 2,
+  "ok": true,
+  "origin": "text-gates/pdf-pastes.json"
+ },
+ {
+  "id": "probability-gradient-pdf-dirty",
+  "tier": "pdf-paste",
+  "input": "To compare two classifiers, the    correction adds \n                                    ∞       2\nnotes write the logistic link ⟪    ∫−∞ e−x dx =\n                                        ​              π  in the\n                                                        ​\n\n\n\n\nσ(x) = 1+e1 −x ⟫. An uncertainty\n               ​\n\n                                   derivation.",
+  "reference": "To compare two classifiers, the notes write the logistic link \\( \\sigma(x) = \\frac{1}{1+e^{-x}} \\). An uncertainty correction adds \\( \\int_{-\\infty}^{\\infty} e^{-x^2}\\,dx = \\sqrt{\\pi} \\) in the derivation.",
+  "source": "https://en.wikipedia.org/wiki/Gaussian_integral, https://en.wikipedia.org/wiki/Logistic_function",
+  "profile": "dirty",
+  "knobs": [
+   "layout_mode",
+   "ligatures",
+   "two_column"
+  ],
+  "spans": 1,
+  "ok": false,
+  "origin": "text-gates/pdf-pastes.json"
+ },
+ {
+  "id": "financial-model-pdf-dirty",
+  "tier": "pdf-paste",
+  "input": "Proceedings Note - Sample Author\n\nIn the December 2025 worksheet, a nominal rate of 7 percent is compounded\nnt\n\nmonthly.¹ The growth rule is A = P (1 + nr ) , and the reserve estimate in​\n\n1. Footnote note: in print/PDF, this line is separated from body flow.\n\n0\n\n\nm m\n\ncludes F = G r1 2 2  as aProceedings\ntoy stress term.\ndate\nand percentage belong to\nNote - The\nSample\nAuthor\nprose metadata.\n​\n\n​\n\n​\n\n1. Footnote note: in print/PDF, this line is separated from body flow.\n\n0",
+  "reference": "In the December 2025 worksheet, a nominal rate of 7 percent is compounded monthly. The growth rule is \\( A = P\\left(1 + \\frac{r}{n}\\right)^{nt} \\), and the reserve estimate includes \\( F = G\\frac{m_1 m_2}{r^2} \\) as a toy stress term. The date and percentage belong to prose metadata.",
+  "source": "https://en.wikipedia.org/wiki/Compound_interest, https://en.wikipedia.org/wiki/Newton%27s_law_of_universal_gravitation",
+  "profile": "dirty",
+  "knobs": [
+   "footnote",
+   "ligatures",
+   "narrow_justified",
+   "running_head"
+  ],
+  "spans": 2,
+  "ok": false,
+  "origin": "text-gates/pdf-pastes.json"
+ },
+ {
+  "id": "synth-00493",
+  "tier": "synth-pdf",
+  "input": "The letter e in his name is not related to Euler's number.",
+  "reference": "The letter e in his name is not related to Euler's number.",
+  "source": "synthetic (no math, hard negative)",
+  "profile": "clean",
+  "knobs": [],
+  "spans": 0,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00358",
+  "tier": "synth-pdf",
+  "input": "The value n was chosen arbitrarily by the teaching assistant. Both answers involve pi even\nthough neither problem mentions a circle.",
+  "reference": "The value n was chosen arbitrarily by the teaching assistant. Both answers involve pi even though neither problem mentions a circle.",
+  "source": "synthetic (no math, hard negative)",
+  "profile": "clean",
+  "knobs": [],
+  "spans": 0,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00365",
+  "tier": "synth-pdf",
+  "input": "Applying the theorem yields \n\nE = hν\n. Recall that \n\nEk =\n​\n\n1\nmv 2\n2\n\n. This converges because eiπ + 1 = 0 holds.\n\n​",
+  "reference": "Applying the theorem yields \\[ E = h\\nu \\]. Recall that \\[ E_\\text{k} = \\frac{1}{2} mv^2 \\]. This converges because \\( e^{i\\pi} + 1 = 0 \\) holds.",
+  "source": "https://en.wikipedia.org/wiki/Planck%E2%80%93Einstein_relation, https://en.wikipedia.org/wiki/Kinetic_energy, https://en.wikipedia.org/wiki/Euler%27s_identity",
+  "profile": "clean",
+  "knobs": [],
+  "spans": 3,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00155",
+  "tier": "synth-pdf",
+  "input": "This converges because \n\nF = ma\n1\n\n holds. In the limit, we find σ(x) = 1+e−x . Both answers involve pi even though neither\nproblem mentions a circle.\n​",
+  "reference": "This converges because \\[ \\mathbf{F} = m\\mathbf{a} \\] holds. In the limit, we find \\( \\sigma(x) = \\frac{1}{1+e^{-x}} \\). Both answers involve pi even though neither problem mentions a circle.",
+  "source": "https://en.wikipedia.org/wiki/Newton%27s_laws_of_motion, https://en.wikipedia.org/wiki/Logistic_function",
+  "profile": "clean",
+  "knobs": [],
+  "spans": 2,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00161",
+  "tier": "synth-pdf",
+  "input": "Note that ∇ × B = μ0 J + μ0 ε0 ∂E\n∂t , which simplifies the rest of the argument.\n​\n\n​\n\n​\n\n​",
+  "reference": "Note that \\( \\nabla \\times \\mathbf{B} = \\mu_0 \\mathbf{J} + \\mu_0 \\varepsilon_0 \\frac{\\partial \\mathbf{E}}{\\partial t} \\), which simplifies the rest of the argument.",
+  "source": "https://en.wikipedia.org/wiki/Amp%C3%A8re%27s_circuital_law",
+  "profile": "clean",
+  "knobs": [],
+  "spans": 1,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00104",
+  "tier": "synth-pdf",
+  "input": "It follows that f ′ (x) = limh→0\nthat ⟪det (\n\n​\n\nf (x+h)−f (x)\n, as shown in the derivation above. We are told\nh\n​\n\na b\n) = ad − bc⟫, which we will use later. In the limit, we find \nc d\n​\n\n​\n\nf ′ (c) =\n.\n\nf (b) − f (a)\nb−a\n\n​",
+  "reference": "It follows that \\( f'(x) = \\lim_{h \\to 0} \\frac{f(x+h) - f(x)}{h} \\), as shown in the derivation above. We are told that \\( \\det\\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix} = ad - bc \\), which we will use later. In the limit, we find \\[ f'(c) = \\frac{f(b)-f(a)}{b-a} \\].",
+  "source": "https://en.wikipedia.org/wiki/Derivative, https://en.wikipedia.org/wiki/Determinant, https://en.wikipedia.org/wiki/Mean_value_theorem",
+  "profile": "clean",
+  "knobs": [],
+  "spans": 2,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00036",
+  "tier": "synth-pdf",
+  "input": "Consider the equation c2 = a2 + b2 − 2ab cos C  and its consequences.",
+  "reference": "Consider the equation \\( c^2 = a^2 + b^2 - 2ab\\cos C \\) and its consequences.",
+  "source": "https://en.wikipedia.org/wiki/Law_of_cosines",
+  "profile": "clean",
+  "knobs": [],
+  "spans": 1,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00033",
+  "tier": "synth-pdf",
+  "input": "Physically, this means \n\nσ(x) =\n\n1\n1 + e−x\n\n​\n\n. Both answers involve pi even though neither problem mentions a circle.",
+  "reference": "Physically, this means \\[ \\sigma(x) = \\frac{1}{1+e^{-x}} \\]. Both answers involve pi even though neither problem mentions a circle.",
+  "source": "https://en.wikipedia.org/wiki/Logistic_function",
+  "profile": "clean",
+  "knobs": [],
+  "spans": 1,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00140",
+  "tier": "synth-pdf",
+  "input": "Physically, this means \n\n−b ±\n\nx=\n\nb2 − 4ac\n2a\n\n​\n\n​\n\n. Consider the equation f^(ξ ) = ∫−∞ f (x)e−2πixξ dx and its consequences.\n∞\n\n​\n\n​",
+  "reference": "Physically, this means \\[ x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a} \\]. Consider the equation \\( \\hat f(\\xi) = \\int_{-\\infty}^{\\infty} f(x) e^{-2\\pi i x \\xi}\\,dx \\) and its consequences.",
+  "source": "https://en.wikipedia.org/wiki/Quadratic_formula, https://en.wikipedia.org/wiki/Fourier_transform",
+  "profile": "clean",
+  "knobs": [],
+  "spans": 2,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00450",
+  "tier": "synth-pdf",
+  "input": "∞\n\nFor any real number x, we know that A = πr 2 . As an exercise, show that ∑k=0 ar k =\n​\n\na\n.\n1−r\n​",
+  "reference": "For any real number x, we know that \\( A = \\pi r^2 \\). As an exercise, show that \\( \\sum_{k=0}^{\\infty} ar^k = \\frac{a}{1-r} \\).",
+  "source": "https://en.wikipedia.org/wiki/Area_of_a_circle, https://en.wikipedia.org/wiki/Geometric_series",
+  "profile": "clean",
+  "knobs": [],
+  "spans": 2,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00282",
+  "tier": "synth-pdf",
+  "input": "The homework asks us to verify that eiπ + 1 = 0. According to the textbook, W = ΔEk\nd\n^ ∣Ψ(t)⟩.\n⟫ for all positive integers n. The proof begins by noting that iℏ dt\n∣Ψ(t)⟩ = H\n​\n\n​",
+  "reference": "The homework asks us to verify that \\( e^{i\\pi} + 1 = 0 \\). According to the textbook, \\( W = \\Delta E_k \\) for all positive integers n. The proof begins by noting that \\( i \\hbar \\frac{d}{d t}\\vert\\Psi(t)\\rangle = \\hat H\\vert\\Psi(t)\\rangle \\).",
+  "source": "https://en.wikipedia.org/wiki/Euler%27s_identity, https://en.wikipedia.org/wiki/Work_(physics), https://en.wikipedia.org/wiki/Schr%C3%B6dinger_equation",
+  "profile": "clean",
+  "knobs": [],
+  "spans": 2,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00189",
+  "tier": "synth-pdf",
+  "input": "One classic result states that \n\n∇ × B = μ0 J + μ0 ε 0\n​\n\n​\n\n​\n\n∂E\n∂t\n\n​\n\n. Both answers involve pi even though neither problem mentions a circle. This converges\nq q\nbecause F = ke r1 2 2  holds.\n​\n\n​\n\n​\n\n​",
+  "reference": "One classic result states that \\[ \\nabla \\times \\mathbf{B} = \\mu_0 \\mathbf{J} + \\mu_0 \\varepsilon_0 \\frac{\\partial \\mathbf{E}}{\\partial t} \\]. Both answers involve pi even though neither problem mentions a circle. This converges because \\( F = k_e \\frac{q_1 q_2}{r^2} \\) holds.",
+  "source": "https://en.wikipedia.org/wiki/Amp%C3%A8re%27s_circuital_law, https://en.wikipedia.org/wiki/Coulomb%27s_law",
+  "profile": "clean",
+  "knobs": [],
+  "spans": 2,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00109",
+  "tier": "synth-pdf",
+  "input": "Proceedings Note - Sample Author\n\nThere were 12 students in the study group that evening.[12]\n\n0",
+  "reference": "There were 12 students in the study group that evening.",
+  "source": "synthetic (no math, hard negative)",
+  "profile": "dirty",
+  "knobs": [
+   "citations",
+   "ligatures",
+   "narrow_justified",
+   "running_head"
+  ],
+  "spans": 0,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00139",
+  "tier": "synth-pdf",
+  "input": "P roceedings N ote - S ample\nn A uthor\n\nThe proof begins by noting that\n\na) ⟫. The letter e in his name is\n\n∞ f (n) (a)\nf (x) = ∑n=0 n! (x −\n​\n\nnot related to Euler's number.\n\n​\n\n0",
+  "reference": "The proof begins by noting that \\( f(x) = \\sum_{n=0}^{\\infty} \\frac{f^{(n)}(a)}{n!}(x-a)^n \\). The letter e in his name is not related to Euler's number.",
+  "source": "https://en.wikipedia.org/wiki/Taylor_series",
+  "profile": "dirty",
+  "knobs": [
+   "narrow_justified",
+   "running_head",
+   "two_column"
+  ],
+  "spans": 0,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00288",
+  "tier": "synth-pdf",
+  "input": "(x−μ)2\nA well-known identity states that f (x) =\n                                             1\n                                           σ 2π\n                                                e−                       ​\n\n\n\n\n                                                                         ​\n                                                                               2σ 2\n                                                                                      ​\n\n\n\n\n                                                                                          .¹\n\n\n\n\n1. Footnote note: in print/PDF, this line is separated from body flow.",
+  "reference": "A well-known identity states that \\( f(x) = \\frac{1}{\\sigma\\sqrt{2\\pi}} e^{-\\frac{(x-\\mu)^2}{2\\sigma^2}} \\).",
+  "source": "https://en.wikipedia.org/wiki/Normal_distribution",
+  "profile": "dirty",
+  "knobs": [
+   "footnote",
+   "layout_mode",
+   "ligatures",
+   "narrow_justified"
+  ],
+  "spans": 1,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00148",
+  "tier": "synth-pdf",
+  "input": "Substituting into the definition gives \n\n                                          S = kB ln Ω     ​\n\n\n\n\n                                                                        ∂E\n.¹ In the limit, we find ∇ × B = μ0 J + μ0 ε0 ∂t . 5 apples were left on\n                                                      ​         ​   ​        ​\n\n\n\n\nthe table after lunch.\n\n\n\n\n1. Footnote note: in print/PDF, this line is separated from body flow.",
+  "reference": "Substituting into the definition gives \\[ S = k_B \\ln \\Omega \\]. In the limit, we find \\( \\nabla \\times \\mathbf{B} = \\mu_0 \\mathbf{J} + \\mu_0 \\varepsilon_0 \\frac{\\partial \\mathbf{E}}{\\partial t} \\). 5 apples were left on the table after lunch.",
+  "source": "https://en.wikipedia.org/wiki/Boltzmann%27s_entropy_formula, https://en.wikipedia.org/wiki/Amp%C3%A8re%27s_circuital_law",
+  "profile": "dirty",
+  "knobs": [
+   "footnote",
+   "layout_mode"
+  ],
+  "spans": 2,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00172",
+  "tier": "synth-pdf",
+  "input": "The value n was chosen arbitrarily by the teaching assistant.[12]\nAccording to the textbook, \n\na2 + b2 = c2  for all positive\n\nintegers n.[3, 7] We used 10 milliliters of solution in the second\ntrial.",
+  "reference": "The value n was chosen arbitrarily by the teaching assistant. According to the textbook, \\( a^2 + b^2 = c^2 \\) for all positive integers n. We used 10 milliliters of solution in the second trial.",
+  "source": "https://en.wikipedia.org/wiki/Pythagorean_theorem",
+  "profile": "dirty",
+  "knobs": [
+   "citations",
+   "narrow_justified",
+   "two_column"
+  ],
+  "spans": 1,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00163",
+  "tier": "synth-pdf",
+  "input": "Note that a2 + b2 = c2 , which\nsimplifies the rest of the\n\nargument.",
+  "reference": "Note that \\( a^2 + b^2 = c^2 \\), which simplifies the rest of the argument.",
+  "source": "https://en.wikipedia.org/wiki/Pythagorean_theorem",
+  "profile": "dirty",
+  "knobs": [
+   "ligatures",
+   "two_column"
+  ],
+  "spans": 1,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00314",
+  "tier": "synth-pdf",
+  "input": "P roceedings N ote - S ample A uthor\nWe used 10 milliliters of solution in the second trial.[12] In the limit, we find \n            2\nx = −b± 2ab −4ac .[3, 7]\n                  ​\n\n\n\n\n                  ​\n\n\n\n\n                                              0",
+  "reference": "We used 10 milliliters of solution in the second trial. In the limit, we find \\( x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a} \\).",
+  "source": "https://en.wikipedia.org/wiki/Quadratic_formula",
+  "profile": "dirty",
+  "knobs": [
+   "citations",
+   "layout_mode",
+   "running_head"
+  ],
+  "spans": 1,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00056",
+  "tier": "synth-pdf",
+  "input": "P roceedings N ote - S ample A uthor\n\nThe proof begins by noting that d =\n\n(x2 − x1 )2 + (y2 − y1 )2 .¹\n​\n\n1. Footnote note: in print/PDF, this line is separated from body flow.\n\n0\n\n​\n\n​\n\n​\n\n​",
+  "reference": "The proof begins by noting that \\( d = \\sqrt{(x_2-x_1)^2 + (y_2-y_1)^2} \\).",
+  "source": "https://en.wikipedia.org/wiki/Euclidean_distance",
+  "profile": "dirty",
+  "knobs": [
+   "footnote",
+   "running_head"
+  ],
+  "spans": 1,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00433",
+  "tier": "synth-pdf",
+  "input": "One classic result states that \n\n                                   E = hν\n\n.",
+  "reference": "One classic result states that \\[ E = h\\nu \\].",
+  "source": "https://en.wikipedia.org/wiki/Planck%E2%80%93Einstein_relation",
+  "profile": "dirty",
+  "knobs": [
+   "layout_mode",
+   "narrow_justified"
+  ],
+  "spans": 1,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00399",
+  "tier": "synth-pdf",
+  "input": "Proceedings Note - Sample Author\n\nThe letter e in his name is not related to Euler's number.¹[12] According to the\nn\n\nn\n\ntextbook, (x + y)n = ∑k=0 (k )xk y n−k  for all positive integers n.[3, 7] This\n​\n\n​\n\n∞\nconverges because f^(ξ) = ∫−∞ f (x)e−2πixξ dx holds.\n​\n\n​\n\n1. Footnote note: in print/PDF, this line is separated from body flow.\n\n0",
+  "reference": "The letter e in his name is not related to Euler's number. According to the textbook, \\( (x+y)^n = \\sum_{k=0}^{n} \\binom{n}{k} x^{k} y^{n-k} \\) for all positive integers n. This converges because \\( \\hat f(\\xi) = \\int_{-\\infty}^{\\infty} f(x) e^{-2\\pi i x \\xi}\\,dx \\) holds.",
+  "source": "https://en.wikipedia.org/wiki/Binomial_theorem, https://en.wikipedia.org/wiki/Fourier_transform",
+  "profile": "dirty",
+  "knobs": [
+   "citations",
+   "footnote",
+   "ligatures",
+   "running_head"
+  ],
+  "spans": 2,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00363",
+  "tier": "synth-pdf",
+  "input": "P roceedings N ote - S ample A uthor\nThis can be rewritten as E =          yields ⟪F = G mr1 m\n                                                         ​\n\n\n\n\n                                                         2\n                                                           2\n                                                             . He la‐\n                                                             ​\n\n\n\n\n                                                                 ​\n\n\n\n\n   2                                   beled the box A, though it had\nmc ⟫. Applying the theorem\n                                       nothing to do with a matrix.\n\n\n\n\n                                   0",
+  "reference": "This can be rewritten as \\( E = mc^2 \\). Applying the theorem yields \\( F = G\\frac{m_1 m_2}{r^2} \\). He labeled the box A, though it had nothing to do with a matrix.",
+  "source": "https://en.wikipedia.org/wiki/Mass%E2%80%93energy_equivalence, https://en.wikipedia.org/wiki/Newton%27s_law_of_universal_gravitation",
+  "profile": "dirty",
+  "knobs": [
+   "layout_mode",
+   "narrow_justified",
+   "running_head",
+   "two_column"
+  ],
+  "spans": 1,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00403",
+  "tier": "synth-pdf",
+  "input": "As an exercise, show that E =\n\nmc2 .[12] 5 apples were left on\n\nthe table after lunch.[3, 7]",
+  "reference": "As an exercise, show that \\( E = mc^2 \\). 5 apples were left on the table after lunch.",
+  "source": "https://en.wikipedia.org/wiki/Mass%E2%80%93energy_equivalence",
+  "profile": "dirty",
+  "knobs": [
+   "citations",
+   "two_column"
+  ],
+  "spans": 1,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00035",
+  "tier": "synth-unicode",
+  "input": "5 apples were left on the table after lunch. Which converges because the terms shrink rapidly.",
+  "reference": "5 apples were left on the table after lunch. Which converges because the terms shrink rapidly.",
+  "source": "synthetic (no math, hard negative)",
+  "profile": null,
+  "knobs": [],
+  "spans": 0,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00249",
+  "tier": "synth-unicode",
+  "input": "The textbook costs twenty dollars at the campus store.",
+  "reference": "The textbook costs twenty dollars at the campus store.",
+  "source": "synthetic (no math, hard negative)",
+  "profile": null,
+  "knobs": [],
+  "spans": 0,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00473",
+  "tier": "synth-unicode",
+  "input": "At time t the sample had cooled to room temperature. At time t the sample had cooled to room temperature. The room number was 214, right next to the lab.",
+  "reference": "At time t the sample had cooled to room temperature. At time t the sample had cooled to room temperature. The room number was 214, right next to the lab.",
+  "source": "synthetic (no math, hard negative)",
+  "profile": null,
+  "knobs": [],
+  "spans": 0,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00488",
+  "tier": "synth-unicode",
+  "input": "The letter e in his name is not related to Euler's number. The variable x was measured five times during the experiment. The homework asks us to verify that (cos θ + i sin θ)^n = cos(nθ) + i sin(nθ).",
+  "reference": "The letter e in his name is not related to Euler's number. The variable x was measured five times during the experiment. The homework asks us to verify that \\( (\\cos\\theta + i\\sin\\theta)^n = \\cos(n\\theta) + i\\sin(n\\theta) \\).",
+  "source": "https://en.wikipedia.org/wiki/De_Moivre%27s_formula",
+  "profile": null,
+  "knobs": [],
+  "spans": 1,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00038",
+  "tier": "synth-unicode",
+  "input": "As an exercise, show that F = k_e q₁q₂/r². She scored 95 out of 100 on the midterm.",
+  "reference": "As an exercise, show that \\( F = k_e \\frac{q_1 q_2}{r^2} \\). She scored 95 out of 100 on the midterm.",
+  "source": "https://en.wikipedia.org/wiki/Coulomb%27s_law",
+  "profile": null,
+  "knobs": [],
+  "spans": 1,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00441",
+  "tier": "synth-unicode",
+  "input": "The result generalizes to higher dimensions as well. Note that (cos θ + i sin θ)^n = cos(nθ) + i sin(nθ), which simplifies the rest of the argument. This ties together several fundamental constants in a single equation.",
+  "reference": "The result generalizes to higher dimensions as well. Note that \\( (\\cos\\theta + i\\sin\\theta)^n = \\cos(n\\theta) + i\\sin(n\\theta) \\), which simplifies the rest of the argument. This ties together several fundamental constants in a single equation.",
+  "source": "https://en.wikipedia.org/wiki/De_Moivre%27s_formula",
+  "profile": null,
+  "knobs": [],
+  "spans": 1,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00335",
+  "tier": "synth-unicode",
+  "input": "According to the textbook, (x+y)^n = ∑ C(n,k) x^k y^(n-k) for all positive integers n. The result generalizes to higher dimensions as well.",
+  "reference": "According to the textbook, \\( (x+y)^n = \\sum_{k=0}^{n} \\binom{n}{k} x^{k} y^{n-k} \\) for all positive integers n. The result generalizes to higher dimensions as well.",
+  "source": "https://en.wikipedia.org/wiki/Binomial_theorem",
+  "profile": null,
+  "knobs": [],
+  "spans": 1,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00259",
+  "tier": "synth-unicode",
+  "input": "It follows that ∇×B = μ₀J + μ₀ε₀ ∂E/∂t, as shown in the derivation above. As an exercise, show that V = IR. According to the textbook, f'(c) = (f(b)-f(a))/(b-a) for all positive integers n.",
+  "reference": "It follows that \\( \\nabla \\times \\mathbf{B} = \\mu_0 \\mathbf{J} + \\mu_0 \\varepsilon_0 \\frac{\\partial \\mathbf{E}}{\\partial t} \\), as shown in the derivation above. As an exercise, show that \\( V = IR \\). According to the textbook, \\( f'(c) = \\frac{f(b)-f(a)}{b-a} \\) for all positive integers n.",
+  "source": "https://en.wikipedia.org/wiki/Amp%C3%A8re%27s_circuital_law, https://en.wikipedia.org/wiki/Ohm%27s_law, https://en.wikipedia.org/wiki/Mean_value_theorem",
+  "profile": null,
+  "knobs": [],
+  "spans": 3,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00008",
+  "tier": "synth-unicode",
+  "input": "Which converges because the terms shrink rapidly. Physically, this means c² = a² + b² - 2ab·cos C. This can be rewritten as G_μν + Λg_μν = κT_μν.",
+  "reference": "Which converges because the terms shrink rapidly. Physically, this means \\( c^2 = a^2 + b^2 - 2ab\\cos C \\). This can be rewritten as \\( G_{\\mu \\nu} + \\Lambda g_{\\mu \\nu} = \\kappa T_{\\mu \\nu} \\).",
+  "source": "https://en.wikipedia.org/wiki/Law_of_cosines, https://en.wikipedia.org/wiki/Einstein_field_equations",
+  "profile": null,
+  "knobs": [],
+  "spans": 2,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00425",
+  "tier": "synth-unicode",
+  "input": "The room number was 214, right next to the lab. The proof begins by noting that f(a) = 1/(2πi) ∮ f(z)/(z-a) dz. Substituting into the definition gives E = hν.",
+  "reference": "The room number was 214, right next to the lab. The proof begins by noting that \\( f(a) = \\frac{1}{2\\pi i} \\oint_\\gamma \\frac{f(z)}{z-a}\\,dz \\). Substituting into the definition gives \\( E = h\\nu \\).",
+  "source": "https://en.wikipedia.org/wiki/Cauchy%27s_integral_formula, https://en.wikipedia.org/wiki/Planck%E2%80%93Einstein_relation",
+  "profile": null,
+  "knobs": [],
+  "spans": 2,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00350",
+  "tier": "synth-unicode",
+  "input": "According to the textbook, P(A|B) = P(B|A)P(A) / P(B) for all positive integers n. The homework asks us to verify that (fg)' = f'g + fg'. Consider the equation dy/dx = dy/du · du/dx and its consequences.",
+  "reference": "According to the textbook, \\( P(A\\vert B) = \\frac{P(B \\vert A) P(A)}{P(B)} \\) for all positive integers n. The homework asks us to verify that \\( (fg)' = f'g + fg' \\). Consider the equation \\( \\frac{dy}{dx} = \\frac{dy}{du}\\cdot\\frac{du}{dx} \\) and its consequences.",
+  "source": "https://en.wikipedia.org/wiki/Bayes%27_theorem, https://en.wikipedia.org/wiki/Product_rule, https://en.wikipedia.org/wiki/Chain_rule",
+  "profile": null,
+  "knobs": [],
+  "spans": 3,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00164",
+  "tier": "synth-unicode",
+  "input": "Note that ∑ ar^k = a/(1-r), which simplifies the rest of the argument. As an exercise, show that p = mv. For any real number x, we know that V = IR.",
+  "reference": "Note that \\( \\sum_{k=0}^{\\infty} ar^k = \\frac{a}{1-r} \\), which simplifies the rest of the argument. As an exercise, show that \\( p = mv \\). For any real number x, we know that \\( V = IR \\).",
+  "source": "https://en.wikipedia.org/wiki/Geometric_series, https://en.wikipedia.org/wiki/Momentum, https://en.wikipedia.org/wiki/Ohm%27s_law",
+  "profile": null,
+  "knobs": [],
+  "spans": 3,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00105",
+  "tier": "synth-unicode",
+  "input": "Consider the equation dy/dx = dy/du · du/dx and its consequences. A well-known identity states that ∇·E = ρ/ε₀. According to the textbook, d = √((x₂-x₁)² + (y₂-y₁)²) for all positive integers n.",
+  "reference": "Consider the equation \\( \\frac{dy}{dx} = \\frac{dy}{du}\\cdot\\frac{du}{dx} \\) and its consequences. A well-known identity states that \\( \\nabla \\cdot \\mathbf{E} = \\frac{\\rho}{\\varepsilon_0} \\). According to the textbook, \\( d = \\sqrt{(x_2-x_1)^2 + (y_2-y_1)^2} \\) for all positive integers n.",
+  "source": "https://en.wikipedia.org/wiki/Chain_rule, https://en.wikipedia.org/wiki/Gauss%27s_law, https://en.wikipedia.org/wiki/Euclidean_distance",
+  "profile": null,
+  "knobs": [],
+  "spans": 3,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00414",
+  "tier": "synth-unicode",
+  "input": "As an exercise, show that f(x) = 1/(σ√(2π)) e^(-(x-μ)²/2σ²). The letter e in his name is not related to Euler's number.",
+  "reference": "As an exercise, show that \\( f(x) = \\frac{1}{\\sigma\\sqrt{2\\pi}} e^{-\\frac{(x-\\mu)^2}{2\\sigma^2}} \\). The letter e in his name is not related to Euler's number.",
+  "source": "https://en.wikipedia.org/wiki/Normal_distribution",
+  "profile": null,
+  "knobs": [],
+  "spans": 1,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00253",
+  "tier": "synth-unicode",
+  "input": "He labeled the box A, though it had nothing to do with a matrix. Newton's second law tells us that d = √((x₂-x₁)² + (y₂-y₁)²), so the net force follows directly. Recall that ζ(s) = 2^s π^(s-1) sin(πs/2) Γ(1-s) ζ(1-s).",
+  "reference": "He labeled the box A, though it had nothing to do with a matrix. Newton's second law tells us that \\( d = \\sqrt{(x_2-x_1)^2 + (y_2-y_1)^2} \\), so the net force follows directly. Recall that \\( \\zeta(s) = 2^s \\pi^{s-1} \\sin\\left( \\frac{\\pi s}{2} \\right) \\Gamma(1-s) \\zeta(1-s) \\).",
+  "source": "https://en.wikipedia.org/wiki/Euclidean_distance, https://en.wikipedia.org/wiki/Riemann_zeta_function",
+  "profile": null,
+  "knobs": [],
+  "spans": 2,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00434",
+  "tier": "synth-unicode",
+  "input": "The lecture notes derive G_μν + Λg_μν = κT_μν from first principles. The value n was chosen arbitrarily by the teaching assistant. The room number was 214, right next to the lab.",
+  "reference": "The lecture notes derive \\( G_{\\mu \\nu} + \\Lambda g_{\\mu \\nu} = \\kappa T_{\\mu \\nu} \\) from first principles. The value n was chosen arbitrarily by the teaching assistant. The room number was 214, right next to the lab.",
+  "source": "https://en.wikipedia.org/wiki/Einstein_field_equations",
+  "profile": null,
+  "knobs": [],
+  "spans": 1,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00145",
+  "tier": "synth-unicode",
+  "input": "As an exercise, show that f(x) = 1/(σ√(2π)) e^(-(x-μ)²/2σ²).",
+  "reference": "As an exercise, show that \\( f(x) = \\frac{1}{\\sigma\\sqrt{2\\pi}} e^{-\\frac{(x-\\mu)^2}{2\\sigma^2}} \\).",
+  "source": "https://en.wikipedia.org/wiki/Normal_distribution",
+  "profile": null,
+  "knobs": [],
+  "spans": 1,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00463",
+  "tier": "synth-unicode",
+  "input": "The lecture notes derive ζ(s) = 2^s π^(s-1) sin(πs/2) Γ(1-s) ζ(1-s) from first principles. The lecture notes derive F = k_e q₁q₂/r² from first principles.",
+  "reference": "The lecture notes derive \\( \\zeta(s) = 2^s \\pi^{s-1} \\sin\\left( \\frac{\\pi s}{2} \\right) \\Gamma(1-s) \\zeta(1-s) \\) from first principles. The lecture notes derive \\( F = k_e \\frac{q_1 q_2}{r^2} \\) from first principles.",
+  "source": "https://en.wikipedia.org/wiki/Riemann_zeta_function, https://en.wikipedia.org/wiki/Coulomb%27s_law",
+  "profile": null,
+  "knobs": [],
+  "spans": 2,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00131",
+  "tier": "synth-latex",
+  "input": "The variable x was measured five times during the experiment. The derivation is left as an exercise for the reader.",
+  "reference": "The variable x was measured five times during the experiment. The derivation is left as an exercise for the reader.",
+  "source": "synthetic (no math, hard negative)",
+  "profile": null,
+  "knobs": [],
+  "spans": 0,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00053",
+  "tier": "synth-latex",
+  "input": "The derivation is left as an exercise for the reader.",
+  "reference": "The derivation is left as an exercise for the reader.",
+  "source": "synthetic (no math, hard negative)",
+  "profile": null,
+  "knobs": [],
+  "spans": 0,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00260",
+  "tier": "synth-latex",
+  "input": "The derivation is left as an exercise for the reader.",
+  "reference": "The derivation is left as an exercise for the reader.",
+  "source": "synthetic (no math, hard negative)",
+  "profile": null,
+  "knobs": [],
+  "spans": 0,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00198",
+  "tier": "synth-latex",
+  "input": "This can be rewritten as f(x) = \\sum_{n=0}^{\\infty} \\frac{f^{(n)}(a)}{n!}(x-a)^n. As an exercise, show that \\sum_{k=0}^{\\infty} ar^k = \\frac{a}{1-r}. In the limit, we find |a + b| \\le |a| + |b|.",
+  "reference": "This can be rewritten as \\( f(x) = \\sum_{n=0}^{\\infty} \\frac{f^{(n)}(a)}{n!}(x-a)^n \\). As an exercise, show that \\( \\sum_{k=0}^{\\infty} ar^k = \\frac{a}{1-r} \\). In the limit, we find \\( |a + b| \\le |a| + |b| \\).",
+  "source": "https://en.wikipedia.org/wiki/Taylor_series, https://en.wikipedia.org/wiki/Geometric_series, https://en.wikipedia.org/wiki/Triangle_inequality",
+  "profile": null,
+  "knobs": [],
+  "spans": 3,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00490",
+  "tier": "synth-latex",
+  "input": "This can be rewritten as \\zeta(s) = 2^s \\pi^{s-1} \\sin\\left( \\frac{\\pi s}{2} \\right) \\Gamma(1-s) \\zeta(1-s). The value n was chosen arbitrarily by the teaching assistant.",
+  "reference": "This can be rewritten as \\( \\zeta(s) = 2^s \\pi^{s-1} \\sin\\left( \\frac{\\pi s}{2} \\right) \\Gamma(1-s) \\zeta(1-s) \\). The value n was chosen arbitrarily by the teaching assistant.",
+  "source": "https://en.wikipedia.org/wiki/Riemann_zeta_function",
+  "profile": null,
+  "knobs": [],
+  "spans": 1,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00034",
+  "tier": "synth-latex",
+  "input": "The homework asks us to verify that e = \\lim_{n \\to \\infty} \\left(1 + \\frac{1}{n}\\right)^n.",
+  "reference": "The homework asks us to verify that \\( e = \\lim_{n \\to \\infty} \\left(1 + \\frac{1}{n}\\right)^n \\).",
+  "source": "https://en.wikipedia.org/wiki/E_(mathematical_constant)",
+  "profile": null,
+  "knobs": [],
+  "spans": 1,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00465",
+  "tier": "synth-latex",
+  "input": "The textbook defines $P(A\\vert B) = \\frac{P(B \\vert A) P(A)}{P(B)}$ for the purposes of this chapter. A well-known identity states that $\\begin{aligned} \\nabla \\cdot \\mathbf{E} &= \\frac{\\rho}{\\varepsilon_0} \\\\ \\nabla \\times \\mathbf{B} &= \\mu_0 \\mathbf{J} + \\mu_0 \\varepsilon_0 \\frac{\\partial \\mathbf{E}}{\\partial t} \\end{aligned}$.",
+  "reference": "The textbook defines \\( P(A\\vert B) = \\frac{P(B \\vert A) P(A)}{P(B)} \\) for the purposes of this chapter. A well-known identity states that \\( \\begin{aligned} \\nabla \\cdot \\mathbf{E} &= \\frac{\\rho}{\\varepsilon_0} \\\\ \\nabla \\times \\mathbf{B} &= \\mu_0 \\mathbf{J} + \\mu_0 \\varepsilon_0 \\frac{\\partial \\mathbf{E}}{\\partial t} \\end{aligned} \\).",
+  "source": "https://en.wikipedia.org/wiki/Bayes%27_theorem, https://en.wikipedia.org/wiki/Maxwell%27s_equations",
+  "profile": null,
+  "knobs": [],
+  "spans": 2,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00339",
+  "tier": "synth-latex",
+  "input": "The homework asks us to verify that $e = \\lim_{n \\to \\infty} \\left(1 + \\frac{1}{n}\\right)^n$. We are told that F = G\\frac{m_1 m_2}{r^2}, which we will use later. The professor arrived at 3 p.m. on Tuesday, September 7.",
+  "reference": "The homework asks us to verify that \\( e = \\lim_{n \\to \\infty} \\left(1 + \\frac{1}{n}\\right)^n \\). We are told that \\( F = G\\frac{m_1 m_2}{r^2} \\), which we will use later. The professor arrived at 3 p.m. on Tuesday, September 7.",
+  "source": "https://en.wikipedia.org/wiki/E_(mathematical_constant), https://en.wikipedia.org/wiki/Newton%27s_law_of_universal_gravitation",
+  "profile": null,
+  "knobs": [],
+  "spans": 2,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00049",
+  "tier": "synth-latex",
+  "input": "This converges because $\\mathbf{F} = m\\mathbf{a}$ holds.",
+  "reference": "This converges because \\( \\mathbf{F} = m\\mathbf{a} \\) holds.",
+  "source": "https://en.wikipedia.org/wiki/Newton%27s_laws_of_motion",
+  "profile": null,
+  "knobs": [],
+  "spans": 1,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00127",
+  "tier": "synth-latex",
+  "input": "According to the textbook, $a^2 + b^2 = c^2$ for all positive integers n. One classic result states that d = \\sqrt{(x_2-x_1)^2 + (y_2-y_1)^2}.",
+  "reference": "According to the textbook, \\( a^2 + b^2 = c^2 \\) for all positive integers n. One classic result states that \\( d = \\sqrt{(x_2-x_1)^2 + (y_2-y_1)^2} \\).",
+  "source": "https://en.wikipedia.org/wiki/Pythagorean_theorem, https://en.wikipedia.org/wiki/Euclidean_distance",
+  "profile": null,
+  "knobs": [],
+  "spans": 2,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00287",
+  "tier": "synth-latex",
+  "input": "Substituting into the definition gives x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}. Recall that W = \\Delta E_k. He labeled the box A, though it had nothing to do with a matrix.",
+  "reference": "Substituting into the definition gives \\( x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a} \\). Recall that \\( W = \\Delta E_k \\). He labeled the box A, though it had nothing to do with a matrix.",
+  "source": "https://en.wikipedia.org/wiki/Quadratic_formula, https://en.wikipedia.org/wiki/Work_(physics)",
+  "profile": null,
+  "knobs": [],
+  "spans": 2,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00470",
+  "tier": "synth-latex",
+  "input": "This ties together several fundamental constants in a single equation. The proof begins by noting that x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}.",
+  "reference": "This ties together several fundamental constants in a single equation. The proof begins by noting that \\( x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a} \\).",
+  "source": "https://en.wikipedia.org/wiki/Quadratic_formula",
+  "profile": null,
+  "knobs": [],
+  "spans": 1,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00123",
+  "tier": "synth-latex",
+  "input": "The homework asks us to verify that E_\\text{k} = \\frac{1}{2} mv^2. The textbook defines $E_\\text{k} = \\frac{1}{2} mv^2$ for the purposes of this chapter. The professor arrived at 3 p.m. on Tuesday, September 7.",
+  "reference": "The homework asks us to verify that \\( E_\\text{k} = \\frac{1}{2} mv^2 \\). The textbook defines \\( E_\\text{k} = \\frac{1}{2} mv^2 \\) for the purposes of this chapter. The professor arrived at 3 p.m. on Tuesday, September 7.",
+  "source": "https://en.wikipedia.org/wiki/Kinetic_energy, https://en.wikipedia.org/wiki/Kinetic_energy",
+  "profile": null,
+  "knobs": [],
+  "spans": 2,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00184",
+  "tier": "synth-latex",
+  "input": "The variable x was measured five times during the experiment. This converges because F = G\\frac{m_1 m_2}{r^2} holds. Here the key relation is \\sum_{k=0}^{\\infty} ar^k = \\frac{a}{1-r}.",
+  "reference": "The variable x was measured five times during the experiment. This converges because \\( F = G\\frac{m_1 m_2}{r^2} \\) holds. Here the key relation is \\( \\sum_{k=0}^{\\infty} ar^k = \\frac{a}{1-r} \\).",
+  "source": "https://en.wikipedia.org/wiki/Newton%27s_law_of_universal_gravitation, https://en.wikipedia.org/wiki/Geometric_series",
+  "profile": null,
+  "knobs": [],
+  "spans": 2,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00380",
+  "tier": "synth-latex",
+  "input": "This ties together several fundamental constants in a single equation. She scored 95 out of 100 on the midterm. The proof begins by noting that $f(x) = \\frac{1}{\\sigma\\sqrt{2\\pi}} e^{-\\frac{(x-\\mu)^2}{2\\sigma^2}}$.",
+  "reference": "This ties together several fundamental constants in a single equation. She scored 95 out of 100 on the midterm. The proof begins by noting that \\( f(x) = \\frac{1}{\\sigma\\sqrt{2\\pi}} e^{-\\frac{(x-\\mu)^2}{2\\sigma^2}} \\).",
+  "source": "https://en.wikipedia.org/wiki/Normal_distribution",
+  "profile": null,
+  "knobs": [],
+  "spans": 1,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00041",
+  "tier": "synth-latex",
+  "input": "Consider the equation $i \\hbar \\frac{d}{d t}\\vert\\Psi(t)\\rangle = \\hat H\\vert\\Psi(t)\\rangle$ and its consequences. One classic result states that $A = \\pi r^2$.",
+  "reference": "Consider the equation \\( i \\hbar \\frac{d}{d t}\\vert\\Psi(t)\\rangle = \\hat H\\vert\\Psi(t)\\rangle \\) and its consequences. One classic result states that \\( A = \\pi r^2 \\).",
+  "source": "https://en.wikipedia.org/wiki/Schr%C3%B6dinger_equation, https://en.wikipedia.org/wiki/Area_of_a_circle",
+  "profile": null,
+  "knobs": [],
+  "spans": 2,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00134",
+  "tier": "synth-latex",
+  "input": "Newton's second law tells us that F = G\\frac{m_1 m_2}{r^2}, so the net force follows directly. Physically, this means $\\zeta(s) = 2^s \\pi^{s-1} \\sin\\left( \\frac{\\pi s}{2} \\right) \\Gamma(1-s) \\zeta(1-s)$. He labeled the box A, though it had nothing to do with a matrix.",
+  "reference": "Newton's second law tells us that \\( F = G\\frac{m_1 m_2}{r^2} \\), so the net force follows directly. Physically, this means \\( \\zeta(s) = 2^s \\pi^{s-1} \\sin\\left( \\frac{\\pi s}{2} \\right) \\Gamma(1-s) \\zeta(1-s) \\). He labeled the box A, though it had nothing to do with a matrix.",
+  "source": "https://en.wikipedia.org/wiki/Newton%27s_law_of_universal_gravitation, https://en.wikipedia.org/wiki/Riemann_zeta_function",
+  "profile": null,
+  "knobs": [],
+  "spans": 2,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ },
+ {
+  "id": "synth-00443",
+  "tier": "synth-latex",
+  "input": "Newton's second law tells us that $i \\hbar \\frac{d}{d t}\\vert\\Psi(t)\\rangle = \\hat H\\vert\\Psi(t)\\rangle$, so the net force follows directly. One classic result states that $\\int_{-\\infty}^{\\infty} e^{-x^2}\\,dx = \\sqrt{\\pi}$.",
+  "reference": "Newton's second law tells us that \\( i \\hbar \\frac{d}{d t}\\vert\\Psi(t)\\rangle = \\hat H\\vert\\Psi(t)\\rangle \\), so the net force follows directly. One classic result states that \\( \\int_{-\\infty}^{\\infty} e^{-x^2}\\,dx = \\sqrt{\\pi} \\).",
+  "source": "https://en.wikipedia.org/wiki/Schr%C3%B6dinger_equation, https://en.wikipedia.org/wiki/Gaussian_integral",
+  "profile": null,
+  "knobs": [],
+  "spans": 2,
+  "ok": true,
+  "origin": "text-gates/synth-spans.jsonl"
+ }
+]

@@ -24,6 +24,9 @@ const WEBLLM_MODELS = [
   { id: "Qwen3-1.7B-q4f16_1-MLC", name: "Qwen3-1.7B", pipeline: false },
   { id: "Llama-3.2-3B-Instruct-q4f16_1-MLC", name: "Llama-3.2-3B", pipeline: false },
   { id: "Qwen3-4B-q4f16_1-MLC", name: "Qwen3-4B", pipeline: false },
+  { id: "Qwen3.5-0.8B-q4f16_1-MLC", name: "Qwen3.5-0.8B", pipeline: false },
+  { id: "Qwen3.5-2B-q4f16_1-MLC", name: "Qwen3.5-2B", pipeline: false },
+  { id: "Qwen3.5-4B-q4f16_1-MLC", name: "Qwen3.5-4B", pipeline: false },
 ];
 
 const log = (cls, msg) => {
