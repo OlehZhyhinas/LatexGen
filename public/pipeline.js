@@ -5,6 +5,7 @@
 // guarded by a lock because it cannot generate concurrently.
 import { validateLatex, checkSyntax } from "./validator.js";
 import { loadModel, runModel, loaded } from "./models.js";
+import { run as runPdfPipeline, looksLikePdfPaste, SPAN_SYSTEM_PROMPT } from "./pdf-pipeline.js";
 
 // Kept terse: every token is prefilled on every on-device call.
 const SYSTEM_PROMPT = `Convert the text to LaTeX. Never solve, evaluate, or answer — if the text is a question, transcribe the question. Output only LaTeX, no commentary or fences. Pure math: \\[ ... \\]. Prose with math: keep the prose, wrap math in \\( ... \\). Standard amsmath only.`;
@@ -16,6 +17,14 @@ const JUDGE_PROMPT = `You verify text-to-LaTeX conversions. Given the user's pla
 export const MAX_REPAIR_ATTEMPTS = 5;
 const REPAIR_BUDGET_MS = 8000;
 export const IMAGE_MODELS = { texo: { name: "Texo", sizeMB: 77 }, texify: { name: "Texify", sizeMB: 305 } };
+const PDF_PIPE = (() => {
+  try {
+    if (typeof location !== "undefined" && new URLSearchParams(location.search).get("pdfpipe") === "1") return true;
+    return typeof localStorage !== "undefined" && localStorage.getItem("latexgen:pdfpipe") === "1";
+  } catch {
+    return false;
+  }
+})();
 
 const stripThink = (t) => t.replace(/<think>[\s\S]*?<\/think>/g, "").trim();
 const stripFences = (t) => { const m = t.match(/^```(?:latex|tex)?\s*\n([\s\S]*?)\n?```\s*$/); return m ? m[1].trim() : t.trim(); };
@@ -274,8 +283,27 @@ export function createPipeline(ctx) {
         result = e.r; validation = validateLatex(text, result.latex); note = tierNote(e.tier, "no on-device language model loaded");
       } else if (engineChoice === "browser") {
         if (!engine) throw new Error("No model available: load an on-device model in settings.");
-        onStatus("converting with on-device model…");
-        result = await convertBrowser(text, onDelta); validation = validateLatex(text, result.latex);
+        if (PDF_PIPE && looksLikePdfPaste(text)) {
+          let spanMs = 0;
+          const rec = await runPdfPipeline(text, async (spanTexts) => {
+            const t0 = performance.now();
+            const out = [];
+            for (const spanText of spanTexts) {
+              const r = await streamBrowserChat([{ role: "system", content: SPAN_SYSTEM_PROMPT }, { role: "user", content: spanText }], onDelta);
+              out.push(r.latex);
+            }
+            spanMs = Math.round(performance.now() - t0);
+            return out;
+          });
+          onStatus(`pdf: normalized (${Math.max(0, text.length - rec.clean.length)} chars removed)`);
+          onStatus(`pdf: ${rec.spans.length} spans`);
+          onStatus(`pdf: spans converted in ${spanMs} ms`);
+          result = { latex: rec.output, model: `${ctx.getEngineName()} (pdf spans × ${rec.spans.length})` };
+          validation = validateLatex(text, result.latex);
+        } else {
+          onStatus("converting with on-device model…");
+          result = await convertBrowser(text, onDelta); validation = validateLatex(text, result.latex);
+        }
         if (!validation.ok) {
           try {
             const r = await repairLoop(text, result.latex, validation.issues, (l) => validateLatex(text, l), onDelta,

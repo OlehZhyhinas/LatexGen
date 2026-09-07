@@ -136,3 +136,31 @@ Command used:
 | 16384 | 0.0313 | 0.0136 | 0.0251 | 0.0662 | 0.0322 | 0.0236 | 0.4082 | 0.6774 |
 | 32768 | 0.0178 | 0.0000 | 0.0146 | 0.0297 | 0.0215 | 0.0166 | 0.3852 | 0.7097 |
 | 65536 | 0.0073 | 0.0000 | 0.0084 | 0.0137 | 0.0107 | 0.0044 | 0.3655 | 0.8065 |
+
+## Span pipeline vs direct on PDF pastes (2026-09-07)
+
+`bench/pdf_pipeline.py` (ported to `public/pdf-pipeline.js`, parity 530/530) normalizes PDF debris, finds maths spans by rules, sends only the spans to the model and splices the LaTeX back into the untouched prose. `bench/run-pipeline-ollama.py` runs it against the app's direct prompts through Ollama; `bench/judge-rows.py` judges with `qwen-local`; `bench/summarize-pipeline.py` prints the table. Modes: `direct` (app prompts, raw paste), `direct-norm` (normalizer, then app prompts), `pipeline` (one request per span), `pipeline-batch` (all spans in one request), `pipeline-ctx-batch` (spans marked inside the full passage). 30 pdf-paste items, greedy, thinking off, M5 Pro. `qwen3-4b-orig` is the Qwen3 4B Modelfile with thinking disabled; the stock `qwen3:4b` tag leaks reasoning into the output under Ollama and was excluded.
+
+Segmenter alone (`bench/eval-segmenter.py`, character level against gold spans): P 0.97 / R 0.98 overall; pdf-paste/clean 1.00/1.00, synth-pdf/dirty 0.96/0.92, synth-unicode 0.97/0.99.
+
+| model | mode | acc all | s all | acc clean | s clean | acc dirty | s dirty | speedup vs direct |
+|---|---|---|---|---|---|---|---|---|
+| gemma4:e2b | direct | 30% | 3.48 | 47% | 3.28 | 13% | 3.65 | 1.00x |
+| qwen3-4b-orig | direct | 37% | 1.97 | 47% | 1.63 | 27% | 2.60 | 1.00x |
+| qwen3-4b-orig | direct-norm | 40% | 1.39 | 40% | 1.34 | 40% | 1.45 | 1.41x |
+| qwen3-4b-orig | pipeline | 27% | 0.90 | 27% | 0.95 | 27% | 0.87 | 2.19x |
+| qwen3-4b-orig | pipeline-batch | 27% | 0.74 | 27% | 0.71 | 27% | 0.78 | 2.66x |
+| qwen3-4b-orig | pipeline-ctx-batch | 27% | 0.82 | 27% | 0.74 | 27% | 0.90 | 2.39x |
+| qwen3.5:0.8b | direct | 13% | 1.36 | 13% | 1.20 | 13% | 1.43 | 1.00x |
+| qwen3:0.6b | direct | 0% | 0.91 | 0% | 0.99 | 0% | 0.76 | 1.00x |
+| qwen3:0.6b | direct-norm | 0% | 0.35 | 0% | 0.28 | 0% | 0.37 | 2.57x |
+| qwen3:0.6b | pipeline | 7% | 0.44 | 7% | 0.44 | 7% | 0.44 | 2.07x |
+| qwen3:0.6b | pipeline-batch | 0% | 0.39 | 0% | 0.37 | 0% | 0.43 | 2.37x |
+| qwen3:0.6b | pipeline-ctx-batch | 0% | 0.79 | 0% | 0.67 | 0% | 0.80 | 1.15x |
+| qwen3:1.7b | direct | 0% | 1.42 | 0% | 2.34 | 0% | 1.31 | 1.00x |
+| qwen3:1.7b | direct-norm | 3% | 1.02 | 0% | 0.97 | 7% | 1.06 | 1.38x |
+| qwen3:1.7b | pipeline | 0% | 0.57 | 0% | 0.57 | 0% | 0.57 | 2.50x |
+| qwen3:1.7b | pipeline-batch | 7% | 0.64 | 7% | 0.71 | 7% | 0.59 | 2.21x |
+| qwen3:1.7b | pipeline-ctx-batch | 0% | 0.56 | 0% | 0.56 | 0% | 0.56 | 2.54x |
+
+Reading: the pipeline is 2.2–2.7x faster than direct at every size because the model generates only the maths (median 42 vs 86 output tokens) and the prose is returned verbatim, but it is less accurate than direct at 4B (27% vs 37%) and does not make the 0.6B/1.7B usable (7%). The normalizer in front of the unchanged direct prompt is the one change that improves the current path: 37% → 40% overall, 27% → 40% on dirty layouts, 2.0 → 1.4 s. Remaining pipeline failures are formulas that pdftotext scattered beyond what a contiguous span can express (limits, stacked fractions, matrices) and subscripts/exponents the extraction dropped; giving the model the surrounding sentence (`pipeline-ctx-batch`) did not change accuracy. Judge verdicts include a few notation nitpicks (`\|` vs `|`, `k_{B}` vs `k_B`) that count against all approaches equally.

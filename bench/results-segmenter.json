@@ -1,0 +1,8482 @@
+{
+  "metrics": {
+    "overall": {
+      "n": 322,
+      "char_precision": 0.9676392572944297,
+      "char_recall": 0.9747060919130744,
+      "char_f1": 0.9711598189724021,
+      "span_exact_precision": 0.4876237623762376,
+      "span_exact_recall": 0.3995943204868154,
+      "span_exact_f1": 0.43924191750278707,
+      "span_iou_precision": 0.9356435643564357,
+      "span_iou_recall": 0.7667342799188641,
+      "span_iou_f1": 0.8428093645484951
+    },
+    "pdf-paste/clean": {
+      "n": 9,
+      "char_precision": 1.0,
+      "char_recall": 1.0,
+      "char_f1": 1.0,
+      "span_exact_precision": 0.29411764705882354,
+      "span_exact_recall": 0.18518518518518517,
+      "span_exact_f1": 0.22727272727272727,
+      "span_iou_precision": 0.9411764705882353,
+      "span_iou_recall": 0.5925925925925926,
+      "span_iou_f1": 0.7272727272727272
+    },
+    "pdf-paste/dirty": {
+      "n": 7,
+      "char_precision": 0.9818181818181818,
+      "char_recall": 1.0,
+      "char_f1": 0.9908256880733944,
+      "span_exact_precision": 0.35714285714285715,
+      "span_exact_recall": 0.29411764705882354,
+      "span_exact_f1": 0.3225806451612903,
+      "span_iou_precision": 1.0,
+      "span_iou_recall": 0.8235294117647058,
+      "span_iou_f1": 0.9032258064516129
+    },
+    "synth-unicode": {
+      "n": 118,
+      "char_precision": 0.9690571532580997,
+      "char_recall": 0.9921729407379799,
+      "char_f1": 0.9804788213627993,
+      "span_exact_precision": 0.7668711656441718,
+      "span_exact_recall": 0.7668711656441718,
+      "span_exact_f1": 0.7668711656441717,
+      "span_iou_precision": 0.9938650306748467,
+      "span_iou_recall": 0.9938650306748467,
+      "span_iou_f1": 0.9938650306748467
+    },
+    "synth-pdf/dirty": {
+      "n": 89,
+      "char_precision": 0.9569336778639104,
+      "char_recall": 0.9189412737799835,
+      "char_f1": 0.9375527426160337,
+      "span_exact_precision": 0.26881720430107525,
+      "span_exact_recall": 0.1953125,
+      "span_exact_f1": 0.2262443438914027,
+      "span_iou_precision": 0.8924731182795699,
+      "span_iou_recall": 0.6484375,
+      "span_iou_f1": 0.751131221719457
+    },
+    "synth-pdf/clean": {
+      "n": 99,
+      "char_precision": 0.9677187948350072,
+      "char_recall": 0.9832361516034985,
+      "char_f1": 0.975415762834418,
+      "span_exact_precision": 0.3162393162393162,
+      "span_exact_recall": 0.23417721518987342,
+      "span_exact_f1": 0.26909090909090905,
+      "span_iou_precision": 0.8803418803418803,
+      "span_iou_recall": 0.6518987341772152,
+      "span_iou_f1": 0.7490909090909091
+    }
+  },
+  "prose": {
+    "overall": {
+      "n": 322,
+      "exact_prose_match_rate": 0.8260869565217391,
+      "mean_prose_ratio": 0.9892644517072842
+    },
+    "pdf-paste/clean": {
+      "n": 9,
+      "exact_prose_match_rate": 0.6666666666666666,
+      "mean_prose_ratio": 0.9941076130357591
+    },
+    "pdf-paste/dirty": {
+      "n": 7,
+      "exact_prose_match_rate": 0.42857142857142855,
+      "mean_prose_ratio": 0.9928316945687616
+    },
+    "synth-unicode": {
+      "n": 118,
+      "exact_prose_match_rate": 1.0,
+      "mean_prose_ratio": 1.0
+    },
+    "synth-pdf/dirty": {
+      "n": 89,
+      "exact_prose_match_rate": 0.6966292134831461,
+      "mean_prose_ratio": 0.9688194154427735
+    },
+    "synth-pdf/clean": {
+      "n": 99,
+      "exact_prose_match_rate": 0.7777777777777778,
+      "mean_prose_ratio": 0.9941559100609643
+    }
+  },
+  "worst10": [
+    {
+      "id": "synth-00003",
+      "source": "synth-unicode",
+      "char_f1": 0.0,
+      "clean": "This is one of the most quoted results in the whole course. She scored 95 out of 100 on the midterm. The derivation is left as an exercise for the reader.",
+      "gold": [],
+      "pred": []
+    },
+    {
+      "id": "synth-00009",
+      "source": "synth-pdf/clean",
+      "char_f1": 0.0,
+      "clean": "Chapter 3 covers roughly 40 pages of new material.",
+      "gold": [],
+      "pred": []
+    },
+    {
+      "id": "synth-00010",
+      "source": "synth-pdf/dirty",
+      "char_f1": 0.0,
+      "clean": "The letter e in his name is not related to Euler's number.",
+      "gold": [],
+      "pred": []
+    },
+    {
+      "id": "synth-00019",
+      "source": "synth-unicode",
+      "char_f1": 0.0,
+      "clean": "The letter e in his name is not related to Euler's number. Chapter 3 covers roughly 40 pages of new material.",
+      "gold": [],
+      "pred": []
+    },
+    {
+      "id": "synth-00023",
+      "source": "synth-pdf/dirty",
+      "char_f1": 0.0,
+      "clean": "The result generalizes to higher dimensions as well.",
+      "gold": [],
+      "pred": []
+    },
+    {
+      "id": "synth-00035",
+      "source": "synth-unicode",
+      "char_f1": 0.0,
+      "clean": "5 apples were left on the table after lunch. Which converges because the terms shrink rapidly.",
+      "gold": [],
+      "pred": []
+    },
+    {
+      "id": "synth-00039",
+      "source": "synth-unicode",
+      "char_f1": 0.0,
+      "clean": "We used 10 milliliters of solution in the second trial.",
+      "gold": [],
+      "pred": []
+    },
+    {
+      "id": "synth-00045",
+      "source": "synth-pdf/dirty",
+      "char_f1": 0.0,
+      "clean": "The letter e in his name is not related to Euler's number. The experiment ran for 2 hours before the readings stabilized. She scored 95 out of 100 on the midterm.",
+      "gold": [],
+      "pred": []
+    },
+    {
+      "id": "synth-00050",
+      "source": "synth-pdf/clean",
+      "char_f1": 0.0,
+      "clean": "The textbook costs twenty dollars at the campus store.",
+      "gold": [],
+      "pred": []
+    },
+    {
+      "id": "synth-00058",
+      "source": "synth-unicode",
+      "char_f1": 0.0,
+      "clean": "This is one of the most quoted results in the whole course.",
+      "gold": [],
+      "pred": []
+    }
+  ],
+  "details": [
+    {
+      "id": "euler-formula-passage-pdf-clean",
+      "source": "pdf-paste/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          28,
+          49
+        ],
+        [
+          189,
+          200
+        ]
+      ],
+      "pred_spans": [
+        [
+          28,
+          49
+        ],
+        [
+          189,
+          200
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "analysis-classics-passage-pdf-clean",
+      "source": "pdf-paste/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 7,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          83,
+          84
+        ],
+        [
+          86,
+          104
+        ],
+        [
+          138,
+          139
+        ],
+        [
+          141,
+          142
+        ],
+        [
+          144,
+          152
+        ],
+        [
+          154,
+          155
+        ],
+        [
+          157,
+          159
+        ]
+      ],
+      "pred_spans": [
+        [
+          83,
+          104
+        ],
+        [
+          138,
+          159
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "series-and-limit-pdf-clean",
+      "source": "pdf-paste/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 3,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          81,
+          82
+        ],
+        [
+          84,
+          100
+        ],
+        [
+          112,
+          134
+        ]
+      ],
+      "pred_spans": [
+        [
+          81,
+          100
+        ],
+        [
+          112,
+          134
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.9922480620155039
+    },
+    {
+      "id": "determinant-appendix-pdf-clean",
+      "source": "pdf-paste/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          106,
+          111
+        ],
+        [
+          113,
+          132
+        ]
+      ],
+      "pred_spans": [
+        [
+          106,
+          132
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "maxwell-note-pdf-clean",
+      "source": "pdf-paste/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 3,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          104,
+          108
+        ],
+        [
+          110,
+          114
+        ],
+        [
+          116,
+          143
+        ]
+      ],
+      "pred_spans": [
+        [
+          104,
+          143
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "physics-constants-pdf-clean",
+      "source": "pdf-paste/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 3,
+      "pred_n": 3,
+      "gold_spans": [
+        [
+          32,
+          40
+        ],
+        [
+          61,
+          68
+        ],
+        [
+          120,
+          134
+        ]
+      ],
+      "pred_spans": [
+        [
+          32,
+          39
+        ],
+        [
+          61,
+          67
+        ],
+        [
+          120,
+          133
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.9805825242718447
+    },
+    {
+      "id": "thermo-note-pdf-clean",
+      "source": "pdf-paste/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          72,
+          82
+        ],
+        [
+          110,
+          121
+        ]
+      ],
+      "pred_spans": [
+        [
+          72,
+          81
+        ],
+        [
+          110,
+          121
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "triangle-geometry-pdf-clean",
+      "source": "pdf-paste/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          91,
+          116
+        ],
+        [
+          142,
+          161
+        ]
+      ],
+      "pred_spans": [
+        [
+          91,
+          115
+        ],
+        [
+          142,
+          161
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "probability-gradient-pdf-clean",
+      "source": "pdf-paste/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 3,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          65,
+          79
+        ],
+        [
+          117,
+          129
+        ],
+        [
+          131,
+          133
+        ]
+      ],
+      "pred_spans": [
+        [
+          65,
+          78
+        ],
+        [
+          117,
+          132
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.9741379310344828
+    },
+    {
+      "id": "euler-formula-passage-pdf-dirty",
+      "source": "pdf-paste/dirty",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          28,
+          49
+        ],
+        [
+          190,
+          201
+        ]
+      ],
+      "pred_spans": [
+        [
+          28,
+          49
+        ],
+        [
+          190,
+          201
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.997867803837953
+    },
+    {
+      "id": "probability-mixture-pdf-dirty",
+      "source": "pdf-paste/dirty",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 3,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          53,
+          75
+        ],
+        [
+          180,
+          187
+        ],
+        [
+          189,
+          211
+        ]
+      ],
+      "pred_spans": [
+        [
+          53,
+          75
+        ],
+        [
+          180,
+          211
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.9829545454545454
+    },
+    {
+      "id": "series-and-limit-pdf-dirty",
+      "source": "pdf-paste/dirty",
+      "char_p": 0.9090909090909091,
+      "char_r": 1.0,
+      "char_f1": 0.9523809523809523,
+      "gold_n": 3,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          82,
+          102
+        ],
+        [
+          117,
+          141
+        ],
+        [
+          143,
+          145
+        ]
+      ],
+      "pred_spans": [
+        [
+          82,
+          105
+        ],
+        [
+          117,
+          145
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.9884169884169884
+    },
+    {
+      "id": "determinant-appendix-pdf-dirty",
+      "source": "pdf-paste/dirty",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          106,
+          131
+        ]
+      ],
+      "pred_spans": [
+        [
+          106,
+          131
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "physics-constants-pdf-dirty",
+      "source": "pdf-paste/dirty",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 3,
+      "pred_n": 3,
+      "gold_spans": [
+        [
+          32,
+          40
+        ],
+        [
+          61,
+          68
+        ],
+        [
+          119,
+          133
+        ]
+      ],
+      "pred_spans": [
+        [
+          32,
+          39
+        ],
+        [
+          61,
+          67
+        ],
+        [
+          119,
+          132
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.9805825242718447
+    },
+    {
+      "id": "thermo-note-pdf-dirty",
+      "source": "pdf-paste/dirty",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          72,
+          82
+        ],
+        [
+          110,
+          121
+        ]
+      ],
+      "pred_spans": [
+        [
+          72,
+          81
+        ],
+        [
+          110,
+          121
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "triangle-geometry-pdf-dirty",
+      "source": "pdf-paste/dirty",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 3,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          91,
+          116
+        ],
+        [
+          143,
+          147
+        ],
+        [
+          149,
+          163
+        ]
+      ],
+      "pred_spans": [
+        [
+          91,
+          115
+        ],
+        [
+          143,
+          163
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00002",
+      "source": "synth-unicode",
+      "char_p": 0.9117647058823529,
+      "char_r": 1.0,
+      "char_f1": 0.9538461538461539,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          22,
+          30
+        ],
+        [
+          78,
+          108
+        ]
+      ],
+      "pred_spans": [
+        [
+          22,
+          34
+        ],
+        [
+          78,
+          108
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00003",
+      "source": "synth-unicode",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00005",
+      "source": "synth-pdf/dirty",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          98,
+          104
+        ]
+      ],
+      "pred_spans": [
+        [
+          98,
+          104
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00006",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          32,
+          33
+        ],
+        [
+          35,
+          53
+        ]
+      ],
+      "pred_spans": [
+        [
+          32,
+          53
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00008",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          73,
+          97
+        ],
+        [
+          124,
+          144
+        ]
+      ],
+      "pred_spans": [
+        [
+          73,
+          97
+        ],
+        [
+          124,
+          144
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00009",
+      "source": "synth-pdf/clean",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00010",
+      "source": "synth-pdf/dirty",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00011",
+      "source": "synth-pdf/dirty",
+      "char_p": 0.8,
+      "char_r": 1.0,
+      "char_f1": 0.888888888888889,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          41,
+          55
+        ]
+      ],
+      "pred_spans": [
+        [
+          41,
+          57
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.9367088607594937
+    },
+    {
+      "id": "synth-00013",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 0.96875,
+      "char_f1": 0.9841269841269841,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          26,
+          39
+        ],
+        [
+          101,
+          127
+        ]
+      ],
+      "pred_spans": [
+        [
+          28,
+          39
+        ],
+        [
+          101,
+          127
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00015",
+      "source": "synth-pdf/dirty",
+      "char_p": 1.0,
+      "char_r": 0.3617021276595745,
+      "char_f1": 0.53125,
+      "gold_n": 3,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          16,
+          19
+        ],
+        [
+          21,
+          54
+        ],
+        [
+          56,
+          82
+        ]
+      ],
+      "pred_spans": [
+        [
+          56,
+          81
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.5
+    },
+    {
+      "id": "synth-00016",
+      "source": "synth-pdf/dirty",
+      "char_p": 0.8,
+      "char_r": 1.0,
+      "char_f1": 0.888888888888889,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          31,
+          44
+        ]
+      ],
+      "pred_spans": [
+        [
+          31,
+          46
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.9846153846153847
+    },
+    {
+      "id": "synth-00017",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          36,
+          50
+        ],
+        [
+          130,
+          156
+        ]
+      ],
+      "pred_spans": [
+        [
+          36,
+          50
+        ],
+        [
+          130,
+          156
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00018",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          23,
+          36
+        ]
+      ],
+      "pred_spans": [
+        [
+          23,
+          35
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00019",
+      "source": "synth-unicode",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00021",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          23,
+          29
+        ]
+      ],
+      "pred_spans": [
+        [
+          23,
+          29
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00022",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          21,
+          66
+        ]
+      ],
+      "pred_spans": [
+        [
+          21,
+          66
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00023",
+      "source": "synth-pdf/dirty",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00028",
+      "source": "synth-pdf/clean",
+      "char_p": 0.8666666666666667,
+      "char_r": 1.0,
+      "char_f1": 0.9285714285714286,
+      "gold_n": 3,
+      "pred_n": 3,
+      "gold_spans": [
+        [
+          22,
+          41
+        ],
+        [
+          97,
+          116
+        ],
+        [
+          168,
+          190
+        ]
+      ],
+      "pred_spans": [
+        [
+          22,
+          45
+        ],
+        [
+          97,
+          120
+        ],
+        [
+          168,
+          190
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00029",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          34,
+          40
+        ],
+        [
+          54,
+          66
+        ]
+      ],
+      "pred_spans": [
+        [
+          34,
+          40
+        ],
+        [
+          54,
+          66
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00031",
+      "source": "synth-pdf/dirty",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          26,
+          45
+        ]
+      ],
+      "pred_spans": [
+        [
+          26,
+          45
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00032",
+      "source": "synth-pdf/clean",
+      "char_p": 0.8695652173913043,
+      "char_r": 1.0,
+      "char_f1": 0.9302325581395349,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          25,
+          35
+        ],
+        [
+          117,
+          140
+        ]
+      ],
+      "pred_spans": [
+        [
+          25,
+          34
+        ],
+        [
+          117,
+          145
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.9863013698630136
+    },
+    {
+      "id": "synth-00033",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          24,
+          30
+        ],
+        [
+          32,
+          41
+        ]
+      ],
+      "pred_spans": [
+        [
+          24,
+          41
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00035",
+      "source": "synth-unicode",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00036",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          22,
+          47
+        ]
+      ],
+      "pred_spans": [
+        [
+          22,
+          46
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00038",
+      "source": "synth-unicode",
+      "char_p": 0.75,
+      "char_r": 1.0,
+      "char_f1": 0.8571428571428571,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          26,
+          41
+        ]
+      ],
+      "pred_spans": [
+        [
+          26,
+          46
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00039",
+      "source": "synth-unicode",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00040",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          26,
+          37
+        ]
+      ],
+      "pred_spans": [
+        [
+          26,
+          37
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00044",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          10,
+          22
+        ]
+      ],
+      "pred_spans": [
+        [
+          10,
+          22
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00045",
+      "source": "synth-pdf/dirty",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00046",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          25,
+          48
+        ],
+        [
+          75,
+          88
+        ]
+      ],
+      "pred_spans": [
+        [
+          25,
+          47
+        ],
+        [
+          75,
+          87
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00047",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          17,
+          38
+        ]
+      ],
+      "pred_spans": [
+        [
+          17,
+          38
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00050",
+      "source": "synth-pdf/clean",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00052",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          37,
+          51
+        ]
+      ],
+      "pred_spans": [
+        [
+          37,
+          50
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.989010989010989
+    },
+    {
+      "id": "synth-00055",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          34,
+          55
+        ],
+        [
+          74,
+          86
+        ]
+      ],
+      "pred_spans": [
+        [
+          34,
+          55
+        ],
+        [
+          74,
+          86
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00056",
+      "source": "synth-pdf/dirty",
+      "char_p": 0.9047619047619048,
+      "char_r": 1.0,
+      "char_f1": 0.9500000000000001,
+      "gold_n": 2,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          33,
+          35
+        ],
+        [
+          37,
+          63
+        ]
+      ],
+      "pred_spans": [
+        [
+          33,
+          65
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.9850746268656716
+    },
+    {
+      "id": "synth-00058",
+      "source": "synth-unicode",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00062",
+      "source": "synth-pdf/dirty",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          36,
+          43
+        ]
+      ],
+      "pred_spans": [
+        [
+          36,
+          42
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00063",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          36,
+          55
+        ]
+      ],
+      "pred_spans": [
+        [
+          36,
+          55
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00067",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          13,
+          25
+        ],
+        [
+          27,
+          29
+        ]
+      ],
+      "pred_spans": [
+        [
+          13,
+          28
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.9818181818181818
+    },
+    {
+      "id": "synth-00069",
+      "source": "synth-unicode",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00071",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          12,
+          35
+        ]
+      ],
+      "pred_spans": [
+        [
+          12,
+          34
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00072",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          26,
+          30
+        ],
+        [
+          32,
+          36
+        ]
+      ],
+      "pred_spans": [
+        [
+          26,
+          36
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00073",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          81,
+          114
+        ]
+      ],
+      "pred_spans": [
+        [
+          81,
+          114
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00074",
+      "source": "synth-pdf/dirty",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 1,
+      "gold_spans": [],
+      "pred_spans": [
+        [
+          25,
+          31
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.9911504424778761
+    },
+    {
+      "id": "synth-00075",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          23,
+          48
+        ]
+      ],
+      "pred_spans": [
+        [
+          23,
+          48
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00076",
+      "source": "synth-pdf/clean",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00078",
+      "source": "synth-unicode",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00079",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          37,
+          60
+        ],
+        [
+          62,
+          75
+        ]
+      ],
+      "pred_spans": [
+        [
+          37,
+          75
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00081",
+      "source": "synth-unicode",
+      "char_p": 0.85,
+      "char_r": 1.0,
+      "char_f1": 0.9189189189189189,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          21,
+          42
+        ]
+      ],
+      "pred_spans": [
+        [
+          21,
+          46
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00082",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 0.9814814814814815,
+      "char_f1": 0.9906542056074767,
+      "gold_n": 3,
+      "pred_n": 3,
+      "gold_spans": [
+        [
+          34,
+          50
+        ],
+        [
+          109,
+          133
+        ],
+        [
+          161,
+          187
+        ]
+      ],
+      "pred_spans": [
+        [
+          36,
+          50
+        ],
+        [
+          109,
+          133
+        ],
+        [
+          161,
+          187
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00084",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          32,
+          73
+        ]
+      ],
+      "pred_spans": [
+        [
+          32,
+          73
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00086",
+      "source": "synth-pdf/dirty",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00087",
+      "source": "synth-pdf/dirty",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00088",
+      "source": "synth-pdf/dirty",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          100,
+          107
+        ]
+      ],
+      "pred_spans": [
+        [
+          100,
+          106
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00089",
+      "source": "synth-pdf/dirty",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 3,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          23,
+          26
+        ],
+        [
+          28,
+          50
+        ],
+        [
+          138,
+          178
+        ]
+      ],
+      "pred_spans": [
+        [
+          23,
+          50
+        ],
+        [
+          138,
+          178
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00090",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 0.9,
+      "char_f1": 0.9473684210526316,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          82,
+          95
+        ]
+      ],
+      "pred_spans": [
+        [
+          84,
+          95
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00091",
+      "source": "synth-pdf/clean",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00092",
+      "source": "synth-pdf/clean",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00094",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          76,
+          84
+        ],
+        [
+          86,
+          117
+        ]
+      ],
+      "pred_spans": [
+        [
+          76,
+          117
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00095",
+      "source": "synth-pdf/dirty",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          22,
+          35
+        ],
+        [
+          62,
+          68
+        ]
+      ],
+      "pred_spans": [
+        [
+          22,
+          34
+        ],
+        [
+          62,
+          68
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00096",
+      "source": "synth-pdf/clean",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00097",
+      "source": "synth-pdf/dirty",
+      "char_p": 0.8333333333333334,
+      "char_r": 1.0,
+      "char_f1": 0.9090909090909091,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          40,
+          54
+        ]
+      ],
+      "pred_spans": [
+        [
+          40,
+          56
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.9367088607594937
+    },
+    {
+      "id": "synth-00098",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          26,
+          38
+        ],
+        [
+          112,
+          138
+        ]
+      ],
+      "pred_spans": [
+        [
+          26,
+          38
+        ],
+        [
+          112,
+          138
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00099",
+      "source": "synth-unicode",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00103",
+      "source": "synth-pdf/dirty",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00105",
+      "source": "synth-unicode",
+      "char_p": 0.8867924528301887,
+      "char_r": 1.0,
+      "char_f1": 0.9400000000000001,
+      "gold_n": 3,
+      "pred_n": 3,
+      "gold_spans": [
+        [
+          22,
+          43
+        ],
+        [
+          100,
+          110
+        ],
+        [
+          139,
+          165
+        ]
+      ],
+      "pred_spans": [
+        [
+          22,
+          47
+        ],
+        [
+          100,
+          110
+        ],
+        [
+          139,
+          169
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00106",
+      "source": "synth-pdf/dirty",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00108",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          25,
+          49
+        ],
+        [
+          98,
+          108
+        ]
+      ],
+      "pred_spans": [
+        [
+          25,
+          49
+        ],
+        [
+          98,
+          108
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00109",
+      "source": "synth-pdf/dirty",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00110",
+      "source": "synth-pdf/dirty",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00111",
+      "source": "synth-unicode",
+      "char_p": 0.8,
+      "char_r": 1.0,
+      "char_f1": 0.888888888888889,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          23,
+          33
+        ],
+        [
+          66,
+          78
+        ]
+      ],
+      "pred_spans": [
+        [
+          23,
+          38
+        ],
+        [
+          66,
+          78
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00113",
+      "source": "synth-pdf/clean",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00116",
+      "source": "synth-pdf/dirty",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 3,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          26,
+          38
+        ],
+        [
+          40,
+          52
+        ],
+        [
+          104,
+          118
+        ]
+      ],
+      "pred_spans": [
+        [
+          26,
+          52
+        ],
+        [
+          104,
+          117
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00117",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          32,
+          47
+        ],
+        [
+          88,
+          121
+        ]
+      ],
+      "pred_spans": [
+        [
+          32,
+          47
+        ],
+        [
+          88,
+          121
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00119",
+      "source": "synth-unicode",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00120",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          36,
+          50
+        ],
+        [
+          154,
+          163
+        ]
+      ],
+      "pred_spans": [
+        [
+          36,
+          49
+        ],
+        [
+          154,
+          163
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.9854014598540146
+    },
+    {
+      "id": "synth-00121",
+      "source": "synth-pdf/dirty",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          26,
+          32
+        ],
+        [
+          59,
+          66
+        ]
+      ],
+      "pred_spans": [
+        [
+          26,
+          32
+        ],
+        [
+          59,
+          66
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00122",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          23,
+          53
+        ]
+      ],
+      "pred_spans": [
+        [
+          23,
+          53
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00125",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          87,
+          90
+        ],
+        [
+          92,
+          95
+        ]
+      ],
+      "pred_spans": [
+        [
+          87,
+          94
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00126",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          137,
+          161
+        ]
+      ],
+      "pred_spans": [
+        [
+          137,
+          161
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00128",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 3,
+      "pred_n": 3,
+      "gold_spans": [
+        [
+          39,
+          58
+        ],
+        [
+          85,
+          99
+        ],
+        [
+          123,
+          130
+        ]
+      ],
+      "pred_spans": [
+        [
+          39,
+          58
+        ],
+        [
+          85,
+          99
+        ],
+        [
+          123,
+          130
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00129",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          34,
+          53
+        ]
+      ],
+      "pred_spans": [
+        [
+          34,
+          53
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00130",
+      "source": "synth-pdf/dirty",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 1,
+      "gold_spans": [],
+      "pred_spans": [
+        [
+          25,
+          31
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.9911504424778761
+    },
+    {
+      "id": "synth-00133",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 0.9230769230769231,
+      "char_f1": 0.9600000000000001,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          22,
+          38
+        ]
+      ],
+      "pred_spans": [
+        [
+          24,
+          38
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00135",
+      "source": "synth-unicode",
+      "char_p": 0.9142857142857143,
+      "char_r": 1.0,
+      "char_f1": 0.955223880597015,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          36,
+          62
+        ],
+        [
+          160,
+          174
+        ]
+      ],
+      "pred_spans": [
+        [
+          36,
+          66
+        ],
+        [
+          160,
+          174
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00137",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          88,
+          99
+        ]
+      ],
+      "pred_spans": [
+        [
+          88,
+          99
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00138",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          34,
+          40
+        ]
+      ],
+      "pred_spans": [
+        [
+          34,
+          40
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00140",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 4,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          24,
+          26
+        ],
+        [
+          28,
+          32
+        ],
+        [
+          34,
+          45
+        ],
+        [
+          71,
+          99
+        ]
+      ],
+      "pred_spans": [
+        [
+          24,
+          45
+        ],
+        [
+          71,
+          99
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.9855072463768116
+    },
+    {
+      "id": "synth-00144",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          90,
+          115
+        ]
+      ],
+      "pred_spans": [
+        [
+          90,
+          115
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00145",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          26,
+          59
+        ]
+      ],
+      "pred_spans": [
+        [
+          26,
+          59
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00147",
+      "source": "synth-unicode",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00149",
+      "source": "synth-pdf/clean",
+      "char_p": 0.84375,
+      "char_r": 1.0,
+      "char_f1": 0.9152542372881356,
+      "gold_n": 4,
+      "pred_n": 3,
+      "gold_spans": [
+        [
+          68,
+          82
+        ],
+        [
+          167,
+          171
+        ],
+        [
+          173,
+          177
+        ],
+        [
+          179,
+          200
+        ]
+      ],
+      "pred_spans": [
+        [
+          68,
+          81
+        ],
+        [
+          167,
+          200
+        ],
+        [
+          202,
+          210
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.9673202614379085
+    },
+    {
+      "id": "synth-00151",
+      "source": "synth-pdf/dirty",
+      "char_p": 1.0,
+      "char_r": 0.6896551724137931,
+      "char_f1": 0.8163265306122449,
+      "gold_n": 1,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          17,
+          60
+        ]
+      ],
+      "pred_spans": [
+        [
+          17,
+          24
+        ],
+        [
+          36,
+          59
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.8533333333333334
+    },
+    {
+      "id": "synth-00152",
+      "source": "synth-unicode",
+      "char_p": 0.8974358974358975,
+      "char_r": 1.0,
+      "char_f1": 0.945945945945946,
+      "gold_n": 3,
+      "pred_n": 3,
+      "gold_spans": [
+        [
+          32,
+          44
+        ],
+        [
+          68,
+          87
+        ],
+        [
+          120,
+          134
+        ]
+      ],
+      "pred_spans": [
+        [
+          32,
+          44
+        ],
+        [
+          68,
+          92
+        ],
+        [
+          120,
+          134
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00153",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 0.8888888888888888,
+      "char_f1": 0.9411764705882353,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          14,
+          30
+        ]
+      ],
+      "pred_spans": [
+        [
+          14,
+          27
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.972972972972973
+    },
+    {
+      "id": "synth-00155",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          24,
+          32
+        ],
+        [
+          63,
+          76
+        ]
+      ],
+      "pred_spans": [
+        [
+          24,
+          32
+        ],
+        [
+          63,
+          75
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00157",
+      "source": "synth-pdf/dirty",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          13,
+          27
+        ],
+        [
+          75,
+          82
+        ]
+      ],
+      "pred_spans": [
+        [
+          13,
+          26
+        ],
+        [
+          75,
+          81
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.7301587301587301
+    },
+    {
+      "id": "synth-00159",
+      "source": "synth-pdf/dirty",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 4,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          48,
+          55
+        ],
+        [
+          57,
+          63
+        ],
+        [
+          65,
+          71
+        ],
+        [
+          73,
+          79
+        ]
+      ],
+      "pred_spans": [
+        [
+          48,
+          79
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.67
+    },
+    {
+      "id": "synth-00160",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          60,
+          84
+        ]
+      ],
+      "pred_spans": [
+        [
+          60,
+          84
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00161",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          10,
+          37
+        ]
+      ],
+      "pred_spans": [
+        [
+          10,
+          36
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00163",
+      "source": "synth-pdf/dirty",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          10,
+          23
+        ]
+      ],
+      "pred_spans": [
+        [
+          10,
+          22
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00164",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 0.9523809523809523,
+      "char_f1": 0.975609756097561,
+      "gold_n": 3,
+      "pred_n": 3,
+      "gold_spans": [
+        [
+          10,
+          26
+        ],
+        [
+          97,
+          103
+        ],
+        [
+          141,
+          147
+        ]
+      ],
+      "pred_spans": [
+        [
+          12,
+          26
+        ],
+        [
+          97,
+          103
+        ],
+        [
+          141,
+          147
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00165",
+      "source": "synth-pdf/dirty",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": false,
+      "prose_ratio": 0.7272727272727273
+    },
+    {
+      "id": "synth-00167",
+      "source": "synth-pdf/clean",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00168",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          17,
+          62
+        ]
+      ],
+      "pred_spans": [
+        [
+          17,
+          62
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00171",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          23,
+          30
+        ],
+        [
+          42,
+          68
+        ]
+      ],
+      "pred_spans": [
+        [
+          23,
+          30
+        ],
+        [
+          42,
+          68
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00172",
+      "source": "synth-pdf/dirty",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          89,
+          102
+        ]
+      ],
+      "pred_spans": [
+        [
+          89,
+          101
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00175",
+      "source": "synth-unicode",
+      "char_p": 0.9210526315789473,
+      "char_r": 0.9722222222222222,
+      "char_f1": 0.9459459459459458,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          12,
+          37
+        ],
+        [
+          66,
+          82
+        ]
+      ],
+      "pred_spans": [
+        [
+          12,
+          37
+        ],
+        [
+          68,
+          86
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00176",
+      "source": "synth-pdf/dirty",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00178",
+      "source": "synth-pdf/clean",
+      "char_p": 0.7,
+      "char_r": 1.0,
+      "char_f1": 0.8235294117647058,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          39,
+          50
+        ]
+      ],
+      "pred_spans": [
+        [
+          39,
+          54
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00179",
+      "source": "synth-pdf/dirty",
+      "char_p": 1.0,
+      "char_r": 0.875,
+      "char_f1": 0.9333333333333333,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          35,
+          49
+        ],
+        [
+          79,
+          93
+        ]
+      ],
+      "pred_spans": [
+        [
+          37,
+          49
+        ],
+        [
+          81,
+          93
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00180",
+      "source": "synth-pdf/dirty",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          16,
+          34
+        ]
+      ],
+      "pred_spans": [
+        [
+          16,
+          33
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00182",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          73,
+          88
+        ]
+      ],
+      "pred_spans": [
+        [
+          73,
+          88
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00183",
+      "source": "synth-pdf/dirty",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          72,
+          78
+        ],
+        [
+          133,
+          165
+        ]
+      ],
+      "pred_spans": [
+        [
+          72,
+          78
+        ],
+        [
+          133,
+          165
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00185",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 3,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          28,
+          44
+        ],
+        [
+          46,
+          69
+        ],
+        [
+          120,
+          134
+        ]
+      ],
+      "pred_spans": [
+        [
+          28,
+          68
+        ],
+        [
+          120,
+          133
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.9937106918238994
+    },
+    {
+      "id": "synth-00186",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          22,
+          50
+        ]
+      ],
+      "pred_spans": [
+        [
+          22,
+          50
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00187",
+      "source": "synth-pdf/dirty",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          31,
+          32
+        ],
+        [
+          34,
+          55
+        ]
+      ],
+      "pred_spans": [
+        [
+          31,
+          54
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00189",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 3,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          32,
+          53
+        ],
+        [
+          55,
+          60
+        ],
+        [
+          162,
+          176
+        ]
+      ],
+      "pred_spans": [
+        [
+          32,
+          60
+        ],
+        [
+          162,
+          175
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.9851851851851852
+    },
+    {
+      "id": "synth-00191",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 3,
+      "pred_n": 3,
+      "gold_spans": [
+        [
+          26,
+          35
+        ],
+        [
+          75,
+          88
+        ],
+        [
+          108,
+          115
+        ]
+      ],
+      "pred_spans": [
+        [
+          26,
+          35
+        ],
+        [
+          75,
+          87
+        ],
+        [
+          108,
+          115
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00193",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 4,
+      "pred_n": 3,
+      "gold_spans": [
+        [
+          26,
+          45
+        ],
+        [
+          75,
+          77
+        ],
+        [
+          79,
+          103
+        ],
+        [
+          123,
+          134
+        ]
+      ],
+      "pred_spans": [
+        [
+          26,
+          45
+        ],
+        [
+          75,
+          103
+        ],
+        [
+          123,
+          134
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00194",
+      "source": "synth-pdf/dirty",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 3,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          25,
+          26
+        ],
+        [
+          28,
+          40
+        ],
+        [
+          42,
+          44
+        ]
+      ],
+      "pred_spans": [
+        [
+          25,
+          43
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00195",
+      "source": "synth-unicode",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00199",
+      "source": "synth-unicode",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00200",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 3,
+      "pred_n": 3,
+      "gold_spans": [
+        [
+          17,
+          47
+        ],
+        [
+          84,
+          94
+        ],
+        [
+          167,
+          174
+        ]
+      ],
+      "pred_spans": [
+        [
+          17,
+          47
+        ],
+        [
+          84,
+          94
+        ],
+        [
+          167,
+          174
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00201",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 0.9655172413793104,
+      "char_f1": 0.9824561403508771,
+      "gold_n": 5,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          16,
+          17
+        ],
+        [
+          19,
+          26
+        ],
+        [
+          28,
+          31
+        ],
+        [
+          33,
+          38
+        ],
+        [
+          164,
+          188
+        ]
+      ],
+      "pred_spans": [
+        [
+          19,
+          38
+        ],
+        [
+          164,
+          188
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00202",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          25,
+          32
+        ],
+        [
+          115,
+          123
+        ]
+      ],
+      "pred_spans": [
+        [
+          25,
+          31
+        ],
+        [
+          115,
+          122
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00203",
+      "source": "synth-pdf/dirty",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 4,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          17,
+          26
+        ],
+        [
+          28,
+          37
+        ],
+        [
+          167,
+          176
+        ],
+        [
+          178,
+          179
+        ]
+      ],
+      "pred_spans": [
+        [
+          17,
+          37
+        ],
+        [
+          167,
+          179
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00207",
+      "source": "synth-pdf/dirty",
+      "char_p": 0.6923076923076923,
+      "char_r": 1.0,
+      "char_f1": 0.8181818181818181,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          40,
+          57
+        ],
+        [
+          87,
+          95
+        ]
+      ],
+      "pred_spans": [
+        [
+          40,
+          57
+        ],
+        [
+          87,
+          106
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00210",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          22,
+          30
+        ]
+      ],
+      "pred_spans": [
+        [
+          22,
+          29
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00211",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          25,
+          55
+        ],
+        [
+          110,
+          143
+        ]
+      ],
+      "pred_spans": [
+        [
+          25,
+          55
+        ],
+        [
+          110,
+          143
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00213",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          99,
+          122
+        ],
+        [
+          124,
+          137
+        ]
+      ],
+      "pred_spans": [
+        [
+          99,
+          137
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00214",
+      "source": "synth-pdf/dirty",
+      "char_p": 1.0,
+      "char_r": 0.28205128205128205,
+      "char_f1": 0.44000000000000006,
+      "gold_n": 2,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          26,
+          61
+        ],
+        [
+          63,
+          80
+        ]
+      ],
+      "pred_spans": [
+        [
+          63,
+          80
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.7361111111111112
+    },
+    {
+      "id": "synth-00215",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 0.9473684210526315,
+      "char_f1": 0.972972972972973,
+      "gold_n": 4,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          34,
+          50
+        ],
+        [
+          52,
+          65
+        ],
+        [
+          94,
+          95
+        ],
+        [
+          97,
+          118
+        ]
+      ],
+      "pred_spans": [
+        [
+          38,
+          65
+        ],
+        [
+          94,
+          118
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00217",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 0.9444444444444444,
+      "char_f1": 0.9714285714285714,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          23,
+          39
+        ],
+        [
+          79,
+          86
+        ]
+      ],
+      "pred_spans": [
+        [
+          25,
+          39
+        ],
+        [
+          79,
+          86
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00218",
+      "source": "synth-pdf/dirty",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          31,
+          71
+        ],
+        [
+          98,
+          108
+        ]
+      ],
+      "pred_spans": [
+        [
+          31,
+          71
+        ],
+        [
+          98,
+          107
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00219",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          22,
+          31
+        ]
+      ],
+      "pred_spans": [
+        [
+          22,
+          30
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00220",
+      "source": "synth-pdf/clean",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00221",
+      "source": "synth-pdf/dirty",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00222",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          17,
+          32
+        ]
+      ],
+      "pred_spans": [
+        [
+          17,
+          32
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.8666666666666667
+    },
+    {
+      "id": "synth-00223",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          33,
+          47
+        ],
+        [
+          167,
+          186
+        ]
+      ],
+      "pred_spans": [
+        [
+          33,
+          46
+        ],
+        [
+          167,
+          186
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.9865771812080537
+    },
+    {
+      "id": "synth-00224",
+      "source": "synth-pdf/dirty",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00225",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          23,
+          36
+        ]
+      ],
+      "pred_spans": [
+        [
+          23,
+          35
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00227",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 0.9,
+      "char_f1": 0.9473684210526316,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          70,
+          94
+        ]
+      ],
+      "pred_spans": [
+        [
+          73,
+          94
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00231",
+      "source": "synth-pdf/clean",
+      "char_p": 0.9259259259259259,
+      "char_r": 0.9259259259259259,
+      "char_f1": 0.9259259259259259,
+      "gold_n": 3,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          12,
+          18
+        ],
+        [
+          52,
+          68
+        ],
+        [
+          70,
+          83
+        ]
+      ],
+      "pred_spans": [
+        [
+          12,
+          18
+        ],
+        [
+          56,
+          87
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.9791666666666666
+    },
+    {
+      "id": "synth-00232",
+      "source": "synth-pdf/dirty",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00233",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          17,
+          18
+        ],
+        [
+          20,
+          38
+        ]
+      ],
+      "pred_spans": [
+        [
+          17,
+          38
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00235",
+      "source": "synth-pdf/dirty",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00238",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          27,
+          52
+        ]
+      ],
+      "pred_spans": [
+        [
+          27,
+          52
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00239",
+      "source": "synth-pdf/dirty",
+      "char_p": 1.0,
+      "char_r": 0.972972972972973,
+      "char_f1": 0.9863013698630138,
+      "gold_n": 5,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          25,
+          29
+        ],
+        [
+          31,
+          57
+        ],
+        [
+          81,
+          84
+        ],
+        [
+          86,
+          87
+        ],
+        [
+          89,
+          106
+        ]
+      ],
+      "pred_spans": [
+        [
+          25,
+          56
+        ],
+        [
+          81,
+          103
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00241",
+      "source": "synth-pdf/clean",
+      "char_p": 0.7647058823529411,
+      "char_r": 0.8666666666666667,
+      "char_f1": 0.8125,
+      "gold_n": 2,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          23,
+          32
+        ],
+        [
+          34,
+          45
+        ]
+      ],
+      "pred_spans": [
+        [
+          27,
+          51
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.9230769230769231
+    },
+    {
+      "id": "synth-00245",
+      "source": "synth-unicode",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00246",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          17,
+          48
+        ]
+      ],
+      "pred_spans": [
+        [
+          17,
+          48
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00247",
+      "source": "synth-pdf/clean",
+      "char_p": 0.8648648648648649,
+      "char_r": 0.9411764705882353,
+      "char_f1": 0.9014084507042254,
+      "gold_n": 3,
+      "pred_n": 3,
+      "gold_spans": [
+        [
+          36,
+          51
+        ],
+        [
+          79,
+          88
+        ],
+        [
+          90,
+          110
+        ]
+      ],
+      "pred_spans": [
+        [
+          0,
+          8
+        ],
+        [
+          36,
+          51
+        ],
+        [
+          83,
+          110
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.9774436090225563
+    },
+    {
+      "id": "synth-00248",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          22,
+          28
+        ],
+        [
+          98,
+          119
+        ]
+      ],
+      "pred_spans": [
+        [
+          22,
+          28
+        ],
+        [
+          98,
+          119
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00249",
+      "source": "synth-unicode",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00250",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          12,
+          38
+        ]
+      ],
+      "pred_spans": [
+        [
+          12,
+          38
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00251",
+      "source": "synth-unicode",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00252",
+      "source": "synth-pdf/dirty",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00253",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          99,
+          125
+        ],
+        [
+          174,
+          216
+        ]
+      ],
+      "pred_spans": [
+        [
+          99,
+          125
+        ],
+        [
+          174,
+          216
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00257",
+      "source": "synth-unicode",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00259",
+      "source": "synth-unicode",
+      "char_p": 0.9361702127659575,
+      "char_r": 1.0,
+      "char_f1": 0.967032967032967,
+      "gold_n": 3,
+      "pred_n": 3,
+      "gold_spans": [
+        [
+          16,
+          38
+        ],
+        [
+          100,
+          106
+        ],
+        [
+          135,
+          160
+        ]
+      ],
+      "pred_spans": [
+        [
+          16,
+          38
+        ],
+        [
+          100,
+          106
+        ],
+        [
+          135,
+          164
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00262",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 0.875,
+      "char_f1": 0.9333333333333333,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          26,
+          40
+        ]
+      ],
+      "pred_spans": [
+        [
+          28,
+          40
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00263",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          27,
+          49
+        ]
+      ],
+      "pred_spans": [
+        [
+          27,
+          49
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00264",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          80,
+          100
+        ]
+      ],
+      "pred_spans": [
+        [
+          80,
+          100
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00269",
+      "source": "synth-pdf/clean",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00271",
+      "source": "synth-pdf/dirty",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          96,
+          136
+        ]
+      ],
+      "pred_spans": [
+        [
+          96,
+          136
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00272",
+      "source": "synth-unicode",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00279",
+      "source": "synth-pdf/dirty",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          34,
+          43
+        ]
+      ],
+      "pred_spans": [
+        [
+          34,
+          42
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00283",
+      "source": "synth-pdf/clean",
+      "char_p": 0.9302325581395349,
+      "char_r": 1.0,
+      "char_f1": 0.963855421686747,
+      "gold_n": 4,
+      "pred_n": 3,
+      "gold_spans": [
+        [
+          29,
+          43
+        ],
+        [
+          69,
+          76
+        ],
+        [
+          100,
+          101
+        ],
+        [
+          103,
+          138
+        ]
+      ],
+      "pred_spans": [
+        [
+          29,
+          42
+        ],
+        [
+          69,
+          76
+        ],
+        [
+          100,
+          143
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.9907407407407407
+    },
+    {
+      "id": "synth-00284",
+      "source": "synth-pdf/clean",
+      "char_p": 0.9090909090909091,
+      "char_r": 1.0,
+      "char_f1": 0.9523809523809523,
+      "gold_n": 2,
+      "pred_n": 3,
+      "gold_spans": [
+        [
+          67,
+          81
+        ],
+        [
+          121,
+          148
+        ]
+      ],
+      "pred_spans": [
+        [
+          0,
+          6
+        ],
+        [
+          67,
+          80
+        ],
+        [
+          121,
+          148
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.9794520547945206
+    },
+    {
+      "id": "synth-00286",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          68,
+          81
+        ]
+      ],
+      "pred_spans": [
+        [
+          68,
+          80
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00290",
+      "source": "synth-pdf/dirty",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          81,
+          92
+        ]
+      ],
+      "pred_spans": [
+        [
+          81,
+          92
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00292",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          28,
+          34
+        ]
+      ],
+      "pred_spans": [
+        [
+          28,
+          34
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00293",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          28,
+          54
+        ]
+      ],
+      "pred_spans": [
+        [
+          28,
+          54
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00295",
+      "source": "synth-pdf/dirty",
+      "char_p": 1.0,
+      "char_r": 0.5,
+      "char_f1": 0.6666666666666666,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          16,
+          24
+        ],
+        [
+          55,
+          114
+        ]
+      ],
+      "pred_spans": [
+        [
+          16,
+          23
+        ],
+        [
+          86,
+          114
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.752
+    },
+    {
+      "id": "synth-00297",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          72,
+          86
+        ]
+      ],
+      "pred_spans": [
+        [
+          72,
+          85
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.9789473684210527
+    },
+    {
+      "id": "synth-00298",
+      "source": "synth-pdf/dirty",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 3,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          82,
+          101
+        ],
+        [
+          121,
+          130
+        ],
+        [
+          132,
+          147
+        ]
+      ],
+      "pred_spans": [
+        [
+          82,
+          101
+        ],
+        [
+          121,
+          146
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00302",
+      "source": "synth-pdf/dirty",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          54,
+          64
+        ]
+      ],
+      "pred_spans": [
+        [
+          54,
+          63
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.7428571428571429
+    },
+    {
+      "id": "synth-00304",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          12,
+          36
+        ]
+      ],
+      "pred_spans": [
+        [
+          12,
+          36
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00306",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 0.9,
+      "char_f1": 0.9473684210526316,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          36,
+          49
+        ]
+      ],
+      "pred_spans": [
+        [
+          38,
+          49
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00308",
+      "source": "synth-pdf/clean",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00309",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          82,
+          110
+        ],
+        [
+          137,
+          149
+        ]
+      ],
+      "pred_spans": [
+        [
+          82,
+          110
+        ],
+        [
+          137,
+          149
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00310",
+      "source": "synth-pdf/clean",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00313",
+      "source": "synth-unicode",
+      "char_p": 0.8333333333333334,
+      "char_r": 1.0,
+      "char_f1": 0.9090909090909091,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          21,
+          40
+        ]
+      ],
+      "pred_spans": [
+        [
+          21,
+          44
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00314",
+      "source": "synth-pdf/dirty",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          78,
+          97
+        ]
+      ],
+      "pred_spans": [
+        [
+          78,
+          96
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00316",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          32,
+          44
+        ]
+      ],
+      "pred_spans": [
+        [
+          32,
+          44
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00317",
+      "source": "synth-unicode",
+      "char_p": 0.85,
+      "char_r": 1.0,
+      "char_f1": 0.9189189189189189,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          150,
+          169
+        ]
+      ],
+      "pred_spans": [
+        [
+          150,
+          173
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00318",
+      "source": "synth-pdf/dirty",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          26,
+          41
+        ],
+        [
+          43,
+          46
+        ]
+      ],
+      "pred_spans": [
+        [
+          26,
+          46
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00319",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          31,
+          39
+        ]
+      ],
+      "pred_spans": [
+        [
+          31,
+          39
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00320",
+      "source": "synth-pdf/dirty",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00321",
+      "source": "synth-pdf/dirty",
+      "char_p": 0.7727272727272727,
+      "char_r": 1.0,
+      "char_f1": 0.8717948717948718,
+      "gold_n": 2,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          28,
+          37
+        ],
+        [
+          39,
+          51
+        ]
+      ],
+      "pred_spans": [
+        [
+          28,
+          59
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.90625
+    },
+    {
+      "id": "synth-00322",
+      "source": "synth-pdf/dirty",
+      "char_p": 1.0,
+      "char_r": 0.9090909090909091,
+      "char_f1": 0.9523809523809523,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          28,
+          47
+        ]
+      ],
+      "pred_spans": [
+        [
+          28,
+          44
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00323",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          27,
+          53
+        ]
+      ],
+      "pred_spans": [
+        [
+          27,
+          53
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00324",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 0.875,
+      "char_f1": 0.9333333333333333,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          78,
+          92
+        ]
+      ],
+      "pred_spans": [
+        [
+          80,
+          92
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00325",
+      "source": "synth-pdf/dirty",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 4,
+      "pred_n": 3,
+      "gold_spans": [
+        [
+          40,
+          47
+        ],
+        [
+          76,
+          91
+        ],
+        [
+          93,
+          96
+        ],
+        [
+          155,
+          185
+        ]
+      ],
+      "pred_spans": [
+        [
+          40,
+          47
+        ],
+        [
+          76,
+          96
+        ],
+        [
+          155,
+          184
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00328",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 0.9,
+      "char_f1": 0.9473684210526316,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          23,
+          47
+        ]
+      ],
+      "pred_spans": [
+        [
+          26,
+          47
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00330",
+      "source": "synth-pdf/clean",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00331",
+      "source": "synth-pdf/dirty",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          131,
+          137
+        ]
+      ],
+      "pred_spans": [
+        [
+          131,
+          137
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00335",
+      "source": "synth-unicode",
+      "char_p": 0.8928571428571429,
+      "char_r": 1.0,
+      "char_f1": 0.9433962264150945,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          27,
+          57
+        ]
+      ],
+      "pred_spans": [
+        [
+          27,
+          61
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00336",
+      "source": "synth-pdf/clean",
+      "char_p": 0.46153846153846156,
+      "char_r": 0.46153846153846156,
+      "char_f1": 0.46153846153846156,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          27,
+          32
+        ],
+        [
+          34,
+          49
+        ]
+      ],
+      "pred_spans": [
+        [
+          40,
+          49
+        ],
+        [
+          90,
+          101
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.9869281045751634
+    },
+    {
+      "id": "synth-00338",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 8,
+      "pred_n": 3,
+      "gold_spans": [
+        [
+          17,
+          18
+        ],
+        [
+          20,
+          21
+        ],
+        [
+          23,
+          31
+        ],
+        [
+          33,
+          34
+        ],
+        [
+          36,
+          38
+        ],
+        [
+          100,
+          109
+        ],
+        [
+          111,
+          112
+        ],
+        [
+          138,
+          153
+        ]
+      ],
+      "pred_spans": [
+        [
+          17,
+          38
+        ],
+        [
+          100,
+          112
+        ],
+        [
+          138,
+          153
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00340",
+      "source": "synth-pdf/clean",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00341",
+      "source": "synth-pdf/dirty",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          10,
+          55
+        ],
+        [
+          181,
+          196
+        ]
+      ],
+      "pred_spans": [
+        [
+          10,
+          55
+        ],
+        [
+          181,
+          195
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.9849624060150376
+    },
+    {
+      "id": "synth-00342",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 0.9,
+      "char_f1": 0.9473684210526316,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          141,
+          165
+        ]
+      ],
+      "pred_spans": [
+        [
+          144,
+          165
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00343",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 3,
+      "pred_n": 3,
+      "gold_spans": [
+        [
+          10,
+          22
+        ],
+        [
+          90,
+          115
+        ],
+        [
+          142,
+          170
+        ]
+      ],
+      "pred_spans": [
+        [
+          10,
+          22
+        ],
+        [
+          90,
+          115
+        ],
+        [
+          142,
+          170
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00344",
+      "source": "synth-unicode",
+      "char_p": 0.9210526315789473,
+      "char_r": 1.0,
+      "char_f1": 0.958904109589041,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          26,
+          45
+        ],
+        [
+          74,
+          99
+        ]
+      ],
+      "pred_spans": [
+        [
+          26,
+          45
+        ],
+        [
+          74,
+          103
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00345",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 3,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          13,
+          20
+        ],
+        [
+          22,
+          46
+        ],
+        [
+          78,
+          101
+        ]
+      ],
+      "pred_spans": [
+        [
+          13,
+          46
+        ],
+        [
+          78,
+          101
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.9846153846153847
+    },
+    {
+      "id": "synth-00346",
+      "source": "synth-unicode",
+      "char_p": 0.8,
+      "char_r": 0.96,
+      "char_f1": 0.8727272727272728,
+      "gold_n": 3,
+      "pred_n": 3,
+      "gold_spans": [
+        [
+          25,
+          38
+        ],
+        [
+          74,
+          107
+        ],
+        [
+          119,
+          132
+        ]
+      ],
+      "pred_spans": [
+        [
+          27,
+          52
+        ],
+        [
+          74,
+          107
+        ],
+        [
+          121,
+          132
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00347",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          31,
+          42
+        ]
+      ],
+      "pred_spans": [
+        [
+          31,
+          42
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00349",
+      "source": "synth-pdf/dirty",
+      "char_p": 0.9574468085106383,
+      "char_r": 1.0,
+      "char_f1": 0.9782608695652174,
+      "gold_n": 3,
+      "pred_n": 3,
+      "gold_spans": [
+        [
+          24,
+          66
+        ],
+        [
+          94,
+          108
+        ],
+        [
+          139,
+          145
+        ]
+      ],
+      "pred_spans": [
+        [
+          24,
+          66
+        ],
+        [
+          94,
+          107
+        ],
+        [
+          139,
+          149
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.9878048780487805
+    },
+    {
+      "id": "synth-00350",
+      "source": "synth-unicode",
+      "char_p": 0.9454545454545454,
+      "char_r": 1.0,
+      "char_f1": 0.9719626168224299,
+      "gold_n": 3,
+      "pred_n": 3,
+      "gold_spans": [
+        [
+          27,
+          53
+        ],
+        [
+          119,
+          136
+        ],
+        [
+          160,
+          181
+        ]
+      ],
+      "pred_spans": [
+        [
+          27,
+          53
+        ],
+        [
+          119,
+          136
+        ],
+        [
+          160,
+          185
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00352",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          23,
+          53
+        ],
+        [
+          78,
+          90
+        ]
+      ],
+      "pred_spans": [
+        [
+          23,
+          53
+        ],
+        [
+          78,
+          90
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00353",
+      "source": "synth-unicode",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00355",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          17,
+          59
+        ],
+        [
+          96,
+          115
+        ]
+      ],
+      "pred_spans": [
+        [
+          17,
+          59
+        ],
+        [
+          96,
+          115
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00356",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          39,
+          53
+        ],
+        [
+          77,
+          88
+        ]
+      ],
+      "pred_spans": [
+        [
+          39,
+          52
+        ],
+        [
+          77,
+          88
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.9931506849315068
+    },
+    {
+      "id": "synth-00357",
+      "source": "synth-pdf/dirty",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          39,
+          46
+        ]
+      ],
+      "pred_spans": [
+        [
+          39,
+          45
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00358",
+      "source": "synth-pdf/clean",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00359",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          10,
+          11
+        ],
+        [
+          13,
+          48
+        ]
+      ],
+      "pred_spans": [
+        [
+          10,
+          48
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00360",
+      "source": "synth-pdf/dirty",
+      "char_p": 0.7777777777777778,
+      "char_r": 1.0,
+      "char_f1": 0.8750000000000001,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          111,
+          112
+        ],
+        [
+          114,
+          135
+        ]
+      ],
+      "pred_spans": [
+        [
+          8,
+          15
+        ],
+        [
+          111,
+          134
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.9625
+    },
+    {
+      "id": "synth-00362",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          68,
+          93
+        ]
+      ],
+      "pred_spans": [
+        [
+          68,
+          93
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00364",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          39,
+          45
+        ]
+      ],
+      "pred_spans": [
+        [
+          39,
+          45
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00365",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 4,
+      "pred_n": 3,
+      "gold_spans": [
+        [
+          29,
+          35
+        ],
+        [
+          51,
+          55
+        ],
+        [
+          57,
+          65
+        ],
+        [
+          92,
+          103
+        ]
+      ],
+      "pred_spans": [
+        [
+          29,
+          35
+        ],
+        [
+          51,
+          65
+        ],
+        [
+          92,
+          103
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00366",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          25,
+          44
+        ]
+      ],
+      "pred_spans": [
+        [
+          25,
+          44
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00368",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          79,
+          80
+        ],
+        [
+          82,
+          98
+        ]
+      ],
+      "pred_spans": [
+        [
+          79,
+          98
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00370",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 4,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          13,
+          20
+        ],
+        [
+          22,
+          46
+        ],
+        [
+          130,
+          141
+        ],
+        [
+          143,
+          169
+        ]
+      ],
+      "pred_spans": [
+        [
+          13,
+          46
+        ],
+        [
+          130,
+          168
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00371",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          94,
+          119
+        ]
+      ],
+      "pred_spans": [
+        [
+          94,
+          119
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00372",
+      "source": "synth-pdf/dirty",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00373",
+      "source": "synth-pdf/dirty",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 3,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          26,
+          27
+        ],
+        [
+          29,
+          44
+        ],
+        [
+          46,
+          47
+        ]
+      ],
+      "pred_spans": [
+        [
+          26,
+          47
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00374",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          73,
+          115
+        ],
+        [
+          133,
+          158
+        ]
+      ],
+      "pred_spans": [
+        [
+          73,
+          115
+        ],
+        [
+          133,
+          158
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00379",
+      "source": "synth-pdf/dirty",
+      "char_p": 1.0,
+      "char_r": 0.9655172413793104,
+      "char_f1": 0.9824561403508771,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          25,
+          62
+        ],
+        [
+          145,
+          151
+        ]
+      ],
+      "pred_spans": [
+        [
+          25,
+          61
+        ],
+        [
+          145,
+          151
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00381",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 0.9,
+      "char_f1": 0.9473684210526316,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          36,
+          49
+        ]
+      ],
+      "pred_spans": [
+        [
+          38,
+          49
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00382",
+      "source": "synth-unicode",
+      "char_p": 0.9545454545454546,
+      "char_r": 0.984375,
+      "char_f1": 0.9692307692307692,
+      "gold_n": 3,
+      "pred_n": 3,
+      "gold_spans": [
+        [
+          22,
+          63
+        ],
+        [
+          113,
+          126
+        ],
+        [
+          178,
+          206
+        ]
+      ],
+      "pred_spans": [
+        [
+          22,
+          63
+        ],
+        [
+          115,
+          130
+        ],
+        [
+          178,
+          206
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00383",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          12,
+          18
+        ],
+        [
+          42,
+          59
+        ]
+      ],
+      "pred_spans": [
+        [
+          12,
+          18
+        ],
+        [
+          42,
+          59
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00384",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          114,
+          139
+        ]
+      ],
+      "pred_spans": [
+        [
+          114,
+          139
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00385",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 3,
+      "pred_n": 3,
+      "gold_spans": [
+        [
+          25,
+          31
+        ],
+        [
+          55,
+          80
+        ],
+        [
+          113,
+          139
+        ]
+      ],
+      "pred_spans": [
+        [
+          25,
+          31
+        ],
+        [
+          55,
+          80
+        ],
+        [
+          113,
+          139
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00386",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          22,
+          63
+        ]
+      ],
+      "pred_spans": [
+        [
+          22,
+          63
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00387",
+      "source": "synth-unicode",
+      "char_p": 0.9491525423728814,
+      "char_r": 1.0,
+      "char_f1": 0.9739130434782608,
+      "gold_n": 3,
+      "pred_n": 3,
+      "gold_spans": [
+        [
+          25,
+          53
+        ],
+        [
+          80,
+          95
+        ],
+        [
+          118,
+          143
+        ]
+      ],
+      "pred_spans": [
+        [
+          25,
+          53
+        ],
+        [
+          80,
+          95
+        ],
+        [
+          118,
+          147
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00392",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 0.875,
+      "char_f1": 0.9333333333333333,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          23,
+          37
+        ]
+      ],
+      "pred_spans": [
+        [
+          25,
+          37
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00393",
+      "source": "synth-pdf/dirty",
+      "char_p": 0.92,
+      "char_r": 1.0,
+      "char_f1": 0.9583333333333334,
+      "gold_n": 4,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          26,
+          32
+        ],
+        [
+          34,
+          36
+        ],
+        [
+          38,
+          40
+        ],
+        [
+          42,
+          66
+        ]
+      ],
+      "pred_spans": [
+        [
+          26,
+          70
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.9811320754716981
+    },
+    {
+      "id": "synth-00394",
+      "source": "synth-pdf/dirty",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00395",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          73,
+          79
+        ]
+      ],
+      "pred_spans": [
+        [
+          73,
+          79
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00397",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          36,
+          44
+        ]
+      ],
+      "pred_spans": [
+        [
+          36,
+          43
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00398",
+      "source": "synth-pdf/dirty",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          13,
+          19
+        ]
+      ],
+      "pred_spans": [
+        [
+          13,
+          19
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00399",
+      "source": "synth-pdf/dirty",
+      "char_p": 0.9333333333333333,
+      "char_r": 1.0,
+      "char_f1": 0.9655172413793104,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          90,
+          119
+        ],
+        [
+          172,
+          199
+        ]
+      ],
+      "pred_spans": [
+        [
+          90,
+          122
+        ],
+        [
+          172,
+          199
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.9795918367346939
+    },
+    {
+      "id": "synth-00401",
+      "source": "synth-unicode",
+      "char_p": 0.90625,
+      "char_r": 1.0,
+      "char_f1": 0.9508196721311475,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          17,
+          41
+        ],
+        [
+          89,
+          104
+        ]
+      ],
+      "pred_spans": [
+        [
+          17,
+          41
+        ],
+        [
+          89,
+          108
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00402",
+      "source": "synth-pdf/clean",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00403",
+      "source": "synth-pdf/dirty",
+      "char_p": 0.625,
+      "char_r": 1.0,
+      "char_f1": 0.7692307692307693,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          26,
+          34
+        ]
+      ],
+      "pred_spans": [
+        [
+          26,
+          38
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.993103448275862
+    },
+    {
+      "id": "synth-00404",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 4,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          11,
+          13
+        ],
+        [
+          15,
+          39
+        ],
+        [
+          121,
+          123
+        ],
+        [
+          125,
+          149
+        ]
+      ],
+      "pred_spans": [
+        [
+          11,
+          39
+        ],
+        [
+          121,
+          149
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00406",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          36,
+          55
+        ],
+        [
+          156,
+          184
+        ]
+      ],
+      "pred_spans": [
+        [
+          36,
+          55
+        ],
+        [
+          156,
+          184
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00407",
+      "source": "synth-pdf/dirty",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          39,
+          54
+        ],
+        [
+          56,
+          57
+        ]
+      ],
+      "pred_spans": [
+        [
+          39,
+          57
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00408",
+      "source": "synth-pdf/dirty",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          22,
+          34
+        ],
+        [
+          36,
+          38
+        ]
+      ],
+      "pred_spans": [
+        [
+          22,
+          38
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00412",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          76,
+          83
+        ]
+      ],
+      "pred_spans": [
+        [
+          76,
+          82
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00413",
+      "source": "synth-unicode",
+      "char_p": 0.8125,
+      "char_r": 1.0,
+      "char_f1": 0.896551724137931,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          22,
+          39
+        ]
+      ],
+      "pred_spans": [
+        [
+          22,
+          43
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00414",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          26,
+          59
+        ]
+      ],
+      "pred_spans": [
+        [
+          26,
+          59
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00415",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          91,
+          106
+        ]
+      ],
+      "pred_spans": [
+        [
+          91,
+          105
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00416",
+      "source": "synth-unicode",
+      "char_p": 0.7692307692307693,
+      "char_r": 1.0,
+      "char_f1": 0.8695652173913044,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          23,
+          31
+        ],
+        [
+          126,
+          132
+        ]
+      ],
+      "pred_spans": [
+        [
+          23,
+          35
+        ],
+        [
+          126,
+          132
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00417",
+      "source": "synth-pdf/dirty",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          84,
+          85
+        ],
+        [
+          87,
+          108
+        ]
+      ],
+      "pred_spans": [
+        [
+          84,
+          107
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00418",
+      "source": "synth-pdf/dirty",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 5,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          22,
+          24
+        ],
+        [
+          26,
+          30
+        ],
+        [
+          32,
+          43
+        ],
+        [
+          95,
+          105
+        ],
+        [
+          107,
+          127
+        ]
+      ],
+      "pred_spans": [
+        [
+          22,
+          43
+        ],
+        [
+          95,
+          126
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00420",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          12,
+          18
+        ],
+        [
+          37,
+          44
+        ]
+      ],
+      "pred_spans": [
+        [
+          12,
+          18
+        ],
+        [
+          37,
+          44
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00421",
+      "source": "synth-pdf/dirty",
+      "char_p": 0.9230769230769231,
+      "char_r": 1.0,
+      "char_f1": 0.9600000000000001,
+      "gold_n": 3,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          22,
+          35
+        ],
+        [
+          74,
+          97
+        ],
+        [
+          99,
+          102
+        ]
+      ],
+      "pred_spans": [
+        [
+          22,
+          37
+        ],
+        [
+          74,
+          101
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.991869918699187
+    },
+    {
+      "id": "synth-00423",
+      "source": "synth-unicode",
+      "char_p": 0.9230769230769231,
+      "char_r": 1.0,
+      "char_f1": 0.9600000000000001,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          21,
+          35
+        ],
+        [
+          97,
+          131
+        ]
+      ],
+      "pred_spans": [
+        [
+          21,
+          35
+        ],
+        [
+          97,
+          135
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00424",
+      "source": "synth-pdf/dirty",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00425",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          80,
+          110
+        ],
+        [
+          151,
+          157
+        ]
+      ],
+      "pred_spans": [
+        [
+          80,
+          110
+        ],
+        [
+          151,
+          157
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00428",
+      "source": "synth-pdf/clean",
+      "char_p": 0.8333333333333334,
+      "char_r": 0.9090909090909091,
+      "char_f1": 0.8695652173913043,
+      "gold_n": 4,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          22,
+          26
+        ],
+        [
+          28,
+          32
+        ],
+        [
+          104,
+          113
+        ],
+        [
+          115,
+          126
+        ]
+      ],
+      "pred_spans": [
+        [
+          22,
+          32
+        ],
+        [
+          108,
+          132
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.9787234042553191
+    },
+    {
+      "id": "synth-00429",
+      "source": "synth-pdf/dirty",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          29,
+          57
+        ]
+      ],
+      "pred_spans": [
+        [
+          29,
+          57
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00431",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          11,
+          17
+        ]
+      ],
+      "pred_spans": [
+        [
+          11,
+          17
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00433",
+      "source": "synth-pdf/dirty",
+      "char_p": 0.6666666666666666,
+      "char_r": 1.0,
+      "char_f1": 0.8,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          32,
+          38
+        ]
+      ],
+      "pred_spans": [
+        [
+          32,
+          42
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.9846153846153847
+    },
+    {
+      "id": "synth-00434",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          25,
+          45
+        ]
+      ],
+      "pred_spans": [
+        [
+          25,
+          45
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00435",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 0.9411764705882353,
+      "char_f1": 0.9696969696969697,
+      "gold_n": 5,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          23,
+          24
+        ],
+        [
+          26,
+          33
+        ],
+        [
+          35,
+          38
+        ],
+        [
+          40,
+          45
+        ],
+        [
+          119,
+          125
+        ]
+      ],
+      "pred_spans": [
+        [
+          26,
+          45
+        ],
+        [
+          119,
+          125
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00436",
+      "source": "synth-pdf/dirty",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00437",
+      "source": "synth-pdf/clean",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00439",
+      "source": "synth-pdf/dirty",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00441",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          63,
+          104
+        ]
+      ],
+      "pred_spans": [
+        [
+          63,
+          104
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00445",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          25,
+          32
+        ]
+      ],
+      "pred_spans": [
+        [
+          25,
+          31
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00446",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 3,
+      "pred_n": 3,
+      "gold_spans": [
+        [
+          17,
+          39
+        ],
+        [
+          78,
+          90
+        ],
+        [
+          108,
+          130
+        ]
+      ],
+      "pred_spans": [
+        [
+          17,
+          39
+        ],
+        [
+          78,
+          90
+        ],
+        [
+          108,
+          130
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00448",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 3,
+      "pred_n": 3,
+      "gold_spans": [
+        [
+          22,
+          46
+        ],
+        [
+          73,
+          106
+        ],
+        [
+          164,
+          194
+        ]
+      ],
+      "pred_spans": [
+        [
+          22,
+          46
+        ],
+        [
+          73,
+          106
+        ],
+        [
+          164,
+          194
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00449",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 0.9523809523809523,
+      "char_f1": 0.975609756097561,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          34,
+          58
+        ],
+        [
+          152,
+          178
+        ]
+      ],
+      "pred_spans": [
+        [
+          37,
+          58
+        ],
+        [
+          152,
+          178
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00452",
+      "source": "synth-pdf/dirty",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 5,
+      "pred_n": 3,
+      "gold_spans": [
+        [
+          25,
+          28
+        ],
+        [
+          30,
+          53
+        ],
+        [
+          111,
+          114
+        ],
+        [
+          116,
+          142
+        ],
+        [
+          184,
+          194
+        ]
+      ],
+      "pred_spans": [
+        [
+          25,
+          52
+        ],
+        [
+          111,
+          141
+        ],
+        [
+          184,
+          193
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00455",
+      "source": "synth-pdf/dirty",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          16,
+          27
+        ]
+      ],
+      "pred_spans": [
+        [
+          16,
+          27
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00456",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          17,
+          62
+        ]
+      ],
+      "pred_spans": [
+        [
+          17,
+          62
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00457",
+      "source": "synth-pdf/dirty",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          16,
+          38
+        ]
+      ],
+      "pred_spans": [
+        [
+          16,
+          38
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.9444444444444444
+    },
+    {
+      "id": "synth-00458",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          42,
+          71
+        ]
+      ],
+      "pred_spans": [
+        [
+          42,
+          70
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.9487179487179487
+    },
+    {
+      "id": "synth-00459",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          10,
+          29
+        ]
+      ],
+      "pred_spans": [
+        [
+          10,
+          29
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00460",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          36,
+          39
+        ],
+        [
+          41,
+          67
+        ]
+      ],
+      "pred_spans": [
+        [
+          36,
+          66
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00461",
+      "source": "synth-unicode",
+      "char_p": 0.8571428571428571,
+      "char_r": 1.0,
+      "char_f1": 0.923076923076923,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          83,
+          109
+        ]
+      ],
+      "pred_spans": [
+        [
+          83,
+          114
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00463",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          25,
+          67
+        ],
+        [
+          116,
+          131
+        ]
+      ],
+      "pred_spans": [
+        [
+          25,
+          67
+        ],
+        [
+          116,
+          131
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00464",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          35,
+          41
+        ]
+      ],
+      "pred_spans": [
+        [
+          35,
+          41
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00469",
+      "source": "synth-pdf/dirty",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          33,
+          42
+        ],
+        [
+          44,
+          62
+        ]
+      ],
+      "pred_spans": [
+        [
+          33,
+          62
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00473",
+      "source": "synth-unicode",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00474",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 0.9473684210526315,
+      "char_f1": 0.972972972972973,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          12,
+          28
+        ],
+        [
+          115,
+          123
+        ]
+      ],
+      "pred_spans": [
+        [
+          14,
+          28
+        ],
+        [
+          115,
+          123
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00475",
+      "source": "synth-unicode",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00476",
+      "source": "synth-pdf/dirty",
+      "char_p": 0.8666666666666667,
+      "char_r": 1.0,
+      "char_f1": 0.9285714285714286,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          34,
+          53
+        ]
+      ],
+      "pred_spans": [
+        [
+          34,
+          56
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.9859154929577465
+    },
+    {
+      "id": "synth-00477",
+      "source": "synth-unicode",
+      "char_p": 0.8846153846153846,
+      "char_r": 1.0,
+      "char_f1": 0.9387755102040816,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          25,
+          35
+        ],
+        [
+          80,
+          99
+        ]
+      ],
+      "pred_spans": [
+        [
+          25,
+          35
+        ],
+        [
+          80,
+          103
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00478",
+      "source": "synth-pdf/clean",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00481",
+      "source": "synth-pdf/clean",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          22,
+          30
+        ],
+        [
+          68,
+          76
+        ]
+      ],
+      "pred_spans": [
+        [
+          22,
+          29
+        ],
+        [
+          68,
+          75
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00482",
+      "source": "synth-pdf/dirty",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          28,
+          40
+        ],
+        [
+          42,
+          44
+        ]
+      ],
+      "pred_spans": [
+        [
+          28,
+          44
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.9953051643192489
+    },
+    {
+      "id": "synth-00483",
+      "source": "synth-pdf/clean",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00484",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          90,
+          120
+        ],
+        [
+          144,
+          169
+        ]
+      ],
+      "pred_spans": [
+        [
+          90,
+          120
+        ],
+        [
+          144,
+          169
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00486",
+      "source": "synth-pdf/dirty",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          26,
+          30
+        ],
+        [
+          32,
+          40
+        ]
+      ],
+      "pred_spans": [
+        [
+          26,
+          40
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00488",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          157,
+          198
+        ]
+      ],
+      "pred_spans": [
+        [
+          157,
+          198
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00491",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          84,
+          112
+        ],
+        [
+          136,
+          142
+        ]
+      ],
+      "pred_spans": [
+        [
+          84,
+          112
+        ],
+        [
+          136,
+          142
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00492",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          162,
+          168
+        ]
+      ],
+      "pred_spans": [
+        [
+          162,
+          168
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00493",
+      "source": "synth-pdf/clean",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00494",
+      "source": "synth-pdf/dirty",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 1,
+      "pred_n": 1,
+      "gold_spans": [
+        [
+          174,
+          189
+        ]
+      ],
+      "pred_spans": [
+        [
+          174,
+          189
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.9902912621359223
+    },
+    {
+      "id": "synth-00496",
+      "source": "synth-unicode",
+      "char_p": 1.0,
+      "char_r": 1.0,
+      "char_f1": 1.0,
+      "gold_n": 2,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          87,
+          99
+        ],
+        [
+          123,
+          149
+        ]
+      ],
+      "pred_spans": [
+        [
+          87,
+          99
+        ],
+        [
+          123,
+          149
+        ]
+      ],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    },
+    {
+      "id": "synth-00497",
+      "source": "synth-pdf/clean",
+      "char_p": 0.0,
+      "char_r": 0.0,
+      "char_f1": 0.0,
+      "gold_n": 0,
+      "pred_n": 0,
+      "gold_spans": [],
+      "pred_spans": [],
+      "prose_exact": true,
+      "prose_ratio": 1.0
+    }
+  ]
+}

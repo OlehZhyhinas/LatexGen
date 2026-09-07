@@ -1,0 +1,42 @@
+[
+ {
+  "approach": "direct:qwen3:0.6b",
+  "model": "qwen3:0.6b",
+  "item": "quadratic-formula",
+  "tier": "easy",
+  "ms": 293,
+  "output": "$$\nx = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}\n$$",
+  "valid": true,
+  "issues": [],
+  "requests": 1,
+  "thinking": 0,
+  "evalTokens": 27,
+  "promptTokens": 122,
+  "evalMs": 123
+ },
+ {
+  "approach": "pipeline:qwen3:0.6b",
+  "model": "qwen3:0.6b",
+  "item": "mechanics-homework-passage-pdf-clean",
+  "tier": "pdf-paste",
+  "spans": 2,
+  "span_texts": [
+   "A block is pushed across a frictionless table. Newton's second law tells us that F = ma, so the net force is the mass times the acceleration. The speed comes from v = ds , the dt",
+   "derivative of position with respect to time. Once we know the speed, the kinetic energy of the block is Ek = 12 mv 2"
+  ],
+  "span_latex": [
+   "\\text{A block is pushed across a frictionless table. Newton's second law tells us that } F = ma, \\text{ so the net force is the mass times the acceleration.} \\text{ The speed comes from } v = ds, \\text{ the } dt.",
+   "\\boxed{ \\frac{d}{dt} x(t) }"
+  ],
+  "clean": "A block is pushed across a frictionless table. Newton's second law tells us that F = ma, so the net force is the mass times the acceleration. The speed comes from v = ds , the dt\n\nderivative of position with respect to time. Once we know the speed, the kinetic energy of the block is Ek = 12 mv 2 .",
+  "ms": 611,
+  "output": "\\[ \\text{A block is pushed across a frictionless table. Newton's second law tells us that } F = ma, \\text{ so the net force is the mass times the acceleration.} \\text{ The speed comes from } v = ds, \\text{ the } dt. \\]\n\n\\( \\boxed{ \\frac{d}{dt} x(t) } \\) .",
+  "valid": true,
+  "issues": [],
+  "requests": 2,
+  "thinking": 0,
+  "evalTokens": 75,
+  "promptTokens": 324,
+  "evalMs": 339
+ }
+]
