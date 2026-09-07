@@ -487,7 +487,7 @@ $("input").addEventListener("keydown", (e) => { if ((e.metaKey || e.ctrlKey) && 
   if (!prefs().consent) consent.hidden = false;
   const maybeStartLadder = () => { if (llmEnabled() && !engine) { const best = modelRows.find((r) => r.canRun); if (best) { loadBtn.hidden = true; startModelLadder(best); } } };
   for (const btn of consent.querySelectorAll(".consent-opt")) {
-    btn.addEventListener("click", () => { setPref("consent", btn.dataset.consent); consent.hidden = true; $("llm-enabled").checked = llmEnabled(); maybeStartLadder(); });
+    btn.addEventListener("click", () => { setPref("consent", btn.dataset.consent); consent.hidden = true; $("llm-enabled").checked = llmEnabled(); maybeStartLadder(); maybeShowWebnnPrompt(); });
   }
   const llmBox = $("llm-enabled");
   llmBox.checked = llmEnabled();
@@ -495,6 +495,75 @@ $("input").addEventListener("keydown", (e) => { if ((e.metaKey || e.ctrlKey) && 
   const strictBox = $("strict-mode");
   strictBox.checked = strictMode();
   strictBox.addEventListener("change", () => setPref("strict", strictBox.checked));
+}
+
+// ---- WebNN flags prompt (Chrome/Edge on Mac; navigator.ml is off for most users) ----
+function webnnAvailableNow() {
+  return typeof navigator !== "undefined" && !!navigator.ml && typeof navigator.ml.createContext === "function";
+}
+function isIosFamily() {
+  const ua = navigator.userAgent || "";
+  return /iPhone|iPad|iPod/.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+}
+function isMacDesktop() {
+  if (isIosFamily()) return false;
+  const platform = navigator.userAgentData?.platform || "";
+  return platform === "macOS" || /Mac/.test(navigator.platform || "") || /Macintosh/.test(navigator.userAgent || "");
+}
+function isChromium() {
+  const brands = navigator.userAgentData?.brands ?? [];
+  if (brands.some((b) => /Chromium|Google Chrome|Microsoft Edge|Brave|Opera/.test(b.brand || ""))) return true;
+  const ua = navigator.userAgent || "";
+  return /Chrome\//.test(ua) && !/Firefox\//.test(ua);
+}
+function flagsPageUrl() {
+  return /Edg\//.test(navigator.userAgent || "") ? "edge://flags/#webnn" : "chrome://flags/#webnn";
+}
+function webnnPromptForced() {
+  return new URLSearchParams(location.search).get("webnn") === "prompt";
+}
+function webnnPromptEligible() {
+  if (webnnPromptForced()) return true;
+  return !webnnAvailableNow() && isMacDesktop() && isChromium();
+}
+function showWebnnPrompt() {
+  const modal = $("webnn-prompt");
+  if (!modal) return;
+  const open = $("webnn-open");
+  const pasteUrl = $("webnn-flags-url");
+  open.textContent = /Edg\//.test(navigator.userAgent || "") ? "Open Edge flags" : "Open Chrome flags";
+  if (pasteUrl) pasteUrl.textContent = flagsPageUrl();
+  $("webnn-paste").hidden = true;
+  modal.hidden = false;
+  open.focus();
+}
+function maybeShowWebnnPrompt() {
+  const settings = $("webnn-settings");
+  if (settings) settings.hidden = !webnnPromptEligible();
+  if (!webnnPromptEligible() || (prefs().webnnPrompt === "dismissed" && !webnnPromptForced())) return;
+  if (!$("consent").hidden) return;
+  showWebnnPrompt();
+}
+{
+  const modal = $("webnn-prompt");
+  $("webnn-dismiss")?.addEventListener("click", () => { setPref("webnnPrompt", "dismissed"); modal.hidden = true; });
+  $("webnn-settings-open")?.addEventListener("click", () => showWebnnPrompt());
+  $("webnn-open")?.addEventListener("click", async () => {
+    // Pages cannot navigate to chrome:// or edge://. Copy the URL and show it
+    // so the click still lands them on the flags page with the WebNN search.
+    const url = flagsPageUrl();
+    try { await navigator.clipboard.writeText(url); } catch { /* ignore */ }
+    $("webnn-paste").hidden = false;
+    $("webnn-flags-url").textContent = url;
+    toast("Paste the copied address into the bar, then set those flags to Enabled.");
+  });
+  modal?.addEventListener("click", (e) => { if (e.target === modal) { setPref("webnnPrompt", "dismissed"); modal.hidden = true; } });
+  document.addEventListener("keydown", (e) => {
+    if (e.key !== "Escape" || !modal || modal.hidden) return;
+    setPref("webnnPrompt", "dismissed");
+    modal.hidden = true;
+  });
+  maybeShowWebnnPrompt();
 }
 
 // ---- history and favorites (this browser only) ----
