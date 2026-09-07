@@ -50,6 +50,43 @@ function toast(msg, ms = 1800) {
   t._timer = setTimeout(() => { t.hidden = true; }, ms);
 }
 
+const KIND_LABEL = { run: "run", step: "step", model: "model", check: "check", stream: "out", error: "error", done: "done" };
+function logEvent({ kind = "step", title, detail, raw, live, bad } = {}) {
+  const box = $("activity-log");
+  if (!box) return;
+  box.querySelector(".activity-empty")?.remove();
+  const stick = box.scrollHeight - box.scrollTop - box.clientHeight < 56;
+  let el = live ? box.querySelector(`[data-live="${CSS.escape(String(live))}"]`) : null;
+  if (!el) {
+    el = document.createElement("article");
+    el.className = `act act-${kind}`;
+    if (live) el.dataset.live = String(live);
+    const meta = document.createElement("div"); meta.className = "act-meta";
+    const time = document.createElement("span"); time.className = "act-time";
+    time.textContent = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" });
+    const k = document.createElement("span"); k.className = "act-kind";
+    meta.append(time, k);
+    const h = document.createElement("div"); h.className = "act-title";
+    const d = document.createElement("div"); d.className = "act-detail";
+    const pre = document.createElement("pre"); pre.className = "act-raw";
+    el.append(meta, h, d, pre);
+    box.appendChild(el);
+  }
+  el.className = `act act-${kind}${bad ? " is-bad" : ""}`;
+  el.querySelector(".act-kind").textContent = KIND_LABEL[kind] ?? kind;
+  el.querySelector(".act-title").textContent = title || "";
+  const det = el.querySelector(".act-detail");
+  det.textContent = detail || "";
+  det.hidden = !detail;
+  const pre = el.querySelector(".act-raw");
+  if (raw == null || raw === "") { pre.hidden = true; pre.textContent = ""; }
+  else { pre.hidden = false; pre.textContent = String(raw); }
+  const idle = $("activity-idle");
+  if (idle) idle.textContent = (kind === "done" || kind === "error") ? "Idle" : "Working…";
+  if (stick) box.scrollTop = box.scrollHeight;
+}
+window.__logEvent = logEvent;
+
 // ---- pipeline ----
 const SLOW_DEVICE_TOK_S = 25;
 function browserIsSlow() { return browserTokPerSec != null && browserTokPerSec < SLOW_DEVICE_TOK_S; }
@@ -68,6 +105,17 @@ const pipe = createPipeline({
 });
 window.__repairLoop = pipe.repairLoop; // debugging hook
 const specialistReady = pipe.ensureSpecialist(); // start the ~190MB specialist download immediately
+{
+  const mb = (n) => `${(Number(n) / 2 ** 20).toFixed(1)} MB`;
+  const watch = (key, title, detail) => onModelProgress(key, (p) => {
+    const file = p.file ?? key;
+    const raw = p.total ? `${file}\n${mb(p.loaded ?? 0)} / ${mb(p.total)}` : (p.text ?? file);
+    logEvent({ kind: "step", title, detail, raw, live: `load-${key}` });
+  });
+  watch("intellitex", "Loading the specialist", "IntelliTeX weights, and a one-time compile if WebNN is on.");
+  watch("texo", "Loading Texo", "Small equation OCR. Downloaded once, then cached.");
+  watch("texify", "Loading Texify", "Larger OCR model. Downloaded once, then cached.");
+}
 
 // ---- rendering helpers ----
 function renderPreview(latex) {
@@ -127,7 +175,7 @@ convertBtn.addEventListener("click", async () => {
   outputCode.textContent = "";
   try {
     const r = await pipe.convertText(text, {
-      engineChoice: engineChoice(), onStatus: onStatusUI, onDelta: onDeltaUI,
+      engineChoice: engineChoice(), onStatus: onStatusUI, onDelta: onDeltaUI, onEvent: logEvent,
       onDraft: (latex, v) => { outputCode.textContent = latex; renderPreview(latex); showChecks(v, "(draft from the specialist — improving…)"); },
     });
     presentResult(text, r, `${(r.ms / 1000).toFixed(1)}s · ${r.model}${r.escalated ? " (escalated)" : ""}`);
@@ -135,6 +183,7 @@ convertBtn.addEventListener("click", async () => {
     if (strictMode() && r.validation.ok && !r.batch) backgroundJudge(text, r.latex);
   } catch (err) {
     convertStatus.textContent = String(err.message || err);
+    logEvent({ kind: "error", title: "Conversion failed", raw: String(err.message || err) });
   } finally {
     convertBtn.disabled = false;
   }
@@ -163,7 +212,7 @@ async function convertImage(fileOrBlob, forceModel = null) {
   const prog = imageProgressUI();
   try {
     const r = await pipe.convertImage(fileOrBlob, {
-      ocr: forceModel ?? "auto", onProgress: prog.onProgress, onDelta: onDeltaUI,
+      ocr: forceModel ?? "auto", onProgress: prog.onProgress, onDelta: onDeltaUI, onEvent: logEvent,
       onStatus: (s, extra) => { label.textContent = s; if (extra?.issues) showChecks({ ok: false, issues: extra.issues }, ""); },
     });
     lastImageModel = r.used;
@@ -173,6 +222,7 @@ async function convertImage(fileOrBlob, forceModel = null) {
     altBtn.hidden = false;
   } catch (err) {
     convertStatus.textContent = `image conversion failed: ${err.message || err}`;
+    logEvent({ kind: "error", title: "Image conversion failed", raw: String(err.message || err) });
   } finally {
     prog.done(); drop.classList.remove("busy");
     label.innerHTML = "Drop / paste / <u>choose</u> an image of an equation — processed entirely in your browser, never uploaded";
@@ -195,7 +245,7 @@ async function checkLatexUI(latex) {
   convertBtn.disabled = true; checksEl.innerHTML = ""; convertStatus.textContent = "checking…";
   outputCode.textContent = latex; renderPreview(latex);
   try {
-    const r = await pipe.checkLatex(latex, { onStatus: onStatusUI, onDelta: onDeltaUI });
+    const r = await pipe.checkLatex(latex, { onStatus: onStatusUI, onDelta: onDeltaUI, onEvent: logEvent });
     presentResult("(latex check)", r, r.validation.ok ? "valid LaTeX" : "issues found");
   } finally { convertBtn.disabled = false; }
 }
@@ -208,7 +258,7 @@ async function sendRefinement() {
   addMsg("user", instruction);
   const pending = addMsg("note", "revising…");
   try {
-    const r = await pipe.refine({ original: currentInput, latex: currentLatex, instruction, engineChoice: engineChoice(), onDelta: (p) => { pending.textContent = p; } });
+    const r = await pipe.refine({ original: currentInput, latex: currentLatex, instruction, engineChoice: engineChoice(), onDelta: (p) => { pending.textContent = p; }, onEvent: logEvent });
     pending.remove();
     if (r.echo) {
       addMsg("note", 'The model returned your feedback instead of edited LaTeX, so I kept the previous version. Try stating the change directly, e.g. "change TV to T(V)".');
@@ -230,11 +280,13 @@ chatInput.addEventListener("keydown", (e) => { if (e.key === "Enter") sendRefine
 async function backgroundJudge(text, latex) {
   const pending = document.createElement("span"); pending.className = "info"; pending.innerHTML = "<i></i>second opinion…";
   checksEl.appendChild(pending);
+  logEvent({ kind: "step", title: "Asking a second model to verify", detail: "Strict mode. This runs after the result is already on screen." });
   const j = await pipe.judge(text, latex);
   if (outputCode.textContent.trim() !== latex.trim()) { pending.remove(); return; } // user moved on
   pending.remove();
   if (j.unavailable) return;
-  if (j.ok) { const ok = document.createElement("span"); ok.className = "ok"; ok.innerHTML = "<i></i>verified by a second model"; checksEl.appendChild(ok); return; }
+  if (j.ok) { const ok = document.createElement("span"); ok.className = "ok"; ok.innerHTML = "<i></i>verified by a second model"; checksEl.appendChild(ok); logEvent({ kind: "check", title: "Second model agrees", raw: j.reason || "ok" }); return; }
+  logEvent({ kind: "check", title: "Second model disagrees", detail: j.reason || "disagrees", raw: j.reason, bad: true });
   const warn = document.createElement("span"); warn.className = "warn"; warn.innerHTML = `<i></i>second opinion: ${j.reason || "disagrees"}`;
   checksEl.appendChild(warn);
   if (!engine && !serverAvailable) return;
@@ -368,38 +420,50 @@ function activate(eng, modelId, statusText) {
   window.dispatchEvent(new CustomEvent("latexgen:caps-changed"));
 }
 // Progressive ladder: quick model first, best-for-device model swapped in later.
+function logLoadProgress(title, detail, live, p) {
+  logEvent({ kind: "step", title, detail, raw: p.text ?? `${Math.round((p.progress ?? 0) * 100)}%`, live });
+}
 async function startModelLadder(best) {
   const starter = [...modelRows].reverse().find((r) => r.canRun);
   loadBtn.hidden = true;
   try {
     if (starter && starter.id !== best.id) {
       loadStatus.textContent = `loading quick model (${starter.name})…`;
-      const quick = await loadEngine(starter.id, (p) => { progressFill.style.width = `${Math.round((p.progress ?? 0) * 100)}%`; });
+      logEvent({ kind: "step", title: `Loading ${starter.name}`, detail: "A smaller on-device language model first, so conversions can start while the larger one downloads." });
+      const quick = await loadEngine(starter.id, (p) => { progressFill.style.width = `${Math.round((p.progress ?? 0) * 100)}%`; logLoadProgress(`Loading ${starter.name}`, "On-device language model. Downloaded once, then cached.", `load-webllm-${starter.id}`, p); });
       activate(quick, starter.id, `ready on ${starter.name} — downloading ${best.name} in background…`);
+      logEvent({ kind: "done", title: `${starter.name} is ready`, detail: "Conversions can use this while the larger model loads." });
     }
     const bigStatus = engine
-      ? (p) => { progressFill.style.width = `${Math.round((p.progress ?? 0) * 100)}%`; loadStatus.textContent = `ready on ${modelRows.find((r) => r.id === loadedModel)?.name} — ${p.text ?? "downloading upgrade…"}`; }
-      : (p) => { loadStatus.textContent = p.text ?? "loading…"; progressFill.style.width = `${Math.round((p.progress ?? 0) * 100)}%`; };
+      ? (p) => { progressFill.style.width = `${Math.round((p.progress ?? 0) * 100)}%`; loadStatus.textContent = `ready on ${modelRows.find((r) => r.id === loadedModel)?.name} — ${p.text ?? "downloading upgrade…"}`; logLoadProgress(`Loading ${best.name}`, "Larger on-device language model, in the background.", `load-webllm-${best.id}`, p); }
+      : (p) => { loadStatus.textContent = p.text ?? "loading…"; progressFill.style.width = `${Math.round((p.progress ?? 0) * 100)}%`; logLoadProgress(`Loading ${best.name}`, "On-device language model. Downloaded once, then cached.", `load-webllm-${best.id}`, p); };
     const bigEngine = await loadEngine(best.id, bigStatus);
     activate(bigEngine, best.id, `loaded: ${best.name}`);
     progressFill.style.width = "100%";
+    logEvent({ kind: "done", title: `${best.name} is ready`, detail: engine?.latexgenPlan?.label ?? "stock WebLLM" });
   } catch (err) {
     const current = modelRows.find((r) => r.id === loadedModel);
     loadStatus.textContent = engine && current ? `upgrade failed (${String(err).slice(0, 60)}…) — continuing on ${current.name}` : `load failed: ${err}`;
     loadBtn.hidden = false;
+    logEvent({ kind: "error", title: "On-device language model failed to load", raw: String(err) });
   }
 }
 async function loadPicked(row) {
   loadBtn.hidden = true;
   try {
-    const eng = await loadEngine(row.id, (p) => { loadStatus.textContent = p.text ?? "loading…"; progressFill.style.width = `${Math.round((p.progress ?? 0) * 100)}%`; });
+    const eng = await loadEngine(row.id, (p) => { loadStatus.textContent = p.text ?? "loading…"; progressFill.style.width = `${Math.round((p.progress ?? 0) * 100)}%`; logLoadProgress(`Loading ${row.name}`, "On-device language model. Downloaded once, then cached.", `load-webllm-${row.id}`, p); });
     activate(eng, row.id, `loaded: ${row.name}`); progressFill.style.width = "100%";
-  } catch (err) { loadStatus.textContent = `load failed: ${err}`; loadBtn.hidden = false; }
+    logEvent({ kind: "done", title: `${row.name} is ready` });
+  } catch (err) { loadStatus.textContent = `load failed: ${err}`; loadBtn.hidden = false; logEvent({ kind: "error", title: "On-device language model failed to load", raw: String(err) }); }
 }
 loadBtn.addEventListener("click", () => { const row = modelRows.find((r) => r.id === selectedModelId); if (row) loadPicked(row); });
 ddBtn.addEventListener("click", () => { ddMenu.hidden = !ddMenu.hidden; });
 document.addEventListener("click", (e) => { if (!$("model-dd").contains(e.target)) ddMenu.hidden = true; });
-specialistReady.then(buildModelPicker, buildModelPicker);
+specialistReady.then((ok) => {
+  const rt = runtimeUsed.intellitex;
+  logEvent({ kind: ok ? "done" : "error", title: ok ? "Specialist is ready" : "Specialist failed to load", detail: rt ? `${rt.device ?? "cpu"}${rt.dtype ? ` · ${rt.dtype}` : ""}` : "", raw: rt ? JSON.stringify(rt) : "" });
+  return buildModelPicker();
+}, () => { logEvent({ kind: "error", title: "Specialist failed to load" }); return buildModelPicker(); });
 
 // ---- WebGPU availability ----
 if (!navigator.gpu) {
@@ -835,6 +899,7 @@ if (!STATIC_BUILD) {
     };
     const pack = (r, extra = {}) => ({ latex: r.latex, ok: r.validation.ok, issues: r.validation.issues, model: r.model, note: r.note?.replace(/^\(|\)$/g, "") ?? "", ms: r.ms, ...extra });
     const eng = job.engine === "server" ? "server" : "browser";
+    const onEvent = (e) => logEvent({ ...e, title: `${job.pool ? "Peer" : "Tab API"} · ${e.title}` });
     if (job.kind === "status") {
       return { ok: true, models: { specialist: pipe.loaded.intellitex, texo: pipe.loaded.texo, texify: pipe.loaded.texify, llm: loadedModel ? (modelRows.find((r) => r.id === loadedModel)?.name ?? loadedModel) : null },
         webllm: engine?.latexgenPlan?.label ?? null, runtime: runtimeUsed, tokPerSec: browserTokPerSec, server: serverAvailable, strictMode: strictMode(), running: running.size };
@@ -842,20 +907,20 @@ if (!STATIC_BUILD) {
     if (job.kind === "history") return { ok: true, history: loadHistory() };
     if (job.kind === "format") return { ok: true, latex: job.latex, ...(await fmt(job.latex, job.format)) };
     if (job.kind === "check" || (job.kind === "convert" && job.latex && !job.text && !job.imageBase64)) {
-      const r = await pipe.checkLatex(job.latex); return pack(r, { repaired: r.repaired, ...(await fmt(r.latex, job.format)) });
+      const r = await pipe.checkLatex(job.latex, { onEvent }); return pack(r, { repaired: r.repaired, ...(await fmt(r.latex, job.format)) });
     }
     if (job.kind === "refine") {
-      const r = await pipe.refine({ original: job.original || "(tab api)", latex: job.latex, instruction: job.instruction, engineChoice: eng, allowMesh: !job.noMesh, allowServer: !job.noServer });
+      const r = await pipe.refine({ original: job.original || "(tab api)", latex: job.latex, instruction: job.instruction, engineChoice: eng, allowMesh: !job.noMesh, allowServer: !job.noServer, onEvent });
       return pack(r, { echo: r.echo, retried: r.retried, ...(await fmt(r.latex, job.format)) });
     }
     if (job.imageBase64) {
       const bin = atob(job.imageBase64.replace(/^data:[^,]+,/, ""));
       const bytes = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
-      const r = await pipe.convertImage(new Blob([bytes], { type: job.mime || "image/png" }), { ocr: job.ocr || "auto" });
+      const r = await pipe.convertImage(new Blob([bytes], { type: job.mime || "image/png" }), { ocr: job.ocr || "auto", onEvent });
       return pack(r, { ocr: r.used, escalated: r.escalatedWhy || undefined, repaired: r.repaired, ...(await fmt(r.latex, job.format)) });
     }
     const local = { allowMesh: !job.noMesh, allowServer: !job.noServer };
-    const r = await pipe.convertText(job.text, { engineChoice: eng, strict: !!job.strict, ...local });
+    const r = await pipe.convertText(job.text, { engineChoice: eng, strict: !!job.strict, ...local, onEvent });
     if (r.validation.ok && !job.pool) recordHistory(job.text, r.latex);
     return pack(r, { escalated: r.escalated, batch: r.batch, judge: r.judge, peer: r.peer, ...(await fmt(r.latex, job.format)) });
   }
