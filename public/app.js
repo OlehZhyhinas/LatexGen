@@ -5,6 +5,7 @@ import * as webllm from "./vendor/webllm/index.js";
 import { validateLatex, checkSyntax } from "./validator.js";
 import { loadModel, onProgress as onModelProgress, runtimeUsed } from "./models.js";
 import { createPipeline, streamServerChat, toFormat, IMAGE_MODELS, MAX_REPAIR_ATTEMPTS, specialistEligible } from "./pipeline.js";
+import { loadCatalog, parseForce, planEngine, rememberRuntime } from "./qwen3-webllm.js";
 import { STATIC_BUILD } from "./config.js";
 
 window.__validate = validateLatex; // debugging hook
@@ -322,18 +323,47 @@ async function warmUp(eng) {
     browserTokPerSec = Math.round((r.usage?.completion_tokens ?? 40) / ((performance.now() - t0) / 1000));
   } catch { /* best-effort */ }
 }
+async function createEngineForPlan(modelId, plan, onProgress) {
+  return webllm.CreateWebWorkerMLCEngine(
+    new Worker(plan.workerUrl, { type: "module" }),
+    modelId,
+    { initProgressCallback: onProgress, appConfig: plan.appConfig },
+    { context_window_size: 2048 }
+  );
+}
 async function loadEngine(modelId, onProgress) {
-  const eng = await webllm.CreateWebWorkerMLCEngine(new Worker(new URL("webllm-worker.js", import.meta.url), { type: "module" }), modelId, { initProgressCallback: onProgress }, { context_window_size: 2048 });
+  const stockRecord = prebuilt.get(modelId);
+  if (!stockRecord) throw new Error(`Unknown WebLLM model: ${modelId}`);
+  let catalog = null;
+  try { catalog = await loadCatalog(); } catch { catalog = null; }
+  const force = parseForce(location.search);
+  let plan = await planEngine(modelId, catalog, { force, stockRecord });
+  let eng;
+  if (plan.kind === "catalog") {
+    try {
+      eng = await createEngineForPlan(modelId, plan, onProgress);
+    } catch (err) {
+      rememberRuntime(modelId, "stock", String(err));
+      console.warn(`webllm catalog runtime failed for ${modelId}, falling back to stock`, err);
+      onProgress?.({ progress: 0, text: "catalog runtime failed — loading stock WebLLM…" });
+      plan = await planEngine(modelId, catalog, { force: "stock", stockRecord });
+      eng = await createEngineForPlan(modelId, plan, onProgress);
+    }
+  } else {
+    eng = await createEngineForPlan(modelId, plan, onProgress);
+  }
+  eng.latexgenPlan = plan;
   await warmUp(eng);
   return eng;
 }
 function activate(eng, modelId, statusText) {
   const old = engine;
   engine = eng; loadedModel = modelId;
-  loadStatus.textContent = statusText;
+  const planLabel = eng?.latexgenPlan?.label ?? "stock WebLLM";
+  loadStatus.textContent = statusText.startsWith("loaded: ") ? `${statusText} (${planLabel})` : statusText;
   const row = modelRows.find((r) => r.id === modelId);
   const speed = browserTokPerSec != null ? ` · ${browserTokPerSec} tok/s` : "";
-  $("model-status").textContent = `On-device model: ${row?.name ?? modelId}${speed}`;
+  $("model-status").textContent = `On-device model: ${row?.name ?? modelId} · ${planLabel}${speed}`;
   if (old && old !== eng) old.unload().catch(() => {});
   window.dispatchEvent(new CustomEvent("latexgen:caps-changed"));
 }
@@ -738,7 +768,7 @@ if (!STATIC_BUILD) {
     const eng = job.engine === "server" ? "server" : "browser";
     if (job.kind === "status") {
       return { ok: true, models: { specialist: pipe.loaded.intellitex, texo: pipe.loaded.texo, texify: pipe.loaded.texify, llm: loadedModel ? (modelRows.find((r) => r.id === loadedModel)?.name ?? loadedModel) : null },
-        runtime: runtimeUsed, tokPerSec: browserTokPerSec, server: serverAvailable, strictMode: strictMode(), running: running.size };
+        webllm: engine?.latexgenPlan?.label ?? null, runtime: runtimeUsed, tokPerSec: browserTokPerSec, server: serverAvailable, strictMode: strictMode(), running: running.size };
     }
     if (job.kind === "history") return { ok: true, history: loadHistory() };
     if (job.kind === "format") return { ok: true, latex: job.latex, ...(await fmt(job.latex, job.format)) };

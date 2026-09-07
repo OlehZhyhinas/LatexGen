@@ -47,6 +47,17 @@ Two things make it more than a file copy:
   The token needs write scope. Homebrew's Python is externally managed, so
   `pip install` into it fails — use the formula or pipx.
 
+- **The qwen3-webllm bundles are vendored, not fetched.** The CSP
+  (`script-src 'self' 'wasm-unsafe-eval'`) forbids dynamic `import()` of a
+  blob:/https: module, so the three patched WebLLM 0.2.84 bundles ship
+  same-origin under `public/vendor/webllm/` like every other vendored
+  library (`node scripts/vendor-qwen3-webllm.mjs --check` verifies them
+  against `public/models/qwen3-webllm/catalog.json`). The per-model `.wasm`
+  model libs are not vendored: like the WebNN catalog's recipe constants,
+  they stream straight from the `ozhyhinas/webnn-catalog` Hugging Face
+  dataset at load time (`connect-src https:` allows it), so publishing this
+  tier needs no extra upload step.
+
 - **A project page is served under a prefix** (`/LatexGen/`), so no asset path
   may be root-absolute. Every path in `public/` is relative to the page or,
   inside workers, resolved against `import.meta.url`. Keep it that way: a

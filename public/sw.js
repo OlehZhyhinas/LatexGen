@@ -16,11 +16,11 @@
 //
 // Every path here is relative to the worker's own URL, so the app works both
 // at a domain root and under a deploy prefix such as /LatexGen/.
-const VERSION = "v5-intellitex-webnn";
+const VERSION = "v6-qwen3-webllm";
 const SHELL_CACHE = `latexgen-shell-${VERSION}`;
 const VENDOR_CACHE = `latexgen-vendor-${VERSION}`;
 const SCOPE = new URL("./", location.href).pathname;
-const SHELL = ["./", "index.html", "style.css", "app.js", "config.js", "validator.js", "webllm-worker.js", "onnx-worker.js", "texo-webnn.js", "texify-webnn.js", "intellitex-webnn.js", "models.js", "pipeline.js", "manifest.webmanifest", "benchmarks.html"];
+const SHELL = ["./", "index.html", "style.css", "app.js", "config.js", "validator.js", "qwen3-webllm.js", "webllm-worker.js", "onnx-worker.js", "texo-webnn.js", "texify-webnn.js", "intellitex-webnn.js", "models.js", "pipeline.js", "manifest.webmanifest", "benchmarks.html"];
 
 self.addEventListener("install", (e) => {
   e.waitUntil(caches.open(SHELL_CACHE).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting()));
