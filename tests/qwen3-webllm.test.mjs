@@ -152,6 +152,15 @@ maybeTest("planEngine: apple+subgroups+Chrome152 picks the model's default catal
   assert.ok(plan.workerUrl.search.includes(`bundle=${runtime.file}`), plan.workerUrl.search);
 });
 
+maybeTest("planEngine: a model without catalog libs (the shipped Qwen3.5 and MiniCPM5 sizes) runs stock", async () => {
+  const cat = structuredClone(catalog);
+  for (const id of ["Qwen3.5-0.8B-q4f16_1-MLC", "MiniCPM5-2B-q4f16_1-MLC", "Qwen3.5-4B-q4f16_1-MLC", "Qwen3.5-9B-q4f16_1-MLC"]) {
+    const plan = await mod.planEngine(id, cat, { nav: goodNav(), storage: makeStorage(), stockRecord: stockRecordFor(id) });
+    assert.equal(plan.kind, "stock", id);
+    assert.equal(plan.why, "not in catalog", id);
+  }
+});
+
 maybeTest("planEngine: force stock always returns stock", async () => {
   const cat = structuredClone(catalog);
   const plan = await mod.planEngine(MODEL_ID, cat, {

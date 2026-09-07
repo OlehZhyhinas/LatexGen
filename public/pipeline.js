@@ -3,7 +3,7 @@
 // jobs never touch the user's screen. Progress is reported through optional
 // callbacks; ONNX models run in a worker (models.js); the WebLLM engine is
 // guarded by a lock because it cannot generate concurrently.
-import { validateLatex, checkSyntax } from "./validator.js";
+import { validateLatex, checkSyntax, unescapeDoubledBackslashes } from "./validator.js";
 import { loadModel, runModel, loaded } from "./models.js";
 
 // Kept terse: every token is prefilled on every on-device call.
@@ -210,7 +210,7 @@ export function createPipeline(ctx) {
       const decodeMs = firstTok != null ? performance.now() - firstTok : ms;
       const stats = runStats(ms, tokens, decodeMs);
       delta(full, { ...stats, decodeMs, done: true });
-      const latex = stripFences(stripThink(full));
+      const latex = unescapeDoubledBackslashes(stripFences(stripThink(full)));
       emit(onEvent, "model", "On-device model finished", { detail: ctx.getEngineName() || "WebLLM", raw: latex, ...stats });
       return { latex, model: ctx.getEngineName() };
     });

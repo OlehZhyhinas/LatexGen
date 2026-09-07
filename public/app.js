@@ -330,18 +330,41 @@ async function backgroundJudge(text, latex) {
 }
 
 // ---- curated model picker ----
-// Ranked by our own benchmark: 1.7B is 100%/100%/50% on easy/medium/hard
-// single equations; only 4B-class and up score on prose passages (`multiline`).
+// Ranked by the tier-matched text benchmark of 2026-09-07 (bench/judged-text-
+// tiers-2026-09-07.json, 105 items: single equations, prose passages, PDF
+// pastes, prose-with-math). Within each size class Qwen3.5 beat the Qwen3 it
+// replaces on prose and PDF pastes (4B: 64% vs 59% overall, 15/30 vs 10/30 on
+// PDF pastes; 1B: 34% vs 10%) at the cost of a few easy
+// single-equation items, which the specialist answers before the LLM is asked.
+// The 2B rung is MiniCPM5 2B (52% vs 13% for Qwen3 1.7B and 26% for Qwen3.5
+// 2B), quantized and compiled by this project (see PUBLISHED above).
+// Only 4B-class and up score on prose passages (`multiline`). Note the graph
+// catalog's tuned decode libs (qwen3-webllm.js) cover Qwen3 only, so these
+// run on stock WebLLM until Qwen3.5 libs are compiled.
 const CURATED = [
   { id: "Qwen3.5-9B-q4f16_1-MLC", name: "Qwen 3.5 · 9B", score: 5, multiline: true },
-  { id: "Qwen3-8B-q4f16_1-MLC", name: "Qwen 3 · 8B", score: 5, multiline: true },
-  { id: "Qwen3-4B-q4f16_1-MLC", name: "Qwen 3 · 4B", score: 4, multiline: true },
-  { id: "Qwen3-1.7B-q4f16_1-MLC", name: "Qwen 3 · 1.7B", score: 3 },
-  { id: "Qwen3-0.6B-q4f16_1-MLC", name: "Qwen 3 · 0.6B", score: 2 },
+  { id: "Qwen3.5-4B-q4f16_1-MLC", name: "Qwen 3.5 · 4B", score: 4, multiline: true },
+  { id: "MiniCPM5-2B-q4f16_1-MLC", name: "MiniCPM5 · 2B", score: 3 },
+  { id: "Qwen3.5-0.8B-q4f16_1-MLC", name: "Qwen 3.5 · 0.8B", score: 2 },
 ];
 const gb = (mb) => `${(mb / 1024).toFixed(1)} GB`;
 const stars = (n) => "★".repeat(n) + "☆".repeat(5 - n);
-const prebuilt = new Map(webllm.prebuiltAppConfig.model_list.map((m) => [m.model_id, m]));
+// Models this project quantized and compiled itself because no mlc-ai build
+// exists. The Hugging Face weights repo also hosts the WebGPU model lib; WebLLM
+// 0.2.84 loads it exactly like a prebuilt entry (tensor-cache.json manifest,
+// q4f16_1 shards). See docs/benchmarks.md for why MiniCPM5 2B holds the 2B rung.
+const PUBLISHED = [
+  {
+    model: "https://huggingface.co/ozhyhinas/MiniCPM5-2B-q4f16_1-MLC",
+    model_id: "MiniCPM5-2B-q4f16_1-MLC",
+    model_lib: "https://huggingface.co/ozhyhinas/MiniCPM5-2B-q4f16_1-MLC/resolve/main/libs/MiniCPM5-2B-q4f16_1-MLC-webgpu.wasm",
+    vram_required_MB: 1900,
+    low_resource_required: true,
+    required_features: ["shader-f16"],
+    overrides: { context_window_size: 4096 },
+  },
+];
+const prebuilt = new Map([...webllm.prebuiltAppConfig.model_list, ...PUBLISHED].map((m) => [m.model_id, m]));
 
 async function detectVramBudgetMB() {
   if (!navigator.gpu) return 0;
@@ -424,6 +447,8 @@ async function loadEngine(modelId, onProgress) {
       eng = await createEngineForPlan(modelId, plan, onProgress);
     }
   } else {
+    // Stock WebLLM only knows its prebuilt list; our published models travel in the app config.
+    if (PUBLISHED.some((m) => m.model_id === modelId)) plan = { ...plan, appConfig: { model_list: [stockRecord] } };
     eng = await createEngineForPlan(modelId, plan, onProgress);
   }
   eng.latexgenPlan = plan;

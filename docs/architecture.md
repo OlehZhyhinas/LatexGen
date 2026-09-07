@@ -8,7 +8,7 @@ flowchart LR
     B -- yes --> C[Specialist<br/>IntelliTeX 220M, WebNN<br/>~0.15 s]
     B -- prose / multi-line --> D
     C -- checks pass --> Z[Validated LaTeX]
-    C -- checks fail --> D[On-device LLM<br/>WebLLM, Qwen3 0.6B to 9B]
+    C -- checks fail --> D[On-device LLM<br/>WebLLM, Qwen3.5 0.8B to 9B, MiniCPM5 2B]
     D -- checks pass --> Z
     D -- checks fail --> E{Escalation}
     E --> F[Self-hosted server<br/>Ollama or local MLX]
@@ -22,7 +22,7 @@ flowchart LR
 ## Tiers
 
 1. **Specialist.** [IntelliTeX](https://huggingface.co/duanxianpi/IntelliTex) (CodeT5+ 220M) fine-tuned on plain-English to LaTeX pairs. Runs in a Web Worker: hand-built WebNN graphs from the graph catalog (`intellitex-t5-220m`) when Core ML is present, WebGPU int4 when available otherwise, and CPU int8 as the last fallback. Handles single-line inputs up to 320 characters, including lists of equations one per line (each line converted separately).
-2. **On-device language model.** WebLLM runs a Qwen3-family model on WebGPU. A progressive ladder loads the small model within seconds and swaps in the best model the device can hold, measured against the GPU budget and browser storage quota. Prompts are kept terse because prefill dominates short generations on laptop GPUs. On an Apple GPU with WGSL subgroups behind Chromium 152 or newer, the graph catalog's patched WebLLM runtime (family `qwen3-webllm`) replaces stock decoding with device-resident greedy argmax and batched command encoding, decoding noticeably faster at temperature 0; anywhere else, or if that runtime fails to load, it falls back to stock WebLLM.
+2. **On-device language model.** WebLLM runs a small model on WebGPU: Qwen3.5 0.8B, MiniCPM5 2B, Qwen3.5 4B or Qwen3.5 9B, picked by the tier-matched benchmark in [benchmarks.md](benchmarks.md), where each replaced the Qwen3 size it succeeds on prose passages and PDF pastes. MiniCPM5 2B has no upstream WebLLM build, so this project quantized and compiled it and hosts it at [ozhyhinas/MiniCPM5-2B-q4f16_1-MLC](https://huggingface.co/ozhyhinas/MiniCPM5-2B-q4f16_1-MLC); `app.js` merges that record into WebLLM's prebuilt list (`PUBLISHED`). A progressive ladder loads the small model within seconds and swaps in the best model the device can hold, measured against the GPU budget and browser storage quota. Prompts are kept terse because prefill dominates short generations on laptop GPUs. On an Apple GPU with WGSL subgroups behind Chromium 152 or newer, the graph catalog's patched WebLLM runtime (family `qwen3-webllm`) replaces stock decoding with device-resident greedy argmax and batched command encoding, decoding noticeably faster at temperature 0; the catalog currently carries tuned model libs for the Qwen3 sizes only, so the Qwen3.5 ladder runs stock WebLLM until Qwen3.5 libs are compiled. Anywhere else, or if that runtime fails to load, it falls back to stock WebLLM.
 3. **Escalation.** Ordered by trust and cost: a self-hosted local server first, then other users' tabs (the mesh), then a cloud API. The client learns the order from the server's `serverKind`.
 
 Images go through their own two-model ladder: Texo first (tiny, fast, robust to small fonts and dark backgrounds), Texify when Texo's output fails syntax checks or it spelled out prose, which it has no mode for.

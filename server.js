@@ -26,7 +26,7 @@ const OPENAI_LOCAL = /^https?:\/\/(localhost|127\.0\.0\.1|host\.docker\.internal
 const OPENAI_ENABLED = process.env.OPENAI_DISABLED !== "1";
 // --- Backend B: Ollama (self-hosted).
 const OLLAMA_URL = process.env.OLLAMA_URL || "http://host.docker.internal:11434";
-const OLLAMA_MODEL = process.env.OLLAMA_MODEL || "qwen3:1.7b";
+const OLLAMA_MODEL = process.env.OLLAMA_MODEL || "qwen3.5:4b";
 const OLLAMA_REFINE_MODEL = process.env.OLLAMA_REFINE_MODEL || OLLAMA_MODEL;
 const OLLAMA_ENABLED = process.env.OLLAMA_DISABLED !== "1";
 // Clients order their escalation ladder by this: a self-hosted local server is
