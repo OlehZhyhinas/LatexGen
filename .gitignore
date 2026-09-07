@@ -1,4 +1,5 @@
 node_modules/
+.venv/
 .DS_Store
 
 # WebGPU int4 variants are build artifacts (see scripts/build-model-variants.sh)

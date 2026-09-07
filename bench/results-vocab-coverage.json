@@ -1,0 +1,4152 @@
+{
+  "tokenizer_path": "/Users/oleh/.cache/huggingface/hub/models--Qwen--Qwen3-0.6B/snapshots/c1899de289a04d12100db370d81485cdf75e47ca/tokenizer.json",
+  "config": {
+    "original_vocab_size_for_memory": 151936,
+    "pad_multiple": 32768,
+    "pad_values": [
+      0,
+      8192,
+      16384,
+      32768,
+      65536
+    ],
+    "head_frequency_proxy": "Use first N regular token ids (after 256 byte tokens) as merge-rank proxy for top-N corpus frequency."
+  },
+  "corpus": {
+    "num_texts": 147,
+    "total_chars": 20718,
+    "total_tokens": 8137,
+    "fertility_tokens_per_char": 0.3927502654696399,
+    "seen_token_ids": 410,
+    "token_frequencies": {
+      "87": 29,
+      "16819": 45,
+      "8225": 5,
+      "293": 11,
+      "5519": 8,
+      "476": 2,
+      "27283": 14,
+      "279": 96,
+      "9334": 5,
+      "3704": 5,
+      "315": 66,
+      "52263": 14,
+      "3040": 1,
+      "264": 60,
+      "272": 8,
+      "11": 75,
+      "678": 5,
+      "916": 12,
+      "1378": 5,
+      "284": 99,
+      "1124": 895,
+      "37018": 149,
+      "19999": 4,
+      "65": 15,
+      "5187": 6,
+      "26888": 21,
+      "90": 292,
+      "61": 104,
+      "17": 128,
+      "481": 37,
+      "220": 42,
+      "19": 8,
+      "580": 8,
+      "3417": 17,
+      "64": 19,
+      "92": 344,
+      "68": 10,
+      "311": 37,
+      "2355": 6,
+      "600": 35,
+      "8938": 16,
+      "825": 19,
+      "7168": 3,
+      "47822": 41,
+      "72": 19,
+      "2493": 81,
+      "488": 34,
+      "16": 181,
+      "15": 23,
+      "1782": 7,
+      "3082": 3,
+      "362": 20,
+      "3039": 28,
+      "435": 8,
+      "32": 10,
+      "25098": 11,
+      "504": 18,
+      "54910": 10,
+      "384": 24,
+      "856": 133,
+      "13822": 12,
+      "59": 282,
+      "396": 17,
+      "15159": 83,
+      "30529": 14,
+      "258": 42,
+      "36958": 41,
+      "24884": 9,
+      "87210": 15,
+      "11035": 57,
+      "12719": 3,
+      "35702": 122,
+      "2629": 8,
+      "308": 17,
+      "4743": 2,
+      "1242": 30,
+      "77": 55,
+      "28": 37,
+      "15170": 103,
+      "21": 13,
+      "12194": 2,
+      "379": 25,
+      "9226": 2,
+      "595": 11,
+      "5157": 1,
+      "2075": 4,
+      "43010": 4,
+      "29776": 37,
+      "74": 60,
+      "28152": 1,
+      "6863": 12,
+      "316": 12,
+      "91362": 12,
+      "12646": 18,
+      "88": 2,
+      "18927": 12,
+      "2661": 7,
+      "425": 16,
+      "17779": 5,
+      "553": 8,
+      "47": 17,
+      "4346": 10,
+      "1621": 4,
+      "8": 87,
+      "5349": 11,
+      "393": 4,
+      "9139": 67,
+      "305": 1,
+      "15773": 1,
+      "31805": 6,
+      "448": 6,
+      "5091": 6,
+      "259": 9,
+      "31281": 2,
+      "53451": 2,
+      "23176": 1,
+      "1103": 1,
+      "5675": 1,
+      "472": 2,
+      "8896": 1,
+      "9251": 1,
+      "71": 8,
+      "2257": 7,
+      "67": 23,
+      "32705": 2,
+      "6321": 2,
+      "1155": 10,
+      "10699": 12,
+      "71182": 4,
+      "9198": 9,
+      "69": 32,
+      "7877": 2,
+      "41433": 2,
+      "21619": 3,
+      "282": 4,
+      "1147": 8,
+      "294": 8,
+      "2877": 5,
+      "781": 20,
+      "56014": 2,
+      "32214": 93,
+      "13174": 26,
+      "89": 66,
+      "7409": 7,
+      "37877": 2,
+      "1915": 13,
+      "274": 20,
+      "57668": 2,
+      "729": 1,
+      "1141": 74,
+      "82": 12,
+      "12": 4,
+      "15940": 57,
+      "2359": 107,
+      "7": 58,
+      "1291": 105,
+      "40457": 6,
+      "1331": 6,
+      "38": 6,
+      "11834": 3,
+      "10908": 3,
+      "6722": 1,
+      "12459": 1,
+      "342": 5,
+      "83995": 1,
+      "350": 8,
+      "15128": 18,
+      "8933": 12,
+      "58266": 2,
+      "27180": 7,
+      "2504": 9,
+      "374": 22,
+      "15391": 5,
+      "3941": 5,
+      "38576": 5,
+      "1717": 5,
+      "1965": 5,
+      "13": 35,
+      "20668": 4,
+      "594": 8,
+      "2086": 5,
+      "2329": 5,
+      "10742": 5,
+      "601": 5,
+      "429": 10,
+      "4621": 8,
+      "434": 4,
+      "296": 13,
+      "773": 5,
+      "4179": 5,
+      "5344": 6,
+      "3072": 5,
+      "30803": 5,
+      "576": 4,
+      "4628": 10,
+      "4041": 5,
+      "348": 11,
+      "2309": 5,
+      "882": 5,
+      "9646": 4,
+      "582": 11,
+      "1414": 5,
+      "70323": 5,
+      "4802": 6,
+      "468": 6,
+      "1186": 3,
+      "4279": 3,
+      "17767": 4,
+      "10374": 8,
+      "13233": 3,
+      "37": 2,
+      "701": 3,
+      "91550": 2,
+      "60618": 1,
+      "83": 7,
+      "1318": 41,
+      "69094": 1,
+      "23164": 1,
+      "568": 1,
+      "36": 3,
+      "8479": 3,
+      "14806": 3,
+      "5302": 5,
+      "75259": 1,
+      "369": 5,
+      "894": 3,
+      "1931": 3,
+      "1372": 3,
+      "1416": 3,
+      "27679": 3,
+      "1290": 3,
+      "24413": 3,
+      "3108": 3,
+      "86358": 3,
+      "323": 7,
+      "6851": 3,
+      "27185": 3,
+      "9569": 3,
+      "892": 5,
+      "19818": 4,
+      "3786": 4,
+      "4236": 4,
+      "15811": 5,
+      "18021": 4,
+      "304": 9,
+      "3175": 4,
+      "23606": 4,
+      "941": 1,
+      "9407": 49,
+      "58": 19,
+      "60": 12,
+      "11613": 3,
+      "11416": 4,
+      "3059": 3,
+      "2525": 3,
+      "705": 3,
+      "1549": 6,
+      "6358": 5,
+      "5512": 3,
+      "89458": 4,
+      "3491": 7,
+      "25": 9,
+      "10440": 3,
+      "48568": 4,
+      "11733": 3,
+      "11253": 3,
+      "21058": 3,
+      "1496": 3,
+      "3498": 3,
+      "13866": 3,
+      "33845": 3,
+      "12671": 3,
+      "14085": 100,
+      "34433": 8,
+      "19732": 2,
+      "10": 2,
+      "51185": 1,
+      "66": 16,
+      "3": 7,
+      "8525": 1,
+      "91": 4,
+      "33": 2,
+      "11730": 4,
+      "8047": 6,
+      "74615": 6,
+      "39": 7,
+      "11520": 42,
+      "1699": 8,
+      "84": 8,
+      "41715": 1,
+      "12935": 4,
+      "27": 2,
+      "397": 1,
+      "7265": 33,
+      "6612": 24,
+      "9": 17,
+      "532": 46,
+      "14581": 9,
+      "408": 28,
+      "23465": 1,
+      "522": 1,
+      "29": 1,
+      "609": 5,
+      "23013": 1,
+      "608": 2,
+      "320": 16,
+      "9612": 1,
+      "1445": 1,
+      "1653": 29,
+      "314": 14,
+      "5493": 104,
+      "3528": 104,
+      "785": 9,
+      "15136": 6,
+      "37420": 4,
+      "335": 7,
+      "25475": 4,
+      "30765": 8,
+      "25547": 3,
+      "340": 4,
+      "25718": 9,
+      "90155": 111,
+      "5": 20,
+      "873": 14,
+      "62": 69,
+      "7287": 32,
+      "717": 1,
+      "70": 1,
+      "198": 44,
+      "4713": 1,
+      "1502": 3,
+      "4574": 1,
+      "9077": 1,
+      "291": 1,
+      "76377": 1,
+      "8833": 2,
+      "4711": 2,
+      "20374": 1,
+      "1107": 1,
+      "47158": 1,
+      "12522": 1,
+      "983": 1,
+      "80": 245,
+      "31610": 251,
+      "4080": 1,
+      "44292": 1,
+      "50853": 11,
+      "297": 3,
+      "35093": 1,
+      "19535": 1,
+      "57758": 2,
+      "81": 1,
+      "271": 6,
+      "437": 2,
+      "704": 2,
+      "15976": 1,
+      "14781": 1,
+      "1806": 1,
+      "333": 1,
+      "14": 1,
+      "1660": 2,
+      "6785": 2,
+      "7546": 2,
+      "16106": 4,
+      "10569": 4,
+      "1958": 1,
+      "811": 1,
+      "921": 1,
+      "479": 2,
+      "4083": 2,
+      "2137": 2,
+      "7989": 1,
+      "5298": 1,
+      "8206": 1,
+      "26056": 2,
+      "26107": 10,
+      "400": 69,
+      "319": 2,
+      "41968": 2,
+      "4698": 2,
+      "9640": 4,
+      "25310": 4,
+      "367": 4,
+      "88464": 5,
+      "6599": 4,
+      "14669": 2,
+      "3422": 1,
+      "26243": 1,
+      "6066": 2,
+      "34": 2,
+      "6062": 6,
+      "1040": 2,
+      "7058": 2,
+      "630": 2,
+      "382": 3,
+      "78045": 1,
+      "1102": 2,
+      "57960": 5,
+      "31716": 3,
+      "2441": 1,
+      "8672": 9,
+      "1096": 1,
+      "13302": 1,
+      "438": 2,
+      "1447": 2,
+      "2303": 1,
+      "22957": 2,
+      "5326": 1,
+      "5356": 1,
+      "45340": 2
+    }
+  },
+  "keep_set": {
+    "size": 636,
+    "padded_size": 32768,
+    "byte_token_ids": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      72,
+      73,
+      74,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80,
+      81,
+      82,
+      83,
+      84,
+      85,
+      86,
+      87,
+      88,
+      89,
+      90,
+      91,
+      92,
+      93,
+      94,
+      95,
+      96,
+      97,
+      98,
+      99,
+      100,
+      101,
+      102,
+      103,
+      104,
+      105,
+      106,
+      107,
+      108,
+      109,
+      110,
+      111,
+      112,
+      113,
+      114,
+      115,
+      116,
+      117,
+      118,
+      119,
+      120,
+      121,
+      122,
+      123,
+      124,
+      125,
+      126,
+      127,
+      128,
+      129,
+      130,
+      131,
+      132,
+      133,
+      134,
+      135,
+      136,
+      137,
+      138,
+      139,
+      140,
+      141,
+      142,
+      143,
+      144,
+      145,
+      146,
+      147,
+      148,
+      149,
+      150,
+      151,
+      152,
+      153,
+      154,
+      155,
+      156,
+      157,
+      158,
+      159,
+      160,
+      161,
+      162,
+      163,
+      164,
+      165,
+      166,
+      167,
+      168,
+      169,
+      170,
+      171,
+      172,
+      173,
+      174,
+      175,
+      176,
+      177,
+      178,
+      179,
+      180,
+      181,
+      182,
+      183,
+      184,
+      185,
+      186,
+      187,
+      188,
+      189,
+      190,
+      191,
+      192,
+      193,
+      194,
+      195,
+      196,
+      197,
+      198,
+      199,
+      200,
+      201,
+      202,
+      203,
+      204,
+      205,
+      206,
+      207,
+      208,
+      209,
+      210,
+      211,
+      212,
+      213,
+      214,
+      215,
+      216,
+      217,
+      218,
+      219,
+      220,
+      221,
+      222,
+      223,
+      224,
+      225,
+      226,
+      227,
+      228,
+      229,
+      230,
+      231,
+      232,
+      233,
+      234,
+      235,
+      236,
+      237,
+      238,
+      239,
+      240,
+      241,
+      242,
+      243,
+      244,
+      245,
+      246,
+      247,
+      248,
+      249,
+      250,
+      251,
+      252,
+      253,
+      254,
+      255
+    ],
+    "added_token_ids": [
+      151643,
+      151644,
+      151645,
+      151646,
+      151647,
+      151648,
+      151649,
+      151650,
+      151651,
+      151652,
+      151653,
+      151654,
+      151655,
+      151656,
+      151657,
+      151658,
+      151659,
+      151660,
+      151661,
+      151662,
+      151663,
+      151664,
+      151665,
+      151666,
+      151667,
+      151668
+    ],
+    "special_token_ids": [
+      151643,
+      151644,
+      151645,
+      151646,
+      151647,
+      151648,
+      151649,
+      151650,
+      151651,
+      151652,
+      151653,
+      151654,
+      151655,
+      151656
+    ],
+    "regular_token_ids_count": 151387
+  },
+  "leave_one_out": {
+    "by_pad": {
+      "0": {
+        "pad_n": 0,
+        "head_ids_size": 0,
+        "head_ids_sample": [],
+        "reference_bit_exact_fraction": 0.26666666666666666,
+        "reference_bit_exact_items": [
+          "eulers-identity",
+          "pythagorean-theorem",
+          "gaussian-integral",
+          "basel-problem"
+        ],
+        "per_item": [
+          {
+            "item": "analysis-classics-passage",
+            "tier": "multiline",
+            "eval_sequences": 8,
+            "eval_chars": 3062,
+            "eval_tokens": 1223,
+            "out_of_set_tokens": 63,
+            "out_of_set_rate": 0.05151267375306623,
+            "fertility_full": 0.399412148922273,
+            "fertility_pruned_sim": 0.5075114304376225,
+            "sim_tokens_pruned": 1554,
+            "reference_oos_tokens": 22,
+            "reference_bit_exact": false,
+            "out_of_set_ids": [
+              705,
+              1102,
+              1496,
+              1549,
+              2441,
+              2525,
+              3059,
+              3491,
+              3498,
+              5512,
+              6358,
+              10440,
+              11253,
+              11416,
+              11613,
+              11733,
+              12671,
+              13866,
+              21058,
+              26056,
+              31716,
+              33845,
+              48568,
+              57960,
+              89458
+            ],
+            "out_of_set_tokens_decoded": [
+              " up",
+              " result",
+              " even",
+              " again",
+              " another",
+              " come",
+              " results",
+              " problem",
+              " though",
+              " First",
+              " analysis",
+              " Second",
+              " answers",
+              " classic",
+              "Two",
+              " Both",
+              " circle",
+              " neither",
+              " involve",
+              "[\\\\",
+              "}$",
+              " mentions",
+              " Gaussian",
+              " $\\\\",
+              " Basel"
+            ]
+          },
+          {
+            "item": "basel-problem",
+            "tier": "medium",
+            "eval_sequences": 9,
+            "eval_chars": 485,
+            "eval_tokens": 249,
+            "out_of_set_tokens": 7,
+            "out_of_set_rate": 0.028112449799196786,
+            "fertility_full": 0.51340206185567,
+            "fertility_pruned_sim": 0.5360824742268041,
+            "sim_tokens_pruned": 260,
+            "reference_oos_tokens": 0,
+            "reference_bit_exact": true,
+            "out_of_set_ids": [
+              333,
+              608,
+              1806,
+              9612,
+              14781,
+              15976
+            ],
+            "out_of_set_tokens_decoded": [
+              "if",
+              " /",
+              "Un",
+              "/n",
+              "sim",
+              "theta"
+            ]
+          },
+          {
+            "item": "bayes-theorem",
+            "tier": "medium",
+            "eval_sequences": 9,
+            "eval_chars": 673,
+            "eval_tokens": 239,
+            "out_of_set_tokens": 63,
+            "out_of_set_rate": 0.26359832635983266,
+            "fertility_full": 0.3551263001485884,
+            "fertility_pruned_sim": 0.6805349182763745,
+            "sim_tokens_pruned": 458,
+            "reference_oos_tokens": 6,
+            "reference_bit_exact": false,
+            "out_of_set_ids": [
+              393,
+              425,
+              2303,
+              2661,
+              4346,
+              5349,
+              16106,
+              18927,
+              41968,
+              88464
+            ],
+            "out_of_set_tokens_decoded": [
+              " P",
+              " B",
+              "  \\n",
+              " given",
+              "(A",
+              "(B",
+              "mid",
+              " probability",
+              "given",
+              "Probability"
+            ]
+          },
+          {
+            "item": "binomial-theorem",
+            "tier": "medium",
+            "eval_sequences": 9,
+            "eval_chars": 2484,
+            "eval_tokens": 1114,
+            "out_of_set_tokens": 114,
+            "out_of_set_rate": 0.10233393177737882,
+            "fertility_full": 0.44847020933977455,
+            "fertility_pruned_sim": 0.5225442834138486,
+            "sim_tokens_pruned": 1298,
+            "reference_oos_tokens": 7,
+            "reference_bit_exact": false,
+            "out_of_set_ids": [
+              314,
+              316,
+              319,
+              379,
+              1096,
+              1445,
+              1660,
+              2075,
+              6785,
+              6863,
+              7546,
+              8525,
+              9226,
+              12194,
+              12646,
+              13302,
+              28152,
+              43010,
+              91362
+            ],
+            "out_of_set_tokens_decoded": [
+              " {",
+              "om",
+              "\\r\\n",
+              " y",
+              " This",
+              "(n",
+              " being",
+              "(x",
+              " positive",
+              "bin",
+              " integer",
+              "$(",
+              " raised",
+              " quantity",
+              "-k",
+              " expressed",
+              " {\\\\",
+              "+y",
+              "{n"
+            ]
+          },
+          {
+            "item": "cauchy-integral-formula",
+            "tier": "hard",
+            "eval_sequences": 9,
+            "eval_chars": 2182,
+            "eval_tokens": 1086,
+            "out_of_set_tokens": 93,
+            "out_of_set_rate": 0.0856353591160221,
+            "fertility_full": 0.4977085242896425,
+            "fertility_pruned_sim": 0.5710357470210816,
+            "sim_tokens_pruned": 1246,
+            "reference_oos_tokens": 5,
+            "reference_bit_exact": false,
+            "out_of_set_ids": [
+              282,
+              781,
+              811,
+              873,
+              1958,
+              2877,
+              5326,
+              6066,
+              7409,
+              7877,
+              13174,
+              25718,
+              37877,
+              41433
+            ],
+            "out_of_set_tokens_decoded": [
+              " f",
+              "oint",
+              "ne",
+              " )",
+              "for",
+              "(a",
+              " written",
+              "bb",
+              "-a",
+              " closed",
+              "(z",
+              " dz",
+              "dz",
+              " contour"
+            ]
+          },
+          {
+            "item": "circle-area",
+            "tier": "easy",
+            "eval_sequences": 9,
+            "eval_chars": 168,
+            "eval_tokens": 85,
+            "out_of_set_tokens": 11,
+            "out_of_set_rate": 0.12941176470588237,
+            "fertility_full": 0.5059523809523809,
+            "fertility_pruned_sim": 0.6071428571428571,
+            "sim_tokens_pruned": 102,
+            "reference_oos_tokens": 1,
+            "reference_bit_exact": false,
+            "out_of_set_ids": [
+              435,
+              522,
+              3082,
+              23465
+            ],
+            "out_of_set_tokens_decoded": [
+              " r",
+              "</",
+              " area",
+              ">A"
+            ]
+          },
+          {
+            "item": "einstein-field-equations",
+            "tier": "hard",
+            "eval_sequences": 9,
+            "eval_chars": 439,
+            "eval_tokens": 214,
+            "out_of_set_tokens": 66,
+            "out_of_set_rate": 0.308411214953271,
+            "fertility_full": 0.4874715261958998,
+            "fertility_pruned_sim": 0.724373576309795,
+            "sim_tokens_pruned": 318,
+            "reference_oos_tokens": 10,
+            "reference_bit_exact": false,
+            "out_of_set_ids": [
+              342,
+              350,
+              479,
+              717,
+              1699,
+              8933,
+              12935,
+              15128,
+              27180,
+              41715,
+              58266
+            ],
+            "out_of_set_tokens_decoded": [
+              " g",
+              " T",
+              " G",
+              "_m",
+              "\\\\n",
+              "nu",
+              "lambda",
+              "mu",
+              "appa",
+              "+\\\\",
+              "Lambda"
+            ]
+          },
+          {
+            "item": "euler-formula-passage",
+            "tier": "multiline",
+            "eval_sequences": 8,
+            "eval_chars": 3024,
+            "eval_tokens": 907,
+            "out_of_set_tokens": 101,
+            "out_of_set_rate": 0.1113561190738699,
+            "fertility_full": 0.29993386243386244,
+            "fertility_pruned_sim": 0.42757936507936506,
+            "sim_tokens_pruned": 1293,
+            "reference_oos_tokens": 22,
+            "reference_bit_exact": false,
+            "out_of_set_ids": [
+              894,
+              941,
+              983,
+              1290,
+              1372,
+              1416,
+              1931,
+              3108,
+              3175,
+              3786,
+              4236,
+              6851,
+              8206,
+              8479,
+              9407,
+              9569,
+              14806,
+              18021,
+              19818,
+              23606,
+              24413,
+              27185,
+              27679,
+              45340,
+              78045,
+              86358
+            ],
+            "out_of_set_tokens_decoded": [
+              " any",
+              "ix",
+              "to",
+              " right",
+              " number",
+              " If",
+              " real",
+              " side",
+              " single",
+              " together",
+              " five",
+              " obtain",
+              "which",
+              "uler",
+              "cos",
+              " identity",
+              " formula",
+              " constants",
+              " ties",
+              " equation",
+              "-hand",
+              " celebrated",
+              " substitute",
+              "{x",
+              "\\\\[",
+              " collapses"
+            ]
+          },
+          {
+            "item": "eulers-identity",
+            "tier": "easy",
+            "eval_sequences": 9,
+            "eval_chars": 143,
+            "eval_tokens": 93,
+            "out_of_set_tokens": 0,
+            "out_of_set_rate": 0.0,
+            "fertility_full": 0.6503496503496503,
+            "fertility_pruned_sim": 0.6503496503496503,
+            "sim_tokens_pruned": 93,
+            "reference_oos_tokens": 0,
+            "reference_bit_exact": true,
+            "out_of_set_ids": [],
+            "out_of_set_tokens_decoded": []
+          },
+          {
+            "item": "gaussian-integral",
+            "tier": "medium",
+            "eval_sequences": 9,
+            "eval_chars": 669,
+            "eval_tokens": 314,
+            "out_of_set_tokens": 1,
+            "out_of_set_rate": 0.0031847133757961785,
+            "fertility_full": 0.4693572496263079,
+            "fertility_pruned_sim": 0.47085201793721976,
+            "sim_tokens_pruned": 315,
+            "reference_oos_tokens": 0,
+            "reference_bit_exact": true,
+            "out_of_set_ids": [
+              23013
+            ],
+            "out_of_set_tokens_decoded": [
+              "[e"
+            ]
+          },
+          {
+            "item": "mechanics-homework-passage",
+            "tier": "multiline",
+            "eval_sequences": 8,
+            "eval_chars": 1813,
+            "eval_tokens": 517,
+            "out_of_set_tokens": 175,
+            "out_of_set_rate": 0.33849129593810445,
+            "fertility_full": 0.2851627137341423,
+            "fertility_pruned_sim": 0.673469387755102,
+            "sim_tokens_pruned": 1221,
+            "reference_oos_tokens": 36,
+            "reference_bit_exact": false,
+            "out_of_set_ids": [
+              291,
+              296,
+              348,
+              434,
+              468,
+              568,
+              576,
+              601,
+              773,
+              882,
+              1107,
+              1186,
+              1414,
+              1502,
+              1717,
+              1965,
+              2086,
+              2137,
+              2309,
+              2329,
+              2504,
+              3072,
+              3941,
+              4041,
+              4083,
+              4179,
+              4279,
+              4574,
+              4621,
+              4628,
+              4698,
+              4711,
+              4713,
+              4802,
+              5298,
+              5344,
+              5356,
+              7989,
+              8833,
+              9077,
+              9646,
+              10742,
+              12522,
+              15391,
+              20374,
+              20668,
+              23164,
+              30803,
+              38576,
+              47158,
+              60618,
+              69094,
+              70323,
+              76377,
+              91550
+            ],
+            "out_of_set_tokens_decoded": [
+              "ed",
+              " m",
+              " v",
+              " F",
+              " E",
+              ").",
+              " The",
+              " us",
+              " so",
+              " time",
+              "der",
+              " sub",
+              " know",
+              "label",
+              "less",
+              " table",
+              " second",
+              "},",
+              " position",
+              " law",
+              " block",
+              " mass",
+              " across",
+              " comes",
+              "vec",
+              " net",
+              " half",
+              "block",
+              " vector",
+              " speed",
+              "_k",
+              "net",
+              "Block",
+              " energy",
+              "etic",
+              " force",
+              "ds",
+              "kin",
+              "force",
+              "push",
+              " Once",
+              " tells",
+              "Once",
+              " pushed",
+              "speed",
+              " Newton",
+              " mv",
+              " acceleration",
+              " friction",
+              "ivative",
+              "}s",
+              "{k",
+              " kinetic",
+              "Newton",
+              "mathrm"
+            ]
+          },
+          {
+            "item": "pythagorean-theorem",
+            "tier": "easy",
+            "eval_sequences": 9,
+            "eval_chars": 159,
+            "eval_tokens": 106,
+            "out_of_set_tokens": 7,
+            "out_of_set_rate": 0.0660377358490566,
+            "fertility_full": 0.6666666666666666,
+            "fertility_pruned_sim": 0.710691823899371,
+            "sim_tokens_pruned": 113,
+            "reference_oos_tokens": 0,
+            "reference_bit_exact": true,
+            "out_of_set_ids": [
+              297,
+              19535,
+              35093,
+              44292,
+              51185
+            ],
+            "out_of_set_tokens_decoded": [
+              " o",
+              "=c",
+              "+b",
+              "\\\\(",
+              "}="
+            ]
+          },
+          {
+            "item": "quadratic-formula",
+            "tier": "easy",
+            "eval_sequences": 9,
+            "eval_chars": 413,
+            "eval_tokens": 220,
+            "out_of_set_tokens": 23,
+            "out_of_set_rate": 0.10454545454545454,
+            "fertility_full": 0.5326876513317191,
+            "fertility_pruned_sim": 0.5907990314769975,
+            "sim_tokens_pruned": 244,
+            "reference_oos_tokens": 3,
+            "reference_bit_exact": false,
+            "out_of_set_ids": [
+              397,
+              476,
+              580,
+              4080,
+              5187,
+              19732,
+              19999
+            ],
+            "out_of_set_tokens_decoded": [
+              ">\\n",
+              " or",
+              "ac",
+              "(-",
+              "pm",
+              "}-",
+              "{-"
+            ]
+          },
+          {
+            "item": "riemann-zeta-functional-equation",
+            "tier": "hard",
+            "eval_sequences": 9,
+            "eval_chars": 2179,
+            "eval_tokens": 984,
+            "out_of_set_tokens": 130,
+            "out_of_set_rate": 0.13211382113821138,
+            "fertility_full": 0.4515832950894906,
+            "fertility_pruned_sim": 0.5245525470399266,
+            "sim_tokens_pruned": 1143,
+            "reference_oos_tokens": 6,
+            "reference_bit_exact": false,
+            "out_of_set_ids": [
+              921,
+              1141,
+              1331,
+              1915,
+              7287,
+              40457
+            ],
+            "out_of_set_tokens_decoded": [
+              "]\\n",
+              "(s",
+              "-s",
+              "eta",
+              ")-",
+              "Gamma"
+            ]
+          },
+          {
+            "item": "schrodinger-time-dependent",
+            "tier": "hard",
+            "eval_sequences": 9,
+            "eval_chars": 586,
+            "eval_tokens": 275,
+            "out_of_set_tokens": 67,
+            "out_of_set_rate": 0.24363636363636362,
+            "fertility_full": 0.46928327645051193,
+            "fertility_pruned_sim": 0.7167235494880546,
+            "sim_tokens_pruned": 420,
+            "reference_oos_tokens": 11,
+            "reference_bit_exact": false,
+            "out_of_set_ids": [
+              472,
+              1155,
+              2257,
+              3422,
+              6321,
+              6599,
+              9198,
+              14669,
+              22957,
+              25475,
+              26243,
+              30765,
+              32705,
+              37420,
+              71182,
+              74615
+            ],
+            "out_of_set_tokens_decoded": [
+              " H",
+              "(t",
+              "bar",
+              "\\\\\\\\",
+              "si",
+              "*(",
+              "hat",
+              ")&",
+              "|\\\\",
+              "ket",
+              "Rightarrow",
+              "psi",
+              "\\\\P",
+              "partial",
+              "rangle",
+              "Psi"
+            ]
+          }
+        ],
+        "summary": {
+          "easy": {
+            "n_items": 4,
+            "oos_rate_micro": 0.08134920634920635,
+            "oos_rate": {
+              "mean": 0.07499873877509838,
+              "median": 0.08529159519725557
+            },
+            "fertility_full_micro": 0.5707814269535674,
+            "fertility_pruned_sim_micro": 0.6251415628539071,
+            "fertility_full": {
+              "mean": 0.5889140873251042,
+              "median": 0.5915186508406847
+            },
+            "fertility_pruned_sim": {
+              "mean": 0.639745840717219,
+              "median": 0.6287462537462537
+            }
+          },
+          "medium": {
+            "n_items": 4,
+            "oos_rate_micro": 0.0965553235908142,
+            "oos_rate": {
+              "mean": 0.09930735532805111,
+              "median": 0.0652231907882878
+            },
+            "fertility_full_micro": 0.4444444444444444,
+            "fertility_pruned_sim_micro": 0.5407098121085595,
+            "fertility_full": {
+              "mean": 0.44658895524258524,
+              "median": 0.4589137294830412
+            },
+            "fertility_pruned_sim": {
+              "mean": 0.5525034234635617,
+              "median": 0.5293133788203264
+            }
+          },
+          "hard": {
+            "n_items": 4,
+            "oos_rate_micro": 0.13911684251660805,
+            "oos_rate": {
+              "mean": 0.19244918971096703,
+              "median": 0.1878750923872875
+            },
+            "fertility_full_micro": 0.4751206832528778,
+            "fertility_pruned_sim_micro": 0.5805792796138136,
+            "fertility_full": {
+              "mean": 0.47651165550638624,
+              "median": 0.47837740132320583
+            },
+            "fertility_pruned_sim": {
+              "mean": 0.6341713549647144,
+              "median": 0.6438796482545681
+            }
+          },
+          "multiline": {
+            "n_items": 3,
+            "oos_rate_micro": 0.1280695126558368,
+            "oos_rate": {
+              "mean": 0.16712002958834685,
+              "median": 0.1113561190738699
+            },
+            "fertility_full_micro": 0.33510570958349156,
+            "fertility_pruned_sim_micro": 0.5150018989745537,
+            "fertility_full": {
+              "mean": 0.3281695750300926,
+              "median": 0.29993386243386244
+            },
+            "fertility_pruned_sim": {
+              "mean": 0.5361867277573632,
+              "median": 0.5075114304376225
+            }
+          },
+          "overall": {
+            "n_items": 15,
+            "oos_rate_micro": 0.12077104642014162,
+            "oos_rate": {
+              "mean": 0.1312254149347671,
+              "median": 0.10454545454545454
+            },
+            "fertility_full_micro": 0.4126846690838249,
+            "fertility_pruned_sim_micro": 0.5453758320255425,
+            "fertility_full": {
+              "mean": 0.46883783449243877,
+              "median": 0.4693572496263079
+            },
+            "fertility_pruned_sim": {
+              "mean": 0.5942828439902713,
+              "median": 0.5907990314769975
+            }
+          }
+        },
+        "oos_top_tokens": [
+          {
+            "id": 1141,
+            "decoded": "(s",
+            "count": 74
+          },
+          {
+            "id": 9407,
+            "decoded": "cos",
+            "count": 49
+          },
+          {
+            "id": 7287,
+            "decoded": ")-",
+            "count": 32
+          },
+          {
+            "id": 13174,
+            "decoded": "(z",
+            "count": 26
+          },
+          {
+            "id": 379,
+            "decoded": " y",
+            "count": 23
+          },
+          {
+            "id": 781,
+            "decoded": "oint",
+            "count": 20
+          },
+          {
+            "id": 12646,
+            "decoded": "-k",
+            "count": 18
+          },
+          {
+            "id": 15128,
+            "decoded": "mu",
+            "count": 18
+          },
+          {
+            "id": 314,
+            "decoded": " {",
+            "count": 14
+          },
+          {
+            "id": 873,
+            "decoded": " )",
+            "count": 14
+          },
+          {
+            "id": 425,
+            "decoded": " B",
+            "count": 13
+          },
+          {
+            "id": 6863,
+            "decoded": "bin",
+            "count": 12
+          },
+          {
+            "id": 316,
+            "decoded": "om",
+            "count": 12
+          },
+          {
+            "id": 91362,
+            "decoded": "{n",
+            "count": 12
+          },
+          {
+            "id": 8933,
+            "decoded": "nu",
+            "count": 12
+          },
+          {
+            "id": 5349,
+            "decoded": "(B",
+            "count": 11
+          },
+          {
+            "id": 1915,
+            "decoded": "eta",
+            "count": 11
+          },
+          {
+            "id": 296,
+            "decoded": " m",
+            "count": 11
+          },
+          {
+            "id": 4346,
+            "decoded": "(A",
+            "count": 10
+          },
+          {
+            "id": 1155,
+            "decoded": "(t",
+            "count": 10
+          },
+          {
+            "id": 9198,
+            "decoded": "hat",
+            "count": 9
+          },
+          {
+            "id": 25718,
+            "decoded": " dz",
+            "count": 9
+          },
+          {
+            "id": 348,
+            "decoded": " v",
+            "count": 9
+          },
+          {
+            "id": 580,
+            "decoded": "ac",
+            "count": 8
+          },
+          {
+            "id": 18927,
+            "decoded": " probability",
+            "count": 8
+          },
+          {
+            "id": 30765,
+            "decoded": "psi",
+            "count": 8
+          },
+          {
+            "id": 1699,
+            "decoded": "\\\\n",
+            "count": 8
+          },
+          {
+            "id": 4628,
+            "decoded": " speed",
+            "count": 8
+          },
+          {
+            "id": 435,
+            "decoded": " r",
+            "count": 7
+          },
+          {
+            "id": 2257,
+            "decoded": "bar",
+            "count": 7
+          }
+        ]
+      },
+      "8192": {
+        "pad_n": 8192,
+        "head_ids_size": 8192,
+        "head_ids_sample": [
+          256,
+          257,
+          258,
+          259,
+          260,
+          261,
+          262,
+          263,
+          264,
+          265,
+          266,
+          267,
+          268,
+          269,
+          270,
+          271
+        ],
+        "reference_bit_exact_fraction": 0.4,
+        "reference_bit_exact_items": [
+          "eulers-identity",
+          "pythagorean-theorem",
+          "circle-area",
+          "gaussian-integral",
+          "basel-problem",
+          "bayes-theorem"
+        ],
+        "per_item": [
+          {
+            "item": "analysis-classics-passage",
+            "tier": "multiline",
+            "eval_sequences": 8,
+            "eval_chars": 3062,
+            "eval_tokens": 1223,
+            "out_of_set_tokens": 35,
+            "out_of_set_rate": 0.028618152085036794,
+            "fertility_full": 0.399412148922273,
+            "fertility_pruned_sim": 0.45460483344219466,
+            "sim_tokens_pruned": 1392,
+            "reference_oos_tokens": 11,
+            "reference_bit_exact": false,
+            "out_of_set_ids": [
+              10440,
+              11253,
+              11416,
+              11613,
+              11733,
+              12671,
+              13866,
+              21058,
+              26056,
+              31716,
+              33845,
+              48568,
+              57960,
+              89458
+            ],
+            "out_of_set_tokens_decoded": [
+              " Second",
+              " answers",
+              " classic",
+              "Two",
+              " Both",
+              " circle",
+              " neither",
+              " involve",
+              "[\\\\",
+              "}$",
+              " mentions",
+              " Gaussian",
+              " $\\\\",
+              " Basel"
+            ]
+          },
+          {
+            "item": "basel-problem",
+            "tier": "medium",
+            "eval_sequences": 9,
+            "eval_chars": 485,
+            "eval_tokens": 249,
+            "out_of_set_tokens": 3,
+            "out_of_set_rate": 0.012048192771084338,
+            "fertility_full": 0.51340206185567,
+            "fertility_pruned_sim": 0.5278350515463918,
+            "sim_tokens_pruned": 256,
+            "reference_oos_tokens": 0,
+            "reference_bit_exact": true,
+            "out_of_set_ids": [
+              9612,
+              14781,
+              15976
+            ],
+            "out_of_set_tokens_decoded": [
+              "/n",
+              "sim",
+              "theta"
+            ]
+          },
+          {
+            "item": "bayes-theorem",
+            "tier": "medium",
+            "eval_sequences": 9,
+            "eval_chars": 673,
+            "eval_tokens": 239,
+            "out_of_set_tokens": 19,
+            "out_of_set_rate": 0.0794979079497908,
+            "fertility_full": 0.3551263001485884,
+            "fertility_pruned_sim": 0.5839524517087668,
+            "sim_tokens_pruned": 393,
+            "reference_oos_tokens": 0,
+            "reference_bit_exact": true,
+            "out_of_set_ids": [
+              16106,
+              18927,
+              41968,
+              88464
+            ],
+            "out_of_set_tokens_decoded": [
+              "mid",
+              " probability",
+              "given",
+              "Probability"
+            ]
+          },
+          {
+            "item": "binomial-theorem",
+            "tier": "medium",
+            "eval_sequences": 9,
+            "eval_chars": 2484,
+            "eval_tokens": 1114,
+            "out_of_set_tokens": 39,
+            "out_of_set_rate": 0.03500897666068223,
+            "fertility_full": 0.44847020933977455,
+            "fertility_pruned_sim": 0.4726247987117552,
+            "sim_tokens_pruned": 1174,
+            "reference_oos_tokens": 4,
+            "reference_bit_exact": false,
+            "out_of_set_ids": [
+              8525,
+              9226,
+              12194,
+              12646,
+              13302,
+              28152,
+              43010,
+              91362
+            ],
+            "out_of_set_tokens_decoded": [
+              "$(",
+              " raised",
+              " quantity",
+              "-k",
+              " expressed",
+              " {\\\\",
+              "+y",
+              "{n"
+            ]
+          },
+          {
+            "item": "cauchy-integral-formula",
+            "tier": "hard",
+            "eval_sequences": 9,
+            "eval_chars": 2182,
+            "eval_tokens": 1086,
+            "out_of_set_tokens": 38,
+            "out_of_set_rate": 0.034990791896869246,
+            "fertility_full": 0.4977085242896425,
+            "fertility_pruned_sim": 0.5219981668194317,
+            "sim_tokens_pruned": 1139,
+            "reference_oos_tokens": 2,
+            "reference_bit_exact": false,
+            "out_of_set_ids": [
+              13174,
+              25718,
+              37877,
+              41433
+            ],
+            "out_of_set_tokens_decoded": [
+              "(z",
+              " dz",
+              "dz",
+              " contour"
+            ]
+          },
+          {
+            "item": "circle-area",
+            "tier": "easy",
+            "eval_sequences": 9,
+            "eval_chars": 168,
+            "eval_tokens": 85,
+            "out_of_set_tokens": 1,
+            "out_of_set_rate": 0.011764705882352941,
+            "fertility_full": 0.5059523809523809,
+            "fertility_pruned_sim": 0.5119047619047619,
+            "sim_tokens_pruned": 86,
+            "reference_oos_tokens": 0,
+            "reference_bit_exact": true,
+            "out_of_set_ids": [
+              23465
+            ],
+            "out_of_set_tokens_decoded": [
+              ">A"
+            ]
+          },
+          {
+            "item": "einstein-field-equations",
+            "tier": "hard",
+            "eval_sequences": 9,
+            "eval_chars": 439,
+            "eval_tokens": 214,
+            "out_of_set_tokens": 44,
+            "out_of_set_rate": 0.205607476635514,
+            "fertility_full": 0.4874715261958998,
+            "fertility_pruned_sim": 0.6742596810933941,
+            "sim_tokens_pruned": 296,
+            "reference_oos_tokens": 8,
+            "reference_bit_exact": false,
+            "out_of_set_ids": [
+              8933,
+              12935,
+              15128,
+              27180,
+              41715,
+              58266
+            ],
+            "out_of_set_tokens_decoded": [
+              "nu",
+              "lambda",
+              "mu",
+              "appa",
+              "+\\\\",
+              "Lambda"
+            ]
+          },
+          {
+            "item": "euler-formula-passage",
+            "tier": "multiline",
+            "eval_sequences": 8,
+            "eval_chars": 3024,
+            "eval_tokens": 907,
+            "out_of_set_tokens": 75,
+            "out_of_set_rate": 0.08269018743109151,
+            "fertility_full": 0.29993386243386244,
+            "fertility_pruned_sim": 0.3878968253968254,
+            "sim_tokens_pruned": 1173,
+            "reference_oos_tokens": 11,
+            "reference_bit_exact": false,
+            "out_of_set_ids": [
+              8479,
+              9407,
+              9569,
+              14806,
+              18021,
+              19818,
+              23606,
+              24413,
+              27185,
+              27679,
+              45340,
+              78045,
+              86358
+            ],
+            "out_of_set_tokens_decoded": [
+              "uler",
+              "cos",
+              " identity",
+              " formula",
+              " constants",
+              " ties",
+              " equation",
+              "-hand",
+              " celebrated",
+              " substitute",
+              "{x",
+              "\\\\[",
+              " collapses"
+            ]
+          },
+          {
+            "item": "eulers-identity",
+            "tier": "easy",
+            "eval_sequences": 9,
+            "eval_chars": 143,
+            "eval_tokens": 93,
+            "out_of_set_tokens": 0,
+            "out_of_set_rate": 0.0,
+            "fertility_full": 0.6503496503496503,
+            "fertility_pruned_sim": 0.6503496503496503,
+            "sim_tokens_pruned": 93,
+            "reference_oos_tokens": 0,
+            "reference_bit_exact": true,
+            "out_of_set_ids": [],
+            "out_of_set_tokens_decoded": []
+          },
+          {
+            "item": "gaussian-integral",
+            "tier": "medium",
+            "eval_sequences": 9,
+            "eval_chars": 669,
+            "eval_tokens": 314,
+            "out_of_set_tokens": 1,
+            "out_of_set_rate": 0.0031847133757961785,
+            "fertility_full": 0.4693572496263079,
+            "fertility_pruned_sim": 0.47085201793721976,
+            "sim_tokens_pruned": 315,
+            "reference_oos_tokens": 0,
+            "reference_bit_exact": true,
+            "out_of_set_ids": [
+              23013
+            ],
+            "out_of_set_tokens_decoded": [
+              "[e"
+            ]
+          },
+          {
+            "item": "mechanics-homework-passage",
+            "tier": "multiline",
+            "eval_sequences": 8,
+            "eval_chars": 1813,
+            "eval_tokens": 517,
+            "out_of_set_tokens": 38,
+            "out_of_set_rate": 0.0735009671179884,
+            "fertility_full": 0.2851627137341423,
+            "fertility_pruned_sim": 0.4092664092664093,
+            "sim_tokens_pruned": 742,
+            "reference_oos_tokens": 12,
+            "reference_bit_exact": false,
+            "out_of_set_ids": [
+              8833,
+              9077,
+              9646,
+              10742,
+              12522,
+              15391,
+              20374,
+              20668,
+              23164,
+              30803,
+              38576,
+              47158,
+              60618,
+              69094,
+              70323,
+              76377,
+              91550
+            ],
+            "out_of_set_tokens_decoded": [
+              "force",
+              "push",
+              " Once",
+              " tells",
+              "Once",
+              " pushed",
+              "speed",
+              " Newton",
+              " mv",
+              " acceleration",
+              " friction",
+              "ivative",
+              "}s",
+              "{k",
+              " kinetic",
+              "Newton",
+              "mathrm"
+            ]
+          },
+          {
+            "item": "pythagorean-theorem",
+            "tier": "easy",
+            "eval_sequences": 9,
+            "eval_chars": 159,
+            "eval_tokens": 106,
+            "out_of_set_tokens": 4,
+            "out_of_set_rate": 0.03773584905660377,
+            "fertility_full": 0.6666666666666666,
+            "fertility_pruned_sim": 0.6918238993710691,
+            "sim_tokens_pruned": 110,
+            "reference_oos_tokens": 0,
+            "reference_bit_exact": true,
+            "out_of_set_ids": [
+              19535,
+              35093,
+              44292,
+              51185
+            ],
+            "out_of_set_tokens_decoded": [
+              "=c",
+              "+b",
+              "\\\\(",
+              "}="
+            ]
+          },
+          {
+            "item": "quadratic-formula",
+            "tier": "easy",
+            "eval_sequences": 9,
+            "eval_chars": 413,
+            "eval_tokens": 220,
+            "out_of_set_tokens": 6,
+            "out_of_set_rate": 0.02727272727272727,
+            "fertility_full": 0.5326876513317191,
+            "fertility_pruned_sim": 0.5472154963680388,
+            "sim_tokens_pruned": 226,
+            "reference_oos_tokens": 1,
+            "reference_bit_exact": false,
+            "out_of_set_ids": [
+              19732,
+              19999
+            ],
+            "out_of_set_tokens_decoded": [
+              "}-",
+              "{-"
+            ]
+          },
+          {
+            "item": "riemann-zeta-functional-equation",
+            "tier": "hard",
+            "eval_sequences": 9,
+            "eval_chars": 2179,
+            "eval_tokens": 984,
+            "out_of_set_tokens": 6,
+            "out_of_set_rate": 0.006097560975609756,
+            "fertility_full": 0.4515832950894906,
+            "fertility_pruned_sim": 0.4625975217989904,
+            "sim_tokens_pruned": 1008,
+            "reference_oos_tokens": 1,
+            "reference_bit_exact": false,
+            "out_of_set_ids": [
+              40457
+            ],
+            "out_of_set_tokens_decoded": [
+              "Gamma"
+            ]
+          },
+          {
+            "item": "schrodinger-time-dependent",
+            "tier": "hard",
+            "eval_sequences": 9,
+            "eval_chars": 586,
+            "eval_tokens": 275,
+            "out_of_set_tokens": 42,
+            "out_of_set_rate": 0.15272727272727274,
+            "fertility_full": 0.46928327645051193,
+            "fertility_pruned_sim": 0.6621160409556314,
+            "sim_tokens_pruned": 388,
+            "reference_oos_tokens": 5,
+            "reference_bit_exact": false,
+            "out_of_set_ids": [
+              9198,
+              14669,
+              22957,
+              25475,
+              26243,
+              30765,
+              32705,
+              37420,
+              71182,
+              74615
+            ],
+            "out_of_set_tokens_decoded": [
+              "hat",
+              ")&",
+              "|\\\\",
+              "ket",
+              "Rightarrow",
+              "psi",
+              "\\\\P",
+              "partial",
+              "rangle",
+              "Psi"
+            ]
+          }
+        ],
+        "summary": {
+          "easy": {
+            "n_items": 4,
+            "oos_rate_micro": 0.021825396825396824,
+            "oos_rate": {
+              "mean": 0.019193320552920997,
+              "median": 0.019518716577540104
+            },
+            "fertility_full_micro": 0.5707814269535674,
+            "fertility_pruned_sim_micro": 0.5832389580973952,
+            "fertility_full": {
+              "mean": 0.5889140873251042,
+              "median": 0.5915186508406847
+            },
+            "fertility_pruned_sim": {
+              "mean": 0.60032345199838,
+              "median": 0.5987825733588445
+            }
+          },
+          "medium": {
+            "n_items": 4,
+            "oos_rate_micro": 0.032359081419624215,
+            "oos_rate": {
+              "mean": 0.032434947689338384,
+              "median": 0.02352858471588328
+            },
+            "fertility_full_micro": 0.4444444444444444,
+            "fertility_pruned_sim_micro": 0.495940617026212,
+            "fertility_full": {
+              "mean": 0.44658895524258524,
+              "median": 0.4589137294830412
+            },
+            "fertility_pruned_sim": {
+              "mean": 0.5138160799760334,
+              "median": 0.5002299251290735
+            }
+          },
+          "hard": {
+            "n_items": 4,
+            "oos_rate_micro": 0.050801094177413054,
+            "oos_rate": {
+              "mean": 0.09985577555881645,
+              "median": 0.09385903231207099
+            },
+            "fertility_full_micro": 0.4751206832528778,
+            "fertility_pruned_sim_micro": 0.525621982918678,
+            "fertility_full": {
+              "mean": 0.47651165550638624,
+              "median": 0.47837740132320583
+            },
+            "fertility_pruned_sim": {
+              "mean": 0.5802428526668619,
+              "median": 0.5920571038875315
+            }
+          },
+          "multiline": {
+            "n_items": 3,
+            "oos_rate_micro": 0.05591235360785795,
+            "oos_rate": {
+              "mean": 0.06160310221137224,
+              "median": 0.0735009671179884
+            },
+            "fertility_full_micro": 0.33510570958349156,
+            "fertility_pruned_sim_micro": 0.4186605899480947,
+            "fertility_full": {
+              "mean": 0.3281695750300926,
+              "median": 0.29993386243386244
+            },
+            "fertility_pruned_sim": {
+              "mean": 0.4172560227018098,
+              "median": 0.4092664092664093
+            }
+          },
+          "overall": {
+            "n_items": 15,
+            "oos_rate_micro": 0.04602675059008655,
+            "oos_rate": {
+              "mean": 0.052716365455894656,
+              "median": 0.034990791896869246
+            },
+            "fertility_full_micro": 0.4126846690838249,
+            "fertility_pruned_sim_micro": 0.4757292061258726,
+            "fertility_full": {
+              "mean": 0.46883783449243877,
+              "median": 0.4693572496263079
+            },
+            "fertility_pruned_sim": {
+              "mean": 0.5352865071113687,
+              "median": 0.5219981668194317
+            }
+          }
+        },
+        "oos_top_tokens": [
+          {
+            "id": 9407,
+            "decoded": "cos",
+            "count": 49
+          },
+          {
+            "id": 13174,
+            "decoded": "(z",
+            "count": 26
+          },
+          {
+            "id": 12646,
+            "decoded": "-k",
+            "count": 18
+          },
+          {
+            "id": 15128,
+            "decoded": "mu",
+            "count": 18
+          },
+          {
+            "id": 91362,
+            "decoded": "{n",
+            "count": 12
+          },
+          {
+            "id": 8933,
+            "decoded": "nu",
+            "count": 12
+          },
+          {
+            "id": 9198,
+            "decoded": "hat",
+            "count": 9
+          },
+          {
+            "id": 25718,
+            "decoded": " dz",
+            "count": 9
+          },
+          {
+            "id": 18927,
+            "decoded": " probability",
+            "count": 8
+          },
+          {
+            "id": 30765,
+            "decoded": "psi",
+            "count": 8
+          },
+          {
+            "id": 27180,
+            "decoded": "appa",
+            "count": 7
+          },
+          {
+            "id": 74615,
+            "decoded": "Psi",
+            "count": 6
+          },
+          {
+            "id": 40457,
+            "decoded": "Gamma",
+            "count": 6
+          },
+          {
+            "id": 88464,
+            "decoded": "Probability",
+            "count": 5
+          },
+          {
+            "id": 57960,
+            "decoded": " $\\\\",
+            "count": 5
+          },
+          {
+            "id": 19999,
+            "decoded": "{-",
+            "count": 4
+          },
+          {
+            "id": 43010,
+            "decoded": "+y",
+            "count": 4
+          },
+          {
+            "id": 16106,
+            "decoded": "mid",
+            "count": 4
+          },
+          {
+            "id": 71182,
+            "decoded": "rangle",
+            "count": 4
+          },
+          {
+            "id": 37420,
+            "decoded": "partial",
+            "count": 4
+          },
+          {
+            "id": 25475,
+            "decoded": "ket",
+            "count": 4
+          },
+          {
+            "id": 12935,
+            "decoded": "lambda",
+            "count": 4
+          },
+          {
+            "id": 15391,
+            "decoded": " pushed",
+            "count": 4
+          },
+          {
+            "id": 38576,
+            "decoded": " friction",
+            "count": 4
+          },
+          {
+            "id": 10742,
+            "decoded": " tells",
+            "count": 4
+          },
+          {
+            "id": 30803,
+            "decoded": " acceleration",
+            "count": 4
+          },
+          {
+            "id": 70323,
+            "decoded": " kinetic",
+            "count": 4
+          },
+          {
+            "id": 20668,
+            "decoded": " Newton",
+            "count": 3
+          },
+          {
+            "id": 9646,
+            "decoded": " Once",
+            "count": 3
+          },
+          {
+            "id": 19818,
+            "decoded": " ties",
+            "count": 3
+          }
+        ]
+      },
+      "16384": {
+        "pad_n": 16384,
+        "head_ids_size": 16384,
+        "head_ids_sample": [
+          256,
+          257,
+          258,
+          259,
+          260,
+          261,
+          262,
+          263,
+          264,
+          265,
+          266,
+          267,
+          268,
+          269,
+          270,
+          271
+        ],
+        "reference_bit_exact_fraction": 0.4,
+        "reference_bit_exact_items": [
+          "eulers-identity",
+          "pythagorean-theorem",
+          "circle-area",
+          "gaussian-integral",
+          "basel-problem",
+          "bayes-theorem"
+        ],
+        "per_item": [
+          {
+            "item": "analysis-classics-passage",
+            "tier": "multiline",
+            "eval_sequences": 8,
+            "eval_chars": 3062,
+            "eval_tokens": 1223,
+            "out_of_set_tokens": 20,
+            "out_of_set_rate": 0.016353229762878167,
+            "fertility_full": 0.399412148922273,
+            "fertility_pruned_sim": 0.42684519921619857,
+            "sim_tokens_pruned": 1307,
+            "reference_oos_tokens": 4,
+            "reference_bit_exact": false,
+            "out_of_set_ids": [
+              21058,
+              26056,
+              31716,
+              33845,
+              48568,
+              57960,
+              89458
+            ],
+            "out_of_set_tokens_decoded": [
+              " involve",
+              "[\\\\",
+              "}$",
+              " mentions",
+              " Gaussian",
+              " $\\\\",
+              " Basel"
+            ]
+          },
+          {
+            "item": "basel-problem",
+            "tier": "medium",
+            "eval_sequences": 9,
+            "eval_chars": 485,
+            "eval_tokens": 249,
+            "out_of_set_tokens": 0,
+            "out_of_set_rate": 0.0,
+            "fertility_full": 0.51340206185567,
+            "fertility_pruned_sim": 0.51340206185567,
+            "sim_tokens_pruned": 249,
+            "reference_oos_tokens": 0,
+            "reference_bit_exact": true,
+            "out_of_set_ids": [],
+            "out_of_set_tokens_decoded": []
+          },
+          {
+            "item": "bayes-theorem",
+            "tier": "medium",
+            "eval_sequences": 9,
+            "eval_chars": 673,
+            "eval_tokens": 239,
+            "out_of_set_tokens": 15,
+            "out_of_set_rate": 0.06276150627615062,
+            "fertility_full": 0.3551263001485884,
+            "fertility_pruned_sim": 0.5720653789004457,
+            "sim_tokens_pruned": 385,
+            "reference_oos_tokens": 0,
+            "reference_bit_exact": true,
+            "out_of_set_ids": [
+              18927,
+              41968,
+              88464
+            ],
+            "out_of_set_tokens_decoded": [
+              " probability",
+              "given",
+              "Probability"
+            ]
+          },
+          {
+            "item": "binomial-theorem",
+            "tier": "medium",
+            "eval_sequences": 9,
+            "eval_chars": 2484,
+            "eval_tokens": 1114,
+            "out_of_set_tokens": 17,
+            "out_of_set_rate": 0.01526032315978456,
+            "fertility_full": 0.44847020933977455,
+            "fertility_pruned_sim": 0.4557165861513688,
+            "sim_tokens_pruned": 1132,
+            "reference_oos_tokens": 3,
+            "reference_bit_exact": false,
+            "out_of_set_ids": [
+              28152,
+              43010,
+              91362
+            ],
+            "out_of_set_tokens_decoded": [
+              " {\\\\",
+              "+y",
+              "{n"
+            ]
+          },
+          {
+            "item": "cauchy-integral-formula",
+            "tier": "hard",
+            "eval_sequences": 9,
+            "eval_chars": 2182,
+            "eval_tokens": 1086,
+            "out_of_set_tokens": 12,
+            "out_of_set_rate": 0.011049723756906077,
+            "fertility_full": 0.4977085242896425,
+            "fertility_pruned_sim": 0.5100824931255729,
+            "sim_tokens_pruned": 1113,
+            "reference_oos_tokens": 1,
+            "reference_bit_exact": false,
+            "out_of_set_ids": [
+              25718,
+              37877,
+              41433
+            ],
+            "out_of_set_tokens_decoded": [
+              " dz",
+              "dz",
+              " contour"
+            ]
+          },
+          {
+            "item": "circle-area",
+            "tier": "easy",
+            "eval_sequences": 9,
+            "eval_chars": 168,
+            "eval_tokens": 85,
+            "out_of_set_tokens": 1,
+            "out_of_set_rate": 0.011764705882352941,
+            "fertility_full": 0.5059523809523809,
+            "fertility_pruned_sim": 0.5119047619047619,
+            "sim_tokens_pruned": 86,
+            "reference_oos_tokens": 0,
+            "reference_bit_exact": true,
+            "out_of_set_ids": [
+              23465
+            ],
+            "out_of_set_tokens_decoded": [
+              ">A"
+            ]
+          },
+          {
+            "item": "einstein-field-equations",
+            "tier": "hard",
+            "eval_sequences": 9,
+            "eval_chars": 439,
+            "eval_tokens": 214,
+            "out_of_set_tokens": 10,
+            "out_of_set_rate": 0.04672897196261682,
+            "fertility_full": 0.4874715261958998,
+            "fertility_pruned_sim": 0.5603644646924829,
+            "sim_tokens_pruned": 246,
+            "reference_oos_tokens": 2,
+            "reference_bit_exact": false,
+            "out_of_set_ids": [
+              27180,
+              41715,
+              58266
+            ],
+            "out_of_set_tokens_decoded": [
+              "appa",
+              "+\\\\",
+              "Lambda"
+            ]
+          },
+          {
+            "item": "euler-formula-passage",
+            "tier": "multiline",
+            "eval_sequences": 8,
+            "eval_chars": 3024,
+            "eval_tokens": 907,
+            "out_of_set_tokens": 20,
+            "out_of_set_rate": 0.022050716648291068,
+            "fertility_full": 0.29993386243386244,
+            "fertility_pruned_sim": 0.3435846560846561,
+            "sim_tokens_pruned": 1039,
+            "reference_oos_tokens": 7,
+            "reference_bit_exact": false,
+            "out_of_set_ids": [
+              18021,
+              19818,
+              23606,
+              24413,
+              27185,
+              27679,
+              45340,
+              78045,
+              86358
+            ],
+            "out_of_set_tokens_decoded": [
+              " constants",
+              " ties",
+              " equation",
+              "-hand",
+              " celebrated",
+              " substitute",
+              "{x",
+              "\\\\[",
+              " collapses"
+            ]
+          },
+          {
+            "item": "eulers-identity",
+            "tier": "easy",
+            "eval_sequences": 9,
+            "eval_chars": 143,
+            "eval_tokens": 93,
+            "out_of_set_tokens": 0,
+            "out_of_set_rate": 0.0,
+            "fertility_full": 0.6503496503496503,
+            "fertility_pruned_sim": 0.6503496503496503,
+            "sim_tokens_pruned": 93,
+            "reference_oos_tokens": 0,
+            "reference_bit_exact": true,
+            "out_of_set_ids": [],
+            "out_of_set_tokens_decoded": []
+          },
+          {
+            "item": "gaussian-integral",
+            "tier": "medium",
+            "eval_sequences": 9,
+            "eval_chars": 669,
+            "eval_tokens": 314,
+            "out_of_set_tokens": 1,
+            "out_of_set_rate": 0.0031847133757961785,
+            "fertility_full": 0.4693572496263079,
+            "fertility_pruned_sim": 0.47085201793721976,
+            "sim_tokens_pruned": 315,
+            "reference_oos_tokens": 0,
+            "reference_bit_exact": true,
+            "out_of_set_ids": [
+              23013
+            ],
+            "out_of_set_tokens_decoded": [
+              "[e"
+            ]
+          },
+          {
+            "item": "mechanics-homework-passage",
+            "tier": "multiline",
+            "eval_sequences": 8,
+            "eval_chars": 1813,
+            "eval_tokens": 517,
+            "out_of_set_tokens": 23,
+            "out_of_set_rate": 0.04448742746615087,
+            "fertility_full": 0.2851627137341423,
+            "fertility_pruned_sim": 0.37065637065637064,
+            "sim_tokens_pruned": 672,
+            "reference_oos_tokens": 9,
+            "reference_bit_exact": false,
+            "out_of_set_ids": [
+              20374,
+              20668,
+              23164,
+              30803,
+              38576,
+              47158,
+              60618,
+              69094,
+              70323,
+              76377,
+              91550
+            ],
+            "out_of_set_tokens_decoded": [
+              "speed",
+              " Newton",
+              " mv",
+              " acceleration",
+              " friction",
+              "ivative",
+              "}s",
+              "{k",
+              " kinetic",
+              "Newton",
+              "mathrm"
+            ]
+          },
+          {
+            "item": "pythagorean-theorem",
+            "tier": "easy",
+            "eval_sequences": 9,
+            "eval_chars": 159,
+            "eval_tokens": 106,
+            "out_of_set_tokens": 4,
+            "out_of_set_rate": 0.03773584905660377,
+            "fertility_full": 0.6666666666666666,
+            "fertility_pruned_sim": 0.6918238993710691,
+            "sim_tokens_pruned": 110,
+            "reference_oos_tokens": 0,
+            "reference_bit_exact": true,
+            "out_of_set_ids": [
+              19535,
+              35093,
+              44292,
+              51185
+            ],
+            "out_of_set_tokens_decoded": [
+              "=c",
+              "+b",
+              "\\\\(",
+              "}="
+            ]
+          },
+          {
+            "item": "quadratic-formula",
+            "tier": "easy",
+            "eval_sequences": 9,
+            "eval_chars": 413,
+            "eval_tokens": 220,
+            "out_of_set_tokens": 6,
+            "out_of_set_rate": 0.02727272727272727,
+            "fertility_full": 0.5326876513317191,
+            "fertility_pruned_sim": 0.5472154963680388,
+            "sim_tokens_pruned": 226,
+            "reference_oos_tokens": 1,
+            "reference_bit_exact": false,
+            "out_of_set_ids": [
+              19732,
+              19999
+            ],
+            "out_of_set_tokens_decoded": [
+              "}-",
+              "{-"
+            ]
+          },
+          {
+            "item": "riemann-zeta-functional-equation",
+            "tier": "hard",
+            "eval_sequences": 9,
+            "eval_chars": 2179,
+            "eval_tokens": 984,
+            "out_of_set_tokens": 6,
+            "out_of_set_rate": 0.006097560975609756,
+            "fertility_full": 0.4515832950894906,
+            "fertility_pruned_sim": 0.4625975217989904,
+            "sim_tokens_pruned": 1008,
+            "reference_oos_tokens": 1,
+            "reference_bit_exact": false,
+            "out_of_set_ids": [
+              40457
+            ],
+            "out_of_set_tokens_decoded": [
+              "Gamma"
+            ]
+          },
+          {
+            "item": "schrodinger-time-dependent",
+            "tier": "hard",
+            "eval_sequences": 9,
+            "eval_chars": 586,
+            "eval_tokens": 275,
+            "out_of_set_tokens": 31,
+            "out_of_set_rate": 0.11272727272727273,
+            "fertility_full": 0.46928327645051193,
+            "fertility_pruned_sim": 0.6279863481228669,
+            "sim_tokens_pruned": 368,
+            "reference_oos_tokens": 4,
+            "reference_bit_exact": false,
+            "out_of_set_ids": [
+              22957,
+              25475,
+              26243,
+              30765,
+              32705,
+              37420,
+              71182,
+              74615
+            ],
+            "out_of_set_tokens_decoded": [
+              "|\\\\",
+              "ket",
+              "Rightarrow",
+              "psi",
+              "\\\\P",
+              "partial",
+              "rangle",
+              "Psi"
+            ]
+          }
+        ],
+        "summary": {
+          "easy": {
+            "n_items": 4,
+            "oos_rate_micro": 0.021825396825396824,
+            "oos_rate": {
+              "mean": 0.019193320552920997,
+              "median": 0.019518716577540104
+            },
+            "fertility_full_micro": 0.5707814269535674,
+            "fertility_pruned_sim_micro": 0.5832389580973952,
+            "fertility_full": {
+              "mean": 0.5889140873251042,
+              "median": 0.5915186508406847
+            },
+            "fertility_pruned_sim": {
+              "mean": 0.60032345199838,
+              "median": 0.5987825733588445
+            }
+          },
+          "medium": {
+            "n_items": 4,
+            "oos_rate_micro": 0.01722338204592902,
+            "oos_rate": {
+              "mean": 0.020301635702932842,
+              "median": 0.009222518267790369
+            },
+            "fertility_full_micro": 0.4444444444444444,
+            "fertility_pruned_sim_micro": 0.4827186267687312,
+            "fertility_full": {
+              "mean": 0.44658895524258524,
+              "median": 0.4589137294830412
+            },
+            "fertility_pruned_sim": {
+              "mean": 0.503009011211176,
+              "median": 0.4921270398964449
+            }
+          },
+          "hard": {
+            "n_items": 4,
+            "oos_rate_micro": 0.023055881203595155,
+            "oos_rate": {
+              "mean": 0.04415088235560134,
+              "median": 0.02888934785976145
+            },
+            "fertility_full_micro": 0.4751206832528778,
+            "fertility_pruned_sim_micro": 0.5077979948013368,
+            "fertility_full": {
+              "mean": 0.47651165550638624,
+              "median": 0.47837740132320583
+            },
+            "fertility_pruned_sim": {
+              "mean": 0.5402577069349783,
+              "median": 0.5352234789090279
+            }
+          },
+          "multiline": {
+            "n_items": 3,
+            "oos_rate_micro": 0.023800528900642236,
+            "oos_rate": {
+              "mean": 0.027630457959106697,
+              "median": 0.022050716648291068
+            },
+            "fertility_full_micro": 0.33510570958349156,
+            "fertility_pruned_sim_micro": 0.3820736802126852,
+            "fertility_full": {
+              "mean": 0.3281695750300926,
+              "median": 0.29993386243386244
+            },
+            "fertility_pruned_sim": {
+              "mean": 0.38036207531907507,
+              "median": 0.37065637065637064
+            }
+          },
+          "overall": {
+            "n_items": 15,
+            "oos_rate_micro": 0.02176763703120902,
+            "oos_rate": {
+              "mean": 0.02783164855487606,
+              "median": 0.016353229762878167
+            },
+            "fertility_full_micro": 0.4126846690838249,
+            "fertility_pruned_sim_micro": 0.4518101628876021,
+            "fertility_full": {
+              "mean": 0.46883783449243877,
+              "median": 0.4693572496263079
+            },
+            "fertility_pruned_sim": {
+              "mean": 0.5143631271023575,
+              "median": 0.5119047619047619
+            }
+          }
+        },
+        "oos_top_tokens": [
+          {
+            "id": 91362,
+            "decoded": "{n",
+            "count": 12
+          },
+          {
+            "id": 25718,
+            "decoded": " dz",
+            "count": 9
+          },
+          {
+            "id": 18927,
+            "decoded": " probability",
+            "count": 8
+          },
+          {
+            "id": 30765,
+            "decoded": "psi",
+            "count": 8
+          },
+          {
+            "id": 27180,
+            "decoded": "appa",
+            "count": 7
+          },
+          {
+            "id": 74615,
+            "decoded": "Psi",
+            "count": 6
+          },
+          {
+            "id": 40457,
+            "decoded": "Gamma",
+            "count": 6
+          },
+          {
+            "id": 88464,
+            "decoded": "Probability",
+            "count": 5
+          },
+          {
+            "id": 57960,
+            "decoded": " $\\\\",
+            "count": 5
+          },
+          {
+            "id": 19999,
+            "decoded": "{-",
+            "count": 4
+          },
+          {
+            "id": 43010,
+            "decoded": "+y",
+            "count": 4
+          },
+          {
+            "id": 71182,
+            "decoded": "rangle",
+            "count": 4
+          },
+          {
+            "id": 37420,
+            "decoded": "partial",
+            "count": 4
+          },
+          {
+            "id": 25475,
+            "decoded": "ket",
+            "count": 4
+          },
+          {
+            "id": 38576,
+            "decoded": " friction",
+            "count": 4
+          },
+          {
+            "id": 30803,
+            "decoded": " acceleration",
+            "count": 4
+          },
+          {
+            "id": 70323,
+            "decoded": " kinetic",
+            "count": 4
+          },
+          {
+            "id": 20668,
+            "decoded": " Newton",
+            "count": 3
+          },
+          {
+            "id": 19818,
+            "decoded": " ties",
+            "count": 3
+          },
+          {
+            "id": 18021,
+            "decoded": " constants",
+            "count": 3
+          },
+          {
+            "id": 23606,
+            "decoded": " equation",
+            "count": 3
+          },
+          {
+            "id": 89458,
+            "decoded": " Basel",
+            "count": 3
+          },
+          {
+            "id": 48568,
+            "decoded": " Gaussian",
+            "count": 3
+          },
+          {
+            "id": 31716,
+            "decoded": "}$",
+            "count": 3
+          },
+          {
+            "id": 19732,
+            "decoded": "}-",
+            "count": 2
+          },
+          {
+            "id": 41968,
+            "decoded": "given",
+            "count": 2
+          },
+          {
+            "id": 32705,
+            "decoded": "\\\\P",
+            "count": 2
+          },
+          {
+            "id": 22957,
+            "decoded": "|\\\\",
+            "count": 2
+          },
+          {
+            "id": 37877,
+            "decoded": "dz",
+            "count": 2
+          },
+          {
+            "id": 58266,
+            "decoded": "Lambda",
+            "count": 2
+          }
+        ]
+      },
+      "32768": {
+        "pad_n": 32768,
+        "head_ids_size": 32768,
+        "head_ids_sample": [
+          256,
+          257,
+          258,
+          259,
+          260,
+          261,
+          262,
+          263,
+          264,
+          265,
+          266,
+          267,
+          268,
+          269,
+          270,
+          271
+        ],
+        "reference_bit_exact_fraction": 0.4666666666666667,
+        "reference_bit_exact_items": [
+          "quadratic-formula",
+          "eulers-identity",
+          "pythagorean-theorem",
+          "circle-area",
+          "gaussian-integral",
+          "basel-problem",
+          "bayes-theorem"
+        ],
+        "per_item": [
+          {
+            "item": "analysis-classics-passage",
+            "tier": "multiline",
+            "eval_sequences": 8,
+            "eval_chars": 3062,
+            "eval_tokens": 1223,
+            "out_of_set_tokens": 13,
+            "out_of_set_rate": 0.01062959934587081,
+            "fertility_full": 0.399412148922273,
+            "fertility_pruned_sim": 0.42064010450685824,
+            "sim_tokens_pruned": 1288,
+            "reference_oos_tokens": 3,
+            "reference_bit_exact": false,
+            "out_of_set_ids": [
+              33845,
+              48568,
+              57960,
+              89458
+            ],
+            "out_of_set_tokens_decoded": [
+              " mentions",
+              " Gaussian",
+              " $\\\\",
+              " Basel"
+            ]
+          },
+          {
+            "item": "basel-problem",
+            "tier": "medium",
+            "eval_sequences": 9,
+            "eval_chars": 485,
+            "eval_tokens": 249,
+            "out_of_set_tokens": 0,
+            "out_of_set_rate": 0.0,
+            "fertility_full": 0.51340206185567,
+            "fertility_pruned_sim": 0.51340206185567,
+            "sim_tokens_pruned": 249,
+            "reference_oos_tokens": 0,
+            "reference_bit_exact": true,
+            "out_of_set_ids": [],
+            "out_of_set_tokens_decoded": []
+          },
+          {
+            "item": "bayes-theorem",
+            "tier": "medium",
+            "eval_sequences": 9,
+            "eval_chars": 673,
+            "eval_tokens": 239,
+            "out_of_set_tokens": 7,
+            "out_of_set_rate": 0.029288702928870293,
+            "fertility_full": 0.3551263001485884,
+            "fertility_pruned_sim": 0.4413075780089153,
+            "sim_tokens_pruned": 297,
+            "reference_oos_tokens": 0,
+            "reference_bit_exact": true,
+            "out_of_set_ids": [
+              41968,
+              88464
+            ],
+            "out_of_set_tokens_decoded": [
+              "given",
+              "Probability"
+            ]
+          },
+          {
+            "item": "binomial-theorem",
+            "tier": "medium",
+            "eval_sequences": 9,
+            "eval_chars": 2484,
+            "eval_tokens": 1114,
+            "out_of_set_tokens": 16,
+            "out_of_set_rate": 0.01436265709156194,
+            "fertility_full": 0.44847020933977455,
+            "fertility_pruned_sim": 0.45491143317230276,
+            "sim_tokens_pruned": 1130,
+            "reference_oos_tokens": 2,
+            "reference_bit_exact": false,
+            "out_of_set_ids": [
+              43010,
+              91362
+            ],
+            "out_of_set_tokens_decoded": [
+              "+y",
+              "{n"
+            ]
+          },
+          {
+            "item": "cauchy-integral-formula",
+            "tier": "hard",
+            "eval_sequences": 9,
+            "eval_chars": 2182,
+            "eval_tokens": 1086,
+            "out_of_set_tokens": 3,
+            "out_of_set_rate": 0.0027624309392265192,
+            "fertility_full": 0.4977085242896425,
+            "fertility_pruned_sim": 0.501833180568286,
+            "sim_tokens_pruned": 1095,
+            "reference_oos_tokens": 1,
+            "reference_bit_exact": false,
+            "out_of_set_ids": [
+              37877,
+              41433
+            ],
+            "out_of_set_tokens_decoded": [
+              "dz",
+              " contour"
+            ]
+          },
+          {
+            "item": "circle-area",
+            "tier": "easy",
+            "eval_sequences": 9,
+            "eval_chars": 168,
+            "eval_tokens": 85,
+            "out_of_set_tokens": 0,
+            "out_of_set_rate": 0.0,
+            "fertility_full": 0.5059523809523809,
+            "fertility_pruned_sim": 0.5059523809523809,
+            "sim_tokens_pruned": 85,
+            "reference_oos_tokens": 0,
+            "reference_bit_exact": true,
+            "out_of_set_ids": [],
+            "out_of_set_tokens_decoded": []
+          },
+          {
+            "item": "einstein-field-equations",
+            "tier": "hard",
+            "eval_sequences": 9,
+            "eval_chars": 439,
+            "eval_tokens": 214,
+            "out_of_set_tokens": 3,
+            "out_of_set_rate": 0.014018691588785047,
+            "fertility_full": 0.4874715261958998,
+            "fertility_pruned_sim": 0.5125284738041003,
+            "sim_tokens_pruned": 225,
+            "reference_oos_tokens": 1,
+            "reference_bit_exact": false,
+            "out_of_set_ids": [
+              41715,
+              58266
+            ],
+            "out_of_set_tokens_decoded": [
+              "+\\\\",
+              "Lambda"
+            ]
+          },
+          {
+            "item": "euler-formula-passage",
+            "tier": "multiline",
+            "eval_sequences": 8,
+            "eval_chars": 3024,
+            "eval_tokens": 907,
+            "out_of_set_tokens": 5,
+            "out_of_set_rate": 0.005512679162072767,
+            "fertility_full": 0.29993386243386244,
+            "fertility_pruned_sim": 0.30687830687830686,
+            "sim_tokens_pruned": 928,
+            "reference_oos_tokens": 1,
+            "reference_bit_exact": false,
+            "out_of_set_ids": [
+              45340,
+              78045,
+              86358
+            ],
+            "out_of_set_tokens_decoded": [
+              "{x",
+              "\\\\[",
+              " collapses"
+            ]
+          },
+          {
+            "item": "eulers-identity",
+            "tier": "easy",
+            "eval_sequences": 9,
+            "eval_chars": 143,
+            "eval_tokens": 93,
+            "out_of_set_tokens": 0,
+            "out_of_set_rate": 0.0,
+            "fertility_full": 0.6503496503496503,
+            "fertility_pruned_sim": 0.6503496503496503,
+            "sim_tokens_pruned": 93,
+            "reference_oos_tokens": 0,
+            "reference_bit_exact": true,
+            "out_of_set_ids": [],
+            "out_of_set_tokens_decoded": []
+          },
+          {
+            "item": "gaussian-integral",
+            "tier": "medium",
+            "eval_sequences": 9,
+            "eval_chars": 669,
+            "eval_tokens": 314,
+            "out_of_set_tokens": 0,
+            "out_of_set_rate": 0.0,
+            "fertility_full": 0.4693572496263079,
+            "fertility_pruned_sim": 0.4693572496263079,
+            "sim_tokens_pruned": 314,
+            "reference_oos_tokens": 0,
+            "reference_bit_exact": true,
+            "out_of_set_ids": [],
+            "out_of_set_tokens_decoded": []
+          },
+          {
+            "item": "mechanics-homework-passage",
+            "tier": "multiline",
+            "eval_sequences": 8,
+            "eval_chars": 1813,
+            "eval_tokens": 517,
+            "out_of_set_tokens": 14,
+            "out_of_set_rate": 0.027079303675048357,
+            "fertility_full": 0.2851627137341423,
+            "fertility_pruned_sim": 0.3309431880860452,
+            "sim_tokens_pruned": 600,
+            "reference_oos_tokens": 6,
+            "reference_bit_exact": false,
+            "out_of_set_ids": [
+              38576,
+              47158,
+              60618,
+              69094,
+              70323,
+              76377,
+              91550
+            ],
+            "out_of_set_tokens_decoded": [
+              " friction",
+              "ivative",
+              "}s",
+              "{k",
+              " kinetic",
+              "Newton",
+              "mathrm"
+            ]
+          },
+          {
+            "item": "pythagorean-theorem",
+            "tier": "easy",
+            "eval_sequences": 9,
+            "eval_chars": 159,
+            "eval_tokens": 106,
+            "out_of_set_tokens": 3,
+            "out_of_set_rate": 0.02830188679245283,
+            "fertility_full": 0.6666666666666666,
+            "fertility_pruned_sim": 0.6855345911949685,
+            "sim_tokens_pruned": 109,
+            "reference_oos_tokens": 0,
+            "reference_bit_exact": true,
+            "out_of_set_ids": [
+              35093,
+              44292,
+              51185
+            ],
+            "out_of_set_tokens_decoded": [
+              "+b",
+              "\\\\(",
+              "}="
+            ]
+          },
+          {
+            "item": "quadratic-formula",
+            "tier": "easy",
+            "eval_sequences": 9,
+            "eval_chars": 413,
+            "eval_tokens": 220,
+            "out_of_set_tokens": 0,
+            "out_of_set_rate": 0.0,
+            "fertility_full": 0.5326876513317191,
+            "fertility_pruned_sim": 0.5326876513317191,
+            "sim_tokens_pruned": 220,
+            "reference_oos_tokens": 0,
+            "reference_bit_exact": true,
+            "out_of_set_ids": [],
+            "out_of_set_tokens_decoded": []
+          },
+          {
+            "item": "riemann-zeta-functional-equation",
+            "tier": "hard",
+            "eval_sequences": 9,
+            "eval_chars": 2179,
+            "eval_tokens": 984,
+            "out_of_set_tokens": 6,
+            "out_of_set_rate": 0.006097560975609756,
+            "fertility_full": 0.4515832950894906,
+            "fertility_pruned_sim": 0.4625975217989904,
+            "sim_tokens_pruned": 1008,
+            "reference_oos_tokens": 1,
+            "reference_bit_exact": false,
+            "out_of_set_ids": [
+              40457
+            ],
+            "out_of_set_tokens_decoded": [
+              "Gamma"
+            ]
+          },
+          {
+            "item": "schrodinger-time-dependent",
+            "tier": "hard",
+            "eval_sequences": 9,
+            "eval_chars": 586,
+            "eval_tokens": 275,
+            "out_of_set_tokens": 14,
+            "out_of_set_rate": 0.05090909090909091,
+            "fertility_full": 0.46928327645051193,
+            "fertility_pruned_sim": 0.5648464163822525,
+            "sim_tokens_pruned": 331,
+            "reference_oos_tokens": 2,
+            "reference_bit_exact": false,
+            "out_of_set_ids": [
+              37420,
+              71182,
+              74615
+            ],
+            "out_of_set_tokens_decoded": [
+              "partial",
+              "rangle",
+              "Psi"
+            ]
+          }
+        ],
+        "summary": {
+          "easy": {
+            "n_items": 4,
+            "oos_rate_micro": 0.005952380952380952,
+            "oos_rate": {
+              "mean": 0.007075471698113208,
+              "median": 0.0
+            },
+            "fertility_full_micro": 0.5707814269535674,
+            "fertility_pruned_sim_micro": 0.5741789354473387,
+            "fertility_full": {
+              "mean": 0.5889140873251042,
+              "median": 0.5915186508406847
+            },
+            "fertility_pruned_sim": {
+              "mean": 0.5936310684571797,
+              "median": 0.5915186508406847
+            }
+          },
+          "medium": {
+            "n_items": 4,
+            "oos_rate_micro": 0.012004175365344467,
+            "oos_rate": {
+              "mean": 0.010912840005108058,
+              "median": 0.00718132854578097
+            },
+            "fertility_full_micro": 0.4444444444444444,
+            "fertility_pruned_sim_micro": 0.46160983530503363,
+            "fertility_full": {
+              "mean": 0.44658895524258524,
+              "median": 0.4589137294830412
+            },
+            "fertility_pruned_sim": {
+              "mean": 0.469744580665799,
+              "median": 0.4621343413993053
+            }
+          },
+          "hard": {
+            "n_items": 4,
+            "oos_rate_micro": 0.01016021883548261,
+            "oos_rate": {
+              "mean": 0.018446943603178056,
+              "median": 0.010058126282197401
+            },
+            "fertility_full_micro": 0.4751206832528778,
+            "fertility_pruned_sim_micro": 0.49368733754177496,
+            "fertility_full": {
+              "mean": 0.47651165550638624,
+              "median": 0.47837740132320583
+            },
+            "fertility_pruned_sim": {
+              "mean": 0.5104513981384072,
+              "median": 0.5071808271861931
+            }
+          },
+          "multiline": {
+            "n_items": 3,
+            "oos_rate_micro": 0.012089157536834151,
+            "oos_rate": {
+              "mean": 0.014407194060997311,
+              "median": 0.01062959934587081
+            },
+            "fertility_full_micro": 0.33510570958349156,
+            "fertility_pruned_sim_micro": 0.3565008228889733,
+            "fertility_full": {
+              "mean": 0.3281695750300926,
+              "median": 0.29993386243386244
+            },
+            "fertility_pruned_sim": {
+              "mean": 0.3528205331570701,
+              "median": 0.3309431880860452
+            }
+          },
+          "overall": {
+            "n_items": 15,
+            "oos_rate_micro": 0.011014948859166011,
+            "oos_rate": {
+              "mean": 0.012597506893905949,
+              "median": 0.006097560975609756
+            },
+            "fertility_full_micro": 0.4126846690838249,
+            "fertility_pruned_sim_micro": 0.43140862600790086,
+            "fertility_full": {
+              "mean": 0.46883783449243877,
+              "median": 0.4693572496263079
+            },
+            "fertility_pruned_sim": {
+              "mean": 0.4902513192344502,
+              "median": 0.501833180568286
+            }
+          }
+        },
+        "oos_top_tokens": [
+          {
+            "id": 91362,
+            "decoded": "{n",
+            "count": 12
+          },
+          {
+            "id": 74615,
+            "decoded": "Psi",
+            "count": 6
+          },
+          {
+            "id": 40457,
+            "decoded": "Gamma",
+            "count": 6
+          },
+          {
+            "id": 88464,
+            "decoded": "Probability",
+            "count": 5
+          },
+          {
+            "id": 57960,
+            "decoded": " $\\\\",
+            "count": 5
+          },
+          {
+            "id": 43010,
+            "decoded": "+y",
+            "count": 4
+          },
+          {
+            "id": 71182,
+            "decoded": "rangle",
+            "count": 4
+          },
+          {
+            "id": 37420,
+            "decoded": "partial",
+            "count": 4
+          },
+          {
+            "id": 38576,
+            "decoded": " friction",
+            "count": 4
+          },
+          {
+            "id": 70323,
+            "decoded": " kinetic",
+            "count": 4
+          },
+          {
+            "id": 89458,
+            "decoded": " Basel",
+            "count": 3
+          },
+          {
+            "id": 48568,
+            "decoded": " Gaussian",
+            "count": 3
+          },
+          {
+            "id": 41968,
+            "decoded": "given",
+            "count": 2
+          },
+          {
+            "id": 37877,
+            "decoded": "dz",
+            "count": 2
+          },
+          {
+            "id": 58266,
+            "decoded": "Lambda",
+            "count": 2
+          },
+          {
+            "id": 91550,
+            "decoded": "mathrm",
+            "count": 2
+          },
+          {
+            "id": 86358,
+            "decoded": " collapses",
+            "count": 2
+          },
+          {
+            "id": 45340,
+            "decoded": "{x",
+            "count": 2
+          },
+          {
+            "id": 33845,
+            "decoded": " mentions",
+            "count": 2
+          },
+          {
+            "id": 51185,
+            "decoded": "}=",
+            "count": 1
+          },
+          {
+            "id": 44292,
+            "decoded": "\\\\(",
+            "count": 1
+          },
+          {
+            "id": 35093,
+            "decoded": "+b",
+            "count": 1
+          },
+          {
+            "id": 41433,
+            "decoded": " contour",
+            "count": 1
+          },
+          {
+            "id": 41715,
+            "decoded": "+\\\\",
+            "count": 1
+          },
+          {
+            "id": 60618,
+            "decoded": "}s",
+            "count": 1
+          },
+          {
+            "id": 69094,
+            "decoded": "{k",
+            "count": 1
+          },
+          {
+            "id": 76377,
+            "decoded": "Newton",
+            "count": 1
+          },
+          {
+            "id": 47158,
+            "decoded": "ivative",
+            "count": 1
+          },
+          {
+            "id": 78045,
+            "decoded": "\\\\[",
+            "count": 1
+          }
+        ]
+      },
+      "65536": {
+        "pad_n": 65536,
+        "head_ids_size": 65536,
+        "head_ids_sample": [
+          256,
+          257,
+          258,
+          259,
+          260,
+          261,
+          262,
+          263,
+          264,
+          265,
+          266,
+          267,
+          268,
+          269,
+          270,
+          271
+        ],
+        "reference_bit_exact_fraction": 0.6666666666666666,
+        "reference_bit_exact_items": [
+          "quadratic-formula",
+          "eulers-identity",
+          "pythagorean-theorem",
+          "circle-area",
+          "gaussian-integral",
+          "basel-problem",
+          "bayes-theorem",
+          "cauchy-integral-formula",
+          "riemann-zeta-functional-equation",
+          "einstein-field-equations"
+        ],
+        "per_item": [
+          {
+            "item": "analysis-classics-passage",
+            "tier": "multiline",
+            "eval_sequences": 8,
+            "eval_chars": 3062,
+            "eval_tokens": 1223,
+            "out_of_set_tokens": 3,
+            "out_of_set_rate": 0.0024529844644317253,
+            "fertility_full": 0.399412148922273,
+            "fertility_pruned_sim": 0.40431090790333113,
+            "sim_tokens_pruned": 1238,
+            "reference_oos_tokens": 1,
+            "reference_bit_exact": false,
+            "out_of_set_ids": [
+              89458
+            ],
+            "out_of_set_tokens_decoded": [
+              " Basel"
+            ]
+          },
+          {
+            "item": "basel-problem",
+            "tier": "medium",
+            "eval_sequences": 9,
+            "eval_chars": 485,
+            "eval_tokens": 249,
+            "out_of_set_tokens": 0,
+            "out_of_set_rate": 0.0,
+            "fertility_full": 0.51340206185567,
+            "fertility_pruned_sim": 0.51340206185567,
+            "sim_tokens_pruned": 249,
+            "reference_oos_tokens": 0,
+            "reference_bit_exact": true,
+            "out_of_set_ids": [],
+            "out_of_set_tokens_decoded": []
+          },
+          {
+            "item": "bayes-theorem",
+            "tier": "medium",
+            "eval_sequences": 9,
+            "eval_chars": 673,
+            "eval_tokens": 239,
+            "out_of_set_tokens": 5,
+            "out_of_set_rate": 0.02092050209205021,
+            "fertility_full": 0.3551263001485884,
+            "fertility_pruned_sim": 0.4294205052005943,
+            "sim_tokens_pruned": 289,
+            "reference_oos_tokens": 0,
+            "reference_bit_exact": true,
+            "out_of_set_ids": [
+              88464
+            ],
+            "out_of_set_tokens_decoded": [
+              "Probability"
+            ]
+          },
+          {
+            "item": "binomial-theorem",
+            "tier": "medium",
+            "eval_sequences": 9,
+            "eval_chars": 2484,
+            "eval_tokens": 1114,
+            "out_of_set_tokens": 12,
+            "out_of_set_rate": 0.010771992818671455,
+            "fertility_full": 0.44847020933977455,
+            "fertility_pruned_sim": 0.4533011272141707,
+            "sim_tokens_pruned": 1126,
+            "reference_oos_tokens": 1,
+            "reference_bit_exact": false,
+            "out_of_set_ids": [
+              91362
+            ],
+            "out_of_set_tokens_decoded": [
+              "{n"
+            ]
+          },
+          {
+            "item": "cauchy-integral-formula",
+            "tier": "hard",
+            "eval_sequences": 9,
+            "eval_chars": 2182,
+            "eval_tokens": 1086,
+            "out_of_set_tokens": 0,
+            "out_of_set_rate": 0.0,
+            "fertility_full": 0.4977085242896425,
+            "fertility_pruned_sim": 0.4977085242896425,
+            "sim_tokens_pruned": 1086,
+            "reference_oos_tokens": 0,
+            "reference_bit_exact": true,
+            "out_of_set_ids": [],
+            "out_of_set_tokens_decoded": []
+          },
+          {
+            "item": "circle-area",
+            "tier": "easy",
+            "eval_sequences": 9,
+            "eval_chars": 168,
+            "eval_tokens": 85,
+            "out_of_set_tokens": 0,
+            "out_of_set_rate": 0.0,
+            "fertility_full": 0.5059523809523809,
+            "fertility_pruned_sim": 0.5059523809523809,
+            "sim_tokens_pruned": 85,
+            "reference_oos_tokens": 0,
+            "reference_bit_exact": true,
+            "out_of_set_ids": [],
+            "out_of_set_tokens_decoded": []
+          },
+          {
+            "item": "einstein-field-equations",
+            "tier": "hard",
+            "eval_sequences": 9,
+            "eval_chars": 439,
+            "eval_tokens": 214,
+            "out_of_set_tokens": 0,
+            "out_of_set_rate": 0.0,
+            "fertility_full": 0.4874715261958998,
+            "fertility_pruned_sim": 0.4874715261958998,
+            "sim_tokens_pruned": 214,
+            "reference_oos_tokens": 0,
+            "reference_bit_exact": true,
+            "out_of_set_ids": [],
+            "out_of_set_tokens_decoded": []
+          },
+          {
+            "item": "euler-formula-passage",
+            "tier": "multiline",
+            "eval_sequences": 8,
+            "eval_chars": 3024,
+            "eval_tokens": 907,
+            "out_of_set_tokens": 3,
+            "out_of_set_rate": 0.0033076074972436605,
+            "fertility_full": 0.29993386243386244,
+            "fertility_pruned_sim": 0.3062169312169312,
+            "sim_tokens_pruned": 926,
+            "reference_oos_tokens": 1,
+            "reference_bit_exact": false,
+            "out_of_set_ids": [
+              78045,
+              86358
+            ],
+            "out_of_set_tokens_decoded": [
+              "\\\\[",
+              " collapses"
+            ]
+          },
+          {
+            "item": "eulers-identity",
+            "tier": "easy",
+            "eval_sequences": 9,
+            "eval_chars": 143,
+            "eval_tokens": 93,
+            "out_of_set_tokens": 0,
+            "out_of_set_rate": 0.0,
+            "fertility_full": 0.6503496503496503,
+            "fertility_pruned_sim": 0.6503496503496503,
+            "sim_tokens_pruned": 93,
+            "reference_oos_tokens": 0,
+            "reference_bit_exact": true,
+            "out_of_set_ids": [],
+            "out_of_set_tokens_decoded": []
+          },
+          {
+            "item": "gaussian-integral",
+            "tier": "medium",
+            "eval_sequences": 9,
+            "eval_chars": 669,
+            "eval_tokens": 314,
+            "out_of_set_tokens": 0,
+            "out_of_set_rate": 0.0,
+            "fertility_full": 0.4693572496263079,
+            "fertility_pruned_sim": 0.4693572496263079,
+            "sim_tokens_pruned": 314,
+            "reference_oos_tokens": 0,
+            "reference_bit_exact": true,
+            "out_of_set_ids": [],
+            "out_of_set_tokens_decoded": []
+          },
+          {
+            "item": "mechanics-homework-passage",
+            "tier": "multiline",
+            "eval_sequences": 8,
+            "eval_chars": 1813,
+            "eval_tokens": 517,
+            "out_of_set_tokens": 8,
+            "out_of_set_rate": 0.015473887814313346,
+            "fertility_full": 0.2851627137341423,
+            "fertility_pruned_sim": 0.3094318808604523,
+            "sim_tokens_pruned": 561,
+            "reference_oos_tokens": 4,
+            "reference_bit_exact": false,
+            "out_of_set_ids": [
+              69094,
+              70323,
+              76377,
+              91550
+            ],
+            "out_of_set_tokens_decoded": [
+              "{k",
+              " kinetic",
+              "Newton",
+              "mathrm"
+            ]
+          },
+          {
+            "item": "pythagorean-theorem",
+            "tier": "easy",
+            "eval_sequences": 9,
+            "eval_chars": 159,
+            "eval_tokens": 106,
+            "out_of_set_tokens": 0,
+            "out_of_set_rate": 0.0,
+            "fertility_full": 0.6666666666666666,
+            "fertility_pruned_sim": 0.6666666666666666,
+            "sim_tokens_pruned": 106,
+            "reference_oos_tokens": 0,
+            "reference_bit_exact": true,
+            "out_of_set_ids": [],
+            "out_of_set_tokens_decoded": []
+          },
+          {
+            "item": "quadratic-formula",
+            "tier": "easy",
+            "eval_sequences": 9,
+            "eval_chars": 413,
+            "eval_tokens": 220,
+            "out_of_set_tokens": 0,
+            "out_of_set_rate": 0.0,
+            "fertility_full": 0.5326876513317191,
+            "fertility_pruned_sim": 0.5326876513317191,
+            "sim_tokens_pruned": 220,
+            "reference_oos_tokens": 0,
+            "reference_bit_exact": true,
+            "out_of_set_ids": [],
+            "out_of_set_tokens_decoded": []
+          },
+          {
+            "item": "riemann-zeta-functional-equation",
+            "tier": "hard",
+            "eval_sequences": 9,
+            "eval_chars": 2179,
+            "eval_tokens": 984,
+            "out_of_set_tokens": 0,
+            "out_of_set_rate": 0.0,
+            "fertility_full": 0.4515832950894906,
+            "fertility_pruned_sim": 0.4515832950894906,
+            "sim_tokens_pruned": 984,
+            "reference_oos_tokens": 0,
+            "reference_bit_exact": true,
+            "out_of_set_ids": [],
+            "out_of_set_tokens_decoded": []
+          },
+          {
+            "item": "schrodinger-time-dependent",
+            "tier": "hard",
+            "eval_sequences": 9,
+            "eval_chars": 586,
+            "eval_tokens": 275,
+            "out_of_set_tokens": 10,
+            "out_of_set_rate": 0.03636363636363636,
+            "fertility_full": 0.46928327645051193,
+            "fertility_pruned_sim": 0.5238907849829352,
+            "sim_tokens_pruned": 307,
+            "reference_oos_tokens": 2,
+            "reference_bit_exact": false,
+            "out_of_set_ids": [
+              71182,
+              74615
+            ],
+            "out_of_set_tokens_decoded": [
+              "rangle",
+              "Psi"
+            ]
+          }
+        ],
+        "summary": {
+          "easy": {
+            "n_items": 4,
+            "oos_rate_micro": 0.0,
+            "oos_rate": {
+              "mean": 0.0,
+              "median": 0.0
+            },
+            "fertility_full_micro": 0.5707814269535674,
+            "fertility_pruned_sim_micro": 0.5707814269535674,
+            "fertility_full": {
+              "mean": 0.5889140873251042,
+              "median": 0.5915186508406847
+            },
+            "fertility_pruned_sim": {
+              "mean": 0.5889140873251042,
+              "median": 0.5915186508406847
+            }
+          },
+          "medium": {
+            "n_items": 4,
+            "oos_rate_micro": 0.008872651356993737,
+            "oos_rate": {
+              "mean": 0.007923123727680417,
+              "median": 0.005385996409335727
+            },
+            "fertility_full_micro": 0.4444444444444444,
+            "fertility_pruned_sim_micro": 0.4588262584087219,
+            "fertility_full": {
+              "mean": 0.44658895524258524,
+              "median": 0.4589137294830412
+            },
+            "fertility_pruned_sim": {
+              "mean": 0.46637023597418575,
+              "median": 0.4613291884202393
+            }
+          },
+          "hard": {
+            "n_items": 4,
+            "oos_rate_micro": 0.003907776475185619,
+            "oos_rate": {
+              "mean": 0.00909090909090909,
+              "median": 0.0
+            },
+            "fertility_full_micro": 0.4751206832528778,
+            "fertility_pruned_sim_micro": 0.48106201262532494,
+            "fertility_full": {
+              "mean": 0.47651165550638624,
+              "median": 0.47837740132320583
+            },
+            "fertility_pruned_sim": {
+              "mean": 0.4901635326394921,
+              "median": 0.4925900252427712
+            }
+          },
+          "multiline": {
+            "n_items": 3,
+            "oos_rate_micro": 0.005289006422364941,
+            "oos_rate": {
+              "mean": 0.007078159925329577,
+              "median": 0.0033076074972436605
+            },
+            "fertility_full_micro": 0.33510570958349156,
+            "fertility_pruned_sim_micro": 0.34498037726294467,
+            "fertility_full": {
+              "mean": 0.3281695750300926,
+              "median": 0.29993386243386244
+            },
+            "fertility_pruned_sim": {
+              "mean": 0.3399865733269049,
+              "median": 0.3094318808604523
+            }
+          },
+          "overall": {
+            "n_items": 15,
+            "oos_rate_micro": 0.005376344086021506,
+            "oos_rate": {
+              "mean": 0.0059527074033564505,
+              "median": 0.0
+            },
+            "fertility_full_micro": 0.4126846690838249,
+            "fertility_pruned_sim_micro": 0.42199253206342335,
+            "fertility_full": {
+              "mean": 0.46883783449243877,
+              "median": 0.4693572496263079
+            },
+            "fertility_pruned_sim": {
+              "mean": 0.48011674291572287,
+              "median": 0.4874715261958998
+            }
+          }
+        },
+        "oos_top_tokens": [
+          {
+            "id": 91362,
+            "decoded": "{n",
+            "count": 12
+          },
+          {
+            "id": 74615,
+            "decoded": "Psi",
+            "count": 6
+          },
+          {
+            "id": 88464,
+            "decoded": "Probability",
+            "count": 5
+          },
+          {
+            "id": 71182,
+            "decoded": "rangle",
+            "count": 4
+          },
+          {
+            "id": 70323,
+            "decoded": " kinetic",
+            "count": 4
+          },
+          {
+            "id": 89458,
+            "decoded": " Basel",
+            "count": 3
+          },
+          {
+            "id": 91550,
+            "decoded": "mathrm",
+            "count": 2
+          },
+          {
+            "id": 86358,
+            "decoded": " collapses",
+            "count": 2
+          },
+          {
+            "id": 69094,
+            "decoded": "{k",
+            "count": 1
+          },
+          {
+            "id": 76377,
+            "decoded": "Newton",
+            "count": 1
+          },
+          {
+            "id": 78045,
+            "decoded": "\\\\[",
+            "count": 1
+          }
+        ]
+      }
+    }
+  },
+  "embedding_memory": [
+    {
+      "model": "Qwen3-0.6B",
+      "hidden": 1024,
+      "fp16": {
+        "orig_bytes": 311164928,
+        "pruned_bytes": 67108864,
+        "saved_bytes": 244056064
+      },
+      "int4": {
+        "orig_bytes": 77791232,
+        "pruned_bytes": 16777216,
+        "saved_bytes": 61014016
+      }
+    },
+    {
+      "model": "Qwen3-1.7B",
+      "hidden": 2048,
+      "fp16": {
+        "orig_bytes": 622329856,
+        "pruned_bytes": 134217728,
+        "saved_bytes": 488112128
+      },
+      "int4": {
+        "orig_bytes": 155582464,
+        "pruned_bytes": 33554432,
+        "saved_bytes": 122028032
+      }
+    },
+    {
+      "model": "Qwen3-4B",
+      "hidden": 2560,
+      "fp16": {
+        "orig_bytes": 777912320,
+        "pruned_bytes": 167772160,
+        "saved_bytes": 610140160
+      },
+      "int4": {
+        "orig_bytes": 194478080,
+        "pruned_bytes": 41943040,
+        "saved_bytes": 152535040
+      }
+    }
+  ]
+}
