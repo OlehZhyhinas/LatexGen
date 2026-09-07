@@ -215,8 +215,11 @@ async function streamChat(res, route, messages) {
   const decoder = new TextDecoder();
   let buf = "";
   let full = "";
+  let tokens = 0;
+  let evalNs = 0;
   const emit = (delta) => {
     if (!delta) return;
+    tokens += 1;
     full += delta;
     res.write(JSON.stringify({ delta }) + "\n");
   };
@@ -231,14 +234,23 @@ async function streamChat(res, route, messages) {
         if (!line.startsWith("data:")) continue;
         line = line.slice(5).trim();
         if (line === "[DONE]") continue;
-        emit(JSON.parse(line).choices?.[0]?.delta?.content ?? "");
+        const j = JSON.parse(line);
+        emit(j.choices?.[0]?.delta?.content ?? "");
+        if (j.usage?.completion_tokens) tokens = j.usage.completion_tokens;
       } else {
-        emit(JSON.parse(line).message?.content ?? "");
+        const j = JSON.parse(line);
+        emit(j.message?.content ?? "");
+        if (j.eval_count) tokens = j.eval_count;
+        if (j.eval_duration) evalNs = j.eval_duration;
       }
     }
   }
   const latex = stripFences(stripThink(full));
-  res.end(JSON.stringify({ done: true, latex, model: `${route.model} (${route.kind})`, ms: Date.now() - started }) + "\n");
+  const ms = Date.now() - started;
+  const tokPerSec = tokens && evalNs ? Math.round((tokens / (evalNs / 1e9)) * 10) / 10
+    : tokens && ms ? Math.round((tokens / (ms / 1000)) * 10) / 10
+    : undefined;
+  res.end(JSON.stringify({ done: true, latex, model: `${route.model} (${route.kind})`, ms, tokens: tokens || undefined, tokPerSec }) + "\n");
 }
 
 // Load both models into memory at boot so the first user request is warm.

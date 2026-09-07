@@ -26,11 +26,38 @@ let streamSeq = 0;
 function emit(onEvent, kind, title, extra = {}) {
   onEvent?.({ kind, title, ...extra });
 }
+export function runStats(ms, tokens, decodeMs) {
+  if (ms == null || !Number.isFinite(ms) || ms < 0) return {};
+  const out = { ms: Math.round(ms) };
+  const n = Number(tokens);
+  if (Number.isFinite(n) && n > 0) {
+    out.tokens = n;
+    const denom = n > 1 && Number.isFinite(decodeMs) && decodeMs > 0 ? decodeMs : ms;
+    if (denom > 0) out.tokPerSec = Math.round((n / (denom / 1000)) * 10) / 10;
+  }
+  return out;
+}
+function fmtDur(ms) {
+  if (ms == null || !Number.isFinite(ms)) return "";
+  return ms < 1000 ? `${Math.round(ms)} ms` : `${(ms / 1000).toFixed(ms >= 10_000 ? 0 : 1)}s`;
+}
 function tapDelta(onDelta, onEvent, title) {
   const live = `stream-${++streamSeq}`;
-  return (full) => {
+  const t0 = performance.now();
+  return (full, extra = {}) => {
     onDelta?.(full);
-    emit(onEvent, "stream", title, { live, raw: full, detail: "Output as it is written. This entry grows until the model stops." });
+    const stats = extra.tokPerSec != null
+      ? { ms: extra.ms ?? Math.round(performance.now() - t0), tokens: extra.tokens, tokPerSec: extra.tokPerSec }
+      : runStats(extra.ms ?? (performance.now() - t0), extra.tokens, extra.decodeMs);
+    emit(onEvent, "stream", title, {
+      live, raw: full,
+      detail: extra.done && stats.tokPerSec != null
+        ? `Wrote ${stats.tokens} token${stats.tokens === 1 ? "" : "s"} in ${fmtDur(stats.ms)} (${stats.tokPerSec} tok/s).`
+        : extra.done
+          ? `Finished in ${fmtDur(stats.ms)}.`
+          : "Output as it is written. This entry grows until the model stops.",
+      ...stats,
+    });
   };
 }
 function checkEvent(v) {
@@ -101,10 +128,11 @@ export function isEcho(instruction, revised) {
 
 // Read the server's NDJSON stream: {delta} lines, then {done, latex, model, ms}.
 export async function streamServerChat(url, body, onDelta) {
+  const t0 = performance.now();
   const r = await fetch(url, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) });
   if (!r.ok) { const data = await r.json().catch(() => ({})); throw new Error(data.error || `server error ${r.status}`); }
   const reader = r.body.getReader(); const decoder = new TextDecoder();
-  let buf = "", full = "", final = null;
+  let buf = "", full = "", final = null, pieces = 0;
   for (;;) {
     const { done, value } = await reader.read(); if (done) break;
     buf += decoder.decode(value, { stream: true });
@@ -113,11 +141,16 @@ export async function streamServerChat(url, body, onDelta) {
       const line = buf.slice(0, i); buf = buf.slice(i + 1);
       if (!line.trim()) continue;
       const j = JSON.parse(line);
-      if (j.done) final = j; else if (j.delta) { full += j.delta; onDelta?.(full); }
+      if (j.done) final = j;
+      else if (j.delta) { full += j.delta; pieces += 1; onDelta?.(full, runStats(performance.now() - t0, pieces)); }
     }
   }
   if (!final) throw new Error("stream ended unexpectedly");
-  return final;
+  const ms = final.ms ?? Math.round(performance.now() - t0);
+  const tokens = final.tokens ?? pieces;
+  const stats = final.tokPerSec != null ? { ms, tokens, tokPerSec: final.tokPerSec } : runStats(ms, tokens);
+  onDelta?.(full || final.latex, { ...stats, done: true });
+  return { ...final, ...stats };
 }
 
 // Output formats (single-segment outputs can be re-wrapped; others as-is).
@@ -156,16 +189,29 @@ export function createPipeline(ctx) {
     const delta = tapDelta(onDelta, onEvent, "On-device model is writing");
     return withEngine(async () => {
       // The catalog runtime fast path needs greedy decode, which also keeps runs reproducible.
-      const chunks = await engine.chat.completions.create({ messages, temperature: 0, max_tokens: maxTokens, stream: true, extra_body: { enable_thinking: false } });
-      let full = "", sinceCheck = 0;
+      const t0 = performance.now();
+      const chunks = await engine.chat.completions.create({
+        messages, temperature: 0, max_tokens: maxTokens, stream: true,
+        stream_options: { include_usage: true }, extra_body: { enable_thinking: false },
+      });
+      let full = "", sinceCheck = 0, chunksOut = 0, usageTokens = null, firstTok = null;
       for await (const c of chunks) {
+        if (c.usage?.completion_tokens) usageTokens = c.usage.completion_tokens;
         const d = c.choices[0]?.delta?.content ?? "";
         if (!d) continue;
-        full += d; delta(full);
+        if (firstTok == null) firstTok = performance.now();
+        full += d; chunksOut += 1;
+        const tokens = usageTokens ?? chunksOut;
+        delta(full, { ms: performance.now() - t0, tokens, decodeMs: firstTok != null ? performance.now() - firstTok : undefined });
         if (++sinceCheck >= 4) { sinceCheck = 0; if (looksComplete(full)) engine.interruptGenerate(); }
       }
+      const ms = performance.now() - t0;
+      const tokens = usageTokens ?? chunksOut;
+      const decodeMs = firstTok != null ? performance.now() - firstTok : ms;
+      const stats = runStats(ms, tokens, decodeMs);
+      delta(full, { ...stats, decodeMs, done: true });
       const latex = stripFences(stripThink(full));
-      emit(onEvent, "model", "On-device model finished", { detail: ctx.getEngineName() || "WebLLM", raw: latex });
+      emit(onEvent, "model", "On-device model finished", { detail: ctx.getEngineName() || "WebLLM", raw: latex, ...stats });
       return { latex, model: ctx.getEngineName() };
     });
   }
@@ -176,9 +222,11 @@ export function createPipeline(ctx) {
     { role: "assistant", content: badLatex },
     { role: "user", content: `Checks failed:\n- ${issues.join("\n- ")}\nOutput the corrected LaTeX.` },
   ], onDelta, onEvent);
-  const convertServer = (text, onDelta, onEvent) => {
+  const convertServer = async (text, onDelta, onEvent) => {
     emit(onEvent, "step", "Running the server model", { detail: "This conversion left the tab. The text is sent to the configured server model.", raw: text });
-    return streamServerChat("api/convert", { text, complex: !specialistEligible(text) }, tapDelta(onDelta, onEvent, "Server model is writing"));
+    const r = await streamServerChat("api/convert", { text, complex: !specialistEligible(text) }, tapDelta(onDelta, onEvent, "Server model is writing"));
+    emit(onEvent, "model", "Server model finished", { detail: r.model, raw: r.latex, ms: r.ms, tokens: r.tokens, tokPerSec: r.tokPerSec });
+    return r;
   };
 
   // Validator-guided repair: up to 5 turns while the error keeps changing;
@@ -212,10 +260,11 @@ export function createPipeline(ctx) {
   async function runOnMesh(kind, body, onStatus, onEvent) {
     onStatus?.("asking another LatexGen tab…");
     emit(onEvent, "step", "Asking another LatexGen tab", { detail: "A peer device will run this conversion. Text only; images never leave this machine.", raw: JSON.stringify(body).slice(0, 2000) });
+    const t0 = performance.now();
     const r = await fetch(`api/pool/${ctx.mesh.tabId()}/${kind}`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) });
     const data = await r.json().catch(() => ({}));
     if (!r.ok || data.error || !data.latex) throw new Error(data.error || `mesh ${r.status}`);
-    emit(onEvent, "model", "Peer tab returned LaTeX", { detail: data.peerModel ?? "on-device model", raw: data.latex });
+    emit(onEvent, "model", "Peer tab returned LaTeX", { detail: data.peerModel ?? "on-device model", raw: data.latex, ...runStats(performance.now() - t0, data.tokens) });
     return { latex: data.latex, model: `peer · ${data.peerModel ?? "on-device model"}`, peer: data.peer };
   }
   // Ladder order after your own device: a self-hosted local server is more
@@ -234,8 +283,10 @@ export function createPipeline(ctx) {
   async function ensureSpecialist() { try { await loadModel("intellitex"); return true; } catch { return false; } }
   async function convertSpecialist(text, onEvent) {
     emit(onEvent, "step", "Running the specialist", { detail: "IntelliTeX is a small model trained only to turn a single equation into LaTeX. It runs on this device.", raw: text });
-    const latex = await runModel("intellitex", text);
-    emit(onEvent, "model", "Specialist returned LaTeX", { detail: "IntelliTeX · specialist", raw: latex });
+    const t0 = performance.now();
+    const r = await runModel("intellitex", text);
+    const latex = r.output;
+    emit(onEvent, "model", "Specialist returned LaTeX", { detail: "IntelliTeX · specialist", raw: latex, ...runStats(r.ms ?? (performance.now() - t0), r.tokens) });
     return { latex, model: "IntelliTeX · specialist" };
   }
 
@@ -282,7 +333,10 @@ export function createPipeline(ctx) {
       return null;
     };
     if (!loaded.intellitex) emit(onEvent, "step", "Loading the specialist", { detail: "First use downloads IntelliTeX (about 200 MB) and may compile it for this machine. Later conversions skip this.", live: "load-intellitex" });
+    const loadStarted = performance.now();
+    const wasLoaded = loaded.intellitex;
     const haveSpecialist = await ensureSpecialist();
+    if (!wasLoaded && haveSpecialist) emit(onEvent, "step", "Specialist is ready", { detail: "IntelliTeX is in memory for this visit.", live: "load-intellitex", ...runStats(performance.now() - loadStarted) });
     if (!haveSpecialist) emit(onEvent, "step", "Specialist is not available", { detail: "Continuing with the on-device language model or the server, if either is ready." });
     let result = null, validation = null, escalated = false, note = "", batch = false;
 
@@ -361,10 +415,11 @@ export function createPipeline(ctx) {
     const out = { latex: result.latex, validation, model: result.model, note, escalated, batch, peer, ms: Math.round(performance.now() - started) };
     if (strict && validation.ok && !batch) {
       emit(onEvent, "step", "Asking a second model to verify", { detail: "Strict mode: another model judges whether the LaTeX says what you typed." });
+      const tJ = performance.now();
       out.judge = await judge(text, result.latex);
-      emit(onEvent, out.judge.ok ? "check" : "check", out.judge.unavailable ? "Second opinion unavailable" : (out.judge.ok ? "Second model agrees" : "Second model disagrees"), { detail: out.judge.reason || "", raw: JSON.stringify(out.judge), bad: out.judge.ok ? undefined : true });
+      emit(onEvent, "check", out.judge.unavailable ? "Second opinion unavailable" : (out.judge.ok ? "Second model agrees" : "Second model disagrees"), { detail: out.judge.reason || "", raw: JSON.stringify(out.judge), bad: out.judge.ok ? undefined : true, ...runStats(performance.now() - tJ) });
     }
-    emit(onEvent, "done", `Finished in ${(out.ms / 1000).toFixed(1)}s`, { detail: `${out.model}${out.escalated ? " (escalated)" : ""}`, raw: out.latex });
+    emit(onEvent, "done", `Finished in ${(out.ms / 1000).toFixed(1)}s`, { detail: `${out.model}${out.escalated ? " (escalated)" : ""}`, raw: out.latex, ms: out.ms });
     return out;
   }
 
@@ -378,11 +433,16 @@ export function createPipeline(ctx) {
     if (used === "texo") {
       onStatus("loading image model (Texo)…");
       emit(onEvent, "step", "Loading Texo", { detail: "A small OCR model for a single equation. Downloaded once, then cached.", live: "load-texo" });
+      const tLoad = performance.now();
+      const texoWasLoaded = loaded.texo;
       await loadModel("texo", onProgress);
+      if (!texoWasLoaded) emit(onEvent, "step", "Texo is ready", { detail: "Downloaded once, then cached.", live: "load-texo", ...runStats(performance.now() - tLoad) });
       onStatus("reading equation from image (Texo)…");
       emit(onEvent, "step", "Reading the image with Texo", { detail: "Texo looks at the pixels and writes LaTeX." });
-      const raw = await runModel("texo", blob);
-      emit(onEvent, "model", "Texo returned LaTeX", { detail: "Raw OCR, before cleanup.", raw });
+      const tRun = performance.now();
+      const texoRun = await runModel("texo", blob);
+      const raw = texoRun.output;
+      emit(onEvent, "model", "Texo returned LaTeX", { detail: "Raw OCR, before cleanup.", raw, ...runStats(texoRun.ms ?? (performance.now() - tRun), texoRun.tokens) });
       latex = canonicalizeTexo(raw);
       if (latex !== raw) emit(onEvent, "step", "Cleaned Texo output", { detail: "Aliases and spacing normalized to what KaTeX accepts.", raw: latex });
       if (ocr === "auto") {
@@ -395,11 +455,16 @@ export function createPipeline(ctx) {
       onStatus(escalatedWhy ? `${escalatedWhy} — switching to Texify…` : "loading image model (Texify)…");
       if (escalatedWhy) emit(onEvent, "step", "Switching to Texify", { detail: escalatedWhy === "image contains prose" ? "Texo has no prose mode, so a larger OCR model takes over." : "Texo's LaTeX did not parse, so a larger OCR model takes over." });
       emit(onEvent, "step", "Loading Texify", { detail: "A larger OCR model. Downloaded once, then cached.", live: "load-texify" });
+      const tLoad = performance.now();
+      const texifyWasLoaded = loaded.texify;
       await loadModel("texify", onProgress);
+      if (!texifyWasLoaded) emit(onEvent, "step", "Texify is ready", { detail: "Downloaded once, then cached.", live: "load-texify", ...runStats(performance.now() - tLoad) });
       onStatus("reading image (Texify)…");
       emit(onEvent, "step", "Reading the image with Texify", { detail: "Texify handles denser equations and prose around math." });
-      latex = dedupeRepeats(await runModel("texify", blob));
-      emit(onEvent, "model", "Texify returned LaTeX", { raw: latex });
+      const tRun = performance.now();
+      const texifyRun = await runModel("texify", blob);
+      latex = dedupeRepeats(texifyRun.output);
+      emit(onEvent, "model", "Texify returned LaTeX", { raw: latex, ...runStats(texifyRun.ms ?? (performance.now() - tRun), texifyRun.tokens) });
     }
     if (!latex) throw new Error("no text recognized in image");
     onDelta(latex);
@@ -415,7 +480,7 @@ export function createPipeline(ctx) {
       } catch (e) { emit(onEvent, "error", "OCR repair failed", { raw: String(e.message || e) }); }
     }
     const out = { latex, validation: { ok: issues.length === 0, issues }, model: `${IMAGE_MODELS[used].name} · local OCR`, used, escalatedWhy, note, repaired, ms: Math.round(performance.now() - started) };
-    emit(onEvent, "done", `Finished in ${(out.ms / 1000).toFixed(1)}s`, { detail: out.model, raw: out.latex });
+    emit(onEvent, "done", `Finished in ${(out.ms / 1000).toFixed(1)}s`, { detail: out.model, raw: out.latex, ms: out.ms });
     return out;
   }
 
@@ -435,7 +500,7 @@ export function createPipeline(ctx) {
       if (r.ok) note = `(fixed after ${r.attempts} repair attempt${r.attempts > 1 ? "s" : ""} — compare with what you pasted)`;
     }
     const result = { latex: out, validation: { ok: issues.length === 0, issues }, note, repaired: attempts, model: "validator", ms: Math.round(performance.now() - started) };
-    emit(onEvent, "done", result.validation.ok ? "Valid LaTeX" : "Issues remain", { detail: note, raw: result.latex });
+    emit(onEvent, "done", result.validation.ok ? "Valid LaTeX" : "Issues remain", { detail: note, raw: result.latex, ms: result.ms });
     return result;
   }
 
@@ -449,7 +514,7 @@ export function createPipeline(ctx) {
     if (!useBrowser && !server && allowMesh && meshUsable()) {
       const r = await runOnMesh("refine", { original, latex, instruction }, undefined, onEvent);
       const ok = acceptable(r.latex); const fl = ok ? r.latex : latex;
-      emit(onEvent, ok ? "done" : "error", ok ? "Peer refined the LaTeX" : "Peer echo ignored", { raw: r.latex });
+      emit(onEvent, ok ? "done" : "error", ok ? "Peer refined the LaTeX" : "Peer echo ignored", { raw: r.latex, ms: Math.round(performance.now() - started) });
       return { latex: fl, validation: validateLatex(original, fl), model: r.model, echo: !ok, retried: false, peer: r.peer, ms: Math.round(performance.now() - started) };
     }
     if (!useBrowser && !server) throw new Error("No model available to refine with: load an on-device model in settings.");
@@ -457,9 +522,11 @@ export function createPipeline(ctx) {
       { role: "system", content: REFINE_PROMPT }, { role: "user", content: `Convert to LaTeX:\n${original}` },
       { role: "assistant", content: latex }, { role: "user", content: instruction },
     ], onDelta, onEvent);
-    const viaServer = () => {
+    const viaServer = async () => {
       emit(onEvent, "step", "Refining with the server model", { raw: instruction });
-      return streamServerChat("api/refine", { original, latex, instruction }, tapDelta(onDelta, onEvent, "Server model is writing"));
+      const r = await streamServerChat("api/refine", { original, latex, instruction }, tapDelta(onDelta, onEvent, "Server model is writing"));
+      emit(onEvent, "model", "Server model finished", { detail: r.model, raw: r.latex, ms: r.ms, tokens: r.tokens, tokPerSec: r.tokPerSec });
+      return r;
     };
     let result = useBrowser ? await viaBrowser() : await viaServer();
     let retried = false;
@@ -469,7 +536,7 @@ export function createPipeline(ctx) {
     }
     const echo = !acceptable(result.latex);
     const finalLatex = echo ? latex : result.latex;
-    emit(onEvent, echo ? "error" : "done", echo ? "Kept the previous LaTeX" : "Refinement applied", { detail: echo ? "The model echoed the instruction instead of editing." : result.model, raw: result.latex });
+    emit(onEvent, echo ? "error" : "done", echo ? "Kept the previous LaTeX" : "Refinement applied", { detail: echo ? "The model echoed the instruction instead of editing." : result.model, raw: result.latex, ms: Math.round(performance.now() - started) });
     return { latex: finalLatex, validation: validateLatex(original, finalLatex), model: result.model ?? "refine", echo, retried, ms: Math.round(performance.now() - started) };
   }
 

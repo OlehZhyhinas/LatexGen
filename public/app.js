@@ -51,7 +51,21 @@ function toast(msg, ms = 1800) {
 }
 
 const KIND_LABEL = { run: "run", step: "step", model: "model", check: "check", stream: "out", error: "error", done: "done" };
-function logEvent({ kind = "step", title, detail, raw, live, bad } = {}) {
+function formatDuration(ms) {
+  if (ms == null || !Number.isFinite(ms) || ms < 1) return "";
+  if (ms < 1000) return `${Math.round(ms)} ms`;
+  return `${(ms / 1000).toFixed(ms >= 10_000 ? 0 : 1)} s`;
+}
+function formatStats(ms, tokPerSec) {
+  const parts = [];
+  const d = formatDuration(ms);
+  if (d) parts.push(d);
+  if (tokPerSec != null && Number.isFinite(tokPerSec) && tokPerSec >= 0.1) {
+    parts.push(`${tokPerSec >= 10 ? Math.round(tokPerSec) : tokPerSec.toFixed(1)} tok/s`);
+  }
+  return parts.join(" · ");
+}
+function logEvent({ kind = "step", title, detail, raw, live, bad, ms, tokens, tokPerSec } = {}) {
   const box = $("activity-log");
   if (!box) return;
   box.querySelector(".activity-empty")?.remove();
@@ -60,12 +74,14 @@ function logEvent({ kind = "step", title, detail, raw, live, bad } = {}) {
   if (!el) {
     el = document.createElement("article");
     el.className = `act act-${kind}`;
+    el._t0 = performance.now();
     if (live) el.dataset.live = String(live);
     const meta = document.createElement("div"); meta.className = "act-meta";
     const time = document.createElement("span"); time.className = "act-time";
     time.textContent = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" });
     const k = document.createElement("span"); k.className = "act-kind";
-    meta.append(time, k);
+    const stats = document.createElement("span"); stats.className = "act-stats";
+    meta.append(time, k, stats);
     const h = document.createElement("div"); h.className = "act-title";
     const d = document.createElement("div"); d.className = "act-detail";
     const pre = document.createElement("pre"); pre.className = "act-raw";
@@ -75,6 +91,11 @@ function logEvent({ kind = "step", title, detail, raw, live, bad } = {}) {
   el.className = `act act-${kind}${bad ? " is-bad" : ""}`;
   el.querySelector(".act-kind").textContent = KIND_LABEL[kind] ?? kind;
   el.querySelector(".act-title").textContent = title || "";
+  const shownMs = ms != null ? ms : (live && el._t0 != null ? performance.now() - el._t0 : null);
+  const statsEl = el.querySelector(".act-stats");
+  statsEl.textContent = formatStats(shownMs, tokPerSec);
+  statsEl.hidden = !statsEl.textContent;
+  if (tokens != null && Number.isFinite(tokens)) statsEl.title = `${tokens} token${tokens === 1 ? "" : "s"}`;
   const det = el.querySelector(".act-detail");
   det.textContent = detail || "";
   det.hidden = !detail;
@@ -281,12 +302,13 @@ async function backgroundJudge(text, latex) {
   const pending = document.createElement("span"); pending.className = "info"; pending.innerHTML = "<i></i>second opinion…";
   checksEl.appendChild(pending);
   logEvent({ kind: "step", title: "Asking a second model to verify", detail: "Strict mode. This runs after the result is already on screen." });
+  const tJ = performance.now();
   const j = await pipe.judge(text, latex);
   if (outputCode.textContent.trim() !== latex.trim()) { pending.remove(); return; } // user moved on
   pending.remove();
   if (j.unavailable) return;
-  if (j.ok) { const ok = document.createElement("span"); ok.className = "ok"; ok.innerHTML = "<i></i>verified by a second model"; checksEl.appendChild(ok); logEvent({ kind: "check", title: "Second model agrees", raw: j.reason || "ok" }); return; }
-  logEvent({ kind: "check", title: "Second model disagrees", detail: j.reason || "disagrees", raw: j.reason, bad: true });
+  if (j.ok) { const ok = document.createElement("span"); ok.className = "ok"; ok.innerHTML = "<i></i>verified by a second model"; checksEl.appendChild(ok); logEvent({ kind: "check", title: "Second model agrees", raw: j.reason || "ok", ms: performance.now() - tJ }); return; }
+  logEvent({ kind: "check", title: "Second model disagrees", detail: j.reason || "disagrees", raw: j.reason, bad: true, ms: performance.now() - tJ });
   const warn = document.createElement("span"); warn.className = "warn"; warn.innerHTML = `<i></i>second opinion: ${j.reason || "disagrees"}`;
   checksEl.appendChild(warn);
   if (!engine && !serverAvailable) return;
@@ -429,18 +451,20 @@ async function startModelLadder(best) {
   try {
     if (starter && starter.id !== best.id) {
       loadStatus.textContent = `loading quick model (${starter.name})…`;
-      logEvent({ kind: "step", title: `Loading ${starter.name}`, detail: "A smaller on-device language model first, so conversions can start while the larger one downloads." });
+      const tQuick = performance.now();
+      logEvent({ kind: "step", title: `Loading ${starter.name}`, detail: "A smaller on-device language model first, so conversions can start while the larger one downloads.", live: `load-webllm-${starter.id}` });
       const quick = await loadEngine(starter.id, (p) => { progressFill.style.width = `${Math.round((p.progress ?? 0) * 100)}%`; logLoadProgress(`Loading ${starter.name}`, "On-device language model. Downloaded once, then cached.", `load-webllm-${starter.id}`, p); });
       activate(quick, starter.id, `ready on ${starter.name} — downloading ${best.name} in background…`);
-      logEvent({ kind: "done", title: `${starter.name} is ready`, detail: "Conversions can use this while the larger model loads." });
+      logEvent({ kind: "done", title: `${starter.name} is ready`, detail: "Conversions can use this while the larger model loads.", live: `load-webllm-${starter.id}`, ms: performance.now() - tQuick });
     }
+    const tBig = performance.now();
     const bigStatus = engine
       ? (p) => { progressFill.style.width = `${Math.round((p.progress ?? 0) * 100)}%`; loadStatus.textContent = `ready on ${modelRows.find((r) => r.id === loadedModel)?.name} — ${p.text ?? "downloading upgrade…"}`; logLoadProgress(`Loading ${best.name}`, "Larger on-device language model, in the background.", `load-webllm-${best.id}`, p); }
       : (p) => { loadStatus.textContent = p.text ?? "loading…"; progressFill.style.width = `${Math.round((p.progress ?? 0) * 100)}%`; logLoadProgress(`Loading ${best.name}`, "On-device language model. Downloaded once, then cached.", `load-webllm-${best.id}`, p); };
     const bigEngine = await loadEngine(best.id, bigStatus);
     activate(bigEngine, best.id, `loaded: ${best.name}`);
     progressFill.style.width = "100%";
-    logEvent({ kind: "done", title: `${best.name} is ready`, detail: engine?.latexgenPlan?.label ?? "stock WebLLM" });
+    logEvent({ kind: "done", title: `${best.name} is ready`, detail: engine?.latexgenPlan?.label ?? "stock WebLLM", live: `load-webllm-${best.id}`, ms: performance.now() - tBig });
   } catch (err) {
     const current = modelRows.find((r) => r.id === loadedModel);
     loadStatus.textContent = engine && current ? `upgrade failed (${String(err).slice(0, 60)}…) — continuing on ${current.name}` : `load failed: ${err}`;
@@ -450,10 +474,11 @@ async function startModelLadder(best) {
 }
 async function loadPicked(row) {
   loadBtn.hidden = true;
+  const t0 = performance.now();
   try {
     const eng = await loadEngine(row.id, (p) => { loadStatus.textContent = p.text ?? "loading…"; progressFill.style.width = `${Math.round((p.progress ?? 0) * 100)}%`; logLoadProgress(`Loading ${row.name}`, "On-device language model. Downloaded once, then cached.", `load-webllm-${row.id}`, p); });
     activate(eng, row.id, `loaded: ${row.name}`); progressFill.style.width = "100%";
-    logEvent({ kind: "done", title: `${row.name} is ready` });
+    logEvent({ kind: "done", title: `${row.name} is ready`, live: `load-webllm-${row.id}`, ms: performance.now() - t0 });
   } catch (err) { loadStatus.textContent = `load failed: ${err}`; loadBtn.hidden = false; logEvent({ kind: "error", title: "On-device language model failed to load", raw: String(err) }); }
 }
 loadBtn.addEventListener("click", () => { const row = modelRows.find((r) => r.id === selectedModelId); if (row) loadPicked(row); });
@@ -461,9 +486,9 @@ ddBtn.addEventListener("click", () => { ddMenu.hidden = !ddMenu.hidden; });
 document.addEventListener("click", (e) => { if (!$("model-dd").contains(e.target)) ddMenu.hidden = true; });
 specialistReady.then((ok) => {
   const rt = runtimeUsed.intellitex;
-  logEvent({ kind: ok ? "done" : "error", title: ok ? "Specialist is ready" : "Specialist failed to load", detail: rt ? `${rt.device ?? "cpu"}${rt.dtype ? ` · ${rt.dtype}` : ""}` : "", raw: rt ? JSON.stringify(rt) : "" });
+  logEvent({ kind: ok ? "done" : "error", title: ok ? "Specialist is ready" : "Specialist failed to load", detail: rt ? `${rt.device ?? "cpu"}${rt.dtype ? ` · ${rt.dtype}` : ""}` : "", raw: rt ? JSON.stringify(rt) : "", live: "load-intellitex" });
   return buildModelPicker();
-}, () => { logEvent({ kind: "error", title: "Specialist failed to load" }); return buildModelPicker(); });
+}, () => { logEvent({ kind: "error", title: "Specialist failed to load", live: "load-intellitex" }); return buildModelPicker(); });
 
 // ---- WebGPU availability ----
 if (!navigator.gpu) {

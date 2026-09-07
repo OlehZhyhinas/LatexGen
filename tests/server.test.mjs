@@ -54,6 +54,8 @@ test("convert streams NDJSON from an OpenAI-compatible upstream (bearer key sent
   assert.equal(r.status, 200);
   const final = await ndjsonFinal(r);
   assert.equal(final.done, true); assert.equal(final.latex, "$$x^{2}$$"); assert.match(final.model, /mock-fast \(openai\)/);
+  assert.equal(typeof final.ms, "number");
+  assert.equal(final.tokens, "$$x^{2}$$".match(/.{1,3}/g).length);
   assert.match(lastChat.messages[0].content, /Never solve/);
   assert.match(lastChat.messages.at(-1).content, /^Convert to LaTeX\. Do not solve or answer\.\nx squared$/);
 });
