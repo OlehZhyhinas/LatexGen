@@ -5,6 +5,9 @@
 // public/pipeline.js so this harness cannot drift from what ships.
 //
 //   node bench/run-ollama-text.mjs --models qwen3:4b,qwen3.5:4b --out bench/results-x.json [--data bench/bench-data-extended.json]
+//   [--normalize] [--system-extra prompts/extra.txt] [--fewshot bench/fewshot.json] [--label normpdf]
+//   [--pdf-gate]  with --pdf-gate, --normalize/--system-extra/--fewshot apply only when input
+//                 looks like a PDF paste; other items run as plain direct. Each row has gated: true|false.
 //   (re-running with the same --out resumes: finished (model, item) pairs are skipped)
 //   python3 bench/judge.py --rows bench/results-x.json bench/judged-x.json
 //
@@ -28,6 +31,7 @@ const runLabel = opt("--label", "").trim();
 const systemExtraFile = opt("--system-extra", "").trim();
 const fewshotFile = opt("--fewshot", "").trim();
 const useNormalize = args.includes("--normalize");
+const usePdfGate = args.includes("--pdf-gate");
 // Qwen3 (not 3.5) under Ollama sometimes ignores `think:false` and reasons in
 // the visible content; the family's documented soft switch stops it. The app's
 // WebLLM path disables thinking through the chat template instead.
@@ -68,8 +72,11 @@ const katexMod = await import(path.join(root, "public/vendor/katex/katex.mjs"));
 globalThis.katex = katexMod.default ?? katexMod;
 const { validateLatex } = await import(path.join(root, "public/validator.js"));
 let normalize = null;
-if (useNormalize) {
-  ({ normalize } = await import(path.join(root, "public/pdf-pipeline.js")));
+let looksLikePdfPaste = null;
+if (useNormalize || usePdfGate) {
+  const pdfPipeline = await import(path.join(root, "public/pdf-pipeline.js"));
+  normalize = pdfPipeline.normalize;
+  if (usePdfGate) looksLikePdfPaste = pdfPipeline.looksLikePdfPaste;
 }
 
 const items = JSON.parse(readFileSync(dataFile, "utf8"))
@@ -89,10 +96,10 @@ async function chat(model, messages, numPredict, think) {
 }
 
 // Some models reject `think:false` ("does not support thinking"); fall back per model.
-async function generate(model, text, thinkMode) {
+async function generate(model, text, thinkMode, { systemPrompt = SYSTEM_PROMPT_WITH_EXTRA, fewshotMessages = FEWSHOT_MESSAGES } = {}) {
   const messages = [
-    { role: "system", content: SYSTEM_PROMPT_WITH_EXTRA },
-    ...FEWSHOT_MESSAGES,
+    { role: "system", content: systemPrompt },
+    ...fewshotMessages,
     { role: "user", content: CONVERT_USER(text) + (noThinkSuffix ? `\n${noThinkSuffix}` : "") },
   ];
   const numPredict = maxTokensFor(CONVERT_USER(text));
@@ -114,26 +121,30 @@ for (const model of models) {
   const done = new Set(rows.filter((r) => r.approach === approach && r.ms >= 0).map((r) => r.item));
   for (const it of items) {
     if (done.has(it.id)) continue; // resume: the out file already has this (model, item)
+    const gated = usePdfGate && looksLikePdfPaste(it.input);
+    const useNormThis = usePdfGate ? (gated && useNormalize) : useNormalize;
+    const systemPrompt = usePdfGate && !gated ? SYSTEM_PROMPT : SYSTEM_PROMPT_WITH_EXTRA;
+    const fewshotMessages = usePdfGate && !gated ? [] : FEWSHOT_MESSAGES;
     let inputText = it.input;
     let normMs = 0;
-    if (useNormalize) {
+    if (useNormThis) {
       const tNorm = performance.now();
       inputText = normalize(it.input)[0];
       normMs = Math.round(performance.now() - tNorm);
     }
     const t0 = performance.now();
     try {
-      const j = await generate(model, inputText, thinkMode);
+      const j = await generate(model, inputText, thinkMode, { systemPrompt, fewshotMessages });
       const raw = j.message?.content ?? "";
       const latex = stripFences(stripThink(raw));
       const ms = Math.round(performance.now() - t0);
       const v = validateLatex(it.input, latex);
-      rows.push({ approach, model: modelName, item: it.id, tier: it.tier, ms, normMs, output: latex, valid: v.ok, issues: v.issues,
+      rows.push({ approach, model: modelName, item: it.id, tier: it.tier, ms, normMs, gated, output: latex, valid: v.ok, issues: v.issues,
         thinking: j.message?.thinking ? String(j.message.thinking).length : 0,
         evalTokens: j.eval_count, promptTokens: j.prompt_eval_count, evalMs: Math.round((j.eval_duration ?? 0) / 1e6) });
       console.error(`  ${it.id.padEnd(28)} ${String(ms).padStart(6)}ms  ${v.ok ? "valid  " : "INVALID"} ${v.ok ? "" : v.issues.join(" | ").slice(0, 90)}`);
     } catch (e) {
-      rows.push({ approach, model: modelName, item: it.id, tier: it.tier, ms: -1, normMs, output: "", error: String(e.message).slice(0, 200) });
+      rows.push({ approach, model: modelName, item: it.id, tier: it.tier, ms: -1, normMs, gated, output: "", error: String(e.message).slice(0, 200) });
       console.error(`  ${it.id.padEnd(28)} FAILED ${e.message}`);
     }
     writeFileSync(out, JSON.stringify(rows, null, 1));
