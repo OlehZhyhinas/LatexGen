@@ -14,6 +14,20 @@ const REPAIR_PROMPT = `Your LaTeX failed checks. Fix every listed issue, stay fa
 const CONVERT_USER = (text) => `Convert to LaTeX. Do not solve or answer.\n${text}`;
 const REFINE_PROMPT = `The user gives feedback on your previous LaTeX. The feedback is about the LaTeX, never content to transcribe. Output only the corrected LaTeX; change only what the feedback concerns and keep the delimiters. If vague, fix your best guess.`;
 const JUDGE_PROMPT = `You verify text-to-LaTeX conversions. Given the user's plain-English input and the produced LaTeX, decide whether the LaTeX expresses exactly what the text describes (same operations, grouping, exponents, limits, variables). Solving or answering instead of transcribing is not ok. Reply with ONLY a JSON object: {"ok": true/false, "reason": "<max 12 words>"}`;
+const pdfFewshotMessages = () => PDF_FEWSHOT.flatMap((pair) => [
+  { role: "user", content: CONVERT_USER(pair.user) },
+  { role: "assistant", content: pair.assistant },
+]);
+function buildPromptMessages(systemPrompt, text, { pdf = false } = {}) {
+  const modelText = pdf ? normalize(text)[0] : text;
+  const messages = [{ role: "system", content: pdf ? `${systemPrompt}\n\n${PDF_HINT}` : systemPrompt }];
+  if (pdf) messages.push(...pdfFewshotMessages());
+  messages.push({ role: "user", content: CONVERT_USER(modelText) });
+  return messages;
+}
+export function buildConvertMessages(text, { pdf = false } = {}) {
+  return buildPromptMessages(SYSTEM_PROMPT, text, { pdf });
+}
 
 export const MAX_REPAIR_ATTEMPTS = 5;
 const REPAIR_BUDGET_MS = 8000;
@@ -175,19 +189,9 @@ export function toFormat(latex, fmt) {
 }
 
 export function createPipeline(ctx) {
-  // ctx: { getEngine, getEngineName, serverAvailable, loadedModelMultiline, browserIsSlow }
+  // ctx: { getEngine, getEngineName, serverAvailable, loadedModelMultiline, pdfPromptEnabled, browserIsSlow }
   let engineLock = Promise.resolve();
   const withEngine = (fn) => { const run = engineLock.catch(() => {}).then(fn); engineLock = run; return run; };
-  const pdfFewshotMessages = () => PDF_FEWSHOT.flatMap((pair) => [
-    { role: "user", content: CONVERT_USER(pair.user) },
-    { role: "assistant", content: pair.assistant },
-  ]);
-  function buildConvertMessages(systemPrompt, modelText, pdfPrompt) {
-    const messages = [{ role: "system", content: pdfPrompt ? `${systemPrompt}\n\n${PDF_HINT}` : systemPrompt }];
-    if (pdfPrompt) messages.push(...pdfFewshotMessages());
-    messages.push({ role: "user", content: CONVERT_USER(modelText) });
-    return messages;
-  }
 
   async function streamBrowserChat(messages, onDelta, onEvent) {
     const engine = ctx.getEngine();
@@ -227,17 +231,17 @@ export function createPipeline(ctx) {
       return { latex, model: ctx.getEngineName() };
     });
   }
-  const convertBrowser = (modelText, onDelta, onEvent, pdfPrompt = false) =>
-    streamBrowserChat(buildConvertMessages(SYSTEM_PROMPT, modelText, pdfPrompt), onDelta, onEvent);
-  const repairBrowser = (modelText, badLatex, issues, onDelta, onEvent, pdfPrompt = false) => streamBrowserChat([
-    ...buildConvertMessages(REPAIR_PROMPT, modelText, pdfPrompt),
+  const convertBrowser = (text, onDelta, onEvent, pdfPrompt = false) =>
+    streamBrowserChat(buildConvertMessages(text, { pdf: pdfPrompt }), onDelta, onEvent);
+  const repairBrowser = (text, badLatex, issues, onDelta, onEvent, pdfPrompt = false) => streamBrowserChat([
+    ...buildPromptMessages(REPAIR_PROMPT, text, { pdf: pdfPrompt }),
     { role: "assistant", content: badLatex },
     { role: "user", content: `Checks failed:\n- ${issues.join("\n- ")}\nOutput the corrected LaTeX.` },
   ], onDelta, onEvent);
-  const convertServer = async (modelText, onDelta, onEvent) => {
-    // Server builds prompts itself, so the client sends normalized text only.
-    emit(onEvent, "step", "Running the server model", { detail: "This conversion left the tab. The text is sent to the configured server model.", raw: modelText });
-    const r = await streamServerChat("api/convert", { text: modelText, complex: !specialistEligible(modelText) }, tapDelta(onDelta, onEvent, "Server model is writing"));
+  const convertServer = async (text, onDelta, onEvent) => {
+    // Server builds prompts itself, so the client always sends the raw input text.
+    emit(onEvent, "step", "Running the server model", { detail: "This conversion left the tab. The text is sent to the configured server model.", raw: text });
+    const r = await streamServerChat("api/convert", { text, complex: !specialistEligible(text) }, tapDelta(onDelta, onEvent, "Server model is writing"));
     emit(onEvent, "model", "Server model finished", { detail: r.model, raw: r.latex, ms: r.ms, tokens: r.tokens, tokPerSec: r.tokPerSec });
     return r;
   };
@@ -330,7 +334,7 @@ export function createPipeline(ctx) {
     emit(onEvent, "run", "Starting a conversion", { detail: "Plain English to LaTeX, on this device unless a later step says otherwise.", raw: text });
     // looksLikePdfPaste requires segmentable math spans plus multiple prose-like
     // sentences after normalization, and rejects mostly-math or clean prose.
-    const pdfPrompt = looksLikePdfPaste(text);
+    const pdfPrompt = !!ctx.pdfPromptEnabled?.() && looksLikePdfPaste(text);
     const modelText = pdfPrompt ? normalize(text)[0] : text;
     if (pdfPrompt) {
       const removedChars = Math.max(0, text.length - modelText.length);
@@ -345,7 +349,7 @@ export function createPipeline(ctx) {
       emit(onEvent, "step", "Climbing to a stronger tier", { detail: why, raw: tiers.join(" → ") || "(none available)" });
       for (const tier of tiers) {
         try {
-          if (tier === "server") { onStatus(`${why} — using server model…`); const r = await convertServer(modelText, onDelta, onEvent); return { r, tier }; }
+          if (tier === "server") { onStatus(`${why} — using server model…`); const r = await convertServer(text, onDelta, onEvent); return { r, tier }; }
           const r = await runOnMesh("convert", { text }, onStatus, onEvent); peer = r.peer; return { r, tier };
         } catch (e) {
           const msg = String(e.message || e).slice(0, 40);
@@ -415,11 +419,11 @@ export function createPipeline(ctx) {
       } else if (engineChoice === "browser") {
         if (!engine) throw new Error("No model available: load an on-device model in settings.");
         onStatus("converting with on-device model…");
-        result = await convertBrowser(modelText, onDelta, onEvent, pdfPrompt); validation = validateLatex(text, result.latex);
+        result = await convertBrowser(text, onDelta, onEvent, pdfPrompt); validation = validateLatex(text, result.latex);
         emit(onEvent, checkEvent(validation).kind, checkEvent(validation).title, { detail: checkEvent(validation).detail, raw: checkEvent(validation).raw, bad: checkEvent(validation).bad });
         if (!validation.ok) {
           try {
-            const r = await repairLoop(modelText, result.latex, validation.issues, (l) => validateLatex(text, l), onDelta,
+            const r = await repairLoop(text, result.latex, validation.issues, (l) => validateLatex(text, l), onDelta,
               (attempt, issues, max) => onStatus(`repair attempt ${attempt}${server ? "" : `/${max}`} — ${issues[0]}…`, { issues }), { onEvent, pdfPrompt });
             result = { ...result, latex: r.latex };
             if (r.ok) { result.model += ` (self-corrected ×${r.attempts})`; validation = { ok: true, issues: [] }; note = `(self-corrected after ${r.attempts} attempt${r.attempts > 1 ? "s" : ""})`; }
@@ -433,7 +437,7 @@ export function createPipeline(ctx) {
       } else {
         if (!server) throw new Error("Server model is not reachable.");
         onStatus("converting with server model…");
-        result = await convertServer(modelText, onDelta, onEvent); validation = validateLatex(text, result.latex);
+        result = await convertServer(text, onDelta, onEvent); validation = validateLatex(text, result.latex);
         emit(onEvent, checkEvent(validation).kind, checkEvent(validation).title, { detail: checkEvent(validation).detail, raw: checkEvent(validation).raw, bad: checkEvent(validation).bad });
       }
     }

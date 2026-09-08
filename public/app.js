@@ -121,6 +121,7 @@ const pipe = createPipeline({
   getEngineName: () => modelRows.find((r) => r.id === loadedModel)?.name ?? loadedModel,
   serverAvailable: () => serverAvailable,
   loadedModelMultiline: () => !!modelRows.find((r) => r.id === loadedModel)?.multiline,
+  pdfPromptEnabled: () => !!modelRows.find((r) => r.id === loadedModel)?.pdfPrompt,
   browserIsSlow,
   mesh: meshHooks,
 });
@@ -345,7 +346,7 @@ const CURATED = [
   { id: "Qwen3.5-9B-q4f16_1-MLC", name: "Qwen 3.5 · 9B", score: 5, multiline: true },
   { id: "Qwen3.5-4B-q4f16_1-MLC", name: "Qwen 3.5 · 4B", score: 4, multiline: true },
   { id: "MiniCPM5-2B-q4f16_1-MLC", name: "MiniCPM5 · 2B", score: 3 },
-  { id: "Qwen3.5-0.8B-q4f16_1-MLC", name: "Qwen 3.5 · 0.8B", score: 2 },
+  { id: "Qwen3.5-0.8B-q4f16_1-MLC", name: "Qwen 3.5 · 0.8B", score: 2, pdfPrompt: true },
 ];
 const gb = (mb) => `${(mb / 1024).toFixed(1)} GB`;
 const stars = (n) => "★".repeat(n) + "☆".repeat(5 - n);
