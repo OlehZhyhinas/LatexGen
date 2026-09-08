@@ -21,6 +21,7 @@ const PROSE_MATH_NAMES = new Set([
   "arg", "sup", "inf", "mod", "gcd", "dx", "dy", "dt", "ds", "dz",
 ]);
 const ORPHAN_SYMBOLS = new Set(["∞", "∫", "∑", "∏", "√"]);
+const HYPHEN_CHARS = new Set(["-", "\u2010", "\u2011"]);
 const BRIDGE_TOKENS = new Set(["(", ")", ","]);
 const SHORT_PROSE = new Set([
   "in", "on", "of", "to", "at", "by", "as", "an", "is", "we", "if", "so", "it", "its",
@@ -237,16 +238,49 @@ function _looksResidueLine(line) {
   return ",;:)]".includes(s[0]) || new Set(["the", "and", "or", "for", "where", ", the"]).has(s.toLowerCase());
 }
 
-function _joinProse(lines) {
+function _hyphenJoinMode(prevText, nextText) {
+  if (!prevText || !nextText) return null;
+  const prev = prevText.replace(/\s+$/u, "");
+  const nxt = nextText.replace(/^\s+/u, "");
+  if (!prev || !nxt || !HYPHEN_CHARS.has(prev[prev.length - 1])) return null;
+  let i = prev.length - 2;
+  while (i >= 0 && /\s/u.test(prev[i])) i--;
+  if (i < 0 || !/[A-Za-z]/u.test(prev[i])) return null;
+  let j = i;
+  while (j >= 0 && /[A-Za-z]/u.test(prev[j])) j--;
+  const prefix = prev.slice(j + 1, i + 1);
+  const first = nxt[0];
+  if (/[a-z]/u.test(first)) return prefix.length === 1 ? "keep" : "drop";
+  if (/[A-Z]/u.test(first) || /\d/u.test(first)) return "keep";
+  return null;
+}
+
+function _popTrailingHyphenation(outT, outM) {
+  while (outT.length && /\s/u.test(outT[outT.length - 1])) {
+    outT.pop();
+    outM.pop();
+  }
+  if (outT.length && HYPHEN_CHARS.has(outT[outT.length - 1])) {
+    outT.pop();
+    outM.pop();
+  }
+}
+
+function _joinRows(lines) {
   if (!lines.length) return ["", []];
   const outT = [...lines[0].text];
   const outM = lines[0].map.slice();
   for (let i = 1; i < lines.length; i++) {
     const txt = lines[i].text;
     const mp = lines[i].map;
-    if (outT.length && outT[outT.length - 1] === "-" && txt && /[a-z]/u.test(txt[0])) {
-      outT.pop();
-      outM.pop();
+    const mode = _hyphenJoinMode(outT.join(""), txt);
+    if (mode === "drop") {
+      _popTrailingHyphenation(outT, outM);
+    } else if (mode === "keep") {
+      while (outT.length && /\s/u.test(outT[outT.length - 1])) {
+        outT.pop();
+        outM.pop();
+      }
     } else {
       outT.push(" ");
       outM.push(-1);
@@ -257,21 +291,15 @@ function _joinProse(lines) {
   return [outT.join(""), outM];
 }
 
+function _joinProse(lines) {
+  return _joinRows(lines);
+}
+
 function _joinMath(lines) {
   const main = [];
   const tail = [];
   for (const row of lines) (_looksResidueLine(row.text) ? tail : main).push(row);
-  const outT = [];
-  const outM = [];
-  for (const row of main.concat(tail)) {
-    if (outT.length) {
-      outT.push(" ");
-      outM.push(-1);
-    }
-    outT.push(...row.text);
-    outM.push(...row.map);
-  }
-  return [outT.join(""), outM];
+  return _joinRows(main.concat(tail));
 }
 
 function _collapseSpaces(text, omap) {
@@ -342,7 +370,12 @@ export function normalize(text) {
   const firstNonEmpty = blocks.findIndex((block) => block.length > 0);
   if (firstNonEmpty >= 0) {
     const block = blocks[firstNonEmpty];
-    if (block.length >= 2 && _isOrphanParagraph(block[0].text) && _tokenRows(block[0].text).length <= 2) {
+    if (
+      block.length >= 2
+      && _isOrphanParagraph(block[0].text)
+      && _tokenRows(block[0].text).length <= 2
+      && !_hyphenJoinMode(block[0].text, block[1].text)
+    ) {
       blocks.splice(firstNonEmpty, 1, [block[0]], [], block.slice(1));
     }
   }

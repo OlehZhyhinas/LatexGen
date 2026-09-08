@@ -23,6 +23,7 @@ PROSE_MATH_NAMES = {
     "arg", "sup", "inf", "mod", "gcd", "dx", "dy", "dt", "ds", "dz",
 }
 ORPHAN_SYMBOLS = {"∞", "∫", "∑", "∏", "√"}
+HYPHEN_CHARS = {"-", "\u2010", "\u2011"}
 BRIDGE_TOKENS = {"(", ")", ","}
 SHORT_PROSE = {
     "in", "on", "of", "to", "at", "by", "as", "an", "is", "we", "if", "so", "it", "its",
@@ -176,28 +177,52 @@ def _looks_residue_line(line):
     return s[0] in ",;:)]" or s.lower() in {"the", "and", "or", "for", "where", ", the"}
 
 
-def _join_prose(lines):
+def _hyphen_join_mode(prev_text, next_text):
+    if not prev_text or not next_text: return None
+    prev, nxt = prev_text.rstrip(), next_text.lstrip()
+    if not prev or not nxt or prev[-1] not in HYPHEN_CHARS: return None
+    i = len(prev) - 2
+    while i >= 0 and prev[i].isspace(): i -= 1
+    if i < 0 or not prev[i].isalpha(): return None
+    j = i
+    while j >= 0 and prev[j].isalpha(): j -= 1
+    prefix = prev[j + 1:i + 1]
+    first = nxt[0]
+    if first.islower(): return "keep" if len(prefix) == 1 else "drop"
+    if first.isupper() or first.isdigit(): return "keep"
+    return None
+
+
+def _pop_trailing_hyphenation(out_t, out_m):
+    while out_t and out_t[-1].isspace(): out_t.pop(); out_m.pop()
+    if out_t and out_t[-1] in HYPHEN_CHARS: out_t.pop(); out_m.pop()
+
+
+def _join_rows(lines):
     if not lines: return "", []
     out_t, out_m = list(lines[0]["text"]), lines[0]["map"][:]
     for row in lines[1:]:
         txt, mp = row["text"], row["map"]
-        if out_t and out_t[-1] == "-" and txt and txt[0].islower():
-            out_t.pop(); out_m.pop()
+        mode = _hyphen_join_mode("".join(out_t), txt)
+        if mode == "drop":
+            _pop_trailing_hyphenation(out_t, out_m)
+        elif mode == "keep":
+            while out_t and out_t[-1].isspace(): out_t.pop(); out_m.pop()
         else:
             out_t.append(" "); out_m.append(-1)
         out_t.extend(txt); out_m.extend(mp)
     return "".join(out_t), out_m
 
 
+def _join_prose(lines):
+    return _join_rows(lines)
+
+
 def _join_math(lines):
     main, tail = [], []
     for row in lines:
         (tail if _looks_residue_line(row["text"]) else main).append(row)
-    out_t, out_m = [], []
-    for i, row in enumerate(main + tail):
-        if i: out_t.append(" "); out_m.append(-1)
-        out_t.extend(row["text"]); out_m.extend(row["map"])
-    return "".join(out_t), out_m
+    return _join_rows(main + tail)
 
 
 def _collapse_spaces(text, omap):
@@ -237,7 +262,12 @@ def normalize(text: str) -> tuple[str, list[int]]:
     first_non_empty = next((i for i, block in enumerate(blocks) if block), None)
     if first_non_empty is not None:
         block = blocks[first_non_empty]
-        if len(block) >= 2 and _is_orphan_paragraph(block[0]["text"]) and len(_token_rows(block[0]["text"])) <= 2:
+        if (
+            len(block) >= 2
+            and _is_orphan_paragraph(block[0]["text"])
+            and len(_token_rows(block[0]["text"])) <= 2
+            and not _hyphen_join_mode(block[0]["text"], block[1]["text"])
+        ):
             blocks = blocks[:first_non_empty] + [[block[0]], [], block[1:]] + blocks[first_non_empty + 1:]
     out_t, out_m, wrote = [], [], False
     for block in blocks:

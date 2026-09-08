@@ -20,6 +20,18 @@ def test_normalize():
     clean, _ = pdf_pipeline.normalize("deriv-\native")
     assert clean == "derivative"
 
+    clean, _ = pdf_pipeline.normalize("perfor-\nmance evaluation")
+    assert clean == "performance evaluation"
+
+    clean, _ = pdf_pipeline.normalize("con-\ncerned")
+    assert clean == "concerned"
+
+    clean, _ = pdf_pipeline.normalize("two-\nColumn")
+    assert clean == "two-Column"
+
+    clean, _ = pdf_pipeline.normalize("x-\naxis")
+    assert clean == "x-axis"
+
     clean, _ = pdf_pipeline.normalize("first line\nsecond line")
     assert clean == "first line second line"
 
