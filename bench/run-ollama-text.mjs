@@ -24,7 +24,9 @@ const models = opt("--models", "").split(",").map((s) => s.trim()).filter(Boolea
 const out = opt("--out", path.join(here, "results-ollama-text.json"));
 const onlyItems = opt("--items", "").split(",").filter(Boolean);
 const dataFile = opt("--data", path.join(here, "bench-data.json"));
-const label = (m) => opt("--label", "") || m;
+const runLabel = opt("--label", "").trim();
+const systemExtraFile = opt("--system-extra", "").trim();
+const fewshotFile = opt("--fewshot", "").trim();
 const useNormalize = args.includes("--normalize");
 // Qwen3 (not 3.5) under Ollama sometimes ignores `think:false` and reasons in
 // the visible content; the family's documented soft switch stops it. The app's
@@ -44,6 +46,19 @@ const grab = (name) => {
 };
 const SYSTEM_PROMPT = grab("SYSTEM_PROMPT");
 const CONVERT_USER = grab("CONVERT_USER");
+const SYSTEM_PROMPT_EXTRA = systemExtraFile ? readFileSync(path.resolve(systemExtraFile), "utf8") : "";
+const SYSTEM_PROMPT_WITH_EXTRA = SYSTEM_PROMPT_EXTRA ? `${SYSTEM_PROMPT}\n\n${SYSTEM_PROMPT_EXTRA}` : SYSTEM_PROMPT;
+const FEWSHOT_PAIRS = fewshotFile ? JSON.parse(readFileSync(path.resolve(fewshotFile), "utf8")) : [];
+if (!Array.isArray(FEWSHOT_PAIRS)) throw new Error(`--fewshot must be a JSON array: ${fewshotFile}`);
+for (const [idx, pair] of FEWSHOT_PAIRS.entries()) {
+  if (!pair || typeof pair.user !== "string" || typeof pair.assistant !== "string") {
+    throw new Error(`--fewshot item ${idx} must be {"user": "...", "assistant": "..."} in ${fewshotFile}`);
+  }
+}
+const FEWSHOT_MESSAGES = FEWSHOT_PAIRS.flatMap((pair) => ([
+  { role: "user", content: CONVERT_USER(pair.user) },
+  { role: "assistant", content: pair.assistant },
+]));
 const stripThink = (t) => t.replace(/<think>[\s\S]*?<\/think>/g, "").trim();
 const stripFences = (t) => { const m = t.match(/^```(?:latex|tex)?\s*\n([\s\S]*?)\n?```\s*$/); return m ? m[1].trim() : t.trim(); };
 const maxTokensFor = (userContent) => Math.min(1024, Math.max(256, Math.ceil(userContent.length / 3) * 2 + 128));
@@ -75,7 +90,11 @@ async function chat(model, messages, numPredict, think) {
 
 // Some models reject `think:false` ("does not support thinking"); fall back per model.
 async function generate(model, text, thinkMode) {
-  const messages = [{ role: "system", content: SYSTEM_PROMPT }, { role: "user", content: CONVERT_USER(text) + (noThinkSuffix ? `\n${noThinkSuffix}` : "") }];
+  const messages = [
+    { role: "system", content: SYSTEM_PROMPT_WITH_EXTRA },
+    ...FEWSHOT_MESSAGES,
+    { role: "user", content: CONVERT_USER(text) + (noThinkSuffix ? `\n${noThinkSuffix}` : "") },
+  ];
   const numPredict = maxTokensFor(CONVERT_USER(text));
   if (thinkMode.value !== "unsupported") {
     try { return await chat(model, messages, numPredict, false); }
@@ -86,8 +105,8 @@ async function generate(model, text, thinkMode) {
 
 const rows = existsSync(out) ? JSON.parse(readFileSync(out, "utf8")) : [];
 for (const model of models) {
-  const approach = `${useNormalize ? "norm" : "direct"}:${label(model)}`;
-  const modelName = useNormalize ? `${model}+norm` : model;
+  const approach = runLabel ? `${runLabel}:${model}` : `${useNormalize ? "norm" : "direct"}:${model}`;
+  const modelName = runLabel ? `${model}+${runLabel}` : (useNormalize ? `${model}+norm` : model);
   const thinkMode = { value: "try" };
   console.error(`== ${model}`);
   try { await chat(model, [{ role: "user", content: "hi" }], 2, undefined); } // load + warm

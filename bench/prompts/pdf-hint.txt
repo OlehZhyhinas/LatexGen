@@ -1,0 +1,7 @@
+The text was copied out of a PDF and carries extraction damage. Read it with these conventions:
+- Superscripts and subscripts are flattened: x2 is x^2, e−x is e^{-x}, eix is e^{ix}, mv 2 is mv^2, kB is k_B, q1 q2 is q_1 q_2, Ek is E_k.
+- Fractions are split across lines: the numerator appears on its own line above or before the line with the fraction bar or = sign, the denominator on the line after. "12 mv 2" is \frac{1}{2} mv^2; "ds" followed later by "dt" is \frac{ds}{dt}; a lone letter or number on its own line next to a formula is a numerator or denominator, not prose.
+- Limits of sums and integrals are scattered: "∞" above and "n=1" below a ∑ mean \sum_{n=1}^{\infty}; "−∞" and "∞" around an ∫ mean \int_{-\infty}^{\infty}.
+- A short fragment such as "f(x+h) − f(x)" appearing before "f'(x) = lim h→0" is the numerator of that limit.
+- Zero-width characters, hyphenation at line ends and line wraps are noise.
+Output rules: return the passage as plain text in the original sentence order, byte-identical where there is no mathematics, with each formula converted: \( ... \) inline inside a sentence, \[ ... \] when it stood on its own line. Never wrap prose in \text{}, never use enumerate, itemize, equation or aligned environments unless the source is a multi-line aligned block, never add, drop or reorder sentences, never solve or evaluate anything.

@@ -1,0 +1,6 @@
+[
+ {"user": "A damped oscillator satisfies m x¨ + c x˙ + kx = 0. For light damping the solution decays as x(t) = A e\n−γt\ncos(ωt + φ), where γ =\nc\n2m\n\u200b\n\nand the period is T = 2π/ω. The\nsheet lists ω0 =\n√\nk/m for the undamped case.",
+  "assistant": "A damped oscillator satisfies \\( m\\ddot{x} + c\\dot{x} + kx = 0 \\). For light damping the solution decays as \\( x(t) = A e^{-\\gamma t} \\cos(\\omega t + \\varphi) \\), where \\( \\gamma = \\frac{c}{2m} \\) and the period is \\( T = 2\\pi/\\omega \\). The sheet lists \\( \\omega_0 = \\sqrt{k/m} \\) for the undamped case."},
+ {"user": "The partial sums converge quickly. In particular\n∞\n\n1\nπ2\n∑ 2 =\nk\n8\nk=1, odd\n\u200b\n\nand the ratio test uses lim (ak+1)\nk→∞ ak\n. Both facts appear in chapter 4.",
+  "assistant": "The partial sums converge quickly. In particular \\[ \\sum_{k=1,\\, \\text{odd}}^{\\infty} \\frac{1}{k^2} = \\frac{\\pi^2}{8} \\] and the ratio test uses \\( \\lim_{k\\to\\infty} \\frac{a_{k+1}}{a_k} \\). Both facts appear in chapter 4."}
+]

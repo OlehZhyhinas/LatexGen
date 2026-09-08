@@ -15,7 +15,7 @@ verdict = {(r["approach"], r["item"]): r for r in judged if "correct" in r}
 KEYS = {"qwen3:0.6b": "qwen3-0_6b", "qwen3.5:0.8b": "qwen3_5-0_8b", "gemma3:1b": "gemma3-1b", "openbmb/minicpm5:q4_K_M": "minicpm5-1b",
         "qwen3:1.7b": "qwen3-1_7b", "qwen3.5:2b-q4_K_M": "qwen3_5-2b", "hf.co/openbmb/MiniCPM5-2B-GGUF:q4_K_M": "minicpm5-2b", "gemma4:e2b": "gemma4-e2b",
         "qwen3:4b": "qwen3-4b", "hf.co/Qwen/Qwen3-4B-GGUF:Q4_K_M": "qwen3-4b", "qwen3-4b-orig": "qwen3-4b", "qwen3.5:4b": "qwen3_5-4b", "gemma3:4b": "gemma3-4b", "gemma4:e4b": "gemma4-e4b",
-        "qwen3.5:0.8b+norm": "qwen3_5-0_8b-norm", "hf.co/openbmb/MiniCPM5-2B-GGUF:q4_K_M+norm": "minicpm5-2b-norm", "qwen3.5:4b+norm": "qwen3_5-4b-norm"}
+        "qwen3.5:0.8b+norm": "qwen3_5-0_8b-norm", "hf.co/openbmb/MiniCPM5-2B-GGUF:q4_K_M+norm": "minicpm5-2b-norm", "qwen3.5:4b+norm": "qwen3_5-4b-norm", "qwen3.5:0.8b+normpdf": "qwen3_5-0_8b-normpdf", "hf.co/openbmb/MiniCPM5-2B-GGUF:q4_K_M+normpdf": "minicpm5-2b-normpdf", "qwen3.5:4b+normpdf": "qwen3_5-4b-normpdf"}
 per = collections.defaultdict(list)
 for r in rows:
     if r.get("ms", -1) < 0 or r.get("model") not in KEYS: continue

@@ -5,7 +5,8 @@
 // guarded by a lock because it cannot generate concurrently.
 import { validateLatex, checkSyntax, unescapeDoubledBackslashes } from "./validator.js";
 import { loadModel, runModel, loaded } from "./models.js";
-import { run as runPdfPipeline, looksLikePdfPaste, SPAN_SYSTEM_PROMPT } from "./pdf-pipeline.js";
+import { looksLikePdfPaste, normalize } from "./pdf-pipeline.js";
+import { PDF_HINT, PDF_FEWSHOT } from "./pdf-prompt.js";
 
 // Kept terse: every token is prefilled on every on-device call.
 const SYSTEM_PROMPT = `Convert the text to LaTeX. Never solve, evaluate, or answer — if the text is a question, transcribe the question. Output only LaTeX, no commentary or fences. Pure math: \\[ ... \\]. Prose with math: keep the prose, wrap math in \\( ... \\). Standard amsmath only.`;
@@ -17,14 +18,6 @@ const JUDGE_PROMPT = `You verify text-to-LaTeX conversions. Given the user's pla
 export const MAX_REPAIR_ATTEMPTS = 5;
 const REPAIR_BUDGET_MS = 8000;
 export const IMAGE_MODELS = { texo: { name: "Texo", sizeMB: 77 }, texify: { name: "Texify", sizeMB: 305 } };
-const PDF_PIPE = (() => {
-  try {
-    if (typeof location !== "undefined" && new URLSearchParams(location.search).get("pdfpipe") === "1") return true;
-    return typeof localStorage !== "undefined" && localStorage.getItem("latexgen:pdfpipe") === "1";
-  } catch {
-    return false;
-  }
-})();
 
 const stripThink = (t) => t.replace(/<think>[\s\S]*?<\/think>/g, "").trim();
 const stripFences = (t) => { const m = t.match(/^```(?:latex|tex)?\s*\n([\s\S]*?)\n?```\s*$/); return m ? m[1].trim() : t.trim(); };
@@ -185,6 +178,16 @@ export function createPipeline(ctx) {
   // ctx: { getEngine, getEngineName, serverAvailable, loadedModelMultiline, browserIsSlow }
   let engineLock = Promise.resolve();
   const withEngine = (fn) => { const run = engineLock.catch(() => {}).then(fn); engineLock = run; return run; };
+  const pdfFewshotMessages = () => PDF_FEWSHOT.flatMap((pair) => [
+    { role: "user", content: CONVERT_USER(pair.user) },
+    { role: "assistant", content: pair.assistant },
+  ]);
+  function buildConvertMessages(systemPrompt, modelText, pdfPrompt) {
+    const messages = [{ role: "system", content: pdfPrompt ? `${systemPrompt}\n\n${PDF_HINT}` : systemPrompt }];
+    if (pdfPrompt) messages.push(...pdfFewshotMessages());
+    messages.push({ role: "user", content: CONVERT_USER(modelText) });
+    return messages;
+  }
 
   async function streamBrowserChat(messages, onDelta, onEvent) {
     const engine = ctx.getEngine();
@@ -224,16 +227,17 @@ export function createPipeline(ctx) {
       return { latex, model: ctx.getEngineName() };
     });
   }
-  const convertBrowser = (text, onDelta, onEvent) => streamBrowserChat([{ role: "system", content: SYSTEM_PROMPT }, { role: "user", content: CONVERT_USER(text) }], onDelta, onEvent);
-  const repairBrowser = (text, badLatex, issues, onDelta, onEvent) => streamBrowserChat([
-    { role: "system", content: REPAIR_PROMPT },
-    { role: "user", content: CONVERT_USER(text) },
+  const convertBrowser = (modelText, onDelta, onEvent, pdfPrompt = false) =>
+    streamBrowserChat(buildConvertMessages(SYSTEM_PROMPT, modelText, pdfPrompt), onDelta, onEvent);
+  const repairBrowser = (modelText, badLatex, issues, onDelta, onEvent, pdfPrompt = false) => streamBrowserChat([
+    ...buildConvertMessages(REPAIR_PROMPT, modelText, pdfPrompt),
     { role: "assistant", content: badLatex },
     { role: "user", content: `Checks failed:\n- ${issues.join("\n- ")}\nOutput the corrected LaTeX.` },
   ], onDelta, onEvent);
-  const convertServer = async (text, onDelta, onEvent) => {
-    emit(onEvent, "step", "Running the server model", { detail: "This conversion left the tab. The text is sent to the configured server model.", raw: text });
-    const r = await streamServerChat("api/convert", { text, complex: !specialistEligible(text) }, tapDelta(onDelta, onEvent, "Server model is writing"));
+  const convertServer = async (modelText, onDelta, onEvent) => {
+    // Server builds prompts itself, so the client sends normalized text only.
+    emit(onEvent, "step", "Running the server model", { detail: "This conversion left the tab. The text is sent to the configured server model.", raw: modelText });
+    const r = await streamServerChat("api/convert", { text: modelText, complex: !specialistEligible(modelText) }, tapDelta(onDelta, onEvent, "Server model is writing"));
     emit(onEvent, "model", "Server model finished", { detail: r.model, raw: r.latex, ms: r.ms, tokens: r.tokens, tokPerSec: r.tokPerSec });
     return r;
   };
@@ -252,7 +256,7 @@ export function createPipeline(ctx) {
         detail: "The last LaTeX failed checks. The same model gets the exact error list and tries again.",
         raw: issues.join("\n"),
       });
-      const repaired = await repairBrowser(contextText, current, issues, onDelta, onEvent);
+      const repaired = await repairBrowser(contextText, current, issues, onDelta, onEvent, opts.pdfPrompt);
       const v = validateFn(repaired.latex);
       const ev = checkEvent(v);
       emit(onEvent, ev.kind, ev.title, { detail: ev.detail, raw: ev.raw, bad: ev.bad });
@@ -324,6 +328,16 @@ export function createPipeline(ctx) {
     const engine = ctx.getEngine();
     const server = allowServer && ctx.serverAvailable();
     emit(onEvent, "run", "Starting a conversion", { detail: "Plain English to LaTeX, on this device unless a later step says otherwise.", raw: text });
+    // looksLikePdfPaste requires segmentable math spans plus multiple prose-like
+    // sentences after normalization, and rejects mostly-math or clean prose.
+    const pdfPrompt = looksLikePdfPaste(text);
+    const modelText = pdfPrompt ? normalize(text)[0] : text;
+    if (pdfPrompt) {
+      const removedChars = Math.max(0, text.length - modelText.length);
+      const status = `pdf paste detected: normalized (${removedChars} chars removed), PDF prompt`;
+      onStatus(status);
+      emit(onEvent, "step", "PDF paste detected", { detail: `normalized (${removedChars} chars removed), PDF prompt`, raw: modelText });
+    }
     // Escalation targets after the on-device attempt, in order.
     const tiers = afterLocalOrder().filter((t) => (t === "server" ? server : allowMesh));
     let peer = null;
@@ -331,7 +345,7 @@ export function createPipeline(ctx) {
       emit(onEvent, "step", "Climbing to a stronger tier", { detail: why, raw: tiers.join(" → ") || "(none available)" });
       for (const tier of tiers) {
         try {
-          if (tier === "server") { onStatus(`${why} — using server model…`); const r = await convertServer(text, onDelta, onEvent); return { r, tier }; }
+          if (tier === "server") { onStatus(`${why} — using server model…`); const r = await convertServer(modelText, onDelta, onEvent); return { r, tier }; }
           const r = await runOnMesh("convert", { text }, onStatus, onEvent); peer = r.peer; return { r, tier };
         } catch (e) {
           const msg = String(e.message || e).slice(0, 40);
@@ -351,7 +365,7 @@ export function createPipeline(ctx) {
 
     // Batch: several lines, each a single equation -> one specialist call per line.
     const lines = text.split(/\n+/).map((l) => l.trim()).filter(Boolean);
-    if (haveSpecialist && lines.length >= 2 && lines.every(specialistEligible)) {
+    if (!pdfPrompt && haveSpecialist && lines.length >= 2 && lines.every(specialistEligible)) {
       const outs = []; let allOk = true;
       for (const [i, line] of lines.entries()) {
         onStatus(`converting line ${i + 1}/${lines.length}…`);
@@ -366,7 +380,7 @@ export function createPipeline(ctx) {
     }
 
     // Tier 0: specialist.
-    if (!result && haveSpecialist && specialistEligible(text)) {
+    if (!result && !pdfPrompt && haveSpecialist && specialistEligible(text)) {
       try {
         onStatus("converting…");
         const r0 = await convertSpecialist(text, onEvent);
@@ -381,6 +395,8 @@ export function createPipeline(ctx) {
       } catch (e) {
         emit(onEvent, "error", "Specialist failed", { detail: "Climbing to the next model.", raw: String(e.message || e) });
       }
+    } else if (!result && pdfPrompt) {
+      emit(onEvent, "step", "Skipping the specialist", { detail: "PDF paste mode uses normalized text with the main language model prompt." });
     } else if (!result && !specialistEligible(text)) {
       emit(onEvent, "step", "Skipping the specialist", { detail: "This input is longer than a single equation, or has multiple lines, so a larger model is next." });
     }
@@ -398,32 +414,13 @@ export function createPipeline(ctx) {
         result = e.r; validation = validateLatex(text, result.latex); note = tierNote(e.tier, "no on-device language model loaded");
       } else if (engineChoice === "browser") {
         if (!engine) throw new Error("No model available: load an on-device model in settings.");
-        if (PDF_PIPE && looksLikePdfPaste(text)) {
-          let spanMs = 0;
-          const rec = await runPdfPipeline(text, async (spanTexts) => {
-            const t0 = performance.now();
-            const out = [];
-            for (const spanText of spanTexts) {
-              const r = await streamBrowserChat([{ role: "system", content: SPAN_SYSTEM_PROMPT }, { role: "user", content: spanText }], onDelta);
-              out.push(r.latex);
-            }
-            spanMs = Math.round(performance.now() - t0);
-            return out;
-          });
-          onStatus(`pdf: normalized (${Math.max(0, text.length - rec.clean.length)} chars removed)`);
-          onStatus(`pdf: ${rec.spans.length} spans`);
-          onStatus(`pdf: spans converted in ${spanMs} ms`);
-          result = { latex: rec.output, model: `${ctx.getEngineName()} (pdf spans × ${rec.spans.length})` };
-          validation = validateLatex(text, result.latex);
-        } else {
-          onStatus("converting with on-device model…");
-          result = await convertBrowser(text, onDelta, onEvent); validation = validateLatex(text, result.latex);
-          emit(onEvent, checkEvent(validation).kind, checkEvent(validation).title, { detail: checkEvent(validation).detail, raw: checkEvent(validation).raw, bad: checkEvent(validation).bad });
-        }
+        onStatus("converting with on-device model…");
+        result = await convertBrowser(modelText, onDelta, onEvent, pdfPrompt); validation = validateLatex(text, result.latex);
+        emit(onEvent, checkEvent(validation).kind, checkEvent(validation).title, { detail: checkEvent(validation).detail, raw: checkEvent(validation).raw, bad: checkEvent(validation).bad });
         if (!validation.ok) {
           try {
-            const r = await repairLoop(text, result.latex, validation.issues, (l) => validateLatex(text, l), onDelta,
-              (attempt, issues, max) => onStatus(`repair attempt ${attempt}${server ? "" : `/${max}`} — ${issues[0]}…`, { issues }), { onEvent });
+            const r = await repairLoop(modelText, result.latex, validation.issues, (l) => validateLatex(text, l), onDelta,
+              (attempt, issues, max) => onStatus(`repair attempt ${attempt}${server ? "" : `/${max}`} — ${issues[0]}…`, { issues }), { onEvent, pdfPrompt });
             result = { ...result, latex: r.latex };
             if (r.ok) { result.model += ` (self-corrected ×${r.attempts})`; validation = { ok: true, issues: [] }; note = `(self-corrected after ${r.attempts} attempt${r.attempts > 1 ? "s" : ""})`; }
             else validation = { ok: false, issues: r.issues };
@@ -436,7 +433,7 @@ export function createPipeline(ctx) {
       } else {
         if (!server) throw new Error("Server model is not reachable.");
         onStatus("converting with server model…");
-        result = await convertServer(text, onDelta, onEvent); validation = validateLatex(text, result.latex);
+        result = await convertServer(modelText, onDelta, onEvent); validation = validateLatex(text, result.latex);
         emit(onEvent, checkEvent(validation).kind, checkEvent(validation).title, { detail: checkEvent(validation).detail, raw: checkEvent(validation).raw, bad: checkEvent(validation).bad });
       }
     }

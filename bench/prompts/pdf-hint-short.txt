@@ -1,0 +1,4 @@
+The text was copied from a PDF: superscripts/subscripts are flattened (x2 = x^2, kB = k_B),
+fractions and limits are split across lines (a lone symbol on its own line is a numerator,
+denominator or limit of the nearby formula), zero-width characters and line wraps are noise.
+Return the passage as plain text in the original order with each formula converted: \( \) inline, \[ \] for a formula on its own line. Never wrap prose in \text{}, never use enumerate or equation environments, never drop or reorder sentences, never solve anything.

@@ -1,0 +1,4 @@
+[
+ {"user": "A damped oscillator satisfies m x¨ + c x˙ + kx = 0. For light damping the solution decays as x(t) = A e\n−γt\ncos(ωt + φ), where γ =\nc\n2m\n\u200b\n\nand the period is T = 2π/ω. The\nsheet lists ω0 =\n√\nk/m for the undamped case.",
+  "assistant": "A damped oscillator satisfies \\( m\\ddot{x} + c\\dot{x} + kx = 0 \\). For light damping the solution decays as \\( x(t) = A e^{-\\gamma t} \\cos(\\omega t + \\varphi) \\), where \\( \\gamma = \\frac{c}{2m} \\) and the period is \\( T = 2\\pi/\\omega \\). The sheet lists \\( \\omega_0 = \\sqrt{k/m} \\) for the undamped case."}
+]
