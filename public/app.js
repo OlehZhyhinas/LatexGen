@@ -5,6 +5,7 @@ import * as webllm from "./vendor/webllm/index.js";
 import { validateLatex, checkSyntax } from "./validator.js";
 import { loadModel, onProgress as onModelProgress, runtimeUsed } from "./models.js";
 import { createPipeline, streamServerChat, toFormat, IMAGE_MODELS, MAX_REPAIR_ATTEMPTS, specialistEligible } from "./pipeline.js";
+import { loadCatalog, parseForce, planEngine, rememberRuntime } from "./qwen3-webllm.js";
 import { STATIC_BUILD } from "./config.js";
 
 window.__validate = validateLatex; // debugging hook
@@ -49,6 +50,64 @@ function toast(msg, ms = 1800) {
   t._timer = setTimeout(() => { t.hidden = true; }, ms);
 }
 
+const KIND_LABEL = { run: "run", step: "step", model: "model", check: "check", stream: "out", error: "error", done: "done" };
+function formatDuration(ms) {
+  if (ms == null || !Number.isFinite(ms) || ms < 1) return "";
+  if (ms < 1000) return `${Math.round(ms)} ms`;
+  return `${(ms / 1000).toFixed(ms >= 10_000 ? 0 : 1)} s`;
+}
+function formatStats(ms, tokPerSec) {
+  const parts = [];
+  const d = formatDuration(ms);
+  if (d) parts.push(d);
+  if (tokPerSec != null && Number.isFinite(tokPerSec) && tokPerSec >= 0.1) {
+    parts.push(`${tokPerSec >= 10 ? Math.round(tokPerSec) : tokPerSec.toFixed(1)} tok/s`);
+  }
+  return parts.join(" · ");
+}
+function logEvent({ kind = "step", title, detail, raw, live, bad, ms, tokens, tokPerSec } = {}) {
+  const box = $("activity-log");
+  if (!box) return;
+  box.querySelector(".activity-empty")?.remove();
+  const stick = box.scrollHeight - box.scrollTop - box.clientHeight < 56;
+  let el = live ? box.querySelector(`[data-live="${CSS.escape(String(live))}"]`) : null;
+  if (!el) {
+    el = document.createElement("article");
+    el.className = `act act-${kind}`;
+    el._t0 = performance.now();
+    if (live) el.dataset.live = String(live);
+    const meta = document.createElement("div"); meta.className = "act-meta";
+    const time = document.createElement("span"); time.className = "act-time";
+    time.textContent = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" });
+    const k = document.createElement("span"); k.className = "act-kind";
+    const stats = document.createElement("span"); stats.className = "act-stats";
+    meta.append(time, k, stats);
+    const h = document.createElement("div"); h.className = "act-title";
+    const d = document.createElement("div"); d.className = "act-detail";
+    const pre = document.createElement("pre"); pre.className = "act-raw";
+    el.append(meta, h, d, pre);
+    box.appendChild(el);
+  }
+  el.className = `act act-${kind}${bad ? " is-bad" : ""}`;
+  el.querySelector(".act-kind").textContent = KIND_LABEL[kind] ?? kind;
+  el.querySelector(".act-title").textContent = title || "";
+  const shownMs = ms != null ? ms : (live && el._t0 != null ? performance.now() - el._t0 : null);
+  const statsEl = el.querySelector(".act-stats");
+  statsEl.textContent = formatStats(shownMs, tokPerSec);
+  statsEl.hidden = !statsEl.textContent;
+  if (tokens != null && Number.isFinite(tokens)) statsEl.title = `${tokens} token${tokens === 1 ? "" : "s"}`;
+  const det = el.querySelector(".act-detail");
+  det.textContent = detail || "";
+  det.hidden = !detail;
+  const pre = el.querySelector(".act-raw");
+  if (raw == null || raw === "") { pre.hidden = true; pre.textContent = ""; }
+  else { pre.hidden = false; pre.textContent = String(raw); }
+  const idle = $("activity-idle");
+  if (idle) idle.textContent = (kind === "done" || kind === "error") ? "Idle" : "Working…";
+  if (stick) box.scrollTop = box.scrollHeight;
+}
+window.__logEvent = logEvent;
+
 // ---- pipeline ----
 const SLOW_DEVICE_TOK_S = 25;
 function browserIsSlow() { return browserTokPerSec != null && browserTokPerSec < SLOW_DEVICE_TOK_S; }
@@ -67,6 +126,17 @@ const pipe = createPipeline({
 });
 window.__repairLoop = pipe.repairLoop; // debugging hook
 const specialistReady = pipe.ensureSpecialist(); // start the ~190MB specialist download immediately
+{
+  const mb = (n) => `${(Number(n) / 2 ** 20).toFixed(1)} MB`;
+  const watch = (key, title, detail) => onModelProgress(key, (p) => {
+    const file = p.file ?? key;
+    const raw = p.total ? `${file}\n${mb(p.loaded ?? 0)} / ${mb(p.total)}` : (p.text ?? file);
+    logEvent({ kind: "step", title, detail, raw, live: `load-${key}` });
+  });
+  watch("intellitex", "Loading the specialist", "IntelliTeX weights, and a one-time compile if WebNN is on.");
+  watch("texo", "Loading Texo", "Small equation OCR. Downloaded once, then cached.");
+  watch("texify", "Loading Texify", "Larger OCR model. Downloaded once, then cached.");
+}
 
 // ---- rendering helpers ----
 function renderPreview(latex) {
@@ -126,7 +196,7 @@ convertBtn.addEventListener("click", async () => {
   outputCode.textContent = "";
   try {
     const r = await pipe.convertText(text, {
-      engineChoice: engineChoice(), onStatus: onStatusUI, onDelta: onDeltaUI,
+      engineChoice: engineChoice(), onStatus: onStatusUI, onDelta: onDeltaUI, onEvent: logEvent,
       onDraft: (latex, v) => { outputCode.textContent = latex; renderPreview(latex); showChecks(v, "(draft from the specialist — improving…)"); },
     });
     presentResult(text, r, `${(r.ms / 1000).toFixed(1)}s · ${r.model}${r.escalated ? " (escalated)" : ""}`);
@@ -134,6 +204,7 @@ convertBtn.addEventListener("click", async () => {
     if (strictMode() && r.validation.ok && !r.batch) backgroundJudge(text, r.latex);
   } catch (err) {
     convertStatus.textContent = String(err.message || err);
+    logEvent({ kind: "error", title: "Conversion failed", raw: String(err.message || err) });
   } finally {
     convertBtn.disabled = false;
   }
@@ -162,7 +233,7 @@ async function convertImage(fileOrBlob, forceModel = null) {
   const prog = imageProgressUI();
   try {
     const r = await pipe.convertImage(fileOrBlob, {
-      ocr: forceModel ?? "auto", onProgress: prog.onProgress, onDelta: onDeltaUI,
+      ocr: forceModel ?? "auto", onProgress: prog.onProgress, onDelta: onDeltaUI, onEvent: logEvent,
       onStatus: (s, extra) => { label.textContent = s; if (extra?.issues) showChecks({ ok: false, issues: extra.issues }, ""); },
     });
     lastImageModel = r.used;
@@ -172,6 +243,7 @@ async function convertImage(fileOrBlob, forceModel = null) {
     altBtn.hidden = false;
   } catch (err) {
     convertStatus.textContent = `image conversion failed: ${err.message || err}`;
+    logEvent({ kind: "error", title: "Image conversion failed", raw: String(err.message || err) });
   } finally {
     prog.done(); drop.classList.remove("busy");
     label.innerHTML = "Drop / paste / <u>choose</u> an image of an equation — processed entirely in your browser, never uploaded";
@@ -194,7 +266,7 @@ async function checkLatexUI(latex) {
   convertBtn.disabled = true; checksEl.innerHTML = ""; convertStatus.textContent = "checking…";
   outputCode.textContent = latex; renderPreview(latex);
   try {
-    const r = await pipe.checkLatex(latex, { onStatus: onStatusUI, onDelta: onDeltaUI });
+    const r = await pipe.checkLatex(latex, { onStatus: onStatusUI, onDelta: onDeltaUI, onEvent: logEvent });
     presentResult("(latex check)", r, r.validation.ok ? "valid LaTeX" : "issues found");
   } finally { convertBtn.disabled = false; }
 }
@@ -207,7 +279,7 @@ async function sendRefinement() {
   addMsg("user", instruction);
   const pending = addMsg("note", "revising…");
   try {
-    const r = await pipe.refine({ original: currentInput, latex: currentLatex, instruction, engineChoice: engineChoice(), onDelta: (p) => { pending.textContent = p; } });
+    const r = await pipe.refine({ original: currentInput, latex: currentLatex, instruction, engineChoice: engineChoice(), onDelta: (p) => { pending.textContent = p; }, onEvent: logEvent });
     pending.remove();
     if (r.echo) {
       addMsg("note", 'The model returned your feedback instead of edited LaTeX, so I kept the previous version. Try stating the change directly, e.g. "change TV to T(V)".');
@@ -229,11 +301,14 @@ chatInput.addEventListener("keydown", (e) => { if (e.key === "Enter") sendRefine
 async function backgroundJudge(text, latex) {
   const pending = document.createElement("span"); pending.className = "info"; pending.innerHTML = "<i></i>second opinion…";
   checksEl.appendChild(pending);
+  logEvent({ kind: "step", title: "Asking a second model to verify", detail: "Strict mode. This runs after the result is already on screen." });
+  const tJ = performance.now();
   const j = await pipe.judge(text, latex);
   if (outputCode.textContent.trim() !== latex.trim()) { pending.remove(); return; } // user moved on
   pending.remove();
   if (j.unavailable) return;
-  if (j.ok) { const ok = document.createElement("span"); ok.className = "ok"; ok.innerHTML = "<i></i>verified by a second model"; checksEl.appendChild(ok); return; }
+  if (j.ok) { const ok = document.createElement("span"); ok.className = "ok"; ok.innerHTML = "<i></i>verified by a second model"; checksEl.appendChild(ok); logEvent({ kind: "check", title: "Second model agrees", raw: j.reason || "ok", ms: performance.now() - tJ }); return; }
+  logEvent({ kind: "check", title: "Second model disagrees", detail: j.reason || "disagrees", raw: j.reason, bad: true, ms: performance.now() - tJ });
   const warn = document.createElement("span"); warn.className = "warn"; warn.innerHTML = `<i></i>second opinion: ${j.reason || "disagrees"}`;
   checksEl.appendChild(warn);
   if (!engine && !serverAvailable) return;
@@ -255,18 +330,41 @@ async function backgroundJudge(text, latex) {
 }
 
 // ---- curated model picker ----
-// Ranked by our own benchmark: 1.7B is 100%/100%/50% on easy/medium/hard
-// single equations; only 4B-class and up score on prose passages (`multiline`).
+// Ranked by the tier-matched text benchmark of 2026-09-07 (bench/judged-text-
+// tiers-2026-09-07.json, 105 items: single equations, prose passages, PDF
+// pastes, prose-with-math). Within each size class Qwen3.5 beat the Qwen3 it
+// replaces on prose and PDF pastes (4B: 64% vs 59% overall, 15/30 vs 10/30 on
+// PDF pastes; 1B: 34% vs 10%) at the cost of a few easy
+// single-equation items, which the specialist answers before the LLM is asked.
+// The 2B rung is MiniCPM5 2B (52% vs 13% for Qwen3 1.7B and 26% for Qwen3.5
+// 2B), quantized and compiled by this project (see PUBLISHED above).
+// Only 4B-class and up score on prose passages (`multiline`). Note the graph
+// catalog's tuned decode libs (qwen3-webllm.js) cover Qwen3 only, so these
+// run on stock WebLLM until Qwen3.5 libs are compiled.
 const CURATED = [
   { id: "Qwen3.5-9B-q4f16_1-MLC", name: "Qwen 3.5 · 9B", score: 5, multiline: true },
-  { id: "Qwen3-8B-q4f16_1-MLC", name: "Qwen 3 · 8B", score: 5, multiline: true },
-  { id: "Qwen3-4B-q4f16_1-MLC", name: "Qwen 3 · 4B", score: 4, multiline: true },
-  { id: "Qwen3-1.7B-q4f16_1-MLC", name: "Qwen 3 · 1.7B", score: 3 },
-  { id: "Qwen3-0.6B-q4f16_1-MLC", name: "Qwen 3 · 0.6B", score: 2 },
+  { id: "Qwen3.5-4B-q4f16_1-MLC", name: "Qwen 3.5 · 4B", score: 4, multiline: true },
+  { id: "MiniCPM5-2B-q4f16_1-MLC", name: "MiniCPM5 · 2B", score: 3 },
+  { id: "Qwen3.5-0.8B-q4f16_1-MLC", name: "Qwen 3.5 · 0.8B", score: 2 },
 ];
 const gb = (mb) => `${(mb / 1024).toFixed(1)} GB`;
 const stars = (n) => "★".repeat(n) + "☆".repeat(5 - n);
-const prebuilt = new Map(webllm.prebuiltAppConfig.model_list.map((m) => [m.model_id, m]));
+// Models this project quantized and compiled itself because no mlc-ai build
+// exists. The Hugging Face weights repo also hosts the WebGPU model lib; WebLLM
+// 0.2.84 loads it exactly like a prebuilt entry (tensor-cache.json manifest,
+// q4f16_1 shards). See docs/benchmarks.md for why MiniCPM5 2B holds the 2B rung.
+const PUBLISHED = [
+  {
+    model: "https://huggingface.co/ozhyhinas/MiniCPM5-2B-q4f16_1-MLC",
+    model_id: "MiniCPM5-2B-q4f16_1-MLC",
+    model_lib: "https://huggingface.co/ozhyhinas/MiniCPM5-2B-q4f16_1-MLC/resolve/main/libs/MiniCPM5-2B-q4f16_1-MLC-webgpu.wasm",
+    vram_required_MB: 1900,
+    low_resource_required: true,
+    required_features: ["shader-f16"],
+    overrides: { context_window_size: 4096 },
+  },
+];
+const prebuilt = new Map([...webllm.prebuiltAppConfig.model_list, ...PUBLISHED].map((m) => [m.model_id, m]));
 
 async function detectVramBudgetMB() {
   if (!navigator.gpu) return 0;
@@ -322,54 +420,100 @@ async function warmUp(eng) {
     browserTokPerSec = Math.round((r.usage?.completion_tokens ?? 40) / ((performance.now() - t0) / 1000));
   } catch { /* best-effort */ }
 }
+async function createEngineForPlan(modelId, plan, onProgress) {
+  return webllm.CreateWebWorkerMLCEngine(
+    new Worker(plan.workerUrl, { type: "module" }),
+    modelId,
+    { initProgressCallback: onProgress, appConfig: plan.appConfig },
+    { context_window_size: 2048 }
+  );
+}
 async function loadEngine(modelId, onProgress) {
-  const eng = await webllm.CreateWebWorkerMLCEngine(new Worker(new URL("webllm-worker.js", import.meta.url), { type: "module" }), modelId, { initProgressCallback: onProgress }, { context_window_size: 2048 });
+  const stockRecord = prebuilt.get(modelId);
+  if (!stockRecord) throw new Error(`Unknown WebLLM model: ${modelId}`);
+  let catalog = null;
+  try { catalog = await loadCatalog(); } catch { catalog = null; }
+  const force = parseForce(location.search);
+  let plan = await planEngine(modelId, catalog, { force, stockRecord });
+  let eng;
+  if (plan.kind === "catalog") {
+    try {
+      eng = await createEngineForPlan(modelId, plan, onProgress);
+    } catch (err) {
+      rememberRuntime(modelId, "stock", String(err));
+      console.warn(`webllm catalog runtime failed for ${modelId}, falling back to stock`, err);
+      onProgress?.({ progress: 0, text: "catalog runtime failed — loading stock WebLLM…" });
+      plan = await planEngine(modelId, catalog, { force: "stock", stockRecord });
+      eng = await createEngineForPlan(modelId, plan, onProgress);
+    }
+  } else {
+    // Stock WebLLM only knows its prebuilt list; our published models travel in the app config.
+    if (PUBLISHED.some((m) => m.model_id === modelId)) plan = { ...plan, appConfig: { model_list: [stockRecord] } };
+    eng = await createEngineForPlan(modelId, plan, onProgress);
+  }
+  eng.latexgenPlan = plan;
   await warmUp(eng);
   return eng;
 }
 function activate(eng, modelId, statusText) {
   const old = engine;
   engine = eng; loadedModel = modelId;
-  loadStatus.textContent = statusText;
+  const planLabel = eng?.latexgenPlan?.label ?? "stock WebLLM";
+  loadStatus.textContent = statusText.startsWith("loaded: ") ? `${statusText} (${planLabel})` : statusText;
   const row = modelRows.find((r) => r.id === modelId);
   const speed = browserTokPerSec != null ? ` · ${browserTokPerSec} tok/s` : "";
-  $("model-status").textContent = `On-device model: ${row?.name ?? modelId}${speed}`;
+  $("model-status").textContent = `On-device model: ${row?.name ?? modelId} · ${planLabel}${speed}`;
   if (old && old !== eng) old.unload().catch(() => {});
   window.dispatchEvent(new CustomEvent("latexgen:caps-changed"));
 }
 // Progressive ladder: quick model first, best-for-device model swapped in later.
+function logLoadProgress(title, detail, live, p) {
+  logEvent({ kind: "step", title, detail, raw: p.text ?? `${Math.round((p.progress ?? 0) * 100)}%`, live });
+}
 async function startModelLadder(best) {
   const starter = [...modelRows].reverse().find((r) => r.canRun);
   loadBtn.hidden = true;
   try {
     if (starter && starter.id !== best.id) {
       loadStatus.textContent = `loading quick model (${starter.name})…`;
-      const quick = await loadEngine(starter.id, (p) => { progressFill.style.width = `${Math.round((p.progress ?? 0) * 100)}%`; });
+      const tQuick = performance.now();
+      logEvent({ kind: "step", title: `Loading ${starter.name}`, detail: "A smaller on-device language model first, so conversions can start while the larger one downloads.", live: `load-webllm-${starter.id}` });
+      const quick = await loadEngine(starter.id, (p) => { progressFill.style.width = `${Math.round((p.progress ?? 0) * 100)}%`; logLoadProgress(`Loading ${starter.name}`, "On-device language model. Downloaded once, then cached.", `load-webllm-${starter.id}`, p); });
       activate(quick, starter.id, `ready on ${starter.name} — downloading ${best.name} in background…`);
+      logEvent({ kind: "done", title: `${starter.name} is ready`, detail: "Conversions can use this while the larger model loads.", live: `load-webllm-${starter.id}`, ms: performance.now() - tQuick });
     }
+    const tBig = performance.now();
     const bigStatus = engine
-      ? (p) => { progressFill.style.width = `${Math.round((p.progress ?? 0) * 100)}%`; loadStatus.textContent = `ready on ${modelRows.find((r) => r.id === loadedModel)?.name} — ${p.text ?? "downloading upgrade…"}`; }
-      : (p) => { loadStatus.textContent = p.text ?? "loading…"; progressFill.style.width = `${Math.round((p.progress ?? 0) * 100)}%`; };
+      ? (p) => { progressFill.style.width = `${Math.round((p.progress ?? 0) * 100)}%`; loadStatus.textContent = `ready on ${modelRows.find((r) => r.id === loadedModel)?.name} — ${p.text ?? "downloading upgrade…"}`; logLoadProgress(`Loading ${best.name}`, "Larger on-device language model, in the background.", `load-webllm-${best.id}`, p); }
+      : (p) => { loadStatus.textContent = p.text ?? "loading…"; progressFill.style.width = `${Math.round((p.progress ?? 0) * 100)}%`; logLoadProgress(`Loading ${best.name}`, "On-device language model. Downloaded once, then cached.", `load-webllm-${best.id}`, p); };
     const bigEngine = await loadEngine(best.id, bigStatus);
     activate(bigEngine, best.id, `loaded: ${best.name}`);
     progressFill.style.width = "100%";
+    logEvent({ kind: "done", title: `${best.name} is ready`, detail: engine?.latexgenPlan?.label ?? "stock WebLLM", live: `load-webllm-${best.id}`, ms: performance.now() - tBig });
   } catch (err) {
     const current = modelRows.find((r) => r.id === loadedModel);
     loadStatus.textContent = engine && current ? `upgrade failed (${String(err).slice(0, 60)}…) — continuing on ${current.name}` : `load failed: ${err}`;
     loadBtn.hidden = false;
+    logEvent({ kind: "error", title: "On-device language model failed to load", raw: String(err) });
   }
 }
 async function loadPicked(row) {
   loadBtn.hidden = true;
+  const t0 = performance.now();
   try {
-    const eng = await loadEngine(row.id, (p) => { loadStatus.textContent = p.text ?? "loading…"; progressFill.style.width = `${Math.round((p.progress ?? 0) * 100)}%`; });
+    const eng = await loadEngine(row.id, (p) => { loadStatus.textContent = p.text ?? "loading…"; progressFill.style.width = `${Math.round((p.progress ?? 0) * 100)}%`; logLoadProgress(`Loading ${row.name}`, "On-device language model. Downloaded once, then cached.", `load-webllm-${row.id}`, p); });
     activate(eng, row.id, `loaded: ${row.name}`); progressFill.style.width = "100%";
-  } catch (err) { loadStatus.textContent = `load failed: ${err}`; loadBtn.hidden = false; }
+    logEvent({ kind: "done", title: `${row.name} is ready`, live: `load-webllm-${row.id}`, ms: performance.now() - t0 });
+  } catch (err) { loadStatus.textContent = `load failed: ${err}`; loadBtn.hidden = false; logEvent({ kind: "error", title: "On-device language model failed to load", raw: String(err) }); }
 }
 loadBtn.addEventListener("click", () => { const row = modelRows.find((r) => r.id === selectedModelId); if (row) loadPicked(row); });
 ddBtn.addEventListener("click", () => { ddMenu.hidden = !ddMenu.hidden; });
 document.addEventListener("click", (e) => { if (!$("model-dd").contains(e.target)) ddMenu.hidden = true; });
-specialistReady.then(buildModelPicker, buildModelPicker);
+specialistReady.then((ok) => {
+  const rt = runtimeUsed.intellitex;
+  logEvent({ kind: ok ? "done" : "error", title: ok ? "Specialist is ready" : "Specialist failed to load", detail: rt ? `${rt.device ?? "cpu"}${rt.dtype ? ` · ${rt.dtype}` : ""}` : "", raw: rt ? JSON.stringify(rt) : "", live: "load-intellitex" });
+  return buildModelPicker();
+}, () => { logEvent({ kind: "error", title: "Specialist failed to load", live: "load-intellitex" }); return buildModelPicker(); });
 
 // ---- WebGPU availability ----
 if (!navigator.gpu) {
@@ -457,7 +601,7 @@ $("input").addEventListener("keydown", (e) => { if ((e.metaKey || e.ctrlKey) && 
   if (!prefs().consent) consent.hidden = false;
   const maybeStartLadder = () => { if (llmEnabled() && !engine) { const best = modelRows.find((r) => r.canRun); if (best) { loadBtn.hidden = true; startModelLadder(best); } } };
   for (const btn of consent.querySelectorAll(".consent-opt")) {
-    btn.addEventListener("click", () => { setPref("consent", btn.dataset.consent); consent.hidden = true; $("llm-enabled").checked = llmEnabled(); maybeStartLadder(); });
+    btn.addEventListener("click", () => { setPref("consent", btn.dataset.consent); consent.hidden = true; $("llm-enabled").checked = llmEnabled(); maybeStartLadder(); maybeShowWebnnPrompt(); });
   }
   const llmBox = $("llm-enabled");
   llmBox.checked = llmEnabled();
@@ -465,6 +609,75 @@ $("input").addEventListener("keydown", (e) => { if ((e.metaKey || e.ctrlKey) && 
   const strictBox = $("strict-mode");
   strictBox.checked = strictMode();
   strictBox.addEventListener("change", () => setPref("strict", strictBox.checked));
+}
+
+// ---- WebNN flags prompt (Chrome/Edge on Mac; navigator.ml is off for most users) ----
+function webnnAvailableNow() {
+  return typeof navigator !== "undefined" && !!navigator.ml && typeof navigator.ml.createContext === "function";
+}
+function isIosFamily() {
+  const ua = navigator.userAgent || "";
+  return /iPhone|iPad|iPod/.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+}
+function isMacDesktop() {
+  if (isIosFamily()) return false;
+  const platform = navigator.userAgentData?.platform || "";
+  return platform === "macOS" || /Mac/.test(navigator.platform || "") || /Macintosh/.test(navigator.userAgent || "");
+}
+function isChromium() {
+  const brands = navigator.userAgentData?.brands ?? [];
+  if (brands.some((b) => /Chromium|Google Chrome|Microsoft Edge|Brave|Opera/.test(b.brand || ""))) return true;
+  const ua = navigator.userAgent || "";
+  return /Chrome\//.test(ua) && !/Firefox\//.test(ua);
+}
+function flagsPageUrl() {
+  return /Edg\//.test(navigator.userAgent || "") ? "edge://flags/#webnn" : "chrome://flags/#webnn";
+}
+function webnnPromptForced() {
+  return new URLSearchParams(location.search).get("webnn") === "prompt";
+}
+function webnnPromptEligible() {
+  if (webnnPromptForced()) return true;
+  return !webnnAvailableNow() && isMacDesktop() && isChromium();
+}
+function showWebnnPrompt() {
+  const modal = $("webnn-prompt");
+  if (!modal) return;
+  const open = $("webnn-open");
+  const pasteUrl = $("webnn-flags-url");
+  open.textContent = /Edg\//.test(navigator.userAgent || "") ? "Open Edge flags" : "Open Chrome flags";
+  if (pasteUrl) pasteUrl.textContent = flagsPageUrl();
+  $("webnn-paste").hidden = true;
+  modal.hidden = false;
+  open.focus();
+}
+function maybeShowWebnnPrompt() {
+  const settings = $("webnn-settings");
+  if (settings) settings.hidden = !webnnPromptEligible();
+  if (!webnnPromptEligible() || (prefs().webnnPrompt === "dismissed" && !webnnPromptForced())) return;
+  if (!$("consent").hidden) return;
+  showWebnnPrompt();
+}
+{
+  const modal = $("webnn-prompt");
+  $("webnn-dismiss")?.addEventListener("click", () => { setPref("webnnPrompt", "dismissed"); modal.hidden = true; });
+  $("webnn-settings-open")?.addEventListener("click", () => showWebnnPrompt());
+  $("webnn-open")?.addEventListener("click", async () => {
+    // Pages cannot navigate to chrome:// or edge://. Copy the URL and show it
+    // so the click still lands them on the flags page with the WebNN search.
+    const url = flagsPageUrl();
+    try { await navigator.clipboard.writeText(url); } catch { /* ignore */ }
+    $("webnn-paste").hidden = false;
+    $("webnn-flags-url").textContent = url;
+    toast("Paste the copied address into the bar, then set those flags to Enabled.");
+  });
+  modal?.addEventListener("click", (e) => { if (e.target === modal) { setPref("webnnPrompt", "dismissed"); modal.hidden = true; } });
+  document.addEventListener("keydown", (e) => {
+    if (e.key !== "Escape" || !modal || modal.hidden) return;
+    setPref("webnnPrompt", "dismissed");
+    modal.hidden = true;
+  });
+  maybeShowWebnnPrompt();
 }
 
 // ---- history and favorites (this browser only) ----
@@ -736,27 +949,28 @@ if (!STATIC_BUILD) {
     };
     const pack = (r, extra = {}) => ({ latex: r.latex, ok: r.validation.ok, issues: r.validation.issues, model: r.model, note: r.note?.replace(/^\(|\)$/g, "") ?? "", ms: r.ms, ...extra });
     const eng = job.engine === "server" ? "server" : "browser";
+    const onEvent = (e) => logEvent({ ...e, title: `${job.pool ? "Peer" : "Tab API"} · ${e.title}` });
     if (job.kind === "status") {
       return { ok: true, models: { specialist: pipe.loaded.intellitex, texo: pipe.loaded.texo, texify: pipe.loaded.texify, llm: loadedModel ? (modelRows.find((r) => r.id === loadedModel)?.name ?? loadedModel) : null },
-        runtime: runtimeUsed, tokPerSec: browserTokPerSec, server: serverAvailable, strictMode: strictMode(), running: running.size };
+        webllm: engine?.latexgenPlan?.label ?? null, runtime: runtimeUsed, tokPerSec: browserTokPerSec, server: serverAvailable, strictMode: strictMode(), running: running.size };
     }
     if (job.kind === "history") return { ok: true, history: loadHistory() };
     if (job.kind === "format") return { ok: true, latex: job.latex, ...(await fmt(job.latex, job.format)) };
     if (job.kind === "check" || (job.kind === "convert" && job.latex && !job.text && !job.imageBase64)) {
-      const r = await pipe.checkLatex(job.latex); return pack(r, { repaired: r.repaired, ...(await fmt(r.latex, job.format)) });
+      const r = await pipe.checkLatex(job.latex, { onEvent }); return pack(r, { repaired: r.repaired, ...(await fmt(r.latex, job.format)) });
     }
     if (job.kind === "refine") {
-      const r = await pipe.refine({ original: job.original || "(tab api)", latex: job.latex, instruction: job.instruction, engineChoice: eng, allowMesh: !job.noMesh, allowServer: !job.noServer });
+      const r = await pipe.refine({ original: job.original || "(tab api)", latex: job.latex, instruction: job.instruction, engineChoice: eng, allowMesh: !job.noMesh, allowServer: !job.noServer, onEvent });
       return pack(r, { echo: r.echo, retried: r.retried, ...(await fmt(r.latex, job.format)) });
     }
     if (job.imageBase64) {
       const bin = atob(job.imageBase64.replace(/^data:[^,]+,/, ""));
       const bytes = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
-      const r = await pipe.convertImage(new Blob([bytes], { type: job.mime || "image/png" }), { ocr: job.ocr || "auto" });
+      const r = await pipe.convertImage(new Blob([bytes], { type: job.mime || "image/png" }), { ocr: job.ocr || "auto", onEvent });
       return pack(r, { ocr: r.used, escalated: r.escalatedWhy || undefined, repaired: r.repaired, ...(await fmt(r.latex, job.format)) });
     }
     const local = { allowMesh: !job.noMesh, allowServer: !job.noServer };
-    const r = await pipe.convertText(job.text, { engineChoice: eng, strict: !!job.strict, ...local });
+    const r = await pipe.convertText(job.text, { engineChoice: eng, strict: !!job.strict, ...local, onEvent });
     if (r.validation.ok && !job.pool) recordHistory(job.text, r.latex);
     return pack(r, { escalated: r.escalated, batch: r.batch, judge: r.judge, peer: r.peer, ...(await fmt(r.latex, job.format)) });
   }

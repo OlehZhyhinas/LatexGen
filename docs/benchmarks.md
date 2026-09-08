@@ -20,6 +20,29 @@ What the router took from this: the specialist goes first for single equations; 
 
 Reproduce: open `public/bench.html` in a browser with the local server running, then `python3 bench/judge.py`.
 
+## Text, second pass: size-matched candidates against the shipped Qwen3 (2026-09-07)
+
+The first table only had 15 items, all clean spoken math. The second pass adds the inputs people actually paste: 30 PDF pastes of the reference passages (15 clean, 15 with two-column, footnote, ligature and running-head garbling from `pdftotext`) and 60 synthetic prose-with-math passages (PDF-style, Unicode-style and LaTeX-style math; ten are prose only, where the right answer is to change nothing). 105 items, 12 models, one greedy run each with the pipeline's exact prompts and thinking off, through Ollama at 4-bit, judged by Qwen3.8 27B. Each shipped size is compared only with candidates of its own size.
+
+| Class | Model | easy | medium | hard | prose | PDF paste (30) | synth PDF (24) | synth unicode (18) | synth LaTeX (18) | all |
+|---|---|---|---|---|---|---|---|---|---|---|
+| ~1B | Qwen3 0.6B (was shipped) | 4/4 | 2/4 | 0/4 | 0/3 | 0 | 1 | 2 | 2 | 10% |
+| ~1B | **Qwen3.5 0.8B** (ships) | 3/4 | 3/4 | 1/4 | 1/3 | 4 | 6 | 7 | 11 | **34%** |
+| ~1B | MiniCPM5 1B | 3/4 | 4/4 | 0/4 | 1/3 | 4 | 4 | 7 | 8 | 30% |
+| ~1B | Gemma 3 1B | 2/4 | 0/4 | 0/4 | 0/3 | 0 | 0 | 1 | 0 | 3% |
+| ~2B | Qwen3 1.7B (was shipped) | 4/4 | 4/4 | 1/4 | 1/3 | 2 | 0 | 2 | 0 | 13% |
+| ~2B | **Qwen3.5 2B** (ships) | 3/4 | 3/4 | 1/4 | 1/3 | 4 | 4 | 8 | 3 | **26%** |
+| ~2B | MiniCPM5 2B | 4/4 | 1/4 | 1/4 | 3/3 | 6 | 8 | 15 | 17 | 52% |
+| ~2B | Gemma 4 E2B | 2/4 | 2/4 | 3/4 | 1/3 | 9 | 10 | 16 | 18 | 58% |
+| ~4B | Qwen3 4B (was shipped) | 3/4 | 1/4 | 3/4 | 2/3 | 10 | 10 | 15 | 18 | 59% |
+| ~4B | **Qwen3.5 4B** (ships) | 2/4 | 2/4 | 4/4 | 2/3 | 15 | 9 | 15 | 18 | **64%** |
+| ~4B | Gemma 4 E4B | 4/4 | 4/4 | 4/4 | 2/3 | 13 | 9 | 16 | 18 | 67% |
+| ~4B | Gemma 3 4B | 3/4 | 3/4 | 3/4 | 2/3 | 3 | 3 | 3 | 3 | 22% |
+
+What changed because of this: the browser ladder is now Qwen3.5 0.8B / MiniCPM5 2B / Qwen3.5 4B / Qwen3.5 9B and the server's default Ollama model is `qwen3.5:4b`. Qwen3.5 gives up a few easy single equations, which the IntelliTeX specialist answers before the LLM is asked, and gains on hard equations, prose and PDF pastes. MiniCPM5 2B had no WebLLM build, so it was quantized to q4f16_1 and compiled for WebGPU here and published at [ozhyhinas/MiniCPM5-2B-q4f16_1-MLC](https://huggingface.co/ozhyhinas/MiniCPM5-2B-q4f16_1-MLC) (build notes in that repo's card). Gemma 4 E2B scores higher still but is 5.1B raw parameters, about 3 GB at 4-bit, and needs a new MLC model type; at that size Qwen3.5 4B is the better pick. Gemma 3 4B wraps whole prose sentences in math mode, so its public instruction-following score does not carry over. Ollama's `qwen3:4b` tag resolves to the 262K-context 2507 Thinking build, not the shipped model; the Qwen3 4B row uses the original weights from the official Qwen GGUF with the `qwen3:1.7b` tag's template (`ollama create qwen3-4b-orig`).
+
+Reproduce: `node bench/run-ollama-text.mjs --data bench/bench-data-extended.json --models <ollama tags> --out bench/results-x.json`, then `python3 bench/judge.py --rows bench/results-x.json --data bench/bench-data-extended.json bench/judged-x.json` and `python3 bench/summarize-text-tiers.py bench/judged-x.json`. Raw rows and verdicts for this run: `bench/results-text-tiers-2026-09-07.json`, `bench/judged-text-tiers-2026-09-07.json`.
+
 ## Images: which OCR model reads rendered math
 
 18 rendered images (KaTeX via headless Chrome) across easy, medium, hard, mixed prose and degraded (tiny font, dark background).
@@ -75,6 +98,53 @@ when `navigator.ml` exists), or `public/bench-images.html?only=texo-webnn` /
 `?only=texify-webnn` for all 18 images, or `public/bench.html?only=intellitex-webnn`
 for the 15 text items.
 
+### WebLLM: Qwen3 through the graph catalog's WebGPU runtime
+
+The same Qwen3 q4f16_1 weights, decoded by the catalog's patched WebLLM 0.2.84
+(family `qwen3-webllm`: device-resident greedy argmax, K-token decode bursts,
+batched command encoding with periodic flushes, optional lookahead) with a
+per-model subgroup-32 model lib, against stock WebLLM 0.2.84. Both sides
+greedy (`temperature: 0`), streamed, the 15 text items, two rounds, arms
+interleaved per round, fresh engine per arm. Decode is (wall − first token) /
+(tokens − 1); medians over the 30 runs. M5 Pro, Chrome 152, 2026-09-07,
+`bench-webllm.html`.
+
+| Model | Variant | Decode ms/token | Speed-up | First token | Same output as stock |
+|---|---|---|---|---|---|
+| Qwen3 0.6B | stock WebLLM | 7.0 | | 42 ms | |
+| | catalog `sg32-burst4` | 4.2 | 1.69x | 42 ms | 14/15 items |
+| | catalog `sg32-burst4-flush64` **(default)** | **3.5** | **2.01x** | 40 ms | 14/15 items |
+| Qwen3 1.7B | stock WebLLM | 9.8 | | 103 ms | |
+| | catalog `sg32-burst4-flush32` | 6.2 | 1.58x | 102 ms | 13/15 items |
+| | catalog `sg32-burst1-flush32-lookahead1` **(default)** | **5.8** | **1.68x** | 105 ms | 13/15 items |
+| Qwen3 4B | stock WebLLM | 17.7 | | 254 ms | |
+| | catalog `sg32-burst4-flush32` | **12.2** | **1.45x** | 252 ms | 15/15 items |
+| Qwen3 8B | stock WebLLM | 25.3 | | 457 ms | |
+| | catalog `sg32-burst4-flush32` | **20.8** | **1.22x** | 466 ms | 14/15 items |
+
+What the router took from this: every size is faster through the catalog, most
+where it matters least (0.6B) and least where it matters most (8B), because the
+tricks remove per-token overhead rather than compute. The sibling pairs were
+settled here: `flush64` over plain `burst4` at 0.6B, and `lookahead1` over
+`burst4-flush32` at 1.7B, where the workbench's +3.9 ms first-token cost did
+not show (105 vs 102 ms) and per-token streaming comes back for free. The
+losing siblings stay in the catalog and can be forced with
+`?webllm=catalog:<variant>`.
+
+The output differences are not the decode tricks: the two 1.7B variants agree
+with each other on all 30 runs and differ from stock on the same two items, so
+the divergence comes from the subgroup model lib producing slightly different
+logits, which flips one near-tie token (0.6B: `\hat{\lambda}` vs `\lambda`;
+8B: `k = 0` vs `k` equals zero`). Every divergence reproduced identically in
+both rounds. Judged by the 27B (`bench/judge.py`,
+`bench/results-qwen3-webllm-2026-09-07.json`), the catalog and stock arms
+score identically on every item for every size (0.6B 6/15, 1.7B 8/15, 4B 9/15,
+8B 9/15): the flipped tokens change wording, not correctness.
+
+Reproduce: `public/bench-webllm.html?model=Qwen3-1.7B-q4f16_1-MLC&rounds=2`
+(arms default to stock plus every catalog variant for the model), then
+`python3 bench/judge.py` for the accuracy column.
+
 ## Loading: getting the weights into the browser
 
 Cold means an empty Cache API and a bypassed HTTP cache, weights streamed from the Hugging Face repo the static build uses; warm means the Cache API. Median of three cold runs for the WebGPU rows, single runs elsewhere. M5 Pro, Chromium 148, one evening, both sides measured within the same two hours.
@@ -94,5 +164,7 @@ Three things changed, and one thing was found:
 - **CDN throughput is per object.** The old Texify objects streamed at about 2 MB/s while everything else came down at 15 to 25 MB/s; the new objects are fast. Measured back to back after the change, the old revision took 47 s for Texify (380 MB at 8.5 MB/s) against 12 s for the new files (182 MB at 17 MB/s), and 18 s for IntelliTeX against 7 s. So the Texify rows overstate what fewer bytes alone buy; the IntelliTeX rows, whose objects were fast on both sides, are the clean signal: about 2x.
 
 Reproduce: `public/bench-load.html?label=x&queue=intellitex,webgpu,q4,hf,cold,1;...` with the local server running (see the file header for the queue syntax), then `curl -s localhost:8000/api/bench > bench/results-load-<date>.json` and `python3 bench/summarize-load.py` on it. The rows behind this table are `bench/results-load-2026-09-03.json`.
+
+Local cold start → first generation (ONNX fallbacks and WebNN per graph), including host loadavg on a shared machine: [docs/load/README.md](load/README.md).
 
 Raw results live in `bench/results-*.json`; a static, crawlable summary is generated into `public/benchmarks.html` by `python3 bench/build-benchmarks-page.py`.

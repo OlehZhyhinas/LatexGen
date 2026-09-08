@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>LatexGen WebLLM head-to-head</title>
+  <style>
+    body { font-family: ui-monospace, Menlo, monospace; background: #0f1115; color: #e6e8ee; padding: 20px; font-size: 13px; }
+    #log div { padding: 1px 0; }
+    .ok { color: #37c98b; } .bad { color: #e6b450; } .err { color: #ff6b6b; }
+    table { border-collapse: collapse; margin: 10px 0 16px; }
+    th, td { border: 1px solid #2a2e38; padding: 3px 8px; text-align: right; }
+    th:first-child, td:first-child { text-align: left; }
+    th { color: #9aa4b2; font-weight: normal; }
+    button { font-family: inherit; font-size: 12px; background: #1c2029; color: #e6e8ee; border: 1px solid #2a2e38; padding: 4px 10px; cursor: pointer; }
+    button:hover { border-color: #3a4050; }
+  </style>
+</head>
+<body>
+  <h3>LatexGen WebLLM catalog runtime head-to-head</h3>
+  <div id="progress">starting…</div>
+  <button id="copy-json">copy JSON</button>
+  <table id="summary"><thead><tr>
+    <th>arm</th><th>loadMs</th><th>med decode ms/tok</th><th>min decode ms/tok</th>
+    <th>med tok/s</th><th>med ttftMs</th><th>identical</th><th>total ms</th>
+  </tr></thead><tbody></tbody></table>
+  <div id="log"></div>
+  <script type="module" src="bench-webllm.js"></script>
+</body>
+</html>

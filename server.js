@@ -6,6 +6,7 @@ import { readFile, stat } from "node:fs/promises";
 import { createReadStream } from "node:fs";
 import { extname, join, normalize } from "node:path";
 import { fileURLToPath } from "node:url";
+import { loadavg, totalmem, freemem } from "node:os";
 
 const PORT = process.env.PORT || 8000;
 const PROD = process.env.NODE_ENV === "production" || process.env.LATEXGEN_PROD === "1";
@@ -25,7 +26,7 @@ const OPENAI_LOCAL = /^https?:\/\/(localhost|127\.0\.0\.1|host\.docker\.internal
 const OPENAI_ENABLED = process.env.OPENAI_DISABLED !== "1";
 // --- Backend B: Ollama (self-hosted).
 const OLLAMA_URL = process.env.OLLAMA_URL || "http://host.docker.internal:11434";
-const OLLAMA_MODEL = process.env.OLLAMA_MODEL || "qwen3:1.7b";
+const OLLAMA_MODEL = process.env.OLLAMA_MODEL || "qwen3.5:4b";
 const OLLAMA_REFINE_MODEL = process.env.OLLAMA_REFINE_MODEL || OLLAMA_MODEL;
 const OLLAMA_ENABLED = process.env.OLLAMA_DISABLED !== "1";
 // Clients order their escalation ladder by this: a self-hosted local server is
@@ -214,8 +215,11 @@ async function streamChat(res, route, messages) {
   const decoder = new TextDecoder();
   let buf = "";
   let full = "";
+  let tokens = 0;
+  let evalNs = 0;
   const emit = (delta) => {
     if (!delta) return;
+    tokens += 1;
     full += delta;
     res.write(JSON.stringify({ delta }) + "\n");
   };
@@ -230,14 +234,23 @@ async function streamChat(res, route, messages) {
         if (!line.startsWith("data:")) continue;
         line = line.slice(5).trim();
         if (line === "[DONE]") continue;
-        emit(JSON.parse(line).choices?.[0]?.delta?.content ?? "");
+        const j = JSON.parse(line);
+        emit(j.choices?.[0]?.delta?.content ?? "");
+        if (j.usage?.completion_tokens) tokens = j.usage.completion_tokens;
       } else {
-        emit(JSON.parse(line).message?.content ?? "");
+        const j = JSON.parse(line);
+        emit(j.message?.content ?? "");
+        if (j.eval_count) tokens = j.eval_count;
+        if (j.eval_duration) evalNs = j.eval_duration;
       }
     }
   }
   const latex = stripFences(stripThink(full));
-  res.end(JSON.stringify({ done: true, latex, model: `${route.model} (${route.kind})`, ms: Date.now() - started }) + "\n");
+  const ms = Date.now() - started;
+  const tokPerSec = tokens && evalNs ? Math.round((tokens / (evalNs / 1e9)) * 10) / 10
+    : tokens && ms ? Math.round((tokens / (ms / 1000)) * 10) / 10
+    : undefined;
+  res.end(JSON.stringify({ done: true, latex, model: `${route.model} (${route.kind})`, ms, tokens: tokens || undefined, tokPerSec }) + "\n");
 }
 
 // Load both models into memory at boot so the first user request is warm.
@@ -496,7 +509,9 @@ const server = createServer(async (req, res) => {
     // reads them back for judging. In-memory only.
     if (PROD && path === "/api/bench") return json(res, 404, { error: "not found" });
     if (req.method === "POST" && path === "/api/bench") {
-      benchRows.push(await readJson(req, BODY_LIMIT_IMAGE));
+      const row = await readJson(req, BODY_LIMIT_IMAGE);
+      row.host = { loadavg: loadavg(), memUsedFrac: 1 - freemem() / totalmem(), at: new Date().toISOString() };
+      benchRows.push(row);
       res.writeHead(204); res.end();
       return;
     }

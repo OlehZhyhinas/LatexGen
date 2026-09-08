@@ -82,3 +82,23 @@ test("an equation that already contains equals is not treated as answered", () =
   );
   assert.deepEqual(issues, []);
 });
+
+// ---- unescapeDoubledBackslashes: JSON-escaped LaTeX from small models ----
+import { unescapeDoubledBackslashes } from "../public/validator.js";
+
+test("systematically double-escaped LaTeX is unescaped", () => {
+  assert.equal(unescapeDoubledBackslashes("$\\\\mathbf{F}$ and $v = \\\\frac{ds}{dt}$"), "$\\mathbf{F}$ and $v = \\frac{ds}{dt}$");
+  assert.equal(unescapeDoubledBackslashes("\\\\[ x^2 \\\\]"), "\\[ x^2 \\]");
+});
+
+test("matrix row breaks and normal LaTeX are left alone", () => {
+  const matrix = "\\begin{pmatrix} a \\\\ b \\end{pmatrix}";
+  assert.equal(unescapeDoubledBackslashes(matrix), matrix);
+  assert.equal(unescapeDoubledBackslashes("\\[ x = \\frac{a}{b} \\]"), "\\[ x = \\frac{a}{b} \\]");
+  assert.equal(unescapeDoubledBackslashes("plain prose"), "plain prose");
+});
+
+test("mixed single and double escaping is not touched", () => {
+  const mixed = "\\\\( a \\\\) then \\frac{1}{2}";
+  assert.equal(unescapeDoubledBackslashes(mixed), mixed);
+});

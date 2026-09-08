@@ -1,0 +1,784 @@
+[
+ {
+  "tier": "load",
+  "label": "cold-hf",
+  "model": "intellitex",
+  "device": "webgpu",
+  "dtype": "q4",
+  "src": "hf",
+  "rev": "main",
+  "mode": "cold",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36",
+  "at": "2026-09-05T22:02:40.862Z",
+  "loadMs": 8979,
+  "downloadMs": 7851,
+  "sessionMs": 572,
+  "files": {
+   "config.json": 830,
+   "generation_config.json": 163,
+   "tokenizer_config.json": 21058,
+   "tokenizer.json": 2288924,
+   "onnx/encoder_model_q4.onnx": 78242154,
+   "onnx/decoder_model_merged_q4.onnx": 111901161
+  },
+  "totalBytes": 192454290,
+  "network": {
+   "requests": 6,
+   "bytes": 190144308,
+   "files": [
+    {
+     "file": "intellitex/config.json",
+     "len": 830,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "onnx/encoder_model_q4.onnx",
+     "len": 78242154,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "intellitex/generation_config.json",
+     "len": 163,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "intellitex/tokenizer_config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "intellitex/tokenizer.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "onnx/decoder_model_merged_q4.onnx",
+     "len": 111901161,
+     "encoding": null,
+     "type": "application/octet-stream"
+    }
+   ]
+  },
+  "warmupMs": 335,
+  "firstOutput": "$$x=\\frac{-b\\pm\\sqrt{b^{2}-4ac}}{2a}$$",
+  "firstGenMs": 230,
+  "fixtureId": "quadratic-formula",
+  "coldToFirstMs": 9544,
+  "secondOutput": "$$x=\\frac{-b\\pm\\sqrt{b^{2}-4ac}}{2a}$$",
+  "secondGenMs": 251,
+  "cacheSettled": true,
+  "host": {
+   "loadavg": [
+    35.21435546875,
+    26.923828125,
+    18.4921875
+   ],
+   "memUsedFrac": 0.9896674156188965,
+   "at": "2026-09-05T22:02:50.696Z"
+  },
+  "runnerHost": {
+   "before": {
+    "at": "2026-09-05T22:02:40.096Z",
+    "loadavg": [
+     35.080078125,
+     26.615234375,
+     18.28564453125
+    ],
+    "cpuCount": 18,
+    "chromeHelpers": 38,
+    "contended": true
+   },
+   "after": {
+    "at": "2026-09-05T22:02:52.200Z",
+    "loadavg": [
+     35.11669921875,
+     27.041015625,
+     18.5830078125
+    ],
+    "cpuCount": 18,
+    "chromeHelpers": 46,
+    "contended": true
+   },
+   "isolation": "new regular Chrome user-data-dir per row"
+  }
+ },
+ {
+  "tier": "load",
+  "label": "cold-hf",
+  "model": "texify",
+  "device": "webgpu",
+  "dtype": "q4",
+  "src": "hf",
+  "rev": "main",
+  "mode": "cold",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36",
+  "at": "2026-09-05T22:02:55.395Z",
+  "loadMs": 62880,
+  "downloadMs": 61704,
+  "sessionMs": 458,
+  "files": {
+   "config.json": 4876,
+   "generation_config.json": 191,
+   "preprocessor_config.json": 615,
+   "tokenizer.json": 2140013,
+   "tokenizer_config.json": 4491,
+   "onnx/encoder_model_q4.onnx": 49064106,
+   "onnx/decoder_model_merged_q4.onnx": 170408898
+  },
+  "totalBytes": 221623190,
+  "network": {
+   "requests": 7,
+   "bytes": 219473810,
+   "files": [
+    {
+     "file": "texify/config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "onnx/encoder_model_q4.onnx",
+     "len": 49064106,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "texify/generation_config.json",
+     "len": 191,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "texify/preprocessor_config.json",
+     "len": 615,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "texify/tokenizer.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "texify/tokenizer_config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "onnx/decoder_model_merged_q4.onnx",
+     "len": 170408898,
+     "encoding": null,
+     "type": "application/octet-stream"
+    }
+   ]
+  },
+  "warmupMs": 404,
+  "firstOutput": "$$x=\\frac{-b\\pm\\sqrt{b^{2}-4ac}}{2a}$$",
+  "firstGenMs": 287,
+  "fixtureId": "quadratic",
+  "coldToFirstMs": 63571,
+  "secondOutput": "$$x=\\frac{-b\\pm\\sqrt{b^{2}-4ac}}{2a}$$",
+  "secondGenMs": 276,
+  "cacheSettled": true,
+  "host": {
+   "loadavg": [
+    33.9521484375,
+    28.27001953125,
+    19.6640625
+   ],
+   "memUsedFrac": 0.9911108016967773,
+   "at": "2026-09-05T22:03:59.280Z"
+  },
+  "runnerHost": {
+   "before": {
+    "at": "2026-09-05T22:02:54.801Z",
+    "loadavg": [
+     35.11669921875,
+     27.041015625,
+     18.5830078125
+    ],
+    "cpuCount": 18,
+    "chromeHelpers": 38,
+    "contended": true
+   },
+   "after": {
+    "at": "2026-09-05T22:04:01.018Z",
+    "loadavg": [
+     33.9521484375,
+     28.27001953125,
+     19.6640625
+    ],
+    "cpuCount": 18,
+    "chromeHelpers": 44,
+    "contended": true
+   },
+   "isolation": "new regular Chrome user-data-dir per row"
+  }
+ },
+ {
+  "tier": "load",
+  "label": "cold-hf",
+  "model": "texo",
+  "device": "wasm",
+  "dtype": "fp32",
+  "src": "hf",
+  "rev": "main",
+  "mode": "cold",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36",
+  "at": "2026-09-05T22:04:04.555Z",
+  "error": "Error: Error (429) occurred while trying to load file: \"https://huggingface.co/ozhyhinas/latexgen-models/resolve/main/texo/config.json\".\n    at aA (http://127.0.0.1:8001/vendor/transformers/transformers.min.js:10:9551)\n    at hz (http://127.0.0.1:8001/vendor/transformers/transformers.min.js:10:17191)\n    at async xo (http://127.0.0.1:8001/vendor/transformers/transformers.min.js:10:19234)\n    at async yo (http://127.0.0.1:8001/vendor/transformers/transformers.min.js:10:19281)\n    at async nt (http://127.0.0.1:8001/vendor/transformers/transformers.min.js:10:19397)\n    at async qN (http://127.0.0.1:8001/vendor/transformers/transformers.min.js:37:6469)\n    at async t.from_pretrained (http://127.0.0.1:8001/vendor/transformers/transformers.min.js:37:14190)\n    at async T1.from_pretrained (http://127.0.0.1:8001/vendor/transformers/transformers.min.js:37:36840)\n    at async http://127.0.0.1:8001/bench-load.js:154:17",
+  "host": {
+   "loadavg": [
+    32.99462890625,
+    28.16552734375,
+    19.677734375
+   ],
+   "memUsedFrac": 0.9671280384063721,
+   "at": "2026-09-05T22:04:04.700Z"
+  },
+  "runnerHost": {
+   "before": {
+    "at": "2026-09-05T22:04:03.777Z",
+    "loadavg": [
+     32.99462890625,
+     28.16552734375,
+     19.677734375
+    ],
+    "cpuCount": 18,
+    "chromeHelpers": 38,
+    "contended": true
+   },
+   "after": {
+    "at": "2026-09-05T22:04:05.842Z",
+    "loadavg": [
+     32.99462890625,
+     28.16552734375,
+     19.677734375
+    ],
+    "cpuCount": 18,
+    "chromeHelpers": 46,
+    "contended": true
+   },
+   "isolation": "new regular Chrome user-data-dir per row"
+  }
+ },
+ {
+  "tier": "load",
+  "label": "cold-hf",
+  "model": "texo",
+  "device": "webnn",
+  "dtype": "fp16",
+  "src": "hf",
+  "rev": "main",
+  "mode": "cold",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36",
+  "at": "2026-09-05T22:04:08.837Z",
+  "backend": "coreml",
+  "graphs": [
+   {
+    "name": "encoder",
+    "ops": 155,
+    "constants": 168,
+    "constantBytes": 33354432,
+    "constantsMs": 4973.1,
+    "emitMs": 0.5,
+    "buildMs": 557.6
+   },
+   {
+    "name": "decoder",
+    "ops": 1363,
+    "constants": 44,
+    "constantBytes": 10783808,
+    "constantsMs": 1759.7,
+    "emitMs": 1.5,
+    "buildMs": 4832.1
+   }
+  ],
+  "entry": "texo-384/coreml-apple-m5-pro-macos26-chrome152",
+  "buildMsReported": 12179,
+  "loadMs": 12196,
+  "downloadMs": 2318,
+  "sessionMs": 4845,
+  "files": {
+   "texo-encoder.bin": 33354432,
+   "texo-decoder-k16.bin": 10783808
+  },
+  "totalBytes": 44138240,
+  "network": {
+   "requests": 8,
+   "bytes": 44646887,
+   "files": [
+    {
+     "file": "texo-webnn/family.json",
+     "len": 9809,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "texo-webnn/entry.json",
+     "len": 11114,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "texo-webnn/manifest.json",
+     "len": 1386,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "texo-webnn/recipe.encoder.json",
+     "len": 91261,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "texo-webnn/recipe.decoder.json",
+     "len": 377759,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/texo-encoder.bin",
+     "len": 33354432,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/texo-decoder-k16.bin",
+     "len": 10783808,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "tokenizer/tokenizer.json",
+     "len": 17318,
+     "encoding": null,
+     "type": "application/json"
+    }
+   ]
+  },
+  "warmupMs": 293,
+  "firstOutput": "x = { \\frac { - b \\pm { \\sqrt { b ^ { 2 } - 4 a c } } } { 2 a } }",
+  "firstGenMs": 54,
+  "fixtureId": "quadratic",
+  "coldToFirstMs": 12543,
+  "secondOutput": "x = { \\frac { - b \\pm { \\sqrt { b ^ { 2 } - 4 a c } } } { 2 a } }",
+  "secondGenMs": 43,
+  "host": {
+   "loadavg": [
+    34.5546875,
+    28.75830078125,
+    20.03759765625
+   ],
+   "memUsedFrac": 0.9782600402832031,
+   "at": "2026-09-05T22:04:21.451Z"
+  },
+  "runnerHost": {
+   "before": {
+    "at": "2026-09-05T22:04:08.107Z",
+    "loadavg": [
+     33.47509765625,
+     28.34521484375,
+     19.79052734375
+    ],
+    "cpuCount": 18,
+    "chromeHelpers": 38,
+    "contended": true
+   },
+   "after": {
+    "at": "2026-09-05T22:04:22.198Z",
+    "loadavg": [
+     34.35009765625,
+     28.81201171875,
+     20.107421875
+    ],
+    "cpuCount": 18,
+    "chromeHelpers": 46,
+    "contended": true
+   },
+   "isolation": "new regular Chrome user-data-dir per row"
+  }
+ },
+ {
+  "tier": "load",
+  "label": "cold-hf",
+  "model": "texify",
+  "device": "webnn",
+  "dtype": "fp16",
+  "src": "hf",
+  "rev": "main",
+  "mode": "cold",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36",
+  "at": "2026-09-05T22:04:25.762Z",
+  "backend": "coreml",
+  "graphs": [
+   {
+    "name": "decoder",
+    "ops": 349,
+    "constants": 162,
+    "constantBytes": 443707464,
+    "constantsMs": 138591.7,
+    "emitMs": 1.1,
+    "buildMs": 12177
+   },
+   {
+    "name": "encoder",
+    "ops": 1049,
+    "constants": 309,
+    "constantBytes": 182872160,
+    "constantsMs": 80053.7,
+    "emitMs": 1.8,
+    "buildMs": 7330.3
+   }
+  ],
+  "entry": "texify-420/coreml-apple-m5-pro-macos26-chrome152",
+  "buildMsReported": 238173.5,
+  "loadMs": 238179,
+  "downloadMs": 92233,
+  "sessionMs": 7339,
+  "files": {
+   "texify-decoder.bin": 443707464,
+   "texify-encoder.bin": 182872160
+  },
+  "totalBytes": 626579624,
+  "network": {
+   "requests": 9,
+   "bytes": 627133994,
+   "files": [
+    {
+     "file": "texify-webnn/family.json",
+     "len": 15200,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "texify-webnn/entry.json",
+     "len": 17889,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "texify-webnn/manifest.json",
+     "len": 1138,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "texify-webnn/recipe.encoder.json",
+     "len": 386656,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "texify-webnn/recipe.decoder.json",
+     "len": 133487,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "texify/tokenizer.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "texify/tokenizer_config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/texify-decode.bin",
+     "len": 443707464,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/texify-encoder.bin",
+     "len": 182872160,
+     "encoding": null,
+     "type": "application/octet-stream"
+    }
+   ]
+  },
+  "warmupMs": 2911,
+  "firstOutput": "$$x=\\frac{-b\\pm\\sqrt{b^{2}-4ac}}{2a}$$",
+  "firstGenMs": 176,
+  "fixtureId": "quadratic",
+  "coldToFirstMs": 241266,
+  "secondOutput": "$$x=\\frac{-b\\pm\\sqrt{b^{2}-4ac}}{2a}$$",
+  "secondGenMs": 160,
+  "host": {
+   "loadavg": [
+    29.701171875,
+    28.92578125,
+    22.32958984375
+   ],
+   "memUsedFrac": 0.9710328578948975,
+   "at": "2026-09-05T22:08:27.223Z"
+  },
+  "runnerHost": {
+   "before": {
+    "at": "2026-09-05T22:04:25.052Z",
+    "loadavg": [
+     34.35009765625,
+     28.81201171875,
+     20.107421875
+    ],
+    "cpuCount": 18,
+    "chromeHelpers": 38,
+    "contended": true
+   },
+   "after": {
+    "at": "2026-09-05T22:08:27.614Z",
+    "loadavg": [
+     29.701171875,
+     28.92578125,
+     22.32958984375
+    ],
+    "cpuCount": 18,
+    "chromeHelpers": 44,
+    "contended": true
+   },
+   "isolation": "new regular Chrome user-data-dir per row"
+  }
+ },
+ {
+  "tier": "load",
+  "label": "cold-hf",
+  "model": "intellitex",
+  "device": "webnn",
+  "dtype": "fp16",
+  "src": "hf",
+  "rev": "main",
+  "mode": "cold",
+  "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36",
+  "at": "2026-09-05T22:08:31.020Z",
+  "backend": "coreml",
+  "graphs": [
+   {
+    "name": "decode32",
+    "ops": 753,
+    "constants": 189,
+    "constantBytes": 298684504,
+    "constantsMs": 21203.1,
+    "emitMs": 1.3,
+    "buildMs": 9591.4
+   },
+   {
+    "name": "encoder32",
+    "ops": 553,
+    "constants": 149,
+    "constantBytes": 247549840,
+    "constantsMs": 17341.3,
+    "emitMs": 0.7,
+    "buildMs": 6783.7
+   },
+   {
+    "name": "decode64",
+    "ops": 753,
+    "constants": 189,
+    "constantBytes": 298684504,
+    "constantsMs": 13939.8,
+    "emitMs": 1,
+    "buildMs": 8740.8
+   },
+   {
+    "name": "encoder64",
+    "ops": 553,
+    "constants": 149,
+    "constantBytes": 247623568,
+    "constantsMs": 18512.3,
+    "emitMs": 1.2,
+    "buildMs": 7048.2
+   },
+   {
+    "name": "decode128",
+    "ops": 753,
+    "constants": 189,
+    "constantBytes": 298684504,
+    "constantsMs": 17924.6,
+    "emitMs": 1.1,
+    "buildMs": 8851.7
+   },
+   {
+    "name": "encoder128",
+    "ops": 553,
+    "constants": 149,
+    "constantBytes": 247918480,
+    "constantsMs": 9634.2,
+    "emitMs": 0.9,
+    "buildMs": 7385.9
+   }
+  ],
+  "entry": "intellitex-t5-220m/coreml-apple-m5-pro-macos26-chrome152",
+  "buildMsReported": 147021.9,
+  "loadMs": 147046,
+  "downloadMs": 118390,
+  "sessionMs": 7393,
+  "files": {
+   "intellitex-decode-L32.bin": 298684504,
+   "intellitex-encoder-L32.bin": 247549840,
+   "intellitex-encoder-L64.bin": 247623568,
+   "intellitex-encoder-L128.bin": 247918480
+  },
+  "totalBytes": 1041776392,
+  "network": {
+   "requests": 17,
+   "bytes": 1640572655,
+   "files": [
+    {
+     "file": "intellitex-webnn/entry.json",
+     "len": 81057,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/family.json",
+     "len": 59960,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/manifest.json",
+     "len": 3648,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.encoder32.json",
+     "len": 181774,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.encoder64.json",
+     "len": 181774,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.decode32.json",
+     "len": 245480,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.encoder128.json",
+     "len": 182522,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.decode64.json",
+     "len": 245480,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex-webnn/recipe.decode128.json",
+     "len": 245560,
+     "encoding": null,
+     "type": "application/json"
+    },
+    {
+     "file": "intellitex/tokenizer.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "intellitex/tokenizer_config.json",
+     "len": 0,
+     "encoding": null,
+     "type": "text/plain; charset=utf-8"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-decode-L32.bin",
+     "len": 298684504,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-encoder-L32.bin",
+     "len": 247549840,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-decode-L32.bin",
+     "len": 298684504,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-encoder-L64.bin",
+     "len": 247623568,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-decode-L32.bin",
+     "len": 298684504,
+     "encoding": null,
+     "type": "application/octet-stream"
+    },
+    {
+     "file": "coreml-apple-m5-pro-macos26-chrome152/intellitex-encoder-L128.bin",
+     "len": 247918480,
+     "encoding": null,
+     "type": "application/octet-stream"
+    }
+   ]
+  },
+  "warmupMs": 216,
+  "firstOutput": "$$x=\\frac{-b\\pm\\sqrt{b^{2}-4ac}}{2a}$$",
+  "firstGenMs": 345,
+  "fixtureId": "quadratic-formula",
+  "coldToFirstMs": 147607,
+  "secondOutput": "$$x=\\frac{-b\\pm\\sqrt{b^{2}-4ac}}{2a}$$",
+  "secondGenMs": 225,
+  "host": {
+   "loadavg": [
+    34.36328125,
+    31.107421875,
+    24.2734375
+   ],
+   "memUsedFrac": 0.9788129329681396,
+   "at": "2026-09-05T22:10:58.879Z"
+  },
+  "runnerHost": {
+   "before": {
+    "at": "2026-09-05T22:08:30.366Z",
+    "loadavg": [
+     29.701171875,
+     28.92578125,
+     22.32958984375
+    ],
+    "cpuCount": 18,
+    "chromeHelpers": 38,
+    "contended": true
+   },
+   "after": {
+    "at": "2026-09-05T22:11:00.742Z",
+    "loadavg": [
+     34.36328125,
+     31.107421875,
+     24.2734375
+    ],
+    "cpuCount": 18,
+    "chromeHelpers": 44,
+    "contended": true
+   },
+   "isolation": "new regular Chrome user-data-dir per row"
+  }
+ }
+]

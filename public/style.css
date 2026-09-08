@@ -107,9 +107,49 @@ kbd { font: inherit; font-size: 11px; padding: 0 4px; border: 1px solid var(--bo
 /* ---- main column and cards ---- */
 .column {
   flex: 1;
-  width: 100%; max-width: 1120px; margin: 0 auto;
+  width: 100%; max-width: 1480px; margin: 0 auto;
   padding: 32px 16px;
   display: flex; flex-direction: column; gap: 24px;
+}
+.workspace { position: relative; padding-right: calc(320px + 24px); min-height: 0; }
+.workspace-main { min-width: 0; display: flex; flex-direction: column; gap: 24px; }
+.activity {
+  position: absolute; top: 0; right: 0; bottom: 0; width: 320px;
+  padding: 16px 14px 12px; gap: 10px; overflow: hidden;
+}
+.activity-head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; flex: none; }
+.activity-log {
+  flex: 1 1 0; min-height: 0; overflow-y: auto; overscroll-behavior: contain;
+  display: flex; flex-direction: column; gap: 0;
+  border: 1px solid var(--border); border-radius: var(--r-md);
+  background: var(--surface-2); padding: 4px 0;
+}
+.activity-empty { color: var(--muted); font-size: 12px; line-height: 1.5; padding: 12px 12px 16px; }
+.act {
+  display: flex; flex-direction: column; gap: 4px;
+  padding: 10px 12px; border-bottom: 1px solid var(--border);
+}
+.act:last-child { border-bottom: 0; }
+.act-meta { display: flex; align-items: baseline; gap: 8px; }
+.act-time { font-family: var(--mono); font-size: 10px; color: var(--muted); flex: none; }
+.act-stats {
+  margin-left: auto; font-family: var(--mono); font-size: 10px; color: var(--muted);
+  white-space: nowrap; flex: none;
+}
+.act-kind {
+  font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--muted);
+}
+.act-check .act-kind { color: var(--success); }
+.act-error .act-kind, .act-check.is-bad .act-kind { color: var(--warn); }
+.act-done .act-kind { color: var(--success); }
+.act-title { font-weight: 600; font-size: 13px; line-height: 1.35; }
+.act-detail { color: var(--muted); font-size: 12px; line-height: 1.45; }
+.act-raw {
+  margin: 2px 0 0; padding: 8px;
+  font-family: var(--mono); font-size: 11px; line-height: 1.45;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 6px;
+  white-space: pre-wrap; word-break: break-word; overflow: auto; max-height: 220px;
 }
 .card {
   background: var(--surface);
@@ -231,6 +271,8 @@ kbd { font: inherit; font-size: 11px; padding: 0 4px; border: 1px solid var(--bo
   .nav a { display: none; }
   .hide-mobile, #privacy-chip { display: none; }
   .column { padding: 16px; gap: 16px; }
+  .workspace { padding-right: 0; }
+  .activity { position: static; width: auto; height: 280px; }
   .card { padding: 16px; border-radius: var(--r-lg); }
   .columns { grid-template-columns: 1fr; }
   .actions { flex-direction: column; align-items: stretch; gap: 10px; }
@@ -277,6 +319,12 @@ kbd { font: inherit; font-size: 11px; padding: 0 4px; border: 1px solid var(--bo
 .consent-opt span { color: var(--muted); font-size: 12px; }
 .consent-opt.primary { border-color: var(--accent); background: var(--accent-soft); }
 .consent-opt:hover { border-color: var(--accent); }
+.flag-list { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 8px; font-size: 13px; }
+.flag-list code { display: block; font-family: var(--mono); font-size: 12px; color: var(--muted); }
+.webnn-paste { background: var(--surface-2); padding: 10px 12px; border-radius: var(--r-md); font-size: 13px; }
+.webnn-paste code { display: block; margin-top: 6px; font-family: var(--mono); font-size: 12px; word-break: break-all; }
+.modal-actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.modal-actions .btn { text-decoration: none; }
 .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); z-index: 60; background: var(--text); color: var(--bg); padding: 10px 16px; border-radius: var(--r-pill); font-size: 13px; font-weight: 500; box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
 .prose h2 { font-size: 18px; margin: 8px 0 0; }
 .prose p, .prose li { font-size: 15px; line-height: 1.6; margin: 0; }
