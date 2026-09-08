@@ -1,5 +1,4 @@
 const ZERO_WIDTH = new Set(["\u200b", "\u200c", "\u200d", "\u2060", "\ufeff"]);
-const BRACKET_CITE_RE = /\[(?:\d+\s*(?:,\s*\d+\s*)*)\]/gu;
 const OPERATORS = new Set("=+*/^_±×⋅·≤≥≠≈→∂∇∈∉⊂∪∩∮⌈⌊|-−∣∞");
 const CONNECTIVES = new Set(["for", "where", "and", ",", "."]);
 const SPAN_EDGE_WORDS = new Set([
@@ -8,6 +7,7 @@ const SPAN_EDGE_WORDS = new Set([
 ]);
 const SUPERS = "⁰¹²³⁴⁵⁶⁷⁸⁹";
 const SUBS = "₀₁₂₃₄₅₆₇₈₉";
+const FOOTNOTE_LINE_RE = new RegExp(`^(?:\\d{1,2}\\.\\s+\\S|[${SUPERS}](?:[\\).])?\\s*\\S)`, "u");
 const GREEK_RE = /[α-ωΑ-ΩπΠμσΣΔΩθΘλΛγΓβΒϵεϕφψΨηΗξΞρΡτΤυΥχΧζΖ]/u;
 const MIX_RE = /(?=.*[A-Za-z])(?=.*\d)/u;
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/u;
@@ -69,19 +69,21 @@ function _splitLines(chars, omap) {
   const out = [];
   let cc = [];
   let cm = [];
+  let page = 0;
   for (let i = 0; i < chars.length; i++) {
     const ch = chars[i];
     const oi = omap[i];
     if (ch === "\n" || ch === "\f") {
-      out.push({ text: cc.join(""), map: cm.slice() });
+      out.push({ text: cc.join(""), map: cm.slice(), page });
       cc = [];
       cm = [];
+      if (ch === "\f") page++;
     } else {
       cc.push(ch);
       cm.push(oi);
     }
   }
-  out.push({ text: cc.join(""), map: cm.slice() });
+  out.push({ text: cc.join(""), map: cm.slice(), page });
   return out;
 }
 
@@ -113,11 +115,7 @@ function _dropRunningHeads(lines) {
   for (const row of lines) {
     const text = row.text.trim();
     const key = _lineKey(text);
-    const toks = text.split(/\s+/u).filter(Boolean);
-    const oneLetter = toks.filter((t) => t.length === 1 && /^\p{L}$/u.test(t)).length;
     if (repeat.has(key)) continue;
-    if (text.includes("-") && toks.length >= 4 && oneLetter >= Math.floor(toks.length / 2)) continue;
-    if (fullMatch(/^[A-Z][A-Za-z]+(?: [A-Z][A-Za-z]+)* - [A-Z][A-Za-z]+(?: [A-Z][A-Za-z]+)*$/u, text)) continue;
     out.push(row);
   }
   return out;
@@ -136,18 +134,45 @@ function _isPageNumber(lines, i) {
 
 function _dropFooters(lines) {
   const out = [];
-  for (let i = 0; i < lines.length; i++) {
-    const row = lines[i];
-    const s = row.text.trim();
-    if (/^\d{1,2}\.\s+\S/u.test(s)) continue;
-    if (_isPageNumber(lines, i)) {
-      if (i === 0 && _isOrphanParagraph(s) && _tokenRows(s).length <= 2) {
-        out.push(row);
-        continue;
+  let i = 0;
+  while (i < lines.length) {
+    const page = hasOwn(lines[i], "page") ? lines[i].page : 0;
+    let j = i;
+    while (j < lines.length && (hasOwn(lines[j], "page") ? lines[j].page : 0) === page) j++;
+    const pageRows = lines.slice(i, j);
+    const keep = Array(pageRows.length).fill(true);
+
+    for (let k = 0; k < pageRows.length; k++) {
+      const s = pageRows[k].text.trim();
+      if (_isPageNumber(pageRows, k)) {
+        if (k === 0 && _isOrphanParagraph(s) && _tokenRows(s).length <= 2) continue;
+        keep[k] = false;
       }
-      continue;
     }
-    out.push(row);
+
+    let t = pageRows.length - 1;
+    while (t >= 0 && (!keep[t] || !pageRows[t].text.trim())) t--;
+    const end = t;
+    while (t >= 0 && keep[t] && FOOTNOTE_LINE_RE.test(pageRows[t].text.trim())) t--;
+    const start = t + 1;
+    if (start <= end) {
+      let hasBody = false;
+      for (let k = 0; k < start; k++) {
+        const s = pageRows[k].text.trim();
+        if (keep[k] && s && !FOOTNOTE_LINE_RE.test(s)) {
+          hasBody = true;
+          break;
+        }
+      }
+      if (hasBody) {
+        for (let k = start; k <= end; k++) keep[k] = false;
+      }
+    }
+
+    for (let k = 0; k < pageRows.length; k++) {
+      if (keep[k]) out.push(pageRows[k]);
+    }
+    i = j;
   }
   return out;
 }
@@ -173,49 +198,15 @@ function _deinterleave(lines) {
   const right = [];
   const used = new Set();
   for (const [i, sp] of splitRows) {
+    const page = hasOwn(lines[i], "page") ? lines[i].page : 0;
     used.add(i);
-    left.push({ text: sp[0][0], map: sp[0][1] });
-    right.push({ text: sp[1][0], map: sp[1][1] });
+    left.push({ text: sp[0][0], map: sp[0][1], page });
+    right.push({ text: sp[1][0], map: sp[1][1], page });
   }
   if (left.map((x) => x.text).join(" ").length < 20 || right.map((x) => x.text).join(" ").length < 20) return lines;
   const out = [];
   for (let i = 0; i < lines.length; i++) if (!used.has(i)) out.push(lines[i]);
   return out.concat([{ text: "", map: [] }], left, [{ text: "", map: [] }], right);
-}
-
-function _removeCitations(text, omap) {
-  const keep = Array(text.length).fill(true);
-  for (const m of text.matchAll(BRACKET_CITE_RE)) {
-    const a = m.index;
-    const b = m.index + m[0].length;
-    for (let i = a; i < b; i++) keep[i] = false;
-  }
-  let i = 0;
-  while (i < text.length) {
-    if (SUPERS.includes(text[i])) {
-      let j = i;
-      while (j < text.length && SUPERS.includes(text[j])) j++;
-      let k = i - 1;
-      while (k >= 0 && " .,)".includes(text[k])) k--;
-      while (k >= 0 && /\p{L}/u.test(text[k])) k--;
-      const wordLen = i - (k + 1);
-      const nextCh = j < text.length ? text[j] : "";
-      if (wordLen >= 3 && (!nextCh || /\s/u.test(nextCh) || ".,;:!?[]".includes(nextCh))) {
-        for (let p = i; p < j; p++) keep[p] = false;
-      }
-      i = j;
-    } else {
-      i++;
-    }
-  }
-  const outT = [];
-  const outM = [];
-  for (let p = 0; p < text.length; p++) {
-    if (!keep[p]) continue;
-    outT.push(text[p]);
-    outM.push(omap[p]);
-  }
-  return [outT.join(""), outM];
 }
 
 function _lineMathyRatio(line) {
@@ -382,8 +373,7 @@ export function normalize(text) {
     outM.push(...bm);
     wrote = true;
   }
-  const [clean, cmap] = _removeCitations(outT.join(""), outM);
-  return _collapseSpaces(clean, cmap);
+  return _collapseSpaces(outT.join(""), outM);
 }
 
 function _tokenize(text) {

@@ -5,7 +5,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { PDF_HINT, PDF_FEWSHOT } from "../public/pdf-prompt.js";
-import { looksLikePdfPaste } from "../public/pdf-pipeline.js";
+import { looksLikePdfPaste, normalize } from "../public/pdf-pipeline.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const pdfPastes = JSON.parse(readFileSync(join(ROOT, "bench/pdf-pastes.json"), "utf8"));
@@ -32,4 +32,20 @@ test("looksLikePdfPaste stays conservative on typed equation and clean prose", (
 test("looksLikePdfPaste detects a known PDF paste sample", () => {
   assert.ok(samplePdfInput.length > 0, "bench/pdf-pastes.json must contain an input sample");
   assert.equal(looksLikePdfPaste(samplePdfInput), true);
+});
+
+test("normalize keeps bracketed citations and intervals but drops page-end junk", () => {
+  assert.equal(normalize("[0, 1]V and [−1, 1]V")[0], "[0, 1]V and [−1, 1]V");
+  assert.equal(normalize("Amir et al. [1] proved")[0], "Amir et al. [1] proved");
+  assert.equal(normalize("Refs. [5, 6, 20];")[0], "Refs. [5, 6, 20];");
+  assert.equal(normalize("new [17–19].")[0], "new [17–19].");
+  assert.equal(normalize("table¹ text")[0], "table¹ text");
+  assert.equal(normalize("Body line\n\n1. Footnote note: extra")[0], "Body line");
+  assert.equal(normalize("Body line\n\n¹ Footnote note: extra")[0], "Body line");
+
+  const runningHead = "Proceedings Note - Sample Author\nText one\nProceedings Note - Sample Author\nText two";
+  const [clean] = normalize(runningHead);
+  assert.equal(clean.includes("Proceedings Note - Sample Author"), false);
+  assert.equal(clean.includes("Text one"), true);
+  assert.equal(clean.includes("Text two"), true);
 });

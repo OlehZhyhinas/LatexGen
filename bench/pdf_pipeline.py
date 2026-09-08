@@ -3,7 +3,6 @@
 import re, unicodedata
 
 ZERO_WIDTH = {"\u200b", "\u200c", "\u200d", "\u2060", "\ufeff"}
-BRACKET_CITE_RE = re.compile(r"\[(?:\d+\s*(?:,\s*\d+\s*)*)\]")
 OPERATORS = set("=+*/^_±×⋅·≤≥≠≈→∂∇∈∉⊂∪∩∮⌈⌊|-−∣∞")
 CONNECTIVES = {"for", "where", "and", ",", "."}
 SPAN_EDGE_WORDS = {
@@ -11,6 +10,7 @@ SPAN_EDGE_WORDS = {
     "which", "when", "first", "second", "third", "real", "number", "the", "a", "an", "of", "in", "is", "are",
 }
 SUPERS, SUBS = "⁰¹²³⁴⁵⁶⁷⁸⁹", "₀₁₂₃₄₅₆₇₈₉"
+FOOTNOTE_LINE_RE = re.compile(rf"^(?:\d{{1,2}}\.\s+\S|[{re.escape(SUPERS)}](?:[\).])?\s*\S)")
 GREEK_RE = re.compile(r"[α-ωΑ-ΩπΠμσΣΔΩθΘλΛγΓβΒϵεϕφψΨηΗξΞρΡτΤυΥχΧζΖ]")
 MIX_RE = re.compile(r"(?=.*[A-Za-z])(?=.*\d)")
 DATE_RE, UNIT_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$"), re.compile(r"^\d+(?:\.\d+)?\s+[A-Za-z]{1,8}s?$")
@@ -44,13 +44,14 @@ def _remove_zero_width(text):
 
 
 def _split_lines(chars, omap):
-    out, cc, cm = [], [], []
+    out, cc, cm, page = [], [], [], 0
     for ch, oi in zip(chars, omap):
         if ch in "\n\f":
-            out.append({"text": "".join(cc), "map": cm[:]}); cc, cm = [], []
+            out.append({"text": "".join(cc), "map": cm[:], "page": page}); cc, cm = [], []
+            if ch == "\f": page += 1
         else:
             cc.append(ch); cm.append(oi)
-    out.append({"text": "".join(cc), "map": cm[:]})
+    out.append({"text": "".join(cc), "map": cm[:], "page": page})
     return out
 
 
@@ -75,11 +76,7 @@ def _drop_running_heads(lines):
     repeat, out = {k for k, v in counts.items() if v >= 2}, []
     for row in lines:
         text, key = row["text"].strip(), _line_key(row["text"].strip())
-        toks = [t for t in text.split() if t]
-        one_letter = sum(1 for t in toks if len(t) == 1 and t.isalpha())
         if key in repeat: continue
-        if "-" in text and len(toks) >= 4 and one_letter >= (len(toks) // 2): continue
-        if re.fullmatch(r"[A-Z][A-Za-z]+(?: [A-Z][A-Za-z]+)* - [A-Z][A-Za-z]+(?: [A-Z][A-Za-z]+)*", text): continue
         out.append(row)
     return out
 
@@ -95,17 +92,43 @@ def _is_page_number(lines, i):
     return False
 
 
+def _is_footnote_line(s):
+    return bool(FOOTNOTE_LINE_RE.match(s))
+
+
 def _drop_footers(lines):
     out = []
-    for i, row in enumerate(lines):
-        s = row["text"].strip()
-        if re.match(r"^\d{1,2}\.\s+\S", s): continue
-        if _is_page_number(lines, i):
-            if i == 0 and _is_orphan_paragraph(s) and len(_token_rows(s)) <= 2:
-                out.append(row)
-                continue
-            continue
-        out.append(row)
+    i = 0
+    while i < len(lines):
+        page = lines[i].get("page", 0)
+        j = i
+        while j < len(lines) and lines[j].get("page", 0) == page: j += 1
+        page_rows = lines[i:j]
+        keep = [True] * len(page_rows)
+
+        for k, row in enumerate(page_rows):
+            s = row["text"].strip()
+            if _is_page_number(page_rows, k):
+                if k == 0 and _is_orphan_paragraph(s) and len(_token_rows(s)) <= 2:
+                    continue
+                keep[k] = False
+
+        t = len(page_rows) - 1
+        while t >= 0 and (not keep[t] or not page_rows[t]["text"].strip()): t -= 1
+        end = t
+        while t >= 0 and keep[t] and _is_footnote_line(page_rows[t]["text"].strip()): t -= 1
+        start = t + 1
+        if start <= end:
+            has_body = any(
+                keep[k] and page_rows[k]["text"].strip() and not _is_footnote_line(page_rows[k]["text"].strip())
+                for k in range(start)
+            )
+            if has_body:
+                for k in range(start, end + 1): keep[k] = False
+
+        for k, row in enumerate(page_rows):
+            if keep[k]: out.append(row)
+        i = j
     return out
 
 
@@ -125,35 +148,11 @@ def _deinterleave(lines):
     if len(split_rows) < 3: return lines
     left, right, used = [], [], set()
     for i, (lp, rp) in split_rows:
-        used.add(i); left.append({"text": lp[0], "map": lp[1]}); right.append({"text": rp[0], "map": rp[1]})
+        page = lines[i].get("page", 0)
+        used.add(i); left.append({"text": lp[0], "map": lp[1], "page": page}); right.append({"text": rp[0], "map": rp[1], "page": page})
     if len(" ".join(x["text"] for x in left)) < 20 or len(" ".join(x["text"] for x in right)) < 20: return lines
     out = [r for i, r in enumerate(lines) if i not in used]
     return out + [{"text": "", "map": []}] + left + [{"text": "", "map": []}] + right
-
-
-def _remove_citations(text, omap):
-    keep = [True] * len(text)
-    for m in BRACKET_CITE_RE.finditer(text):
-        a, b = m.span()
-        for i in range(a, b): keep[i] = False
-    i = 0
-    while i < len(text):
-        if text[i] in SUPERS:
-            j = i
-            while j < len(text) and text[j] in SUPERS: j += 1
-            k = i - 1
-            while k >= 0 and text[k] in " .,)": k -= 1
-            while k >= 0 and text[k].isalpha(): k -= 1
-            word_len = i - (k + 1); next_ch = text[j] if j < len(text) else ""
-            if word_len >= 3 and (not next_ch or next_ch.isspace() or next_ch in ".,;:!?[]"):
-                for p in range(i, j): keep[p] = False
-            i = j
-        else:
-            i += 1
-    out_t, out_m = [], []
-    for ch, oi, ok in zip(text, omap, keep):
-        if ok: out_t.append(ch); out_m.append(oi)
-    return "".join(out_t), out_m
 
 
 def _line_mathy_ratio(line):
@@ -255,8 +254,7 @@ def normalize(text: str) -> tuple[str, list[int]]:
         bt, bm = _join_math(block) if is_math else _join_prose(block)
         if out_t and out_t[-1] != "\n": out_t.append("\n"); out_m.append(-1)
         out_t.extend(bt); out_m.extend(bm); wrote = True
-    clean, cmap = _remove_citations("".join(out_t), out_m)
-    return _collapse_spaces(clean, cmap)
+    return _collapse_spaces("".join(out_t), out_m)
 
 
 def _tokenize(text):

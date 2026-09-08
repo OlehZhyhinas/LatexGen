@@ -2,15 +2,15 @@
   "metrics": {
     "overall": {
       "n": 322,
-      "char_precision": 0.9676392572944297,
-      "char_recall": 0.9747060919130744,
-      "char_f1": 0.9711598189724021,
-      "span_exact_precision": 0.4876237623762376,
-      "span_exact_recall": 0.3995943204868154,
-      "span_exact_f1": 0.43924191750278707,
-      "span_iou_precision": 0.9356435643564357,
-      "span_iou_recall": 0.7667342799188641,
-      "span_iou_f1": 0.8428093645484951
+      "char_precision": 0.8314912944738834,
+      "char_recall": 0.9636778382172311,
+      "char_f1": 0.8927178153446033,
+      "span_exact_precision": 0.39791666666666664,
+      "span_exact_recall": 0.3850806451612903,
+      "span_exact_f1": 0.39139344262295084,
+      "span_iou_precision": 0.7791666666666667,
+      "span_iou_recall": 0.7540322580645161,
+      "span_iou_f1": 0.7663934426229508
     },
     "pdf-paste/clean": {
       "n": 9,
@@ -26,15 +26,15 @@
     },
     "pdf-paste/dirty": {
       "n": 7,
-      "char_precision": 0.9818181818181818,
+      "char_precision": 0.5955882352941176,
       "char_recall": 1.0,
-      "char_f1": 0.9908256880733944,
-      "span_exact_precision": 0.35714285714285715,
-      "span_exact_recall": 0.29411764705882354,
-      "span_exact_f1": 0.3225806451612903,
-      "span_iou_precision": 1.0,
-      "span_iou_recall": 0.8235294117647058,
-      "span_iou_f1": 0.9032258064516129
+      "char_f1": 0.7465437788018433,
+      "span_exact_precision": 0.14285714285714285,
+      "span_exact_recall": 0.17647058823529413,
+      "span_exact_f1": 0.15789473684210528,
+      "span_iou_precision": 0.6190476190476191,
+      "span_iou_recall": 0.7647058823529411,
+      "span_iou_f1": 0.6842105263157895
     },
     "synth-unicode": {
       "n": 118,
@@ -50,15 +50,15 @@
     },
     "synth-pdf/dirty": {
       "n": 89,
-      "char_precision": 0.9569336778639104,
-      "char_recall": 0.9189412737799835,
-      "char_f1": 0.9375527426160337,
-      "span_exact_precision": 0.26881720430107525,
-      "span_exact_recall": 0.1953125,
-      "span_exact_f1": 0.2262443438914027,
-      "span_iou_precision": 0.8924731182795699,
-      "span_iou_recall": 0.6484375,
-      "span_iou_f1": 0.751131221719457
+      "char_precision": 0.5643712574850299,
+      "char_recall": 0.8740340030911901,
+      "char_f1": 0.685870224378411,
+      "span_exact_precision": 0.12962962962962962,
+      "span_exact_recall": 0.16030534351145037,
+      "span_exact_f1": 0.14334470989761094,
+      "span_iou_precision": 0.49382716049382713,
+      "span_iou_recall": 0.6106870229007634,
+      "span_iou_f1": 0.546075085324232
     },
     "synth-pdf/clean": {
       "n": 99,
@@ -76,8 +76,8 @@
   "prose": {
     "overall": {
       "n": 322,
-      "exact_prose_match_rate": 0.8260869565217391,
-      "mean_prose_ratio": 0.9892644517072842
+      "exact_prose_match_rate": 0.6645962732919255,
+      "mean_prose_ratio": 0.9631538167797199
     },
     "pdf-paste/clean": {
       "n": 9,
@@ -86,8 +86,8 @@
     },
     "pdf-paste/dirty": {
       "n": 7,
-      "exact_prose_match_rate": 0.42857142857142855,
-      "mean_prose_ratio": 0.9928316945687616
+      "exact_prose_match_rate": 0.14285714285714285,
+      "mean_prose_ratio": 0.9480668776713868
     },
     "synth-unicode": {
       "n": 118,
@@ -96,8 +96,8 @@
     },
     "synth-pdf/dirty": {
       "n": 89,
-      "exact_prose_match_rate": 0.6966292134831461,
-      "mean_prose_ratio": 0.9688194154427735
+      "exact_prose_match_rate": 0.1348314606741573,
+      "mean_prose_ratio": 0.8778725533259866
     },
     "synth-pdf/clean": {
       "n": 99,
@@ -126,9 +126,11 @@
       "id": "synth-00010",
       "source": "synth-pdf/dirty",
       "char_f1": 0.0,
-      "clean": "The letter e in his name is not related to Euler's number.",
+      "clean": "Proceedings Note - Sample Author\n\nThe letter e in his name is not related to Euler's number.[12]",
       "gold": [],
-      "pred": []
+      "pred": [
+        "[85:96] number.[12]"
+      ]
     },
     {
       "id": "synth-00019",
@@ -142,9 +144,11 @@
       "id": "synth-00023",
       "source": "synth-pdf/dirty",
       "char_f1": 0.0,
-      "clean": "The result generalizes to higher dimensions as well.",
+      "clean": "The result generalizes to higher dimensions as well.¹",
       "gold": [],
-      "pred": []
+      "pred": [
+        "[47:53] well.¹"
+      ]
     },
     {
       "id": "synth-00035",
@@ -166,9 +170,11 @@
       "id": "synth-00045",
       "source": "synth-pdf/dirty",
       "char_f1": 0.0,
-      "clean": "The letter e in his name is not related to Euler's number. The experiment ran for 2 hours before the readings stabilized. She scored 95 out of 100 on the midterm.",
+      "clean": "P roceedings N ote - S ample A uthor\n\nThe letter e in his name is not related to Euler's number. The experiment ran for 2 hours before the readings stabilized. She scored 95 out of 100 on the midterm.",
       "gold": [],
-      "pred": []
+      "pred": [
+        "[13:22] N ote - S"
+      ]
     },
     {
       "id": "synth-00050",
@@ -502,19 +508,19 @@
     {
       "id": "euler-formula-passage-pdf-dirty",
       "source": "pdf-paste/dirty",
-      "char_p": 1.0,
+      "char_p": 0.5,
       "char_r": 1.0,
-      "char_f1": 1.0,
+      "char_f1": 0.6666666666666666,
       "gold_n": 2,
-      "pred_n": 2,
+      "pred_n": 4,
       "gold_spans": [
         [
           28,
           49
         ],
         [
-          190,
-          201
+          194,
+          205
         ]
       ],
       "pred_spans": [
@@ -523,175 +529,203 @@
           49
         ],
         [
-          190,
-          201
+          70,
+          77
+        ],
+        [
+          194,
+          205
+        ],
+        [
+          265,
+          280
         ]
       ],
       "prose_exact": false,
-      "prose_ratio": 0.997867803837953
+      "prose_ratio": 0.9770354906054279
     },
     {
       "id": "probability-mixture-pdf-dirty",
       "source": "pdf-paste/dirty",
-      "char_p": 1.0,
+      "char_p": 0.6166666666666667,
       "char_r": 1.0,
-      "char_f1": 1.0,
-      "gold_n": 3,
-      "pred_n": 2,
-      "gold_spans": [
-        [
-          53,
-          75
-        ],
-        [
-          180,
-          187
-        ],
-        [
-          189,
-          211
-        ]
-      ],
-      "pred_spans": [
-        [
-          53,
-          75
-        ],
-        [
-          180,
-          211
-        ]
-      ],
-      "prose_exact": false,
-      "prose_ratio": 0.9829545454545454
-    },
-    {
-      "id": "series-and-limit-pdf-dirty",
-      "source": "pdf-paste/dirty",
-      "char_p": 0.9090909090909091,
-      "char_r": 1.0,
-      "char_f1": 0.9523809523809523,
-      "gold_n": 3,
-      "pred_n": 2,
-      "gold_spans": [
-        [
-          82,
-          102
-        ],
-        [
-          117,
-          141
-        ],
-        [
-          143,
-          145
-        ]
-      ],
-      "pred_spans": [
-        [
-          82,
-          105
-        ],
-        [
-          117,
-          145
-        ]
-      ],
-      "prose_exact": false,
-      "prose_ratio": 0.9884169884169884
-    },
-    {
-      "id": "determinant-appendix-pdf-dirty",
-      "source": "pdf-paste/dirty",
-      "char_p": 1.0,
-      "char_r": 1.0,
-      "char_f1": 1.0,
-      "gold_n": 1,
-      "pred_n": 1,
-      "gold_spans": [
-        [
-          106,
-          131
-        ]
-      ],
-      "pred_spans": [
-        [
-          106,
-          131
-        ]
-      ],
-      "prose_exact": true,
-      "prose_ratio": 1.0
-    },
-    {
-      "id": "physics-constants-pdf-dirty",
-      "source": "pdf-paste/dirty",
-      "char_p": 1.0,
-      "char_r": 1.0,
-      "char_f1": 1.0,
+      "char_f1": 0.7628865979381444,
       "gold_n": 3,
       "pred_n": 3,
       "gold_spans": [
         [
-          32,
-          40
+          53,
+          75
         ],
         [
-          61,
-          68
+          190,
+          197
         ],
         [
-          119,
-          133
+          199,
+          221
         ]
       ],
       "pred_spans": [
         [
-          32,
-          39
+          53,
+          81
         ],
         [
-          61,
-          67
+          140,
+          162
         ],
         [
-          119,
-          132
+          190,
+          221
         ]
       ],
       "prose_exact": false,
-      "prose_ratio": 0.9805825242718447
+      "prose_ratio": 0.9558011049723757
+    },
+    {
+      "id": "series-and-limit-pdf-dirty",
+      "source": "pdf-paste/dirty",
+      "char_p": 0.6818181818181818,
+      "char_r": 1.0,
+      "char_f1": 0.8108108108108109,
+      "gold_n": 3,
+      "pred_n": 3,
+      "gold_spans": [
+        [
+          86,
+          106
+        ],
+        [
+          121,
+          145
+        ],
+        [
+          147,
+          149
+        ]
+      ],
+      "pred_spans": [
+        [
+          66,
+          77
+        ],
+        [
+          86,
+          109
+        ],
+        [
+          121,
+          149
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.973384030418251
+    },
+    {
+      "id": "determinant-appendix-pdf-dirty",
+      "source": "pdf-paste/dirty",
+      "char_p": 0.46875,
+      "char_r": 1.0,
+      "char_f1": 0.6382978723404256,
+      "gold_n": 1,
+      "pred_n": 2,
+      "gold_spans": [
+        [
+          110,
+          135
+        ]
+      ],
+      "pred_spans": [
+        [
+          58,
+          69
+        ],
+        [
+          110,
+          144
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.9705882352941176
+    },
+    {
+      "id": "physics-constants-pdf-dirty",
+      "source": "pdf-paste/dirty",
+      "char_p": 0.4722222222222222,
+      "char_r": 1.0,
+      "char_f1": 0.6415094339622641,
+      "gold_n": 3,
+      "pred_n": 4,
+      "gold_spans": [
+        [
+          69,
+          77
+        ],
+        [
+          98,
+          105
+        ],
+        [
+          160,
+          174
+        ]
+      ],
+      "pred_spans": [
+        [
+          13,
+          22
+        ],
+        [
+          69,
+          76
+        ],
+        [
+          98,
+          114
+        ],
+        [
+          160,
+          181
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.7984189723320159
     },
     {
       "id": "thermo-note-pdf-dirty",
       "source": "pdf-paste/dirty",
-      "char_p": 1.0,
+      "char_p": 0.4482758620689655,
       "char_r": 1.0,
-      "char_f1": 1.0,
+      "char_f1": 0.6190476190476191,
       "gold_n": 2,
-      "pred_n": 2,
+      "pred_n": 3,
       "gold_spans": [
         [
           72,
           82
         ],
         [
-          110,
-          121
+          114,
+          125
         ]
       ],
       "pred_spans": [
         [
           72,
-          81
+          87
         ],
         [
-          110,
-          121
+          114,
+          125
+        ],
+        [
+          145,
+          157
         ]
       ],
-      "prose_exact": true,
-      "prose_ratio": 1.0
+      "prose_exact": false,
+      "prose_ratio": 0.9612403100775194
     },
     {
       "id": "triangle-geometry-pdf-dirty",
@@ -775,25 +809,33 @@
     {
       "id": "synth-00005",
       "source": "synth-pdf/dirty",
-      "char_p": 1.0,
+      "char_p": 0.12903225806451613,
       "char_r": 1.0,
-      "char_f1": 1.0,
+      "char_f1": 0.2285714285714286,
       "gold_n": 1,
-      "pred_n": 1,
+      "pred_n": 3,
       "gold_spans": [
         [
-          98,
-          104
+          140,
+          146
         ]
       ],
       "pred_spans": [
         [
-          98,
-          104
+          13,
+          22
+        ],
+        [
+          88,
+          103
+        ],
+        [
+          140,
+          153
         ]
       ],
-      "prose_exact": true,
-      "prose_ratio": 1.0
+      "prose_exact": false,
+      "prose_ratio": 0.8048780487804879
     },
     {
       "id": "synth-00006",
@@ -873,18 +915,23 @@
       "char_r": 0.0,
       "char_f1": 0.0,
       "gold_n": 0,
-      "pred_n": 0,
+      "pred_n": 1,
       "gold_spans": [],
-      "pred_spans": [],
-      "prose_exact": true,
-      "prose_ratio": 1.0
+      "pred_spans": [
+        [
+          85,
+          96
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.7581699346405228
     },
     {
       "id": "synth-00011",
       "source": "synth-pdf/dirty",
-      "char_p": 0.8,
+      "char_p": 0.5714285714285714,
       "char_r": 1.0,
-      "char_f1": 0.888888888888889,
+      "char_f1": 0.7272727272727273,
       "gold_n": 1,
       "pred_n": 1,
       "gold_spans": [
@@ -896,11 +943,11 @@
       "pred_spans": [
         [
           41,
-          57
+          61
         ]
       ],
       "prose_exact": false,
-      "prose_ratio": 0.9367088607594937
+      "prose_ratio": 0.891566265060241
     },
     {
       "id": "synth-00013",
@@ -937,55 +984,59 @@
       "id": "synth-00015",
       "source": "synth-pdf/dirty",
       "char_p": 1.0,
-      "char_r": 0.3617021276595745,
-      "char_f1": 0.53125,
+      "char_r": 0.5,
+      "char_f1": 0.6666666666666666,
       "gold_n": 3,
       "pred_n": 1,
       "gold_spans": [
         [
-          16,
-          19
+          50,
+          53
         ],
         [
-          21,
-          54
+          55,
+          89
         ],
         [
-          56,
-          82
+          91,
+          117
         ]
       ],
       "pred_spans": [
         [
-          56,
-          81
+          82,
+          116
         ]
       ],
       "prose_exact": false,
-      "prose_ratio": 0.5
+      "prose_ratio": 0.33663366336633666
     },
     {
       "id": "synth-00016",
       "source": "synth-pdf/dirty",
-      "char_p": 0.8,
+      "char_p": 0.5,
       "char_r": 1.0,
-      "char_f1": 0.888888888888889,
+      "char_f1": 0.6666666666666666,
       "gold_n": 1,
-      "pred_n": 1,
+      "pred_n": 2,
       "gold_spans": [
         [
-          31,
-          44
+          68,
+          81
         ]
       ],
       "pred_spans": [
         [
-          31,
-          46
+          13,
+          22
+        ],
+        [
+          68,
+          83
         ]
       ],
       "prose_exact": false,
-      "prose_ratio": 0.9846153846153847
+      "prose_ratio": 0.6274509803921569
     },
     {
       "id": "synth-00017",
@@ -1107,11 +1158,16 @@
       "char_r": 0.0,
       "char_f1": 0.0,
       "gold_n": 0,
-      "pred_n": 0,
+      "pred_n": 1,
       "gold_spans": [],
-      "pred_spans": [],
-      "prose_exact": true,
-      "prose_ratio": 1.0
+      "pred_spans": [
+        [
+          47,
+          53
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.9904761904761905
     },
     {
       "id": "synth-00028",
@@ -1389,11 +1445,16 @@
       "char_r": 0.0,
       "char_f1": 0.0,
       "gold_n": 0,
-      "pred_n": 0,
+      "pred_n": 1,
       "gold_spans": [],
-      "pred_spans": [],
-      "prose_exact": true,
-      "prose_ratio": 1.0
+      "pred_spans": [
+        [
+          13,
+          22
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.8975069252077562
     },
     {
       "id": "synth-00046",
@@ -1559,25 +1620,25 @@
     {
       "id": "synth-00062",
       "source": "synth-pdf/dirty",
-      "char_p": 1.0,
+      "char_p": 0.6666666666666666,
       "char_r": 1.0,
-      "char_f1": 1.0,
+      "char_f1": 0.8,
       "gold_n": 1,
       "pred_n": 1,
       "gold_spans": [
         [
-          36,
-          43
+          69,
+          76
         ]
       ],
       "pred_spans": [
         [
-          36,
-          42
+          69,
+          78
         ]
       ],
-      "prose_exact": true,
-      "prose_ratio": 1.0
+      "prose_exact": false,
+      "prose_ratio": 0.6851851851851852
     },
     {
       "id": "synth-00063",
@@ -1901,11 +1962,20 @@
       "char_r": 0.0,
       "char_f1": 0.0,
       "gold_n": 0,
-      "pred_n": 0,
+      "pred_n": 2,
       "gold_spans": [],
-      "pred_spans": [],
-      "prose_exact": true,
-      "prose_ratio": 1.0
+      "pred_spans": [
+        [
+          13,
+          22
+        ],
+        [
+          83,
+          95
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.7162162162162162
     },
     {
       "id": "synth-00087",
@@ -1914,43 +1984,52 @@
       "char_r": 0.0,
       "char_f1": 0.0,
       "gold_n": 0,
-      "pred_n": 0,
+      "pred_n": 2,
       "gold_spans": [],
-      "pred_spans": [],
-      "prose_exact": true,
-      "prose_ratio": 1.0
+      "pred_spans": [
+        [
+          13,
+          22
+        ],
+        [
+          87,
+          94
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.848
     },
     {
       "id": "synth-00088",
       "source": "synth-pdf/dirty",
-      "char_p": 1.0,
+      "char_p": 0.4,
       "char_r": 1.0,
-      "char_f1": 1.0,
+      "char_f1": 0.5714285714285715,
       "gold_n": 1,
       "pred_n": 1,
       "gold_spans": [
         [
-          100,
-          107
+          105,
+          112
         ]
       ],
       "pred_spans": [
         [
-          100,
-          106
+          105,
+          119
         ]
       ],
-      "prose_exact": true,
-      "prose_ratio": 1.0
+      "prose_exact": false,
+      "prose_ratio": 0.9665653495440729
     },
     {
       "id": "synth-00089",
       "source": "synth-pdf/dirty",
-      "char_p": 1.0,
+      "char_p": 0.6764705882352942,
       "char_r": 1.0,
-      "char_f1": 1.0,
+      "char_f1": 0.8070175438596492,
       "gold_n": 3,
-      "pred_n": 2,
+      "pred_n": 3,
       "gold_spans": [
         [
           23,
@@ -1961,22 +2040,26 @@
           50
         ],
         [
-          138,
-          178
+          149,
+          189
         ]
       ],
       "pred_spans": [
         [
           23,
-          50
+          63
         ],
         [
-          138,
-          178
+          114,
+          126
+        ],
+        [
+          149,
+          189
         ]
       ],
-      "prose_exact": true,
-      "prose_ratio": 1.0
+      "prose_exact": false,
+      "prose_ratio": 0.9621993127147767
     },
     {
       "id": "synth-00090",
@@ -2057,33 +2140,37 @@
     {
       "id": "synth-00095",
       "source": "synth-pdf/dirty",
-      "char_p": 1.0,
+      "char_p": 0.36363636363636365,
       "char_r": 1.0,
-      "char_f1": 1.0,
+      "char_f1": 0.5333333333333333,
       "gold_n": 2,
-      "pred_n": 2,
+      "pred_n": 3,
       "gold_spans": [
         [
           22,
           35
         ],
         [
-          62,
-          68
+          66,
+          72
         ]
       ],
       "pred_spans": [
         [
           22,
-          34
+          40
         ],
         [
-          62,
-          68
+          66,
+          72
+        ],
+        [
+          85,
+          102
         ]
       ],
-      "prose_exact": true,
-      "prose_ratio": 1.0
+      "prose_exact": false,
+      "prose_ratio": 0.9621212121212122
     },
     {
       "id": "synth-00096",
@@ -2101,25 +2188,29 @@
     {
       "id": "synth-00097",
       "source": "synth-pdf/dirty",
-      "char_p": 0.8333333333333334,
+      "char_p": 0.5555555555555556,
       "char_r": 1.0,
-      "char_f1": 0.9090909090909091,
+      "char_f1": 0.7142857142857143,
       "gold_n": 1,
-      "pred_n": 1,
+      "pred_n": 2,
       "gold_spans": [
         [
-          40,
-          54
+          77,
+          91
         ]
       ],
       "pred_spans": [
         [
-          40,
-          56
+          13,
+          22
+        ],
+        [
+          77,
+          93
         ]
       ],
       "prose_exact": false,
-      "prose_ratio": 0.9367088607594937
+      "prose_ratio": 0.6379310344827587
     },
     {
       "id": "synth-00098",
@@ -2172,11 +2263,16 @@
       "char_r": 0.0,
       "char_f1": 0.0,
       "gold_n": 0,
-      "pred_n": 0,
+      "pred_n": 1,
       "gold_spans": [],
-      "pred_spans": [],
-      "prose_exact": true,
-      "prose_ratio": 1.0
+      "pred_spans": [
+        [
+          37,
+          53
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.9947643979057592
     },
     {
       "id": "synth-00105",
@@ -2224,11 +2320,16 @@
       "char_r": 0.0,
       "char_f1": 0.0,
       "gold_n": 0,
-      "pred_n": 0,
+      "pred_n": 1,
       "gold_spans": [],
-      "pred_spans": [],
-      "prose_exact": true,
-      "prose_ratio": 1.0
+      "pred_spans": [
+        [
+          51,
+          62
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.991869918699187
     },
     {
       "id": "synth-00108",
@@ -2281,11 +2382,16 @@
       "char_r": 0.0,
       "char_f1": 0.0,
       "gold_n": 0,
-      "pred_n": 0,
+      "pred_n": 1,
       "gold_spans": [],
-      "pred_spans": [],
-      "prose_exact": true,
-      "prose_ratio": 1.0
+      "pred_spans": [
+        [
+          46,
+          58
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.954954954954955
     },
     {
       "id": "synth-00111",
@@ -2334,11 +2440,11 @@
     {
       "id": "synth-00116",
       "source": "synth-pdf/dirty",
-      "char_p": 1.0,
+      "char_p": 0.5333333333333333,
       "char_r": 1.0,
-      "char_f1": 1.0,
+      "char_f1": 0.6956521739130436,
       "gold_n": 3,
-      "pred_n": 2,
+      "pred_n": 3,
       "gold_spans": [
         [
           26,
@@ -2349,8 +2455,8 @@
           52
         ],
         [
-          104,
-          118
+          108,
+          122
         ]
       ],
       "pred_spans": [
@@ -2359,12 +2465,16 @@
           52
         ],
         [
-          104,
-          117
+          64,
+          79
+        ],
+        [
+          108,
+          129
         ]
       ],
-      "prose_exact": true,
-      "prose_ratio": 1.0
+      "prose_exact": false,
+      "prose_ratio": 0.9390243902439024
     },
     {
       "id": "synth-00117",
@@ -2619,11 +2729,11 @@
       "pred_spans": [
         [
           25,
-          31
+          42
         ]
       ],
       "prose_exact": false,
-      "prose_ratio": 0.9911504424778761
+      "prose_ratio": 0.9105691056910569
     },
     {
       "id": "synth-00133",
@@ -2869,29 +2979,33 @@
     {
       "id": "synth-00151",
       "source": "synth-pdf/dirty",
-      "char_p": 1.0,
+      "char_p": 0.7692307692307693,
       "char_r": 0.6896551724137931,
-      "char_f1": 0.8163265306122449,
+      "char_f1": 0.7272727272727274,
       "gold_n": 1,
-      "pred_n": 2,
+      "pred_n": 3,
       "gold_spans": [
         [
-          17,
-          60
+          54,
+          97
         ]
       ],
       "pred_spans": [
         [
-          17,
-          24
+          13,
+          22
         ],
         [
-          36,
-          59
+          54,
+          61
+        ],
+        [
+          73,
+          96
         ]
       ],
       "prose_exact": false,
-      "prose_ratio": 0.8533333333333334
+      "prose_ratio": 0.5714285714285714
     },
     {
       "id": "synth-00152",
@@ -2989,33 +3103,41 @@
     {
       "id": "synth-00157",
       "source": "synth-pdf/dirty",
-      "char_p": 1.0,
+      "char_p": 0.4666666666666667,
       "char_r": 1.0,
-      "char_f1": 1.0,
+      "char_f1": 0.6363636363636364,
       "gold_n": 2,
-      "pred_n": 2,
+      "pred_n": 4,
       "gold_spans": [
         [
-          13,
-          27
+          50,
+          64
         ],
         [
-          75,
-          82
+          113,
+          120
         ]
       ],
       "pred_spans": [
         [
           13,
-          26
+          22
         ],
         [
-          75,
-          81
+          50,
+          63
+        ],
+        [
+          67,
+          77
+        ],
+        [
+          113,
+          119
         ]
       ],
       "prose_exact": false,
-      "prose_ratio": 0.7301587301587301
+      "prose_ratio": 0.6344827586206897
     },
     {
       "id": "synth-00159",
@@ -3101,11 +3223,11 @@
     {
       "id": "synth-00163",
       "source": "synth-pdf/dirty",
-      "char_p": 1.0,
+      "char_p": 0.36363636363636365,
       "char_r": 1.0,
-      "char_f1": 1.0,
+      "char_f1": 0.5333333333333333,
       "gold_n": 1,
-      "pred_n": 1,
+      "pred_n": 2,
       "gold_spans": [
         [
           10,
@@ -3116,10 +3238,14 @@
         [
           10,
           22
+        ],
+        [
+          59,
+          73
         ]
       ],
-      "prose_exact": true,
-      "prose_ratio": 1.0
+      "prose_exact": false,
+      "prose_ratio": 0.9557522123893806
     },
     {
       "id": "synth-00164",
@@ -3167,11 +3293,20 @@
       "char_r": 0.0,
       "char_f1": 0.0,
       "gold_n": 0,
-      "pred_n": 0,
+      "pred_n": 2,
       "gold_spans": [],
-      "pred_spans": [],
+      "pred_spans": [
+        [
+          85,
+          95
+        ],
+        [
+          108,
+          121
+        ]
+      ],
       "prose_exact": false,
-      "prose_ratio": 0.7272727272727273
+      "prose_ratio": 0.6956521739130435
     },
     {
       "id": "synth-00167",
@@ -3243,25 +3378,33 @@
     {
       "id": "synth-00172",
       "source": "synth-pdf/dirty",
-      "char_p": 1.0,
+      "char_p": 0.26666666666666666,
       "char_r": 1.0,
-      "char_f1": 1.0,
+      "char_f1": 0.4210526315789474,
       "gold_n": 1,
-      "pred_n": 1,
+      "pred_n": 3,
       "gold_spans": [
         [
-          89,
-          102
+          94,
+          107
         ]
       ],
       "pred_spans": [
         [
-          89,
-          101
+          51,
+          66
+        ],
+        [
+          94,
+          106
+        ],
+        [
+          133,
+          141
         ]
       ],
-      "prose_exact": true,
-      "prose_ratio": 1.0
+      "prose_exact": false,
+      "prose_ratio": 0.969187675070028
     },
     {
       "id": "synth-00175",
@@ -3301,11 +3444,16 @@
       "char_r": 0.0,
       "char_f1": 0.0,
       "gold_n": 0,
-      "pred_n": 0,
+      "pred_n": 1,
       "gold_spans": [],
-      "pred_spans": [],
-      "prose_exact": true,
-      "prose_ratio": 1.0
+      "pred_spans": [
+        [
+          51,
+          65
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.9682539682539683
     },
     {
       "id": "synth-00178",
@@ -3333,9 +3481,9 @@
     {
       "id": "synth-00179",
       "source": "synth-pdf/dirty",
-      "char_p": 1.0,
+      "char_p": 0.56,
       "char_r": 0.875,
-      "char_f1": 0.9333333333333333,
+      "char_f1": 0.6829268292682927,
       "gold_n": 2,
       "pred_n": 2,
       "gold_spans": [
@@ -3344,22 +3492,22 @@
           49
         ],
         [
-          79,
-          93
+          83,
+          97
         ]
       ],
       "pred_spans": [
         [
           37,
-          49
+          56
         ],
         [
-          81,
-          93
+          85,
+          105
         ]
       ],
-      "prose_exact": true,
-      "prose_ratio": 1.0
+      "prose_exact": false,
+      "prose_ratio": 0.9253731343283582
     },
     {
       "id": "synth-00180",
@@ -3371,18 +3519,18 @@
       "pred_n": 1,
       "gold_spans": [
         [
-          16,
-          34
+          50,
+          68
         ]
       ],
       "pred_spans": [
         [
-          16,
-          33
+          50,
+          67
         ]
       ],
-      "prose_exact": true,
-      "prose_ratio": 1.0
+      "prose_exact": false,
+      "prose_ratio": 0.9009009009009009
     },
     {
       "id": "synth-00182",
@@ -3499,9 +3647,9 @@
     {
       "id": "synth-00187",
       "source": "synth-pdf/dirty",
-      "char_p": 1.0,
+      "char_p": 0.75,
       "char_r": 1.0,
-      "char_f1": 1.0,
+      "char_f1": 0.8571428571428571,
       "gold_n": 2,
       "pred_n": 1,
       "gold_spans": [
@@ -3517,11 +3665,11 @@
       "pred_spans": [
         [
           31,
-          54
+          60
         ]
       ],
-      "prose_exact": true,
-      "prose_ratio": 1.0
+      "prose_exact": false,
+      "prose_ratio": 0.9411764705882353
     },
     {
       "id": "synth-00189",
@@ -3643,9 +3791,9 @@
     {
       "id": "synth-00194",
       "source": "synth-pdf/dirty",
-      "char_p": 1.0,
+      "char_p": 0.6875,
       "char_r": 1.0,
-      "char_f1": 1.0,
+      "char_f1": 0.8148148148148148,
       "gold_n": 3,
       "pred_n": 1,
       "gold_spans": [
@@ -3665,11 +3813,11 @@
       "pred_spans": [
         [
           25,
-          43
+          49
         ]
       ],
-      "prose_exact": true,
-      "prose_ratio": 1.0
+      "prose_exact": false,
+      "prose_ratio": 0.9285714285714286
     },
     {
       "id": "synth-00195",
@@ -3813,11 +3961,11 @@
     {
       "id": "synth-00203",
       "source": "synth-pdf/dirty",
-      "char_p": 1.0,
+      "char_p": 0.43478260869565216,
       "char_r": 1.0,
-      "char_f1": 1.0,
+      "char_f1": 0.6060606060606061,
       "gold_n": 4,
-      "pred_n": 2,
+      "pred_n": 4,
       "gold_spans": [
         [
           17,
@@ -3828,12 +3976,12 @@
           37
         ],
         [
-          167,
-          176
+          177,
+          186
         ],
         [
-          178,
-          179
+          188,
+          189
         ]
       ],
       "pred_spans": [
@@ -3842,12 +3990,20 @@
           37
         ],
         [
-          167,
-          179
+          57,
+          67
+        ],
+        [
+          120,
+          137
+        ],
+        [
+          177,
+          189
         ]
       ],
-      "prose_exact": true,
-      "prose_ratio": 1.0
+      "prose_exact": false,
+      "prose_ratio": 0.9671052631578947
     },
     {
       "id": "synth-00207",
@@ -4061,33 +4217,41 @@
     {
       "id": "synth-00218",
       "source": "synth-pdf/dirty",
-      "char_p": 1.0,
+      "char_p": 0.5625,
       "char_r": 1.0,
-      "char_f1": 1.0,
+      "char_f1": 0.72,
       "gold_n": 2,
-      "pred_n": 2,
+      "pred_n": 4,
       "gold_spans": [
         [
-          31,
-          71
+          68,
+          108
         ],
         [
-          98,
-          108
+          140,
+          150
         ]
       ],
       "pred_spans": [
         [
-          31,
-          71
+          13,
+          22
         ],
         [
-          98,
-          107
+          68,
+          114
+        ],
+        [
+          140,
+          149
+        ],
+        [
+          161,
+          178
         ]
       ],
-      "prose_exact": true,
-      "prose_ratio": 1.0
+      "prose_exact": false,
+      "prose_ratio": 0.8554216867469879
     },
     {
       "id": "synth-00219",
@@ -4132,11 +4296,16 @@
       "char_r": 0.0,
       "char_f1": 0.0,
       "gold_n": 0,
-      "pred_n": 0,
+      "pred_n": 1,
       "gold_spans": [],
-      "pred_spans": [],
-      "prose_exact": true,
-      "prose_ratio": 1.0
+      "pred_spans": [
+        [
+          51,
+          67
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.9612403100775194
     },
     {
       "id": "synth-00222",
@@ -4199,11 +4368,20 @@
       "char_r": 0.0,
       "char_f1": 0.0,
       "gold_n": 0,
-      "pred_n": 0,
+      "pred_n": 2,
       "gold_spans": [],
-      "pred_spans": [],
-      "prose_exact": true,
-      "prose_ratio": 1.0
+      "pred_spans": [
+        [
+          13,
+          22
+        ],
+        [
+          70,
+          82
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.6611570247933884
     },
     {
       "id": "synth-00225",
@@ -4293,11 +4471,16 @@
       "char_r": 0.0,
       "char_f1": 0.0,
       "gold_n": 0,
-      "pred_n": 0,
+      "pred_n": 1,
       "gold_spans": [],
-      "pred_spans": [],
-      "prose_exact": true,
-      "prose_ratio": 1.0
+      "pred_spans": [
+        [
+          13,
+          22
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.8745762711864407
     },
     {
       "id": "synth-00233",
@@ -4333,11 +4516,20 @@
       "char_r": 0.0,
       "char_f1": 0.0,
       "gold_n": 0,
-      "pred_n": 0,
+      "pred_n": 2,
       "gold_spans": [],
-      "pred_spans": [],
-      "prose_exact": true,
-      "prose_ratio": 1.0
+      "pred_spans": [
+        [
+          13,
+          22
+        ],
+        [
+          87,
+          102
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.7484662576687117
     },
     {
       "id": "synth-00238",
@@ -4365,9 +4557,9 @@
     {
       "id": "synth-00239",
       "source": "synth-pdf/dirty",
-      "char_p": 1.0,
-      "char_r": 0.972972972972973,
-      "char_f1": 0.9863013698630138,
+      "char_p": 0.7708333333333334,
+      "char_r": 1.0,
+      "char_f1": 0.8705882352941177,
       "gold_n": 5,
       "pred_n": 2,
       "gold_spans": [
@@ -4380,30 +4572,30 @@
           57
         ],
         [
-          81,
-          84
+          85,
+          88
         ],
         [
-          86,
-          87
+          90,
+          91
         ],
         [
-          89,
-          106
+          93,
+          110
         ]
       ],
       "pred_spans": [
         [
           25,
-          56
+          62
         ],
         [
-          81,
-          103
+          85,
+          117
         ]
       ],
-      "prose_exact": true,
-      "prose_ratio": 1.0
+      "prose_exact": false,
+      "prose_ratio": 0.9541284403669725
     },
     {
       "id": "synth-00241",
@@ -4775,18 +4967,18 @@
       "pred_n": 1,
       "gold_spans": [
         [
-          96,
-          136
+          129,
+          169
         ]
       ],
       "pred_spans": [
         [
-          96,
-          136
+          129,
+          169
         ]
       ],
-      "prose_exact": true,
-      "prose_ratio": 1.0
+      "prose_exact": false,
+      "prose_ratio": 0.8546255506607929
     },
     {
       "id": "synth-00272",
@@ -4804,11 +4996,11 @@
     {
       "id": "synth-00279",
       "source": "synth-pdf/dirty",
-      "char_p": 1.0,
+      "char_p": 0.3333333333333333,
       "char_r": 1.0,
-      "char_f1": 1.0,
+      "char_f1": 0.5,
       "gold_n": 1,
-      "pred_n": 1,
+      "pred_n": 2,
       "gold_spans": [
         [
           34,
@@ -4819,10 +5011,14 @@
         [
           34,
           42
+        ],
+        [
+          70,
+          80
         ]
       ],
-      "prose_exact": true,
-      "prose_ratio": 1.0
+      "prose_exact": false,
+      "prose_ratio": 0.9929078014184397
     },
     {
       "id": "synth-00283",
@@ -4928,25 +5124,29 @@
     {
       "id": "synth-00290",
       "source": "synth-pdf/dirty",
-      "char_p": 1.0,
+      "char_p": 0.5,
       "char_r": 1.0,
-      "char_f1": 1.0,
+      "char_f1": 0.6666666666666666,
       "gold_n": 1,
-      "pred_n": 1,
+      "pred_n": 2,
       "gold_spans": [
         [
-          81,
-          92
+          82,
+          93
         ]
       ],
       "pred_spans": [
         [
-          81,
-          92
+          38,
+          45
+        ],
+        [
+          82,
+          93
         ]
       ],
-      "prose_exact": true,
-      "prose_ratio": 1.0
+      "prose_exact": false,
+      "prose_ratio": 0.9939393939393939
     },
     {
       "id": "synth-00292",
@@ -5004,26 +5204,26 @@
       "pred_n": 2,
       "gold_spans": [
         [
-          16,
-          24
+          49,
+          57
         ],
         [
-          55,
-          114
+          88,
+          147
         ]
       ],
       "pred_spans": [
         [
-          16,
-          23
+          49,
+          56
         ],
         [
-          86,
-          114
+          119,
+          147
         ]
       ],
       "prose_exact": false,
-      "prose_ratio": 0.752
+      "prose_ratio": 0.5949367088607594
     },
     {
       "id": "synth-00297",
@@ -5051,60 +5251,64 @@
     {
       "id": "synth-00298",
       "source": "synth-pdf/dirty",
-      "char_p": 1.0,
+      "char_p": 0.5686274509803921,
       "char_r": 1.0,
-      "char_f1": 1.0,
+      "char_f1": 0.725,
       "gold_n": 3,
-      "pred_n": 2,
+      "pred_n": 3,
       "gold_spans": [
         [
-          82,
-          101
+          86,
+          105
         ],
         [
-          121,
-          130
+          131,
+          140
         ],
         [
-          132,
-          147
+          142,
+          157
         ]
       ],
       "pred_spans": [
         [
-          82,
-          101
+          51,
+          62
         ],
         [
-          121,
-          146
+          86,
+          118
+        ],
+        [
+          131,
+          156
         ]
       ],
-      "prose_exact": true,
-      "prose_ratio": 1.0
+      "prose_exact": false,
+      "prose_ratio": 0.9532710280373832
     },
     {
       "id": "synth-00302",
       "source": "synth-pdf/dirty",
-      "char_p": 1.0,
+      "char_p": 0.3,
       "char_r": 1.0,
-      "char_f1": 1.0,
+      "char_f1": 0.4615384615384615,
       "gold_n": 1,
       "pred_n": 1,
       "gold_spans": [
         [
-          54,
-          64
+          59,
+          69
         ]
       ],
       "pred_spans": [
         [
-          54,
-          63
+          43,
+          68
         ]
       ],
       "prose_exact": false,
-      "prose_ratio": 0.7428571428571429
+      "prose_ratio": 0.7172413793103448
     },
     {
       "id": "synth-00304",
@@ -5304,11 +5508,11 @@
     {
       "id": "synth-00318",
       "source": "synth-pdf/dirty",
-      "char_p": 1.0,
+      "char_p": 0.48148148148148145,
       "char_r": 1.0,
-      "char_f1": 1.0,
+      "char_f1": 0.65,
       "gold_n": 2,
-      "pred_n": 1,
+      "pred_n": 2,
       "gold_spans": [
         [
           26,
@@ -5322,11 +5526,15 @@
       "pred_spans": [
         [
           26,
-          46
+          53
+        ],
+        [
+          79,
+          90
         ]
       ],
-      "prose_exact": true,
-      "prose_ratio": 1.0
+      "prose_exact": false,
+      "prose_ratio": 0.9438202247191011
     },
     {
       "id": "synth-00319",
@@ -5358,18 +5566,23 @@
       "char_r": 0.0,
       "char_f1": 0.0,
       "gold_n": 0,
-      "pred_n": 0,
+      "pred_n": 1,
       "gold_spans": [],
-      "pred_spans": [],
-      "prose_exact": true,
-      "prose_ratio": 1.0
+      "pred_spans": [
+        [
+          51,
+          59
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.9914529914529915
     },
     {
       "id": "synth-00321",
       "source": "synth-pdf/dirty",
-      "char_p": 0.7727272727272727,
+      "char_p": 0.7391304347826086,
       "char_r": 1.0,
-      "char_f1": 0.8717948717948718,
+      "char_f1": 0.85,
       "gold_n": 2,
       "pred_n": 1,
       "gold_spans": [
@@ -5385,11 +5598,11 @@
       "pred_spans": [
         [
           28,
-          59
+          60
         ]
       ],
       "prose_exact": false,
-      "prose_ratio": 0.90625
+      "prose_ratio": 0.8923076923076924
     },
     {
       "id": "synth-00322",
@@ -5463,45 +5676,49 @@
     {
       "id": "synth-00325",
       "source": "synth-pdf/dirty",
-      "char_p": 1.0,
+      "char_p": 0.6379310344827587,
       "char_r": 1.0,
-      "char_f1": 1.0,
+      "char_f1": 0.7789473684210527,
       "gold_n": 4,
-      "pred_n": 3,
+      "pred_n": 4,
       "gold_spans": [
         [
           40,
           47
         ],
         [
-          76,
-          91
+          80,
+          95
         ],
         [
-          93,
-          96
+          97,
+          100
         ],
         [
-          155,
-          185
+          165,
+          195
         ]
       ],
       "pred_spans": [
         [
           40,
-          47
+          54
         ],
         [
-          76,
-          96
+          80,
+          100
         ],
         [
-          155,
-          184
+          113,
+          130
+        ],
+        [
+          165,
+          194
         ]
       ],
-      "prose_exact": true,
-      "prose_ratio": 1.0
+      "prose_exact": false,
+      "prose_ratio": 0.9695121951219512
     },
     {
       "id": "synth-00328",
@@ -5542,25 +5759,33 @@
     {
       "id": "synth-00331",
       "source": "synth-pdf/dirty",
-      "char_p": 1.0,
+      "char_p": 0.12903225806451613,
       "char_r": 1.0,
-      "char_f1": 1.0,
+      "char_f1": 0.2285714285714286,
       "gold_n": 1,
-      "pred_n": 1,
+      "pred_n": 3,
       "gold_spans": [
         [
-          131,
-          137
+          142,
+          148
         ]
       ],
       "pred_spans": [
         [
-          131,
-          137
+          41,
+          57
+        ],
+        [
+          112,
+          125
+        ],
+        [
+          142,
+          148
         ]
       ],
-      "prose_exact": true,
-      "prose_ratio": 1.0
+      "prose_exact": false,
+      "prose_ratio": 0.967930029154519
     },
     {
       "id": "synth-00335",
@@ -5691,33 +5916,37 @@
     {
       "id": "synth-00341",
       "source": "synth-pdf/dirty",
-      "char_p": 1.0,
+      "char_p": 0.8723404255319149,
       "char_r": 1.0,
-      "char_f1": 1.0,
+      "char_f1": 0.9318181818181819,
       "gold_n": 2,
-      "pred_n": 2,
+      "pred_n": 3,
       "gold_spans": [
         [
-          10,
-          55
+          47,
+          92
         ],
         [
-          181,
-          196
+          218,
+          233
         ]
       ],
       "pred_spans": [
         [
-          10,
-          55
+          13,
+          22
         ],
         [
-          181,
-          195
+          47,
+          92
+        ],
+        [
+          218,
+          232
         ]
       ],
       "prose_exact": false,
-      "prose_ratio": 0.9849624060150376
+      "prose_ratio": 0.8646864686468647
     },
     {
       "id": "synth-00342",
@@ -5919,34 +6148,34 @@
       "pred_n": 3,
       "gold_spans": [
         [
-          24,
-          66
+          57,
+          99
         ],
         [
-          94,
-          108
+          127,
+          141
         ],
         [
-          139,
-          145
+          172,
+          178
         ]
       ],
       "pred_spans": [
         [
-          24,
-          66
+          57,
+          99
         ],
         [
-          94,
-          107
+          127,
+          140
         ],
         [
-          139,
-          149
+          172,
+          182
         ]
       ],
       "prose_exact": false,
-      "prose_ratio": 0.9878048780487805
+      "prose_ratio": 0.8223350253807107
     },
     {
       "id": "synth-00350",
@@ -6096,9 +6325,9 @@
     {
       "id": "synth-00357",
       "source": "synth-pdf/dirty",
-      "char_p": 1.0,
+      "char_p": 0.6666666666666666,
       "char_r": 1.0,
-      "char_f1": 1.0,
+      "char_f1": 0.8,
       "gold_n": 1,
       "pred_n": 1,
       "gold_spans": [
@@ -6110,11 +6339,11 @@
       "pred_spans": [
         [
           39,
-          45
+          48
         ]
       ],
-      "prose_exact": true,
-      "prose_ratio": 1.0
+      "prose_exact": false,
+      "prose_ratio": 0.9946524064171123
     },
     {
       "id": "synth-00358",
@@ -6159,33 +6388,37 @@
     {
       "id": "synth-00360",
       "source": "synth-pdf/dirty",
-      "char_p": 0.7777777777777778,
+      "char_p": 0.5833333333333334,
       "char_r": 1.0,
-      "char_f1": 0.8750000000000001,
+      "char_f1": 0.7368421052631579,
       "gold_n": 2,
-      "pred_n": 2,
+      "pred_n": 3,
       "gold_spans": [
         [
-          111,
-          112
+          140,
+          141
         ],
         [
-          114,
-          135
+          143,
+          164
         ]
       ],
       "pred_spans": [
         [
-          8,
-          15
+          13,
+          22
         ],
         [
-          111,
-          134
+          37,
+          44
+        ],
+        [
+          140,
+          163
         ]
       ],
       "prose_exact": false,
-      "prose_ratio": 0.9625
+      "prose_ratio": 0.8825214899713467
     },
     {
       "id": "synth-00362",
@@ -6395,42 +6628,55 @@
       "char_r": 0.0,
       "char_f1": 0.0,
       "gold_n": 0,
-      "pred_n": 0,
+      "pred_n": 1,
       "gold_spans": [],
-      "pred_spans": [],
-      "prose_exact": true,
-      "prose_ratio": 1.0
+      "pred_spans": [
+        [
+          61,
+          75
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.9655172413793104
     },
     {
       "id": "synth-00373",
       "source": "synth-pdf/dirty",
       "char_p": 1.0,
-      "char_r": 1.0,
-      "char_f1": 1.0,
-      "gold_n": 3,
-      "pred_n": 1,
+      "char_r": 0.45,
+      "char_f1": 0.6206896551724138,
+      "gold_n": 4,
+      "pred_n": 2,
       "gold_spans": [
         [
           26,
-          27
+          62
         ],
         [
-          29,
-          44
+          64,
+          65
         ],
         [
-          46,
-          47
+          67,
+          82
+        ],
+        [
+          84,
+          85
         ]
       ],
       "pred_spans": [
         [
-          26,
-          47
+          39,
+          48
+        ],
+        [
+          64,
+          85
         ]
       ],
-      "prose_exact": true,
-      "prose_ratio": 1.0
+      "prose_exact": false,
+      "prose_ratio": 0.9285714285714286
     },
     {
       "id": "synth-00374",
@@ -6776,11 +7022,20 @@
       "char_r": 0.0,
       "char_f1": 0.0,
       "gold_n": 0,
-      "pred_n": 0,
+      "pred_n": 2,
       "gold_spans": [],
-      "pred_spans": [],
-      "prose_exact": true,
-      "prose_ratio": 1.0
+      "pred_spans": [
+        [
+          63,
+          74
+        ],
+        [
+          127,
+          140
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.9626865671641791
     },
     {
       "id": "synth-00395",
@@ -6854,33 +7109,45 @@
     {
       "id": "synth-00399",
       "source": "synth-pdf/dirty",
-      "char_p": 0.9333333333333333,
+      "char_p": 0.6086956521739131,
       "char_r": 1.0,
-      "char_f1": 0.9655172413793104,
+      "char_f1": 0.7567567567567568,
       "gold_n": 2,
-      "pred_n": 2,
+      "pred_n": 5,
       "gold_spans": [
         [
-          90,
-          119
+          131,
+          160
         ],
         [
-          172,
-          199
+          219,
+          246
         ]
       ],
       "pred_spans": [
         [
-          90,
-          122
+          13,
+          22
         ],
         [
-          172,
-          199
+          88,
+          99
+        ],
+        [
+          131,
+          163
+        ],
+        [
+          186,
+          194
+        ],
+        [
+          219,
+          246
         ]
       ],
       "prose_exact": false,
-      "prose_ratio": 0.9795918367346939
+      "prose_ratio": 0.844574780058651
     },
     {
       "id": "synth-00401",
@@ -7022,36 +7289,40 @@
     {
       "id": "synth-00407",
       "source": "synth-pdf/dirty",
-      "char_p": 1.0,
+      "char_p": 0.631578947368421,
       "char_r": 1.0,
-      "char_f1": 1.0,
+      "char_f1": 0.7741935483870968,
       "gold_n": 2,
-      "pred_n": 1,
+      "pred_n": 2,
       "gold_spans": [
         [
-          39,
-          54
+          76,
+          91
         ],
         [
-          56,
-          57
+          93,
+          94
         ]
       ],
       "pred_spans": [
         [
-          39,
-          57
+          13,
+          22
+        ],
+        [
+          76,
+          94
         ]
       ],
-      "prose_exact": true,
-      "prose_ratio": 1.0
+      "prose_exact": false,
+      "prose_ratio": 0.8464730290456431
     },
     {
       "id": "synth-00408",
       "source": "synth-pdf/dirty",
-      "char_p": 1.0,
+      "char_p": 0.6666666666666666,
       "char_r": 1.0,
-      "char_f1": 1.0,
+      "char_f1": 0.8,
       "gold_n": 2,
       "pred_n": 1,
       "gold_spans": [
@@ -7067,11 +7338,11 @@
       "pred_spans": [
         [
           22,
-          38
+          45
         ]
       ],
-      "prose_exact": true,
-      "prose_ratio": 1.0
+      "prose_exact": false,
+      "prose_ratio": 0.92
     },
     {
       "id": "synth-00412",
@@ -7199,68 +7470,80 @@
     {
       "id": "synth-00417",
       "source": "synth-pdf/dirty",
-      "char_p": 1.0,
+      "char_p": 0.39473684210526316,
       "char_r": 1.0,
-      "char_f1": 1.0,
+      "char_f1": 0.5660377358490566,
       "gold_n": 2,
-      "pred_n": 1,
+      "pred_n": 2,
       "gold_spans": [
         [
-          84,
-          85
+          89,
+          90
         ],
         [
-          87,
-          108
+          92,
+          113
         ]
       ],
       "pred_spans": [
         [
-          84,
-          107
+          37,
+          55
+        ],
+        [
+          89,
+          120
         ]
       ],
-      "prose_exact": true,
-      "prose_ratio": 1.0
+      "prose_exact": false,
+      "prose_ratio": 0.9385474860335196
     },
     {
       "id": "synth-00418",
       "source": "synth-pdf/dirty",
       "char_p": 1.0,
-      "char_r": 1.0,
-      "char_f1": 1.0,
-      "gold_n": 5,
-      "pred_n": 2,
+      "char_r": 0.6507936507936508,
+      "char_f1": 0.7884615384615385,
+      "gold_n": 6,
+      "pred_n": 3,
       "gold_spans": [
         [
           22,
-          24
+          58
         ],
         [
-          26,
-          30
+          60,
+          62
         ],
         [
-          32,
-          43
+          64,
+          68
         ],
         [
-          95,
-          105
+          70,
+          81
         ],
         [
-          107,
-          127
+          133,
+          143
+        ],
+        [
+          145,
+          165
         ]
       ],
       "pred_spans": [
         [
-          22,
-          43
+          35,
+          44
         ],
         [
-          95,
-          126
+          60,
+          81
+        ],
+        [
+          133,
+          164
         ]
       ],
       "prose_exact": true,
@@ -7300,37 +7583,41 @@
     {
       "id": "synth-00421",
       "source": "synth-pdf/dirty",
-      "char_p": 0.9230769230769231,
+      "char_p": 0.5714285714285714,
       "char_r": 1.0,
-      "char_f1": 0.9600000000000001,
+      "char_f1": 0.7272727272727273,
       "gold_n": 3,
-      "pred_n": 2,
+      "pred_n": 3,
       "gold_spans": [
         [
-          22,
-          35
+          59,
+          72
         ],
         [
-          74,
-          97
+          115,
+          138
         ],
         [
-          99,
-          102
+          140,
+          143
         ]
       ],
       "pred_spans": [
         [
-          22,
-          37
+          13,
+          22
         ],
         [
-          74,
-          101
+          59,
+          78
+        ],
+        [
+          115,
+          150
         ]
       ],
       "prose_exact": false,
-      "prose_ratio": 0.991869918699187
+      "prose_ratio": 0.7176470588235294
     },
     {
       "id": "synth-00423",
@@ -7370,11 +7657,20 @@
       "char_r": 0.0,
       "char_f1": 0.0,
       "gold_n": 0,
-      "pred_n": 0,
+      "pred_n": 2,
       "gold_spans": [],
-      "pred_spans": [],
-      "prose_exact": true,
-      "prose_ratio": 1.0
+      "pred_spans": [
+        [
+          13,
+          22
+        ],
+        [
+          88,
+          96
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.7532467532467533
     },
     {
       "id": "synth-00425",
@@ -7449,25 +7745,29 @@
     {
       "id": "synth-00429",
       "source": "synth-pdf/dirty",
-      "char_p": 1.0,
+      "char_p": 0.7777777777777778,
       "char_r": 1.0,
-      "char_f1": 1.0,
+      "char_f1": 0.8750000000000001,
       "gold_n": 1,
-      "pred_n": 1,
+      "pred_n": 2,
       "gold_spans": [
         [
-          29,
-          57
+          66,
+          94
         ]
       ],
       "pred_spans": [
         [
-          29,
-          57
+          13,
+          22
+        ],
+        [
+          66,
+          94
         ]
       ],
-      "prose_exact": true,
-      "prose_ratio": 1.0
+      "prose_exact": false,
+      "prose_ratio": 0.6105263157894737
     },
     {
       "id": "synth-00431",
@@ -7591,8 +7891,8 @@
       "pred_n": 0,
       "gold_spans": [],
       "pred_spans": [],
-      "prose_exact": true,
-      "prose_ratio": 1.0
+      "prose_exact": false,
+      "prose_ratio": 0.7692307692307693
     },
     {
       "id": "synth-00437",
@@ -7614,11 +7914,16 @@
       "char_r": 0.0,
       "char_f1": 0.0,
       "gold_n": 0,
-      "pred_n": 0,
+      "pred_n": 1,
       "gold_spans": [],
-      "pred_spans": [],
-      "prose_exact": true,
-      "prose_ratio": 1.0
+      "pred_spans": [
+        [
+          40,
+          56
+        ]
+      ],
+      "prose_exact": false,
+      "prose_ratio": 0.9629629629629629
     },
     {
       "id": "synth-00441",
@@ -7825,25 +8130,33 @@
     {
       "id": "synth-00455",
       "source": "synth-pdf/dirty",
-      "char_p": 1.0,
+      "char_p": 0.35,
       "char_r": 1.0,
-      "char_f1": 1.0,
+      "char_f1": 0.5185185185185185,
       "gold_n": 1,
-      "pred_n": 1,
+      "pred_n": 3,
       "gold_spans": [
         [
-          16,
-          27
+          54,
+          65
         ]
       ],
       "pred_spans": [
         [
-          16,
-          27
+          13,
+          22
+        ],
+        [
+          54,
+          65
+        ],
+        [
+          94,
+          101
         ]
       ],
-      "prose_exact": true,
-      "prose_ratio": 1.0
+      "prose_exact": false,
+      "prose_ratio": 0.7285714285714285
     },
     {
       "id": "synth-00456",
@@ -8044,29 +8357,33 @@
     {
       "id": "synth-00469",
       "source": "synth-pdf/dirty",
-      "char_p": 1.0,
+      "char_p": 0.7777777777777778,
       "char_r": 1.0,
-      "char_f1": 1.0,
+      "char_f1": 0.8750000000000001,
       "gold_n": 2,
-      "pred_n": 1,
+      "pred_n": 2,
       "gold_spans": [
         [
-          33,
-          42
+          71,
+          80
         ],
         [
-          44,
-          62
+          82,
+          100
         ]
       ],
       "pred_spans": [
         [
-          33,
-          62
+          13,
+          22
+        ],
+        [
+          71,
+          100
         ]
       ],
-      "prose_exact": true,
-      "prose_ratio": 1.0
+      "prose_exact": false,
+      "prose_ratio": 0.6407766990291263
     },
     {
       "id": "synth-00473",
@@ -8128,25 +8445,29 @@
     {
       "id": "synth-00476",
       "source": "synth-pdf/dirty",
-      "char_p": 0.8666666666666667,
+      "char_p": 0.52,
       "char_r": 1.0,
-      "char_f1": 0.9285714285714286,
+      "char_f1": 0.6842105263157895,
       "gold_n": 1,
-      "pred_n": 1,
+      "pred_n": 2,
       "gold_spans": [
         [
-          34,
-          53
+          71,
+          90
         ]
       ],
       "pred_spans": [
         [
-          34,
-          56
+          13,
+          22
+        ],
+        [
+          71,
+          97
         ]
       ],
       "prose_exact": false,
-      "prose_ratio": 0.9859154929577465
+      "prose_ratio": 0.625
     },
     {
       "id": "synth-00477",
@@ -8226,11 +8547,11 @@
     {
       "id": "synth-00482",
       "source": "synth-pdf/dirty",
-      "char_p": 1.0,
+      "char_p": 0.29411764705882354,
       "char_r": 1.0,
-      "char_f1": 1.0,
+      "char_f1": 0.45454545454545453,
       "gold_n": 2,
-      "pred_n": 1,
+      "pred_n": 3,
       "gold_spans": [
         [
           28,
@@ -8245,10 +8566,18 @@
         [
           28,
           44
+        ],
+        [
+          72,
+          79
+        ],
+        [
+          117,
+          136
         ]
       ],
       "prose_exact": false,
-      "prose_ratio": 0.9953051643192489
+      "prose_ratio": 0.9506726457399103
     },
     {
       "id": "synth-00483",
@@ -8297,29 +8626,37 @@
     {
       "id": "synth-00486",
       "source": "synth-pdf/dirty",
-      "char_p": 1.0,
-      "char_r": 1.0,
-      "char_f1": 1.0,
-      "gold_n": 2,
-      "pred_n": 1,
+      "char_p": 0.3,
+      "char_r": 0.24324324324324326,
+      "char_f1": 0.26865671641791045,
+      "gold_n": 3,
+      "pred_n": 2,
       "gold_spans": [
         [
           26,
-          30
+          58
         ],
         [
-          32,
-          40
+          60,
+          64
+        ],
+        [
+          66,
+          74
         ]
       ],
       "pred_spans": [
         [
-          26,
-          40
+          60,
+          81
+        ],
+        [
+          132,
+          149
         ]
       ],
-      "prose_exact": true,
-      "prose_ratio": 1.0
+      "prose_exact": false,
+      "prose_ratio": 0.946236559139785
     },
     {
       "id": "synth-00488",
@@ -8414,25 +8751,29 @@
     {
       "id": "synth-00494",
       "source": "synth-pdf/dirty",
-      "char_p": 1.0,
+      "char_p": 0.6470588235294118,
       "char_r": 1.0,
-      "char_f1": 1.0,
+      "char_f1": 0.7857142857142858,
       "gold_n": 1,
-      "pred_n": 1,
+      "pred_n": 2,
       "gold_spans": [
         [
-          174,
-          189
+          212,
+          227
         ]
       ],
       "pred_spans": [
         [
-          174,
-          189
+          13,
+          22
+        ],
+        [
+          212,
+          227
         ]
       ],
       "prose_exact": false,
-      "prose_ratio": 0.9902912621359223
+      "prose_ratio": 0.9086859688195991
     },
     {
       "id": "synth-00496",

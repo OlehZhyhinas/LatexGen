@@ -27,12 +27,27 @@ def test_normalize():
     assert clean == "p1 line\n\np2 line"
 
     clean, _ = pdf_pipeline.normalize("Euler.[12] Next.[3, 7]")
-    assert clean == "Euler. Next."
+    assert clean == "Euler.[12] Next.[3, 7]"
 
     clean, _ = pdf_pipeline.normalize("table¹ text")
-    assert clean == "table text"
+    assert clean == "table¹ text"
+
+    clean, _ = pdf_pipeline.normalize("[0, 1]V and [−1, 1]V")
+    assert clean == "[0, 1]V and [−1, 1]V"
+
+    clean, _ = pdf_pipeline.normalize("Amir et al. [1] proved")
+    assert clean == "Amir et al. [1] proved"
+
+    clean, _ = pdf_pipeline.normalize("Refs. [5, 6, 20];")
+    assert clean == "Refs. [5, 6, 20];"
+
+    clean, _ = pdf_pipeline.normalize("new [17–19].")
+    assert clean == "new [17–19]."
 
     clean, _ = pdf_pipeline.normalize("Body line\n\n1. Footnote note: extra")
+    assert clean == "Body line"
+
+    clean, _ = pdf_pipeline.normalize("Body line\n\n¹ Footnote note: extra")
     assert clean == "Body line"
 
     clean, _ = pdf_pipeline.normalize("Body\n\n0\n\nTail")
