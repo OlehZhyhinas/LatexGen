@@ -82,3 +82,5 @@ The full ladder, the validation and repair rules, and the runtime choices are in
 ## Status
 
 Working and self-hostable today; AWS deployment scripted; license to be decided. Issues and ideas welcome.
+
+Built and maintained by [Oleh Zhyhinas](https://github.com/OlehZhyhinas) ([Hugging Face](https://huggingface.co/ozhyhinas), [LinkedIn](https://www.linkedin.com/in/oleh-zhyhinas-5221a752/)).
