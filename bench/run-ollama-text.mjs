@@ -25,6 +25,7 @@ const out = opt("--out", path.join(here, "results-ollama-text.json"));
 const onlyItems = opt("--items", "").split(",").filter(Boolean);
 const dataFile = opt("--data", path.join(here, "bench-data.json"));
 const label = (m) => opt("--label", "") || m;
+const useNormalize = args.includes("--normalize");
 // Qwen3 (not 3.5) under Ollama sometimes ignores `think:false` and reasons in
 // the visible content; the family's documented soft switch stops it. The app's
 // WebLLM path disables thinking through the chat template instead.
@@ -32,10 +33,13 @@ const noThinkSuffix = opt("--no-think-suffix", "") ; // e.g. "/no_think"
 if (!models.length) { console.error("usage: --models a,b,c [--out file] [--items id,id]"); process.exit(2); }
 
 // ---- prompts and helpers lifted from pipeline.js ----
-const src = readFileSync(path.join(root, "public/pipeline.js"), "utf8");
+const pipelineJs = process.env.PIPELINE_JS
+  ? path.resolve(process.env.PIPELINE_JS)
+  : path.join(root, "public/pipeline.js");
+const src = readFileSync(pipelineJs, "utf8");
 const grab = (name) => {
   const m = src.match(new RegExp(`const ${name} = (\`[^\`]*\`|\\(text\\) => \`[^\`]*\`);`));
-  if (!m) throw new Error(`could not find ${name} in pipeline.js`);
+  if (!m) throw new Error(`could not find ${name} in ${pipelineJs}`);
   return new Function(`return ${m[1]};`)();
 };
 const SYSTEM_PROMPT = grab("SYSTEM_PROMPT");
@@ -48,6 +52,10 @@ const maxTokensFor = (userContent) => Math.min(1024, Math.max(256, Math.ceil(use
 const katexMod = await import(path.join(root, "public/vendor/katex/katex.mjs"));
 globalThis.katex = katexMod.default ?? katexMod;
 const { validateLatex } = await import(path.join(root, "public/validator.js"));
+let normalize = null;
+if (useNormalize) {
+  ({ normalize } = await import(path.join(root, "public/pdf-pipeline.js")));
+}
 
 const items = JSON.parse(readFileSync(dataFile, "utf8"))
   .filter((i) => !onlyItems.length || onlyItems.includes(i.id));
@@ -78,27 +86,35 @@ async function generate(model, text, thinkMode) {
 
 const rows = existsSync(out) ? JSON.parse(readFileSync(out, "utf8")) : [];
 for (const model of models) {
-  const approach = `direct:${label(model)}`;
+  const approach = `${useNormalize ? "norm" : "direct"}:${label(model)}`;
+  const modelName = useNormalize ? `${model}+norm` : model;
   const thinkMode = { value: "try" };
   console.error(`== ${model}`);
   try { await chat(model, [{ role: "user", content: "hi" }], 2, undefined); } // load + warm
-  catch (e) { console.error(`  LOAD FAILED: ${e.message}`); rows.push({ approach, model, item: "__load__", tier: "meta", ms: -1, output: "", error: String(e.message).slice(0, 200) }); continue; }
+  catch (e) { console.error(`  LOAD FAILED: ${e.message}`); rows.push({ approach, model: modelName, item: "__load__", tier: "meta", ms: -1, normMs: 0, output: "", error: String(e.message).slice(0, 200) }); continue; }
   const done = new Set(rows.filter((r) => r.approach === approach && r.ms >= 0).map((r) => r.item));
   for (const it of items) {
     if (done.has(it.id)) continue; // resume: the out file already has this (model, item)
+    let inputText = it.input;
+    let normMs = 0;
+    if (useNormalize) {
+      const tNorm = performance.now();
+      inputText = normalize(it.input)[0];
+      normMs = Math.round(performance.now() - tNorm);
+    }
     const t0 = performance.now();
     try {
-      const j = await generate(model, it.input, thinkMode);
+      const j = await generate(model, inputText, thinkMode);
       const raw = j.message?.content ?? "";
       const latex = stripFences(stripThink(raw));
       const ms = Math.round(performance.now() - t0);
       const v = validateLatex(it.input, latex);
-      rows.push({ approach, model, item: it.id, tier: it.tier, ms, output: latex, valid: v.ok, issues: v.issues,
+      rows.push({ approach, model: modelName, item: it.id, tier: it.tier, ms, normMs, output: latex, valid: v.ok, issues: v.issues,
         thinking: j.message?.thinking ? String(j.message.thinking).length : 0,
         evalTokens: j.eval_count, promptTokens: j.prompt_eval_count, evalMs: Math.round((j.eval_duration ?? 0) / 1e6) });
       console.error(`  ${it.id.padEnd(28)} ${String(ms).padStart(6)}ms  ${v.ok ? "valid  " : "INVALID"} ${v.ok ? "" : v.issues.join(" | ").slice(0, 90)}`);
     } catch (e) {
-      rows.push({ approach, model, item: it.id, tier: it.tier, ms: -1, output: "", error: String(e.message).slice(0, 200) });
+      rows.push({ approach, model: modelName, item: it.id, tier: it.tier, ms: -1, normMs, output: "", error: String(e.message).slice(0, 200) });
       console.error(`  ${it.id.padEnd(28)} FAILED ${e.message}`);
     }
     writeFileSync(out, JSON.stringify(rows, null, 1));

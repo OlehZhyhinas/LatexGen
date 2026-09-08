@@ -13,9 +13,9 @@ verdict = {(r["approach"], r["item"]): r for r in judged if "correct" in r}
 n_items = len(items)
 
 CLASSES = [
-    ("Around 1B", "Shipped: Qwen3 0.6B", [("qwen3:0.6b", "Qwen3 0.6B", True), ("qwen3.5:0.8b", "Qwen3.5 0.8B", False), ("gemma3:1b", "Gemma 3 1B", False), ("openbmb/minicpm5:q4_K_M", "MiniCPM5 1B", False)]),
-    ("Around 2B", "Shipped: Qwen3 1.7B", [("qwen3:1.7b", "Qwen3 1.7B", True), ("qwen3.5:2b-q4_K_M", "Qwen3.5 2B", False), ("hf.co/openbmb/MiniCPM5-2B-GGUF:q4_K_M", "MiniCPM5 2B", False), ("gemma4:e2b", "Gemma 4 E2B", False)]),
-    ("Around 4B", "Shipped: Qwen3 4B", [("qwen3:4b", "Qwen3 4B", True), ("qwen3.5:4b", "Qwen3.5 4B", False), ("gemma3:4b", "Gemma 3 4B", False), ("gemma4:e4b", "Gemma 4 E4B", False)]),
+    ("Around 1B", "Shipped: Qwen3.5 0.8B", [("qwen3:0.6b", "Qwen3 0.6B (previous)", False), ("qwen3.5:0.8b", "Qwen3.5 0.8B", True), ("qwen3.5:0.8b+norm", "Qwen3.5 0.8B + normalizer", False), ("gemma3:1b", "Gemma 3 1B", False), ("openbmb/minicpm5:q4_K_M", "MiniCPM5 1B", False)]),
+    ("Around 2B", "Shipped: MiniCPM5 2B", [("qwen3:1.7b", "Qwen3 1.7B (previous)", False), ("qwen3.5:2b-q4_K_M", "Qwen3.5 2B", False), ("hf.co/openbmb/MiniCPM5-2B-GGUF:q4_K_M", "MiniCPM5 2B", True), ("hf.co/openbmb/MiniCPM5-2B-GGUF:q4_K_M+norm", "MiniCPM5 2B + normalizer", False), ("gemma4:e2b", "Gemma 4 E2B", False)]),
+    ("Around 4B", "Shipped: Qwen3.5 4B", [("qwen3:4b", "Qwen3 4B (previous)", False), ("qwen3.5:4b", "Qwen3.5 4B", True), ("qwen3.5:4b+norm", "Qwen3.5 4B + normalizer", False), ("gemma3:4b", "Gemma 3 4B", False), ("gemma4:e4b", "Gemma 4 E4B", False)]),
 ]
 TIERS = [("easy", "easy", 4), ("medium", "medium", 4), ("hard", "hard", 4), ("multiline", "prose", 3),
          ("pdf-paste", "PDF paste", 30), ("synth-pdf", "synth PDF", 24), ("synth-unicode", "synth unicode", 18), ("synth-latex", "synth LaTeX", 18)]
