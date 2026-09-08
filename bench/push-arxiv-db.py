@@ -12,6 +12,7 @@ judged = json.load(open(judged_path)) if os.path.exists(judged_path) else []
 items = {i["id"]: i for i in json.load(open(data_path))}
 verdict = {(r["approach"], r["item"]): r for r in judged if "correct" in r}
 KEYS = {"qwen3.5:0.8b": "arxiv-qwen3_5-0_8b", "hf.co/openbmb/MiniCPM5-2B-GGUF:q4_K_M": "arxiv-minicpm5-2b", "qwen3.5:4b": "arxiv-qwen3_5-4b",
+        "qwen3.5:0.8b+norm": "arxiv-qwen3_5-0_8b-norm", "hf.co/openbmb/MiniCPM5-2B-GGUF:q4_K_M+norm": "arxiv-minicpm5-2b-norm", "qwen3.5:4b+norm": "arxiv-qwen3_5-4b-norm",
         "qwen3.5:0.8b+normpdf": "arxiv-qwen3_5-0_8b-normpdf", "hf.co/openbmb/MiniCPM5-2B-GGUF:q4_K_M+normpdf": "arxiv-minicpm5-2b-normpdf", "qwen3.5:4b+normpdf": "arxiv-qwen3_5-4b-normpdf"}
 
 def group(item):
