@@ -33,6 +33,6 @@ for model, rs in per.items():
 groups = collections.Counter(group(i) for i in items.values())
 rng = random.Random(0)
 samples = [{"id": i["id"], "source": i["source"], "input": i["input"][:700], "reference": i["reference"][:700]} for i in rng.sample(list(items.values()), 3)]
-json.dump({"updated": datetime.datetime.now().isoformat(timespec="seconds"), "items": len(items), "papers": len({i["id"].split("-p")[0] for i in items}),
+json.dump({"updated": datetime.datetime.now().isoformat(timespec="seconds"), "items": len(items), "papers": len({k.rsplit("-p", 1)[0] for k in items}),
            "groups": dict(groups), "samples": samples}, open(os.path.join(out_dir, "arxiv-status.json"), "w"), ensure_ascii=False)
 print(f"{sum(len(v) for v in per.values())} rows, {len(per)} model docs, groups {dict(groups)} -> {out_dir}")
