@@ -339,9 +339,9 @@ async function backgroundJudge(text, latex) {
 // single-equation items, which the specialist answers before the LLM is asked.
 // The 2B rung is MiniCPM5 2B (52% vs 13% for Qwen3 1.7B and 26% for Qwen3.5
 // 2B), quantized and compiled by this project (see PUBLISHED above).
-// Only 4B-class and up score on prose passages (`multiline`). Note the graph
-// catalog's tuned decode libs (qwen3-webllm.js) cover Qwen3 only, so these
-// run on stock WebLLM until Qwen3.5 libs are compiled.
+// Only 4B-class and up score on prose passages (`multiline`). The graph
+// catalog's tuned decode libs (qwen3-webllm.js) now cover every rung above,
+// Qwen3 and Qwen3.5 alike, plus MiniCPM5 2B.
 const CURATED = [
   // Percentages are judge-correct over all 105 items of the 2026-09-07 tier
   // benchmark (bench/judged-text-tiers-2026-09-07.json). The 8B and 9B were not

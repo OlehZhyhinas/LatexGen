@@ -1,7 +1,7 @@
 {
  "family": "qwen3-webllm",
- "title": "Qwen3 q4f16_1 through the graph catalog's WebGPU runtime",
- "summary": "A patched WebLLM 0.2.84 (device-resident greedy argmax, K-token decode bursts, batched command encoding with periodic flushes, optional lookahead) plus a per-model TVM model lib compiled with subgroup-32 kernels, chunked argmax and GEMV TR=32. Weights are the stock mlc-ai q4f16_1 shards; only the runtime bundle and the model_lib differ from stock WebLLM. Output is byte-identical under greedy decoding on the workbench corpus; the fast path only engages at temperature 0.",
+ "title": "Qwen3, Qwen3.5 and MiniCPM5 q4f16_1 through the graph catalog's WebGPU runtime",
+ "summary": "A patched WebLLM 0.2.84 (device-resident greedy argmax, K-token decode bursts, batched command encoding with periodic flushes, optional lookahead) plus a per-model TVM model lib compiled with chunked argmax and (Qwen3/Qwen3.5) subgroup-32 kernels and GEMV TR. Weights are the stock mlc-ai q4f16_1 shards; only the runtime bundle and the model_lib differ from stock WebLLM. Output is byte-identical under greedy decoding on the workbench corpus; the fast path only engages at temperature 0.",
  "source": {
   "dataset": "ozhyhinas/webnn-catalog",
   "base": "https://huggingface.co/datasets/ozhyhinas/webnn-catalog/resolve/main",
@@ -191,6 +191,90 @@
      "entry": "qwen3-8b-q4f16-1/v1/webgpu-apple-m5-pro-macos26-chrome152-sg32-burst4-flush32",
      "issue": 34,
      "expected": "unmeasured in the workbench; mirrors the 4B recipe"
+    }
+   }
+  },
+  "Qwen3.5-0.8B-q4f16_1-MLC": {
+   "modelLib": {
+    "file": "qwen3.5-0.8b-argmax-chunk256-sg32.wasm",
+    "bytes": 6229140,
+    "sha256": "aea2152ea7783c0e80c5e1cf9004e69e70a8365acdfc1aea1a2eb7715b013987",
+    "url": "https://huggingface.co/datasets/ozhyhinas/webnn-catalog/resolve/main/qwen3.5-0.8b-q4f16-1/v1/webgpu-apple-m5-pro-macos26-chrome152-sg32-burst5-flush32/qwen3.5-0.8b-argmax-chunk256-sg32.wasm"
+   },
+   "default": "sg32-burst5-flush32",
+   "variants": {
+    "sg32-burst5-flush32": {
+     "runtime": "m5-overlap",
+     "tuning": {
+      "greedyArgmax": true,
+      "greedyBurst": 5,
+      "batchPass": true,
+      "flushEvery": 32
+     },
+     "entry": "qwen3.5-0.8b-q4f16-1/v1/webgpu-apple-m5-pro-macos26-chrome152-sg32-burst5-flush32"
+    }
+   }
+  },
+  "Qwen3.5-4B-q4f16_1-MLC": {
+   "modelLib": {
+    "file": "qwen35-4b-argmax-chunk256-sg32-tr32.wasm",
+    "bytes": 6534052,
+    "sha256": "5b13f1de06bb205b87ccbcdd565859fc9ef4cb39f1cee161149f3dc956b20829",
+    "url": "https://huggingface.co/datasets/ozhyhinas/webnn-catalog/resolve/main/qwen3.5-4b-q4f16-1/v1/webgpu-apple-m5-pro-macos26-chrome152-sg32-burst1-lookahead1/qwen35-4b-argmax-chunk256-sg32-tr32.wasm"
+   },
+   "default": "sg32-burst1-lookahead1",
+   "variants": {
+    "sg32-burst1-lookahead1": {
+     "runtime": "m5-lookahead",
+     "tuning": {
+      "greedyArgmax": true,
+      "greedyBurst": 1,
+      "lookahead": 1
+     },
+     "entry": "qwen3.5-4b-q4f16-1/v1/webgpu-apple-m5-pro-macos26-chrome152-sg32-burst1-lookahead1"
+    }
+   }
+  },
+  "Qwen3.5-9B-q4f16_1-MLC": {
+   "modelLib": {
+    "file": "qwen35-9b-argmax-chunk256-sg32-tr64.wasm",
+    "bytes": 6560135,
+    "sha256": "b3e5395b14bf8b84edf2d7dec431759e98216c864cd3f24197251e0fce0508a3",
+    "url": "https://huggingface.co/datasets/ozhyhinas/webnn-catalog/resolve/main/qwen3.5-9b-q4f16-1/v1/webgpu-apple-m5-pro-macos26-chrome152-sg32-burst4-flush64/qwen35-9b-argmax-chunk256-sg32-tr64.wasm"
+   },
+   "default": "sg32-burst4-flush64",
+   "variants": {
+    "sg32-burst4-flush64": {
+     "runtime": "m5-overlap",
+     "tuning": {
+      "greedyArgmax": true,
+      "greedyBurst": 4,
+      "batchPass": true,
+      "flushEvery": 64
+     },
+     "entry": "qwen3.5-9b-q4f16-1/v1/webgpu-apple-m5-pro-macos26-chrome152-sg32-burst4-flush64"
+    }
+   }
+  },
+  "MiniCPM5-2B-q4f16_1-MLC": {
+   "modelLib": {
+    "file": "minicpm5-2b-argmax-chunk256-nosg-tr64.wasm",
+    "bytes": 6562687,
+    "sha256": "addcdc0a97cd186d7e500bc90af5caf6cd73609bcef9579ef43f862ed48363ff",
+    "url": "https://huggingface.co/datasets/ozhyhinas/webnn-catalog/resolve/main/minicpm5-2b-q4f16-1/v1/webgpu-apple-m5-pro-macos26-chrome152-burst1-flush32-lookahead1/minicpm5-2b-argmax-chunk256-nosg-tr64.wasm"
+   },
+   "default": "burst1-flush32-lookahead1",
+   "variants": {
+    "burst1-flush32-lookahead1": {
+     "runtime": "m5-lookahead",
+     "tuning": {
+      "greedyArgmax": true,
+      "greedyBurst": 1,
+      "batchPass": true,
+      "flushEvery": 32,
+      "lookahead": 1
+     },
+     "entry": "minicpm5-2b-q4f16-1/v1/webgpu-apple-m5-pro-macos26-chrome152-burst1-flush32-lookahead1"
     }
    }
   }
