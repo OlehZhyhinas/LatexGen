@@ -436,10 +436,13 @@ def build_provenance_md(args, K, actual_K, coverage, tok_prov_entry, hashes, scr
     lines.append("")
     lines.append("## Emitted file hashes")
     lines.append("")
-    lines.append("| file | sha256 |")
-    lines.append("|---|---|")
-    for f, h in hashes.items():
-        lines.append(f"| {f} | `{h}` |")
+    lines.append(
+        "See `SHA256SUMS.txt` in this directory for the authoritative, current SHA-256 of every "
+        "emitted file (including this one). It is regenerated whenever a file in the directory "
+        "changes -- e.g. `bench/annotate-keepset-gate.py` updates `coverage.json` and appends the "
+        "Gate decision section below, and its run rewrites `SHA256SUMS.txt` accordingly -- so an "
+        "embedded copy of hashes here would go stale; that file will not."
+    )
     lines.append("")
     return "\n".join(lines) + "\n"
 
