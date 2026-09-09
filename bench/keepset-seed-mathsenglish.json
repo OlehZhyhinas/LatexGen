@@ -1,0 +1,12853 @@
+{
+  "provenance": {
+    "method": "Document frequency over word types (ASCII letters, optional internal apostrophe) extracted from the fields named below. One document = one corpus item; a word's document frequency is the number of distinct items it appears in (not raw token count). No word was hand-added, no casing/stemming normalization was applied.",
+    "sources": [
+      {
+        "corpus": "bench/arxiv-pastes.json",
+        "fields": [
+          "reference",
+          "meta.reference_prose"
+        ],
+        "n_items": 120
+      },
+      {
+        "corpus": "bench/bench-data-extended.json",
+        "fields": [
+          "input",
+          "reference"
+        ],
+        "n_items": 105
+      },
+      {
+        "corpus": "bench/pdf-pastes.json",
+        "fields": [
+          "input",
+          "reference"
+        ],
+        "n_items": 30
+      }
+    ],
+    "n_documents_total": 255,
+    "n_word_types": 2563,
+    "limitation": "This corpus is small (255 items total, mostly short single-formula passages plus 120 arXiv paragraphs). The resulting word list is a floor on maths-English coverage, not a general English vocabulary -- it will miss common English words that happen not to occur in these specific benchmark passages. Reported as a limitation, not papered over: see the PR/README for how this affects the gate."
+  },
+  "word_document_frequency": [
+    {
+      "word": "the",
+      "df": 233
+    },
+    {
+      "word": "a",
+      "df": 144
+    },
+    {
+      "word": "of",
+      "df": 135
+    },
+    {
+      "word": "in",
+      "df": 134
+    },
+    {
+      "word": "is",
+      "df": 134
+    },
+    {
+      "word": "to",
+      "df": 134
+    },
+    {
+      "word": "and",
+      "df": 130
+    },
+    {
+      "word": "The",
+      "df": 119
+    },
+    {
+      "word": "that",
+      "df": 106
+    },
+    {
+      "word": "frac",
+      "df": 95
+    },
+    {
+      "word": "ref",
+      "df": 79
+    },
+    {
+      "word": "with",
+      "df": 72
+    },
+    {
+      "word": "for",
+      "df": 71
+    },
+    {
+      "word": "as",
+      "df": 70
+    },
+    {
+      "word": "A",
+      "df": 67
+    },
+    {
+      "word": "x",
+      "df": 66
+    },
+    {
+      "word": "from",
+      "df": 63
+    },
+    {
+      "word": "e",
+      "df": 58
+    },
+    {
+      "word": "we",
+      "df": 56
+    },
+    {
+      "word": "on",
+      "df": 54
+    },
+    {
+      "word": "by",
+      "df": 53
+    },
+    {
+      "word": "this",
+      "df": 53
+    },
+    {
+      "word": "pi",
+      "df": 51
+    },
+    {
+      "word": "are",
+      "df": 47
+    },
+    {
+      "word": "k",
+      "df": 43
+    },
+    {
+      "word": "n",
+      "df": 43
+    },
+    {
+      "word": "an",
+      "df": 38
+    },
+    {
+      "word": "r",
+      "df": 37
+    },
+    {
+      "word": "not",
+      "df": 36
+    },
+    {
+      "word": "E",
+      "df": 34
+    },
+    {
+      "word": "This",
+      "df": 34
+    },
+    {
+      "word": "at",
+      "df": 34
+    },
+    {
+      "word": "i",
+      "df": 34
+    },
+    {
+      "word": "infty",
+      "df": 34
+    },
+    {
+      "word": "one",
+      "df": 34
+    },
+    {
+      "word": "b",
+      "df": 33
+    },
+    {
+      "word": "f",
+      "df": 33
+    },
+    {
+      "word": "In",
+      "df": 32
+    },
+    {
+      "word": "right",
+      "df": 32
+    },
+    {
+      "word": "B",
+      "df": 31
+    },
+    {
+      "word": "We",
+      "df": 31
+    },
+    {
+      "word": "c",
+      "df": 31
+    },
+    {
+      "word": "P",
+      "df": 30
+    },
+    {
+      "word": "sqrt",
+      "df": 30
+    },
+    {
+      "word": "d",
+      "df": 29
+    },
+    {
+      "word": "left",
+      "df": 29
+    },
+    {
+      "word": "times",
+      "df": 29
+    },
+    {
+      "word": "which",
+      "df": 29
+    },
+    {
+      "word": "it",
+      "df": 28
+    },
+    {
+      "word": "line",
+      "df": 28
+    },
+    {
+      "word": "t",
+      "df": 28
+    },
+    {
+      "word": "all",
+      "df": 26
+    },
+    {
+      "word": "F",
+      "df": 25
+    },
+    {
+      "word": "mu",
+      "df": 25
+    },
+    {
+      "word": "note",
+      "df": 25
+    },
+    {
+      "word": "sum",
+      "df": 24
+    },
+    {
+      "word": "For",
+      "df": 23
+    },
+    {
+      "word": "be",
+      "df": 23
+    },
+    {
+      "word": "dx",
+      "df": 23
+    },
+    {
+      "word": "states",
+      "df": 23
+    },
+    {
+      "word": "two",
+      "df": 23
+    },
+    {
+      "word": "its",
+      "df": 22
+    },
+    {
+      "word": "H",
+      "df": 20
+    },
+    {
+      "word": "It",
+      "df": 20
+    },
+    {
+      "word": "body",
+      "df": 20
+    },
+    {
+      "word": "can",
+      "df": 20
+    },
+    {
+      "word": "equals",
+      "df": 20
+    },
+    {
+      "word": "first",
+      "df": 20
+    },
+    {
+      "word": "m",
+      "df": 20
+    },
+    {
+      "word": "mathbf",
+      "df": 20
+    },
+    {
+      "word": "number",
+      "df": 20
+    },
+    {
+      "word": "over",
+      "df": 20
+    },
+    {
+      "word": "sigma",
+      "df": 20
+    },
+    {
+      "word": "so",
+      "df": 20
+    },
+    {
+      "word": "then",
+      "df": 20
+    },
+    {
+      "word": "S",
+      "df": 19
+    },
+    {
+      "word": "equation",
+      "df": 19
+    },
+    {
+      "word": "estimate",
+      "df": 19
+    },
+    {
+      "word": "flow",
+      "df": 19
+    },
+    {
+      "word": "s",
+      "df": 19
+    },
+    {
+      "word": "separated",
+      "df": 19
+    },
+    {
+      "word": "us",
+      "df": 19
+    },
+    {
+      "word": "used",
+      "df": 19
+    },
+    {
+      "word": "Footnote",
+      "df": 18
+    },
+    {
+      "word": "PDF",
+      "df": 18
+    },
+    {
+      "word": "int",
+      "df": 18
+    },
+    {
+      "word": "print",
+      "df": 18
+    },
+    {
+      "word": "show",
+      "df": 18
+    },
+    {
+      "word": "also",
+      "df": 17
+    },
+    {
+      "word": "cos",
+      "df": 17
+    },
+    {
+      "word": "h",
+      "df": 17
+    },
+    {
+      "word": "proof",
+      "df": 17
+    },
+    {
+      "word": "same",
+      "df": 17
+    },
+    {
+      "word": "was",
+      "df": 17
+    },
+    {
+      "word": "when",
+      "df": 17
+    },
+    {
+      "word": "N",
+      "df": 16
+    },
+    {
+      "word": "across",
+      "df": 16
+    },
+    {
+      "word": "later",
+      "df": 16
+    },
+    {
+      "word": "positive",
+      "df": 16
+    },
+    {
+      "word": "sin",
+      "df": 16
+    },
+    {
+      "word": "time",
+      "df": 16
+    },
+    {
+      "word": "Both",
+      "df": 15
+    },
+    {
+      "word": "any",
+      "df": 15
+    },
+    {
+      "word": "because",
+      "df": 15
+    },
+    {
+      "word": "energy",
+      "df": 15
+    },
+    {
+      "word": "fixed",
+      "df": 15
+    },
+    {
+      "word": "only",
+      "df": 15
+    },
+    {
+      "word": "result",
+      "df": 15
+    },
+    {
+      "word": "single",
+      "df": 15
+    },
+    {
+      "word": "state",
+      "df": 15
+    },
+    {
+      "word": "As",
+      "df": 14
+    },
+    {
+      "word": "To",
+      "df": 14
+    },
+    {
+      "word": "analysis",
+      "df": 14
+    },
+    {
+      "word": "constants",
+      "df": 14
+    },
+    {
+      "word": "field",
+      "df": 14
+    },
+    {
+      "word": "has",
+      "df": 14
+    },
+    {
+      "word": "have",
+      "df": 14
+    },
+    {
+      "word": "identity",
+      "df": 14
+    },
+    {
+      "word": "notes",
+      "df": 14
+    },
+    {
+      "word": "problem",
+      "df": 14
+    },
+    {
+      "word": "second",
+      "df": 14
+    },
+    {
+      "word": "while",
+      "df": 14
+    },
+    {
+      "word": "Note",
+      "df": 13
+    },
+    {
+      "word": "alpha",
+      "df": 13
+    },
+    {
+      "word": "each",
+      "df": 13
+    },
+    {
+      "word": "mass",
+      "df": 13
+    },
+    {
+      "word": "nu",
+      "df": 13
+    },
+    {
+      "word": "text",
+      "df": 13
+    },
+    {
+      "word": "though",
+      "df": 13
+    },
+    {
+      "word": "varepsilon",
+      "df": 13
+    },
+    {
+      "word": "G",
+      "df": 12
+    },
+    {
+      "word": "V",
+      "df": 12
+    },
+    {
+      "word": "bound",
+      "df": 12
+    },
+    {
+      "word": "cdot",
+      "df": 12
+    },
+    {
+      "word": "do",
+      "df": 12
+    },
+    {
+      "word": "end",
+      "df": 12
+    },
+    {
+      "word": "even",
+      "df": 12
+    },
+    {
+      "word": "g",
+      "df": 12
+    },
+    {
+      "word": "law",
+      "df": 12
+    },
+    {
+      "word": "mathrm",
+      "df": 12
+    },
+    {
+      "word": "mv",
+      "df": 12
+    },
+    {
+      "word": "next",
+      "df": 12
+    },
+    {
+      "word": "or",
+      "df": 12
+    },
+    {
+      "word": "our",
+      "df": 12
+    },
+    {
+      "word": "q",
+      "df": 12
+    },
+    {
+      "word": "table",
+      "df": 12
+    },
+    {
+      "word": "terms",
+      "df": 12
+    },
+    {
+      "word": "value",
+      "df": 12
+    },
+    {
+      "word": "well",
+      "df": 12
+    },
+    {
+      "word": "At",
+      "df": 11
+    },
+    {
+      "word": "C",
+      "df": 11
+    },
+    {
+      "word": "K",
+      "df": 11
+    },
+    {
+      "word": "L",
+      "df": 11
+    },
+    {
+      "word": "M",
+      "df": 11
+    },
+    {
+      "word": "converges",
+      "df": 11
+    },
+    {
+      "word": "density",
+      "df": 11
+    },
+    {
+      "word": "exercise",
+      "df": 11
+    },
+    {
+      "word": "given",
+      "df": 11
+    },
+    {
+      "word": "hat",
+      "df": 11
+    },
+    {
+      "word": "ix",
+      "df": 11
+    },
+    {
+      "word": "lim",
+      "df": 11
+    },
+    {
+      "word": "mathcal",
+      "df": 11
+    },
+    {
+      "word": "neither",
+      "df": 11
+    },
+    {
+      "word": "p",
+      "df": 11
+    },
+    {
+      "word": "partial",
+      "df": 11
+    },
+    {
+      "word": "results",
+      "df": 11
+    },
+    {
+      "word": "rho",
+      "df": 11
+    },
+    {
+      "word": "side",
+      "df": 11
+    },
+    {
+      "word": "textbook",
+      "df": 11
+    },
+    {
+      "word": "together",
+      "df": 11
+    },
+    {
+      "word": "under",
+      "df": 11
+    },
+    {
+      "word": "vert",
+      "df": 11
+    },
+    {
+      "word": "y",
+      "df": 11
+    },
+    {
+      "word": "Ek",
+      "df": 10
+    },
+    {
+      "word": "Euler's",
+      "df": 10
+    },
+    {
+      "word": "J",
+      "df": 10
+    },
+    {
+      "word": "Two",
+      "df": 10
+    },
+    {
+      "word": "ample",
+      "df": 10
+    },
+    {
+      "word": "answers",
+      "df": 10
+    },
+    {
+      "word": "before",
+      "df": 10
+    },
+    {
+      "word": "begin",
+      "df": 10
+    },
+    {
+      "word": "block",
+      "df": 10
+    },
+    {
+      "word": "boundary",
+      "df": 10
+    },
+    {
+      "word": "classic",
+      "df": 10
+    },
+    {
+      "word": "conditions",
+      "df": 10
+    },
+    {
+      "word": "derivation",
+      "df": 10
+    },
+    {
+      "word": "initial",
+      "df": 10
+    },
+    {
+      "word": "involve",
+      "df": 10
+    },
+    {
+      "word": "local",
+      "df": 10
+    },
+    {
+      "word": "model",
+      "df": 10
+    },
+    {
+      "word": "more",
+      "df": 10
+    },
+    {
+      "word": "nabla",
+      "df": 10
+    },
+    {
+      "word": "net",
+      "df": 10
+    },
+    {
+      "word": "order",
+      "df": 10
+    },
+    {
+      "word": "ote",
+      "df": 10
+    },
+    {
+      "word": "respect",
+      "df": 10
+    },
+    {
+      "word": "rm",
+      "df": 10
+    },
+    {
+      "word": "roceedings",
+      "df": 10
+    },
+    {
+      "word": "section",
+      "df": 10
+    },
+    {
+      "word": "shows",
+      "df": 10
+    },
+    {
+      "word": "structure",
+      "df": 10
+    },
+    {
+      "word": "term",
+      "df": 10
+    },
+    {
+      "word": "than",
+      "df": 10
+    },
+    {
+      "word": "use",
+      "df": 10
+    },
+    {
+      "word": "using",
+      "df": 10
+    },
+    {
+      "word": "uthor",
+      "df": 10
+    },
+    {
+      "word": "D",
+      "df": 9
+    },
+    {
+      "word": "Figure",
+      "df": 9
+    },
+    {
+      "word": "First",
+      "df": 9
+    },
+    {
+      "word": "One",
+      "df": 9
+    },
+    {
+      "word": "R",
+      "df": 9
+    },
+    {
+      "word": "Second",
+      "df": 9
+    },
+    {
+      "word": "T",
+      "df": 9
+    },
+    {
+      "word": "These",
+      "df": 9
+    },
+    {
+      "word": "below",
+      "df": 9
+    },
+    {
+      "word": "circle",
+      "df": 9
+    },
+    {
+      "word": "compares",
+      "df": 9
+    },
+    {
+      "word": "does",
+      "df": 9
+    },
+    {
+      "word": "error",
+      "df": 9
+    },
+    {
+      "word": "every",
+      "df": 9
+    },
+    {
+      "word": "finite",
+      "df": 9
+    },
+    {
+      "word": "five",
+      "df": 9
+    },
+    {
+      "word": "gas",
+      "df": 9
+    },
+    {
+      "word": "if",
+      "df": 9
+    },
+    {
+      "word": "integral",
+      "df": 9
+    },
+    {
+      "word": "into",
+      "df": 9
+    },
+    {
+      "word": "lower",
+      "df": 9
+    },
+    {
+      "word": "mentions",
+      "df": 9
+    },
+    {
+      "word": "negative",
+      "df": 9
+    },
+    {
+      "word": "position",
+      "df": 9
+    },
+    {
+      "word": "real",
+      "df": 9
+    },
+    {
+      "word": "relation",
+      "df": 9
+    },
+    {
+      "word": "therefore",
+      "df": 9
+    },
+    {
+      "word": "u",
+      "df": 9
+    },
+    {
+      "word": "up",
+      "df": 9
+    },
+    {
+      "word": "v",
+      "df": 9
+    },
+    {
+      "word": "will",
+      "df": 9
+    },
+    {
+      "word": "zero",
+      "df": 9
+    },
+    {
+      "word": "According",
+      "df": 8
+    },
+    {
+      "word": "Author",
+      "df": 8
+    },
+    {
+      "word": "Newton's",
+      "df": 8
+    },
+    {
+      "word": "Proceedings",
+      "df": 8
+    },
+    {
+      "word": "Sample",
+      "df": 8
+    },
+    {
+      "word": "Section",
+      "df": 8
+    },
+    {
+      "word": "above",
+      "df": 8
+    },
+    {
+      "word": "ar",
+      "df": 8
+    },
+    {
+      "word": "argument",
+      "df": 8
+    },
+    {
+      "word": "between",
+      "df": 8
+    },
+    {
+      "word": "both",
+      "df": 8
+    },
+    {
+      "word": "case",
+      "df": 8
+    },
+    {
+      "word": "corresponding",
+      "df": 8
+    },
+    {
+      "word": "derivative",
+      "df": 8
+    },
+    {
+      "word": "endpoint",
+      "df": 8
+    },
+    {
+      "word": "establish",
+      "df": 8
+    },
+    {
+      "word": "follows",
+      "df": 8
+    },
+    {
+      "word": "force",
+      "df": 8
+    },
+    {
+      "word": "fundamental",
+      "df": 8
+    },
+    {
+      "word": "gives",
+      "df": 8
+    },
+    {
+      "word": "his",
+      "df": 8
+    },
+    {
+      "word": "integers",
+      "df": 8
+    },
+    {
+      "word": "limit",
+      "df": 8
+    },
+    {
+      "word": "matrix",
+      "df": 8
+    },
+    {
+      "word": "monthly",
+      "df": 8
+    },
+    {
+      "word": "nonlinear",
+      "df": 8
+    },
+    {
+      "word": "obtain",
+      "df": 8
+    },
+    {
+      "word": "other",
+      "df": 8
+    },
+    {
+      "word": "probability",
+      "df": 8
+    },
+    {
+      "word": "prose",
+      "df": 8
+    },
+    {
+      "word": "rate",
+      "df": 8
+    },
+    {
+      "word": "related",
+      "df": 8
+    },
+    {
+      "word": "resulting",
+      "df": 8
+    },
+    {
+      "word": "set",
+      "df": 8
+    },
+    {
+      "word": "spectral",
+      "df": 8
+    },
+    {
+      "word": "tells",
+      "df": 8
+    },
+    {
+      "word": "their",
+      "df": 8
+    },
+    {
+      "word": "theta",
+      "df": 8
+    },
+    {
+      "word": "ties",
+      "df": 8
+    },
+    {
+      "word": "were",
+      "df": 8
+    },
+    {
+      "word": "yields",
+      "df": 8
+    },
+    {
+      "word": "z",
+      "df": 8
+    },
+    {
+      "word": "Gamma",
+      "df": 7
+    },
+    {
+      "word": "If",
+      "df": 7
+    },
+    {
+      "word": "ab",
+      "df": 7
+    },
+    {
+      "word": "after",
+      "df": 7
+    },
+    {
+      "word": "along",
+      "df": 7
+    },
+    {
+      "word": "based",
+      "df": 7
+    },
+    {
+      "word": "begins",
+      "df": 7
+    },
+    {
+      "word": "but",
+      "df": 7
+    },
+    {
+      "word": "chosen",
+      "df": 7
+    },
+    {
+      "word": "data",
+      "df": 7
+    },
+    {
+      "word": "delta",
+      "df": 7
+    },
+    {
+      "word": "directly",
+      "df": 7
+    },
+    {
+      "word": "equilibrium",
+      "df": 7
+    },
+    {
+      "word": "family",
+      "df": 7
+    },
+    {
+      "word": "find",
+      "df": 7
+    },
+    {
+      "word": "follow",
+      "df": 7
+    },
+    {
+      "word": "following",
+      "df": 7
+    },
+    {
+      "word": "formula",
+      "df": 7
+    },
+    {
+      "word": "higher",
+      "df": 7
+    },
+    {
+      "word": "holds",
+      "df": 7
+    },
+    {
+      "word": "know",
+      "df": 7
+    },
+    {
+      "word": "lab",
+      "df": 7
+    },
+    {
+      "word": "le",
+      "df": 7
+    },
+    {
+      "word": "linear",
+      "df": 7
+    },
+    {
+      "word": "main",
+      "df": 7
+    },
+    {
+      "word": "new",
+      "df": 7
+    },
+    {
+      "word": "operator",
+      "df": 7
+    },
+    {
+      "word": "pair",
+      "df": 7
+    },
+    {
+      "word": "prove",
+      "df": 7
+    },
+    {
+      "word": "provides",
+      "df": 7
+    },
+    {
+      "word": "shown",
+      "df": 7
+    },
+    {
+      "word": "slope",
+      "df": 7
+    },
+    {
+      "word": "space",
+      "df": 7
+    },
+    {
+      "word": "step",
+      "df": 7
+    },
+    {
+      "word": "strength",
+      "df": 7
+    },
+    {
+      "word": "these",
+      "df": 7
+    },
+    {
+      "word": "through",
+      "df": 7
+    },
+    {
+      "word": "vacuum",
+      "df": 7
+    },
+    {
+      "word": "values",
+      "df": 7
+    },
+    {
+      "word": "velocity",
+      "df": 7
+    },
+    {
+      "word": "verify",
+      "df": 7
+    },
+    {
+      "word": "xi",
+      "df": 7
+    },
+    {
+      "word": "Consider",
+      "df": 6
+    },
+    {
+      "word": "Eq",
+      "df": 6
+    },
+    {
+      "word": "I",
+      "df": 6
+    },
+    {
+      "word": "Once",
+      "df": 6
+    },
+    {
+      "word": "Thus",
+      "df": 6
+    },
+    {
+      "word": "aligned",
+      "df": 6
+    },
+    {
+      "word": "appear",
+      "df": 6
+    },
+    {
+      "word": "asks",
+      "df": 6
+    },
+    {
+      "word": "cells",
+      "df": 6
+    },
+    {
+      "word": "chain",
+      "df": 6
+    },
+    {
+      "word": "condition",
+      "df": 6
+    },
+    {
+      "word": "definition",
+      "df": 6
+    },
+    {
+      "word": "distribution",
+      "df": 6
+    },
+    {
+      "word": "du",
+      "df": 6
+    },
+    {
+      "word": "dy",
+      "df": 6
+    },
+    {
+      "word": "ei",
+      "df": 6
+    },
+    {
+      "word": "equations",
+      "df": 6
+    },
+    {
+      "word": "function",
+      "df": 6
+    },
+    {
+      "word": "hand",
+      "df": 6
+    },
+    {
+      "word": "homework",
+      "df": 6
+    },
+    {
+      "word": "known",
+      "df": 6
+    },
+    {
+      "word": "lambda",
+      "df": 6
+    },
+    {
+      "word": "lecture",
+      "df": 6
+    },
+    {
+      "word": "lemma",
+      "df": 6
+    },
+    {
+      "word": "less",
+      "df": 6
+    },
+    {
+      "word": "level",
+      "df": 6
+    },
+    {
+      "word": "ln",
+      "df": 6
+    },
+    {
+      "word": "low",
+      "df": 6
+    },
+    {
+      "word": "max",
+      "df": 6
+    },
+    {
+      "word": "may",
+      "df": 6
+    },
+    {
+      "word": "mc",
+      "df": 6
+    },
+    {
+      "word": "metric",
+      "df": 6
+    },
+    {
+      "word": "milliliters",
+      "df": 6
+    },
+    {
+      "word": "minus",
+      "df": 6
+    },
+    {
+      "word": "must",
+      "df": 6
+    },
+    {
+      "word": "noting",
+      "df": 6
+    },
+    {
+      "word": "numbers",
+      "df": 6
+    },
+    {
+      "word": "numerical",
+      "df": 6
+    },
+    {
+      "word": "oscillation",
+      "df": 6
+    },
+    {
+      "word": "out",
+      "df": 6
+    },
+    {
+      "word": "part",
+      "df": 6
+    },
+    {
+      "word": "plus",
+      "df": 6
+    },
+    {
+      "word": "power",
+      "df": 6
+    },
+    {
+      "word": "required",
+      "df": 6
+    },
+    {
+      "word": "rest",
+      "df": 6
+    },
+    {
+      "word": "reward",
+      "df": 6
+    },
+    {
+      "word": "rule",
+      "df": 6
+    },
+    {
+      "word": "sample",
+      "df": 6
+    },
+    {
+      "word": "scale",
+      "df": 6
+    },
+    {
+      "word": "size",
+      "df": 6
+    },
+    {
+      "word": "solution",
+      "df": 6
+    },
+    {
+      "word": "squared",
+      "df": 6
+    },
+    {
+      "word": "standard",
+      "df": 6
+    },
+    {
+      "word": "theorem",
+      "df": 6
+    },
+    {
+      "word": "those",
+      "df": 6
+    },
+    {
+      "word": "three",
+      "df": 6
+    },
+    {
+      "word": "transform",
+      "df": 6
+    },
+    {
+      "word": "uncertainty",
+      "df": 6
+    },
+    {
+      "word": "update",
+      "df": 6
+    },
+    {
+      "word": "where",
+      "df": 6
+    },
+    {
+      "word": "whose",
+      "df": 6
+    },
+    {
+      "word": "Appendix",
+      "df": 5
+    },
+    {
+      "word": "Basel",
+      "df": 5
+    },
+    {
+      "word": "Gaussian",
+      "df": 5
+    },
+    {
+      "word": "He",
+      "df": 5
+    },
+    {
+      "word": "Jacobian",
+      "df": 5
+    },
+    {
+      "word": "Let",
+      "df": 5
+    },
+    {
+      "word": "Omega",
+      "df": 5
+    },
+    {
+      "word": "On",
+      "df": 5
+    },
+    {
+      "word": "Psi",
+      "df": 5
+    },
+    {
+      "word": "Theorem",
+      "df": 5
+    },
+    {
+      "word": "U",
+      "df": 5
+    },
+    {
+      "word": "absolute",
+      "df": 5
+    },
+    {
+      "word": "ac",
+      "df": 5
+    },
+    {
+      "word": "acceleration",
+      "df": 5
+    },
+    {
+      "word": "ad",
+      "df": 5
+    },
+    {
+      "word": "again",
+      "df": 5
+    },
+    {
+      "word": "ambient",
+      "df": 5
+    },
+    {
+      "word": "baseline",
+      "df": 5
+    },
+    {
+      "word": "bc",
+      "df": 5
+    },
+    {
+      "word": "beta",
+      "df": 5
+    },
+    {
+      "word": "box",
+      "df": 5
+    },
+    {
+      "word": "calibration",
+      "df": 5
+    },
+    {
+      "word": "celebrated",
+      "df": 5
+    },
+    {
+      "word": "check",
+      "df": 5
+    },
+    {
+      "word": "collapses",
+      "df": 5
+    },
+    {
+      "word": "come",
+      "df": 5
+    },
+    {
+      "word": "comes",
+      "df": 5
+    },
+    {
+      "word": "compact",
+      "df": 5
+    },
+    {
+      "word": "compare",
+      "df": 5
+    },
+    {
+      "word": "computed",
+      "df": 5
+    },
+    {
+      "word": "consequences",
+      "df": 5
+    },
+    {
+      "word": "construction",
+      "df": 5
+    },
+    {
+      "word": "convention",
+      "df": 5
+    },
+    {
+      "word": "det",
+      "df": 5
+    },
+    {
+      "word": "distance",
+      "df": 5
+    },
+    {
+      "word": "dt",
+      "df": 5
+    },
+    {
+      "word": "during",
+      "df": 5
+    },
+    {
+      "word": "dynamics",
+      "df": 5
+    },
+    {
+      "word": "empirical",
+      "df": 5
+    },
+    {
+      "word": "entropy",
+      "df": 5
+    },
+    {
+      "word": "estimated",
+      "df": 5
+    },
+    {
+      "word": "evolution",
+      "df": 5
+    },
+    {
+      "word": "exact",
+      "df": 5
+    },
+    {
+      "word": "expected",
+      "df": 5
+    },
+    {
+      "word": "explicit",
+      "df": 5
+    },
+    {
+      "word": "f'g",
+      "df": 5
+    },
+    {
+      "word": "fg",
+      "df": 5
+    },
+    {
+      "word": "free",
+      "df": 5
+    },
+    {
+      "word": "frictionless",
+      "df": 5
+    },
+    {
+      "word": "functional",
+      "df": 5
+    },
+    {
+      "word": "geometry",
+      "df": 5
+    },
+    {
+      "word": "give",
+      "df": 5
+    },
+    {
+      "word": "had",
+      "df": 5
+    },
+    {
+      "word": "hbar",
+      "df": 5
+    },
+    {
+      "word": "here",
+      "df": 5
+    },
+    {
+      "word": "how",
+      "df": 5
+    },
+    {
+      "word": "infinity",
+      "df": 5
+    },
+    {
+      "word": "information",
+      "df": 5
+    },
+    {
+      "word": "input",
+      "df": 5
+    },
+    {
+      "word": "kB",
+      "df": 5
+    },
+    {
+      "word": "kappa",
+      "df": 5
+    },
+    {
+      "word": "ke",
+      "df": 5
+    },
+    {
+      "word": "keep",
+      "df": 5
+    },
+    {
+      "word": "keeps",
+      "df": 5
+    },
+    {
+      "word": "kinetic",
+      "df": 5
+    },
+    {
+      "word": "least",
+      "df": 5
+    },
+    {
+      "word": "letter",
+      "df": 5
+    },
+    {
+      "word": "limh",
+      "df": 5
+    },
+    {
+      "word": "ma",
+      "df": 5
+    },
+    {
+      "word": "margin",
+      "df": 5
+    },
+    {
+      "word": "models",
+      "df": 5
+    },
+    {
+      "word": "name",
+      "df": 5
+    },
+    {
+      "word": "non",
+      "df": 5
+    },
+    {
+      "word": "norm",
+      "df": 5
+    },
+    {
+      "word": "now",
+      "df": 5
+    },
+    {
+      "word": "paper",
+      "df": 5
+    },
+    {
+      "word": "paragraph",
+      "df": 5
+    },
+    {
+      "word": "pm",
+      "df": 5
+    },
+    {
+      "word": "pmatrix",
+      "df": 5
+    },
+    {
+      "word": "policy",
+      "df": 5
+    },
+    {
+      "word": "polynomial",
+      "df": 5
+    },
+    {
+      "word": "prior",
+      "df": 5
+    },
+    {
+      "word": "pushed",
+      "df": 5
+    },
+    {
+      "word": "range",
+      "df": 5
+    },
+    {
+      "word": "rangle",
+      "df": 5
+    },
+    {
+      "word": "refined",
+      "df": 5
+    },
+    {
+      "word": "report",
+      "df": 5
+    },
+    {
+      "word": "representation",
+      "df": 5
+    },
+    {
+      "word": "scaling",
+      "df": 5
+    },
+    {
+      "word": "setup",
+      "df": 5
+    },
+    {
+      "word": "several",
+      "df": 5
+    },
+    {
+      "word": "short",
+      "df": 5
+    },
+    {
+      "word": "signs",
+      "df": 5
+    },
+    {
+      "word": "simplifies",
+      "df": 5
+    },
+    {
+      "word": "speed",
+      "df": 5
+    },
+    {
+      "word": "starts",
+      "df": 5
+    },
+    {
+      "word": "stated",
+      "df": 5
+    },
+    {
+      "word": "strictly",
+      "df": 5
+    },
+    {
+      "word": "study",
+      "df": 5
+    },
+    {
+      "word": "substitute",
+      "df": 5
+    },
+    {
+      "word": "such",
+      "df": 5
+    },
+    {
+      "word": "there",
+      "df": 5
+    },
+    {
+      "word": "threshold",
+      "df": 5
+    },
+    {
+      "word": "tracks",
+      "df": 5
+    },
+    {
+      "word": "transitions",
+      "df": 5
+    },
+    {
+      "word": "type",
+      "df": 5
+    },
+    {
+      "word": "units",
+      "df": 5
+    },
+    {
+      "word": "would",
+      "df": 5
+    },
+    {
+      "word": "zeta",
+      "df": 5
+    },
+    {
+      "word": "An",
+      "df": 4
+    },
+    {
+      "word": "December",
+      "df": 4
+    },
+    {
+      "word": "Fig",
+      "df": 4
+    },
+    {
+      "word": "Finally",
+      "df": 4
+    },
+    {
+      "word": "Our",
+      "df": 4
+    },
+    {
+      "word": "PV",
+      "df": 4
+    },
+    {
+      "word": "Physically",
+      "df": 4
+    },
+    {
+      "word": "Substituting",
+      "df": 4
+    },
+    {
+      "word": "W",
+      "df": 4
+    },
+    {
+      "word": "about",
+      "df": 4
+    },
+    {
+      "word": "adds",
+      "df": 4
+    },
+    {
+      "word": "agent",
+      "df": 4
+    },
+    {
+      "word": "algorithm",
+      "df": 4
+    },
+    {
+      "word": "alternates",
+      "df": 4
+    },
+    {
+      "word": "angle",
+      "df": 4
+    },
+    {
+      "word": "applied",
+      "df": 4
+    },
+    {
+      "word": "apply",
+      "df": 4
+    },
+    {
+      "word": "arbitrarily",
+      "df": 4
+    },
+    {
+      "word": "assistant",
+      "df": 4
+    },
+    {
+      "word": "assumption",
+      "df": 4
+    },
+    {
+      "word": "belong",
+      "df": 4
+    },
+    {
+      "word": "benchmark",
+      "df": 4
+    },
+    {
+      "word": "bounds",
+      "df": 4
+    },
+    {
+      "word": "candidate",
+      "df": 4
+    },
+    {
+      "word": "cannot",
+      "df": 4
+    },
+    {
+      "word": "chi",
+      "df": 4
+    },
+    {
+      "word": "class",
+      "df": 4
+    },
+    {
+      "word": "classifiers",
+      "df": 4
+    },
+    {
+      "word": "closed",
+      "df": 4
+    },
+    {
+      "word": "coefficient",
+      "df": 4
+    },
+    {
+      "word": "cohort",
+      "df": 4
+    },
+    {
+      "word": "comments",
+      "df": 4
+    },
+    {
+      "word": "common",
+      "df": 4
+    },
+    {
+      "word": "components",
+      "df": 4
+    },
+    {
+      "word": "compounded",
+      "df": 4
+    },
+    {
+      "word": "compounding",
+      "df": 4
+    },
+    {
+      "word": "computes",
+      "df": 4
+    },
+    {
+      "word": "concave",
+      "df": 4
+    },
+    {
+      "word": "constant",
+      "df": 4
+    },
+    {
+      "word": "constraint",
+      "df": 4
+    },
+    {
+      "word": "continuous",
+      "df": 4
+    },
+    {
+      "word": "contrast",
+      "df": 4
+    },
+    {
+      "word": "convergence",
+      "df": 4
+    },
+    {
+      "word": "copy",
+      "df": 4
+    },
+    {
+      "word": "correction",
+      "df": 4
+    },
+    {
+      "word": "date",
+      "df": 4
+    },
+    {
+      "word": "defined",
+      "df": 4
+    },
+    {
+      "word": "degree",
+      "df": 4
+    },
+    {
+      "word": "determinant",
+      "df": 4
+    },
+    {
+      "word": "deterministic",
+      "df": 4
+    },
+    {
+      "word": "different",
+      "df": 4
+    },
+    {
+      "word": "dimensions",
+      "df": 4
+    },
+    {
+      "word": "discussing",
+      "df": 4
+    },
+    {
+      "word": "drift",
+      "df": 4
+    },
+    {
+      "word": "driven",
+      "df": 4
+    },
+    {
+      "word": "ds",
+      "df": 4
+    },
+    {
+      "word": "dye",
+      "df": 4
+    },
+    {
+      "word": "eix",
+      "df": 4
+    },
+    {
+      "word": "electrodynamics",
+      "df": 4
+    },
+    {
+      "word": "equivalent",
+      "df": 4
+    },
+    {
+      "word": "equivalently",
+      "df": 4
+    },
+    {
+      "word": "estimates",
+      "df": 4
+    },
+    {
+      "word": "estimator",
+      "df": 4
+    },
+    {
+      "word": "eta",
+      "df": 4
+    },
+    {
+      "word": "exactly",
+      "df": 4
+    },
+    {
+      "word": "example",
+      "df": 4
+    },
+    {
+      "word": "form",
+      "df": 4
+    },
+    {
+      "word": "formation",
+      "df": 4
+    },
+    {
+      "word": "four",
+      "df": 4
+    },
+    {
+      "word": "functions",
+      "df": 4
+    },
+    {
+      "word": "gamma",
+      "df": 4
+    },
+    {
+      "word": "geq",
+      "df": 4
+    },
+    {
+      "word": "growth",
+      "df": 4
+    },
+    {
+      "word": "half",
+      "df": 4
+    },
+    {
+      "word": "horizon",
+      "df": 4
+    },
+    {
+      "word": "hour",
+      "df": 4
+    },
+    {
+      "word": "ideal",
+      "df": 4
+    },
+    {
+      "word": "identities",
+      "df": 4
+    },
+    {
+      "word": "includes",
+      "df": 4
+    },
+    {
+      "word": "increases",
+      "df": 4
+    },
+    {
+      "word": "independent",
+      "df": 4
+    },
+    {
+      "word": "inputs",
+      "df": 4
+    },
+    {
+      "word": "invoke",
+      "df": 4
+    },
+    {
+      "word": "j",
+      "df": 4
+    },
+    {
+      "word": "kpc",
+      "df": 4
+    },
+    {
+      "word": "labeled",
+      "df": 4
+    },
+    {
+      "word": "link",
+      "df": 4
+    },
+    {
+      "word": "log",
+      "df": 4
+    },
+    {
+      "word": "logistic",
+      "df": 4
+    },
+    {
+      "word": "loss",
+      "df": 4
+    },
+    {
+      "word": "makes",
+      "df": 4
+    },
+    {
+      "word": "making",
+      "df": 4
+    },
+    {
+      "word": "map",
+      "df": 4
+    },
+    {
+      "word": "mathbb",
+      "df": 4
+    },
+    {
+      "word": "mean",
+      "df": 4
+    },
+    {
+      "word": "means",
+      "df": 4
+    },
+    {
+      "word": "measure",
+      "df": 4
+    },
+    {
+      "word": "measured",
+      "df": 4
+    },
+    {
+      "word": "metadata",
+      "df": 4
+    },
+    {
+      "word": "most",
+      "df": 4
+    },
+    {
+      "word": "much",
+      "df": 4
+    },
+    {
+      "word": "nRT",
+      "df": 4
+    },
+    {
+      "word": "neighboring",
+      "df": 4
+    },
+    {
+      "word": "no",
+      "df": 4
+    },
+    {
+      "word": "nominal",
+      "df": 4
+    },
+    {
+      "word": "normalization",
+      "df": 4
+    },
+    {
+      "word": "nothing",
+      "df": 4
+    },
+    {
+      "word": "nr",
+      "df": 4
+    },
+    {
+      "word": "nt",
+      "df": 4
+    },
+    {
+      "word": "objective",
+      "df": 4
+    },
+    {
+      "word": "observed",
+      "df": 4
+    },
+    {
+      "word": "odds",
+      "df": 4
+    },
+    {
+      "word": "optimal",
+      "df": 4
+    },
+    {
+      "word": "overline",
+      "df": 4
+    },
+    {
+      "word": "own",
+      "df": 4
+    },
+    {
+      "word": "payoff",
+      "df": 4
+    },
+    {
+      "word": "percent",
+      "df": 4
+    },
+    {
+      "word": "percentage",
+      "df": 4
+    },
+    {
+      "word": "population",
+      "df": 4
+    },
+    {
+      "word": "posterior",
+      "df": 4
+    },
+    {
+      "word": "preference",
+      "df": 4
+    },
+    {
+      "word": "present",
+      "df": 4
+    },
+    {
+      "word": "procedure",
+      "df": 4
+    },
+    {
+      "word": "product",
+      "df": 4
+    },
+    {
+      "word": "profiles",
+      "df": 4
+    },
+    {
+      "word": "proofs",
+      "df": 4
+    },
+    {
+      "word": "reader",
+      "df": 4
+    },
+    {
+      "word": "region",
+      "df": 4
+    },
+    {
+      "word": "repeatedly",
+      "df": 4
+    },
+    {
+      "word": "require",
+      "df": 4
+    },
+    {
+      "word": "reserve",
+      "df": 4
+    },
+    {
+      "word": "reused",
+      "df": 4
+    },
+    {
+      "word": "rewrites",
+      "df": 4
+    },
+    {
+      "word": "rewritten",
+      "df": 4
+    },
+    {
+      "word": "rollout",
+      "df": 4
+    },
+    {
+      "word": "root",
+      "df": 4
+    },
+    {
+      "word": "rounding",
+      "df": 4
+    },
+    {
+      "word": "run",
+      "df": 4
+    },
+    {
+      "word": "sampling",
+      "df": 4
+    },
+    {
+      "word": "see",
+      "df": 4
+    },
+    {
+      "word": "sentence",
+      "df": 4
+    },
+    {
+      "word": "sharp",
+      "df": 4
+    },
+    {
+      "word": "sheet",
+      "df": 4
+    },
+    {
+      "word": "since",
+      "df": 4
+    },
+    {
+      "word": "small",
+      "df": 4
+    },
+    {
+      "word": "square",
+      "df": 4
+    },
+    {
+      "word": "stress",
+      "df": 4
+    },
+    {
+      "word": "substitutions",
+      "df": 4
+    },
+    {
+      "word": "summarizes",
+      "df": 4
+    },
+    {
+      "word": "summary",
+      "df": 4
+    },
+    {
+      "word": "symbolic",
+      "df": 4
+    },
+    {
+      "word": "symmetric",
+      "df": 4
+    },
+    {
+      "word": "teaching",
+      "df": 4
+    },
+    {
+      "word": "temperature",
+      "df": 4
+    },
+    {
+      "word": "test",
+      "df": 4
+    },
+    {
+      "word": "thermodynamics",
+      "df": 4
+    },
+    {
+      "word": "they",
+      "df": 4
+    },
+    {
+      "word": "toy",
+      "df": 4
+    },
+    {
+      "word": "turn",
+      "df": 4
+    },
+    {
+      "word": "upper",
+      "df": 4
+    },
+    {
+      "word": "uses",
+      "df": 4
+    },
+    {
+      "word": "utility",
+      "df": 4
+    },
+    {
+      "word": "variable",
+      "df": 4
+    },
+    {
+      "word": "viewpoints",
+      "df": 4
+    },
+    {
+      "word": "weight",
+      "df": 4
+    },
+    {
+      "word": "windows",
+      "df": 4
+    },
+    {
+      "word": "worksheet",
+      "df": 4
+    },
+    {
+      "word": "write",
+      "df": 4
+    },
+    {
+      "word": "written",
+      "df": 4
+    },
+    {
+      "word": "AJC",
+      "df": 3
+    },
+    {
+      "word": "Delta",
+      "df": 3
+    },
+    {
+      "word": "Hence",
+      "df": 3
+    },
+    {
+      "word": "Its",
+      "df": 3
+    },
+    {
+      "word": "Lambda",
+      "df": 3
+    },
+    {
+      "word": "Moreover",
+      "df": 3
+    },
+    {
+      "word": "O",
+      "df": 3
+    },
+    {
+      "word": "Proposition",
+      "df": 3
+    },
+    {
+      "word": "Recall",
+      "df": 3
+    },
+    {
+      "word": "Therefore",
+      "df": 3
+    },
+    {
+      "word": "With",
+      "df": 3
+    },
+    {
+      "word": "X",
+      "df": 3
+    },
+    {
+      "word": "absolutely",
+      "df": 3
+    },
+    {
+      "word": "additional",
+      "df": 3
+    },
+    {
+      "word": "advantage",
+      "df": 3
+    },
+    {
+      "word": "against",
+      "df": 3
+    },
+    {
+      "word": "al",
+      "df": 3
+    },
+    {
+      "word": "allows",
+      "df": 3
+    },
+    {
+      "word": "alone",
+      "df": 3
+    },
+    {
+      "word": "already",
+      "df": 3
+    },
+    {
+      "word": "among",
+      "df": 3
+    },
+    {
+      "word": "apples",
+      "df": 3
+    },
+    {
+      "word": "applies",
+      "df": 3
+    },
+    {
+      "word": "approach",
+      "df": 3
+    },
+    {
+      "word": "approx",
+      "df": 3
+    },
+    {
+      "word": "approximation",
+      "df": 3
+    },
+    {
+      "word": "around",
+      "df": 3
+    },
+    {
+      "word": "ball",
+      "df": 3
+    },
+    {
+      "word": "become",
+      "df": 3
+    },
+    {
+      "word": "becomes",
+      "df": 3
+    },
+    {
+      "word": "binom",
+      "df": 3
+    },
+    {
+      "word": "bounded",
+      "df": 3
+    },
+    {
+      "word": "capital",
+      "df": 3
+    },
+    {
+      "word": "choice",
+      "df": 3
+    },
+    {
+      "word": "close",
+      "df": 3
+    },
+    {
+      "word": "code",
+      "df": 3
+    },
+    {
+      "word": "comparison",
+      "df": 3
+    },
+    {
+      "word": "component",
+      "df": 3
+    },
+    {
+      "word": "conditional",
+      "df": 3
+    },
+    {
+      "word": "considered",
+      "df": 3
+    },
+    {
+      "word": "costs",
+      "df": 3
+    },
+    {
+      "word": "current",
+      "df": 3
+    },
+    {
+      "word": "decreases",
+      "df": 3
+    },
+    {
+      "word": "defines",
+      "df": 3
+    },
+    {
+      "word": "derive",
+      "df": 3
+    },
+    {
+      "word": "deviation",
+      "df": 3
+    },
+    {
+      "word": "differ",
+      "df": 3
+    },
+    {
+      "word": "difference",
+      "df": 3
+    },
+    {
+      "word": "diffusion",
+      "df": 3
+    },
+    {
+      "word": "direct",
+      "df": 3
+    },
+    {
+      "word": "divided",
+      "df": 3
+    },
+    {
+      "word": "domain",
+      "df": 3
+    },
+    {
+      "word": "dominant",
+      "df": 3
+    },
+    {
+      "word": "effect",
+      "df": 3
+    },
+    {
+      "word": "efficient",
+      "df": 3
+    },
+    {
+      "word": "effort",
+      "df": 3
+    },
+    {
+      "word": "elements",
+      "df": 3
+    },
+    {
+      "word": "ell",
+      "df": 3
+    },
+    {
+      "word": "evaluated",
+      "df": 3
+    },
+    {
+      "word": "evaluation",
+      "df": 3
+    },
+    {
+      "word": "existence",
+      "df": 3
+    },
+    {
+      "word": "experiment",
+      "df": 3
+    },
+    {
+      "word": "exponent",
+      "df": 3
+    },
+    {
+      "word": "expression",
+      "df": 3
+    },
+    {
+      "word": "failure",
+      "df": 3
+    },
+    {
+      "word": "few",
+      "df": 3
+    },
+    {
+      "word": "figure",
+      "df": 3
+    },
+    {
+      "word": "forms",
+      "df": 3
+    },
+    {
+      "word": "full",
+      "df": 3
+    },
+    {
+      "word": "game",
+      "df": 3
+    },
+    {
+      "word": "ge",
+      "df": 3
+    },
+    {
+      "word": "ground",
+      "df": 3
+    },
+    {
+      "word": "group",
+      "df": 3
+    },
+    {
+      "word": "identify",
+      "df": 3
+    },
+    {
+      "word": "implement",
+      "df": 3
+    },
+    {
+      "word": "included",
+      "df": 3
+    },
+    {
+      "word": "increasing",
+      "df": 3
+    },
+    {
+      "word": "individual",
+      "df": 3
+    },
+    {
+      "word": "instead",
+      "df": 3
+    },
+    {
+      "word": "itself",
+      "df": 3
+    },
+    {
+      "word": "kernel",
+      "df": 3
+    },
+    {
+      "word": "key",
+      "df": 3
+    },
+    {
+      "word": "last",
+      "df": 3
+    },
+    {
+      "word": "lattice",
+      "df": 3
+    },
+    {
+      "word": "learning",
+      "df": 3
+    },
+    {
+      "word": "length",
+      "df": 3
+    },
+    {
+      "word": "literature",
+      "df": 3
+    },
+    {
+      "word": "long",
+      "df": 3
+    },
+    {
+      "word": "loops",
+      "df": 3
+    },
+    {
+      "word": "lunch",
+      "df": 3
+    },
+    {
+      "word": "marginal",
+      "df": 3
+    },
+    {
+      "word": "mathfrak",
+      "df": 3
+    },
+    {
+      "word": "maximum",
+      "df": 3
+    },
+    {
+      "word": "mechanism",
+      "df": 3
+    },
+    {
+      "word": "metallicity",
+      "df": 3
+    },
+    {
+      "word": "moments",
+      "df": 3
+    },
+    {
+      "word": "needed",
+      "df": 3
+    },
+    {
+      "word": "noise",
+      "df": 3
+    },
+    {
+      "word": "normalized",
+      "df": 3
+    },
+    {
+      "word": "observation",
+      "df": 3
+    },
+    {
+      "word": "obtained",
+      "df": 3
+    },
+    {
+      "word": "offline",
+      "df": 3
+    },
+    {
+      "word": "omega",
+      "df": 3
+    },
+    {
+      "word": "orbits",
+      "df": 3
+    },
+    {
+      "word": "original",
+      "df": 3
+    },
+    {
+      "word": "outside",
+      "df": 3
+    },
+    {
+      "word": "parameter",
+      "df": 3
+    },
+    {
+      "word": "particular",
+      "df": 3
+    },
+    {
+      "word": "per",
+      "df": 3
+    },
+    {
+      "word": "performance",
+      "df": 3
+    },
+    {
+      "word": "phase",
+      "df": 3
+    },
+    {
+      "word": "player",
+      "df": 3
+    },
+    {
+      "word": "point",
+      "df": 3
+    },
+    {
+      "word": "points",
+      "df": 3
+    },
+    {
+      "word": "precisely",
+      "df": 3
+    },
+    {
+      "word": "previous",
+      "df": 3
+    },
+    {
+      "word": "quad",
+      "df": 3
+    },
+    {
+      "word": "quantum",
+      "df": 3
+    },
+    {
+      "word": "radial",
+      "df": 3
+    },
+    {
+      "word": "random",
+      "df": 3
+    },
+    {
+      "word": "raw",
+      "df": 3
+    },
+    {
+      "word": "recovered",
+      "df": 3
+    },
+    {
+      "word": "reduction",
+      "df": 3
+    },
+    {
+      "word": "relevant",
+      "df": 3
+    },
+    {
+      "word": "remain",
+      "df": 3
+    },
+    {
+      "word": "remains",
+      "df": 3
+    },
+    {
+      "word": "risk",
+      "df": 3
+    },
+    {
+      "word": "room",
+      "df": 3
+    },
+    {
+      "word": "row",
+      "df": 3
+    },
+    {
+      "word": "runs",
+      "df": 3
+    },
+    {
+      "word": "satisfies",
+      "df": 3
+    },
+    {
+      "word": "scales",
+      "df": 3
+    },
+    {
+      "word": "scrutiny",
+      "df": 3
+    },
+    {
+      "word": "selected",
+      "df": 3
+    },
+    {
+      "word": "sense",
+      "df": 3
+    },
+    {
+      "word": "serve",
+      "df": 3
+    },
+    {
+      "word": "signal",
+      "df": 3
+    },
+    {
+      "word": "sim",
+      "df": 3
+    },
+    {
+      "word": "six",
+      "df": 3
+    },
+    {
+      "word": "some",
+      "df": 3
+    },
+    {
+      "word": "spatial",
+      "df": 3
+    },
+    {
+      "word": "special",
+      "df": 3
+    },
+    {
+      "word": "species",
+      "df": 3
+    },
+    {
+      "word": "squeezed",
+      "df": 3
+    },
+    {
+      "word": "statement",
+      "df": 3
+    },
+    {
+      "word": "stationary",
+      "df": 3
+    },
+    {
+      "word": "steady",
+      "df": 3
+    },
+    {
+      "word": "strict",
+      "df": 3
+    },
+    {
+      "word": "succsim",
+      "df": 3
+    },
+    {
+      "word": "sufficiently",
+      "df": 3
+    },
+    {
+      "word": "suitable",
+      "df": 3
+    },
+    {
+      "word": "supply",
+      "df": 3
+    },
+    {
+      "word": "symmetry",
+      "df": 3
+    },
+    {
+      "word": "system",
+      "df": 3
+    },
+    {
+      "word": "take",
+      "df": 3
+    },
+    {
+      "word": "target",
+      "df": 3
+    },
+    {
+      "word": "total",
+      "df": 3
+    },
+    {
+      "word": "transition",
+      "df": 3
+    },
+    {
+      "word": "trivial",
+      "df": 3
+    },
+    {
+      "word": "true",
+      "df": 3
+    },
+    {
+      "word": "truth",
+      "df": 3
+    },
+    {
+      "word": "uniform",
+      "df": 3
+    },
+    {
+      "word": "unique",
+      "df": 3
+    },
+    {
+      "word": "weak",
+      "df": 3
+    },
+    {
+      "word": "weights",
+      "df": 3
+    },
+    {
+      "word": "what",
+      "df": 3
+    },
+    {
+      "word": "widehat",
+      "df": 3
+    },
+    {
+      "word": "work",
+      "df": 3
+    },
+    {
+      "word": "ABM",
+      "df": 2
+    },
+    {
+      "word": "All",
+      "df": 2
+    },
+    {
+      "word": "Applying",
+      "df": 2
+    },
+    {
+      "word": "Because",
+      "df": 2
+    },
+    {
+      "word": "Before",
+      "df": 2
+    },
+    {
+      "word": "CSS",
+      "df": 2
+    },
+    {
+      "word": "Conversely",
+      "df": 2
+    },
+    {
+      "word": "Darbo",
+      "df": 2
+    },
+    {
+      "word": "Darbo's",
+      "df": 2
+    },
+    {
+      "word": "Equation",
+      "df": 2
+    },
+    {
+      "word": "FDPC",
+      "df": 2
+    },
+    {
+      "word": "Fock",
+      "df": 2
+    },
+    {
+      "word": "From",
+      "df": 2
+    },
+    {
+      "word": "Furthermore",
+      "df": 2
+    },
+    {
+      "word": "Gyr",
+      "df": 2
+    },
+    {
+      "word": "Hamiltonian",
+      "df": 2
+    },
+    {
+      "word": "Here",
+      "df": 2
+    },
+    {
+      "word": "However",
+      "df": 2
+    },
+    {
+      "word": "III",
+      "df": 2
+    },
+    {
+      "word": "IR",
+      "df": 2
+    },
+    {
+      "word": "Indeed",
+      "df": 2
+    },
+    {
+      "word": "Kerr",
+      "df": 2
+    },
+    {
+      "word": "Nash",
+      "df": 2
+    },
+    {
+      "word": "Neither",
+      "df": 2
+    },
+    {
+      "word": "PSF",
+      "df": 2
+    },
+    {
+      "word": "Q",
+      "df": 2
+    },
+    {
+      "word": "QCP",
+      "df": 2
+    },
+    {
+      "word": "RCCBM",
+      "df": 2
+    },
+    {
+      "word": "SO",
+      "df": 2
+    },
+    {
+      "word": "September",
+      "df": 2
+    },
+    {
+      "word": "She",
+      "df": 2
+    },
+    {
+      "word": "Table",
+      "df": 2
+    },
+    {
+      "word": "Tuesday",
+      "df": 2
+    },
+    {
+      "word": "Under",
+      "df": 2
+    },
+    {
+      "word": "Unless",
+      "df": 2
+    },
+    {
+      "word": "Using",
+      "df": 2
+    },
+    {
+      "word": "When",
+      "df": 2
+    },
+    {
+      "word": "Which",
+      "df": 2
+    },
+    {
+      "word": "Z",
+      "df": 2
+    },
+    {
+      "word": "aProceedings",
+      "df": 2
+    },
+    {
+      "word": "ability",
+      "df": 2
+    },
+    {
+      "word": "abundance",
+      "df": 2
+    },
+    {
+      "word": "according",
+      "df": 2
+    },
+    {
+      "word": "adaptive",
+      "df": 2
+    },
+    {
+      "word": "admissible",
+      "df": 2
+    },
+    {
+      "word": "agree",
+      "df": 2
+    },
+    {
+      "word": "algebra",
+      "df": 2
+    },
+    {
+      "word": "aligns",
+      "df": 2
+    },
+    {
+      "word": "appearing",
+      "df": 2
+    },
+    {
+      "word": "applications",
+      "df": 2
+    },
+    {
+      "word": "ark",
+      "df": 2
+    },
+    {
+      "word": "arrived",
+      "df": 2
+    },
+    {
+      "word": "assigns",
+      "df": 2
+    },
+    {
+      "word": "associated",
+      "df": 2
+    },
+    {
+      "word": "assume",
+      "df": 2
+    },
+    {
+      "word": "asymptotic",
+      "df": 2
+    },
+    {
+      "word": "attraction",
+      "df": 2
+    },
+    {
+      "word": "attractor",
+      "df": 2
+    },
+    {
+      "word": "bar",
+      "df": 2
+    },
+    {
+      "word": "basis",
+      "df": 2
+    },
+    {
+      "word": "bct",
+      "df": 2
+    },
+    {
+      "word": "been",
+      "df": 2
+    },
+    {
+      "word": "behavior",
+      "df": 2
+    },
+    {
+      "word": "better",
+      "df": 2
+    },
+    {
+      "word": "bid",
+      "df": 2
+    },
+    {
+      "word": "bids",
+      "df": 2
+    },
+    {
+      "word": "blocks",
+      "df": 2
+    },
+    {
+      "word": "boldsymbol",
+      "df": 2
+    },
+    {
+      "word": "boundedness",
+      "df": 2
+    },
+    {
+      "word": "broad",
+      "df": 2
+    },
+    {
+      "word": "budget",
+      "df": 2
+    },
+    {
+      "word": "call",
+      "df": 2
+    },
+    {
+      "word": "canonical",
+      "df": 2
+    },
+    {
+      "word": "cap",
+      "df": 2
+    },
+    {
+      "word": "captures",
+      "df": 2
+    },
+    {
+      "word": "cases",
+      "df": 2
+    },
+    {
+      "word": "caused",
+      "df": 2
+    },
+    {
+      "word": "centred",
+      "df": 2
+    },
+    {
+      "word": "chapter",
+      "df": 2
+    },
+    {
+      "word": "choose",
+      "df": 2
+    },
+    {
+      "word": "classes",
+      "df": 2
+    },
+    {
+      "word": "clear",
+      "df": 2
+    },
+    {
+      "word": "closely",
+      "df": 2
+    },
+    {
+      "word": "cloud",
+      "df": 2
+    },
+    {
+      "word": "cludes",
+      "df": 2
+    },
+    {
+      "word": "coincide",
+      "df": 2
+    },
+    {
+      "word": "compactness",
+      "df": 2
+    },
+    {
+      "word": "comparable",
+      "df": 2
+    },
+    {
+      "word": "compatible",
+      "df": 2
+    },
+    {
+      "word": "competing",
+      "df": 2
+    },
+    {
+      "word": "confidence",
+      "df": 2
+    },
+    {
+      "word": "conjecture",
+      "df": 2
+    },
+    {
+      "word": "consistent",
+      "df": 2
+    },
+    {
+      "word": "construct",
+      "df": 2
+    },
+    {
+      "word": "constructed",
+      "df": 2
+    },
+    {
+      "word": "consumption",
+      "df": 2
+    },
+    {
+      "word": "content",
+      "df": 2
+    },
+    {
+      "word": "contour",
+      "df": 2
+    },
+    {
+      "word": "contraction",
+      "df": 2
+    },
+    {
+      "word": "control",
+      "df": 2
+    },
+    {
+      "word": "convergent",
+      "df": 2
+    },
+    {
+      "word": "convex",
+      "df": 2
+    },
+    {
+      "word": "coolant",
+      "df": 2
+    },
+    {
+      "word": "correspondence",
+      "df": 2
+    },
+    {
+      "word": "corresponds",
+      "df": 2
+    },
+    {
+      "word": "cosine",
+      "df": 2
+    },
+    {
+      "word": "cost",
+      "df": 2
+    },
+    {
+      "word": "could",
+      "df": 2
+    },
+    {
+      "word": "criterion",
+      "df": 2
+    },
+    {
+      "word": "critical",
+      "df": 2
+    },
+    {
+      "word": "cross",
+      "df": 2
+    },
+    {
+      "word": "crossings",
+      "df": 2
+    },
+    {
+      "word": "crucially",
+      "df": 2
+    },
+    {
+      "word": "cubic",
+      "df": 2
+    },
+    {
+      "word": "dagger",
+      "df": 2
+    },
+    {
+      "word": "decision",
+      "df": 2
+    },
+    {
+      "word": "decisions",
+      "df": 2
+    },
+    {
+      "word": "decomposition",
+      "df": 2
+    },
+    {
+      "word": "demand",
+      "df": 2
+    },
+    {
+      "word": "dependent",
+      "df": 2
+    },
+    {
+      "word": "desired",
+      "df": 2
+    },
+    {
+      "word": "determined",
+      "df": 2
+    },
+    {
+      "word": "develop",
+      "df": 2
+    },
+    {
+      "word": "developed",
+      "df": 2
+    },
+    {
+      "word": "diameter",
+      "df": 2
+    },
+    {
+      "word": "differs",
+      "df": 2
+    },
+    {
+      "word": "dimension",
+      "df": 2
+    },
+    {
+      "word": "dimensionality",
+      "df": 2
+    },
+    {
+      "word": "direction",
+      "df": 2
+    },
+    {
+      "word": "diverges",
+      "df": 2
+    },
+    {
+      "word": "dust",
+      "df": 2
+    },
+    {
+      "word": "dz",
+      "df": 2
+    },
+    {
+      "word": "eSFT",
+      "df": 2
+    },
+    {
+      "word": "either",
+      "df": 2
+    },
+    {
+      "word": "element",
+      "df": 2
+    },
+    {
+      "word": "emission",
+      "df": 2
+    },
+    {
+      "word": "ensures",
+      "df": 2
+    },
+    {
+      "word": "entanglement",
+      "df": 2
+    },
+    {
+      "word": "enters",
+      "df": 2
+    },
+    {
+      "word": "entire",
+      "df": 2
+    },
+    {
+      "word": "eq",
+      "df": 2
+    },
+    {
+      "word": "equal",
+      "df": 2
+    },
+    {
+      "word": "equiv",
+      "df": 2
+    },
+    {
+      "word": "equivalence",
+      "df": 2
+    },
+    {
+      "word": "et",
+      "df": 2
+    },
+    {
+      "word": "event",
+      "df": 2
+    },
+    {
+      "word": "ex",
+      "df": 2
+    },
+    {
+      "word": "excitation",
+      "df": 2
+    },
+    {
+      "word": "existing",
+      "df": 2
+    },
+    {
+      "word": "experiments",
+      "df": 2
+    },
+    {
+      "word": "explicitly",
+      "df": 2
+    },
+    {
+      "word": "exponential",
+      "df": 2
+    },
+    {
+      "word": "extended",
+      "df": 2
+    },
+    {
+      "word": "extract",
+      "df": 2
+    },
+    {
+      "word": "face",
+      "df": 2
+    },
+    {
+      "word": "feature",
+      "df": 2
+    },
+    {
+      "word": "feedback",
+      "df": 2
+    },
+    {
+      "word": "final",
+      "df": 2
+    },
+    {
+      "word": "firm",
+      "df": 2
+    },
+    {
+      "word": "fitted",
+      "df": 2
+    },
+    {
+      "word": "fitting",
+      "df": 2
+    },
+    {
+      "word": "fluid",
+      "df": 2
+    },
+    {
+      "word": "flux",
+      "df": 2
+    },
+    {
+      "word": "formulation",
+      "df": 2
+    },
+    {
+      "word": "fractional",
+      "df": 2
+    },
+    {
+      "word": "frame",
+      "df": 2
+    },
+    {
+      "word": "front",
+      "df": 2
+    },
+    {
+      "word": "further",
+      "df": 2
+    },
+    {
+      "word": "galaxy",
+      "df": 2
+    },
+    {
+      "word": "gap",
+      "df": 2
+    },
+    {
+      "word": "gather",
+      "df": 2
+    },
+    {
+      "word": "general",
+      "df": 2
+    },
+    {
+      "word": "generalized",
+      "df": 2
+    },
+    {
+      "word": "generalizes",
+      "df": 2
+    },
+    {
+      "word": "generated",
+      "df": 2
+    },
+    {
+      "word": "geodesics",
+      "df": 2
+    },
+    {
+      "word": "geometric",
+      "df": 2
+    },
+    {
+      "word": "gradient",
+      "df": 2
+    },
+    {
+      "word": "grows",
+      "df": 2
+    },
+    {
+      "word": "guarantee",
+      "df": 2
+    },
+    {
+      "word": "guarantees",
+      "df": 2
+    },
+    {
+      "word": "having",
+      "df": 2
+    },
+    {
+      "word": "head",
+      "df": 2
+    },
+    {
+      "word": "held",
+      "df": 2
+    },
+    {
+      "word": "helium",
+      "df": 2
+    },
+    {
+      "word": "her",
+      "df": 2
+    },
+    {
+      "word": "highest",
+      "df": 2
+    },
+    {
+      "word": "homogeneous",
+      "df": 2
+    },
+    {
+      "word": "horizontal",
+      "df": 2
+    },
+    {
+      "word": "hydrogen",
+      "df": 2
+    },
+    {
+      "word": "identified",
+      "df": 2
+    },
+    {
+      "word": "impatience",
+      "df": 2
+    },
+    {
+      "word": "important",
+      "df": 2
+    },
+    {
+      "word": "incentives",
+      "df": 2
+    },
+    {
+      "word": "incoherent",
+      "df": 2
+    },
+    {
+      "word": "increase",
+      "df": 2
+    },
+    {
+      "word": "indeed",
+      "df": 2
+    },
+    {
+      "word": "inequality",
+      "df": 2
+    },
+    {
+      "word": "infinite",
+      "df": 2
+    },
+    {
+      "word": "informed",
+      "df": 2
+    },
+    {
+      "word": "intermediate",
+      "df": 2
+    },
+    {
+      "word": "internal",
+      "df": 2
+    },
+    {
+      "word": "iteration",
+      "df": 2
+    },
+    {
+      "word": "joint",
+      "df": 2
+    },
+    {
+      "word": "ket",
+      "df": 2
+    },
+    {
+      "word": "knowledge",
+      "df": 2
+    },
+    {
+      "word": "l",
+      "df": 2
+    },
+    {
+      "word": "laboratory",
+      "df": 2
+    },
+    {
+      "word": "ladder",
+      "df": 2
+    },
+    {
+      "word": "larger",
+      "df": 2
+    },
+    {
+      "word": "laws",
+      "df": 2
+    },
+    {
+      "word": "leading",
+      "df": 2
+    },
+    {
+      "word": "leads",
+      "df": 2
+    },
+    {
+      "word": "leave",
+      "df": 2
+    },
+    {
+      "word": "leq",
+      "df": 2
+    },
+    {
+      "word": "lesssim",
+      "df": 2
+    },
+    {
+      "word": "lies",
+      "df": 2
+    },
+    {
+      "word": "likelihood",
+      "df": 2
+    },
+    {
+      "word": "localization",
+      "df": 2
+    },
+    {
+      "word": "ly",
+      "df": 2
+    },
+    {
+      "word": "made",
+      "df": 2
+    },
+    {
+      "word": "make",
+      "df": 2
+    },
+    {
+      "word": "manager",
+      "df": 2
+    },
+    {
+      "word": "maps",
+      "df": 2
+    },
+    {
+      "word": "masses",
+      "df": 2
+    },
+    {
+      "word": "matched",
+      "df": 2
+    },
+    {
+      "word": "mathsf",
+      "df": 2
+    },
+    {
+      "word": "measures",
+      "df": 2
+    },
+    {
+      "word": "method",
+      "df": 2
+    },
+    {
+      "word": "methods",
+      "df": 2
+    },
+    {
+      "word": "midterm",
+      "df": 2
+    },
+    {
+      "word": "modified",
+      "df": 2
+    },
+    {
+      "word": "moment",
+      "df": 2
+    },
+    {
+      "word": "monthP",
+      "df": 2
+    },
+    {
+      "word": "multiplicity",
+      "df": 2
+    },
+    {
+      "word": "natural",
+      "df": 2
+    },
+    {
+      "word": "nature",
+      "df": 2
+    },
+    {
+      "word": "need",
+      "df": 2
+    },
+    {
+      "word": "neq",
+      "df": 2
+    },
+    {
+      "word": "nor",
+      "df": 2
+    },
+    {
+      "word": "observing",
+      "df": 2
+    },
+    {
+      "word": "odot",
+      "df": 2
+    },
+    {
+      "word": "oint",
+      "df": 2
+    },
+    {
+      "word": "onto",
+      "df": 2
+    },
+    {
+      "word": "operatorname",
+      "df": 2
+    },
+    {
+      "word": "optimization",
+      "df": 2
+    },
+    {
+      "word": "origin",
+      "df": 2
+    },
+    {
+      "word": "orthogonal",
+      "df": 2
+    },
+    {
+      "word": "package",
+      "df": 2
+    },
+    {
+      "word": "packet",
+      "df": 2
+    },
+    {
+      "word": "panel",
+      "df": 2
+    },
+    {
+      "word": "panels",
+      "df": 2
+    },
+    {
+      "word": "parameters",
+      "df": 2
+    },
+    {
+      "word": "particle",
+      "df": 2
+    },
+    {
+      "word": "path",
+      "df": 2
+    },
+    {
+      "word": "peak",
+      "df": 2
+    },
+    {
+      "word": "pendulum",
+      "df": 2
+    },
+    {
+      "word": "period",
+      "df": 2
+    },
+    {
+      "word": "phi",
+      "df": 2
+    },
+    {
+      "word": "physical",
+      "df": 2
+    },
+    {
+      "word": "pieces",
+      "df": 2
+    },
+    {
+      "word": "plateau",
+      "df": 2
+    },
+    {
+      "word": "play",
+      "df": 2
+    },
+    {
+      "word": "plots",
+      "df": 2
+    },
+    {
+      "word": "poles",
+      "df": 2
+    },
+    {
+      "word": "possible",
+      "df": 2
+    },
+    {
+      "word": "potential",
+      "df": 2
+    },
+    {
+      "word": "predictive",
+      "df": 2
+    },
+    {
+      "word": "presented",
+      "df": 2
+    },
+    {
+      "word": "price",
+      "df": 2
+    },
+    {
+      "word": "primary",
+      "df": 2
+    },
+    {
+      "word": "principal",
+      "df": 2
+    },
+    {
+      "word": "principles",
+      "df": 2
+    },
+    {
+      "word": "problems",
+      "df": 2
+    },
+    {
+      "word": "process",
+      "df": 2
+    },
+    {
+      "word": "produced",
+      "df": 2
+    },
+    {
+      "word": "production",
+      "df": 2
+    },
+    {
+      "word": "professor",
+      "df": 2
+    },
+    {
+      "word": "propagation",
+      "df": 2
+    },
+    {
+      "word": "properties",
+      "df": 2
+    },
+    {
+      "word": "proved",
+      "df": 2
+    },
+    {
+      "word": "proves",
+      "df": 2
+    },
+    {
+      "word": "provide",
+      "df": 2
+    },
+    {
+      "word": "pullback",
+      "df": 2
+    },
+    {
+      "word": "pure",
+      "df": 2
+    },
+    {
+      "word": "purposes",
+      "df": 2
+    },
+    {
+      "word": "qLDPC",
+      "df": 2
+    },
+    {
+      "word": "quadrature",
+      "df": 2
+    },
+    {
+      "word": "quasilinear",
+      "df": 2
+    },
+    {
+      "word": "question",
+      "df": 2
+    },
+    {
+      "word": "rad",
+      "df": 2
+    },
+    {
+      "word": "radius",
+      "df": 2
+    },
+    {
+      "word": "randomized",
+      "df": 2
+    },
+    {
+      "word": "rapidly",
+      "df": 2
+    },
+    {
+      "word": "rates",
+      "df": 2
+    },
+    {
+      "word": "rational",
+      "df": 2
+    },
+    {
+      "word": "reaches",
+      "df": 2
+    },
+    {
+      "word": "recall",
+      "df": 2
+    },
+    {
+      "word": "receives",
+      "df": 2
+    },
+    {
+      "word": "reduces",
+      "df": 2
+    },
+    {
+      "word": "refinement",
+      "df": 2
+    },
+    {
+      "word": "regression",
+      "df": 2
+    },
+    {
+      "word": "relative",
+      "df": 2
+    },
+    {
+      "word": "relies",
+      "df": 2
+    },
+    {
+      "word": "rely",
+      "df": 2
+    },
+    {
+      "word": "replaces",
+      "df": 2
+    },
+    {
+      "word": "reported",
+      "df": 2
+    },
+    {
+      "word": "representative",
+      "df": 2
+    },
+    {
+      "word": "requiring",
+      "df": 2
+    },
+    {
+      "word": "respectively",
+      "df": 2
+    },
+    {
+      "word": "restricted",
+      "df": 2
+    },
+    {
+      "word": "returns",
+      "df": 2
+    },
+    {
+      "word": "rewards",
+      "df": 2
+    },
+    {
+      "word": "rotation",
+      "df": 2
+    },
+    {
+      "word": "round",
+      "df": 2
+    },
+    {
+      "word": "samples",
+      "df": 2
+    },
+    {
+      "word": "saving",
+      "df": 2
+    },
+    {
+      "word": "scatter",
+      "df": 2
+    },
+    {
+      "word": "scored",
+      "df": 2
+    },
+    {
+      "word": "seen",
+      "df": 2
+    },
+    {
+      "word": "selection",
+      "df": 2
+    },
+    {
+      "word": "selector",
+      "df": 2
+    },
+    {
+      "word": "selects",
+      "df": 2
+    },
+    {
+      "word": "self",
+      "df": 2
+    },
+    {
+      "word": "semidiscrete",
+      "df": 2
+    },
+    {
+      "word": "separatrix",
+      "df": 2
+    },
+    {
+      "word": "series",
+      "df": 2
+    },
+    {
+      "word": "sets",
+      "df": 2
+    },
+    {
+      "word": "shape",
+      "df": 2
+    },
+    {
+      "word": "shift",
+      "df": 2
+    },
+    {
+      "word": "shrink",
+      "df": 2
+    },
+    {
+      "word": "sign",
+      "df": 2
+    },
+    {
+      "word": "significantly",
+      "df": 2
+    },
+    {
+      "word": "similar",
+      "df": 2
+    },
+    {
+      "word": "simply",
+      "df": 2
+    },
+    {
+      "word": "sine",
+      "df": 2
+    },
+    {
+      "word": "smooth",
+      "df": 2
+    },
+    {
+      "word": "snapshot",
+      "df": 2
+    },
+    {
+      "word": "snapshots",
+      "df": 2
+    },
+    {
+      "word": "solutions",
+      "df": 2
+    },
+    {
+      "word": "solve",
+      "df": 2
+    },
+    {
+      "word": "source",
+      "df": 2
+    },
+    {
+      "word": "sparsity",
+      "df": 2
+    },
+    {
+      "word": "specific",
+      "df": 2
+    },
+    {
+      "word": "spin",
+      "df": 2
+    },
+    {
+      "word": "star",
+      "df": 2
+    },
+    {
+      "word": "start",
+      "df": 2
+    },
+    {
+      "word": "stellar",
+      "df": 2
+    },
+    {
+      "word": "still",
+      "df": 2
+    },
+    {
+      "word": "stochastic",
+      "df": 2
+    },
+    {
+      "word": "studied",
+      "df": 2
+    },
+    {
+      "word": "sub",
+      "df": 2
+    },
+    {
+      "word": "subsolutions",
+      "df": 2
+    },
+    {
+      "word": "sums",
+      "df": 2
+    },
+    {
+      "word": "sup",
+      "df": 2
+    },
+    {
+      "word": "super",
+      "df": 2
+    },
+    {
+      "word": "survive",
+      "df": 2
+    },
+    {
+      "word": "synthetic",
+      "df": 2
+    },
+    {
+      "word": "systems",
+      "df": 2
+    },
+    {
+      "word": "tail",
+      "df": 2
+    },
+    {
+      "word": "task",
+      "df": 2
+    },
+    {
+      "word": "tasks",
+      "df": 2
+    },
+    {
+      "word": "tau",
+      "df": 2
+    },
+    {
+      "word": "temperatures",
+      "df": 2
+    },
+    {
+      "word": "tends",
+      "df": 2
+    },
+    {
+      "word": "terminal",
+      "df": 2
+    },
+    {
+      "word": "them",
+      "df": 2
+    },
+    {
+      "word": "theoretical",
+      "df": 2
+    },
+    {
+      "word": "thermal",
+      "df": 2
+    },
+    {
+      "word": "timescales",
+      "df": 2
+    },
+    {
+      "word": "told",
+      "df": 2
+    },
+    {
+      "word": "tolerance",
+      "df": 2
+    },
+    {
+      "word": "topology",
+      "df": 2
+    },
+    {
+      "word": "toward",
+      "df": 2
+    },
+    {
+      "word": "transfers",
+      "df": 2
+    },
+    {
+      "word": "transport",
+      "df": 2
+    },
+    {
+      "word": "trapped",
+      "df": 2
+    },
+    {
+      "word": "treat",
+      "df": 2
+    },
+    {
+      "word": "treated",
+      "df": 2
+    },
+    {
+      "word": "trial",
+      "df": 2
+    },
+    {
+      "word": "types",
+      "df": 2
+    },
+    {
+      "word": "underlying",
+      "df": 2
+    },
+    {
+      "word": "unigram",
+      "df": 2
+    },
+    {
+      "word": "unit",
+      "df": 2
+    },
+    {
+      "word": "valid",
+      "df": 2
+    },
+    {
+      "word": "validation",
+      "df": 2
+    },
+    {
+      "word": "valued",
+      "df": 2
+    },
+    {
+      "word": "vanishes",
+      "df": 2
+    },
+    {
+      "word": "vary",
+      "df": 2
+    },
+    {
+      "word": "vector",
+      "df": 2
+    },
+    {
+      "word": "vectors",
+      "df": 2
+    },
+    {
+      "word": "virial",
+      "df": 2
+    },
+    {
+      "word": "w",
+      "df": 2
+    },
+    {
+      "word": "weighted",
+      "df": 2
+    },
+    {
+      "word": "whether",
+      "df": 2
+    },
+    {
+      "word": "why",
+      "df": 2
+    },
+    {
+      "word": "wide",
+      "df": 2
+    },
+    {
+      "word": "wind",
+      "df": 2
+    },
+    {
+      "word": "without",
+      "df": 2
+    },
+    {
+      "word": "worry",
+      "df": 2
+    },
+    {
+      "word": "AGNs",
+      "df": 1
+    },
+    {
+      "word": "Accordingly",
+      "df": 1
+    },
+    {
+      "word": "After",
+      "df": 1
+    },
+    {
+      "word": "Aitchison",
+      "df": 1
+    },
+    {
+      "word": "Although",
+      "df": 1
+    },
+    {
+      "word": "Amir",
+      "df": 1
+    },
+    {
+      "word": "Any",
+      "df": 1
+    },
+    {
+      "word": "App",
+      "df": 1
+    },
+    {
+      "word": "Ashcroft",
+      "df": 1
+    },
+    {
+      "word": "Assumptions",
+      "df": 1
+    },
+    {
+      "word": "Atomic",
+      "df": 1
+    },
+    {
+      "word": "Au",
+      "df": 1
+    },
+    {
+      "word": "BCG",
+      "df": 1
+    },
+    {
+      "word": "BH",
+      "df": 1
+    },
+    {
+      "word": "BPP",
+      "df": 1
+    },
+    {
+      "word": "Bang",
+      "df": 1
+    },
+    {
+      "word": "Based",
+      "df": 1
+    },
+    {
+      "word": "Bayes",
+      "df": 1
+    },
+    {
+      "word": "Bayesian",
+      "df": 1
+    },
+    {
+      "word": "Bellman",
+      "df": 1
+    },
+    {
+      "word": "Best",
+      "df": 1
+    },
+    {
+      "word": "Bewley",
+      "df": 1
+    },
+    {
+      "word": "Big",
+      "df": 1
+    },
+    {
+      "word": "Black",
+      "df": 1
+    },
+    {
+      "word": "Brock",
+      "df": 1
+    },
+    {
+      "word": "By",
+      "df": 1
+    },
+    {
+      "word": "CDF",
+      "df": 1
+    },
+    {
+      "word": "CGM",
+      "df": 1
+    },
+    {
+      "word": "CII",
+      "df": 1
+    },
+    {
+      "word": "CRRA",
+      "df": 1
+    },
+    {
+      "word": "Carnot",
+      "df": 1
+    },
+    {
+      "word": "Clifford",
+      "df": 1
+    },
+    {
+      "word": "Clutton",
+      "df": 1
+    },
+    {
+      "word": "Cobb",
+      "df": 1
+    },
+    {
+      "word": "Coleman",
+      "df": 1
+    },
+    {
+      "word": "Combine",
+      "df": 1
+    },
+    {
+      "word": "Communicability",
+      "df": 1
+    },
+    {
+      "word": "Compatibility",
+      "df": 1
+    },
+    {
+      "word": "Conclusion",
+      "df": 1
+    },
+    {
+      "word": "CondSOC",
+      "df": 1
+    },
+    {
+      "word": "Condition",
+      "df": 1
+    },
+    {
+      "word": "Consequently",
+      "df": 1
+    },
+    {
+      "word": "DAOPHOT",
+      "df": 1
+    },
+    {
+      "word": "DR",
+      "df": 1
+    },
+    {
+      "word": "Das",
+      "df": 1
+    },
+    {
+      "word": "Define",
+      "df": 1
+    },
+    {
+      "word": "Definition",
+      "df": 1
+    },
+    {
+      "word": "Dicke",
+      "df": 1
+    },
+    {
+      "word": "Difference",
+      "df": 1
+    },
+    {
+      "word": "Dirichlet",
+      "df": 1
+    },
+    {
+      "word": "Douglas",
+      "df": 1
+    },
+    {
+      "word": "Draw",
+      "df": 1
+    },
+    {
+      "word": "Each",
+      "df": 1
+    },
+    {
+      "word": "Euclidean",
+      "df": 1
+    },
+    {
+      "word": "Ewald's",
+      "df": 1
+    },
+    {
+      "word": "Exact",
+      "df": 1
+    },
+    {
+      "word": "Example",
+      "df": 1
+    },
+    {
+      "word": "Exponential",
+      "df": 1
+    },
+    {
+      "word": "FD",
+      "df": 1
+    },
+    {
+      "word": "FDP",
+      "df": 1
+    },
+    {
+      "word": "FOC",
+      "df": 1
+    },
+    {
+      "word": "Fe",
+      "df": 1
+    },
+    {
+      "word": "Fife",
+      "df": 1
+    },
+    {
+      "word": "Figs",
+      "df": 1
+    },
+    {
+      "word": "Filtered",
+      "df": 1
+    },
+    {
+      "word": "Final",
+      "df": 1
+    },
+    {
+      "word": "Firm",
+      "df": 1
+    },
+    {
+      "word": "Fisher",
+      "df": 1
+    },
+    {
+      "word": "Following",
+      "df": 1
+    },
+    {
+      "word": "Fourier",
+      "df": 1
+    },
+    {
+      "word": "Frequency",
+      "df": 1
+    },
+    {
+      "word": "Full",
+      "df": 1
+    },
+    {
+      "word": "Function",
+      "df": 1
+    },
+    {
+      "word": "GNY",
+      "df": 1
+    },
+    {
+      "word": "GUE",
+      "df": 1
+    },
+    {
+      "word": "GUM",
+      "df": 1
+    },
+    {
+      "word": "Gemma",
+      "df": 1
+    },
+    {
+      "word": "Gram",
+      "df": 1
+    },
+    {
+      "word": "Green's",
+      "df": 1
+    },
+    {
+      "word": "Groves",
+      "df": 1
+    },
+    {
+      "word": "HARA",
+      "df": 1
+    },
+    {
+      "word": "HS",
+      "df": 1
+    },
+    {
+      "word": "Hausdorff",
+      "df": 1
+    },
+    {
+      "word": "Heisenberg",
+      "df": 1
+    },
+    {
+      "word": "Henry",
+      "df": 1
+    },
+    {
+      "word": "Herein",
+      "df": 1
+    },
+    {
+      "word": "Hernquist",
+      "df": 1
+    },
+    {
+      "word": "Hubbard",
+      "df": 1
+    },
+    {
+      "word": "Hyperinterpolation",
+      "df": 1
+    },
+    {
+      "word": "II",
+      "df": 1
+    },
+    {
+      "word": "ISM",
+      "df": 1
+    },
+    {
+      "word": "Independent",
+      "df": 1
+    },
+    {
+      "word": "Information",
+      "df": 1
+    },
+    {
+      "word": "Interestingly",
+      "df": 1
+    },
+    {
+      "word": "Intuitively",
+      "df": 1
+    },
+    {
+      "word": "Inzamamul",
+      "df": 1
+    },
+    {
+      "word": "JC",
+      "df": 1
+    },
+    {
+      "word": "JSC",
+      "df": 1
+    },
+    {
+      "word": "KH",
+      "df": 1
+    },
+    {
+      "word": "KL",
+      "df": 1
+    },
+    {
+      "word": "KP",
+      "df": 1
+    },
+    {
+      "word": "KP's",
+      "df": 1
+    },
+    {
+      "word": "KPP",
+      "df": 1
+    },
+    {
+      "word": "Kalnajs",
+      "df": 1
+    },
+    {
+      "word": "Keller",
+      "df": 1
+    },
+    {
+      "word": "Kyng",
+      "df": 1
+    },
+    {
+      "word": "LLM",
+      "df": 1
+    },
+    {
+      "word": "LMAGN",
+      "df": 1
+    },
+    {
+      "word": "LMAGNs",
+      "df": 1
+    },
+    {
+      "word": "Laboratory",
+      "df": 1
+    },
+    {
+      "word": "Laplacian",
+      "df": 1
+    },
+    {
+      "word": "Lastly",
+      "df": 1
+    },
+    {
+      "word": "Later",
+      "df": 1
+    },
+    {
+      "word": "Launch",
+      "df": 1
+    },
+    {
+      "word": "Lemma",
+      "df": 1
+    },
+    {
+      "word": "Lemmas",
+      "df": 1
+    },
+    {
+      "word": "Levy",
+      "df": 1
+    },
+    {
+      "word": "Lie",
+      "df": 1
+    },
+    {
+      "word": "Lipschitz",
+      "df": 1
+    },
+    {
+      "word": "Liu",
+      "df": 1
+    },
+    {
+      "word": "Llama",
+      "df": 1
+    },
+    {
+      "word": "LoS",
+      "df": 1
+    },
+    {
+      "word": "Lorentz",
+      "df": 1
+    },
+    {
+      "word": "Lowering",
+      "df": 1
+    },
+    {
+      "word": "MBL",
+      "df": 1
+    },
+    {
+      "word": "MSE",
+      "df": 1
+    },
+    {
+      "word": "Main",
+      "df": 1
+    },
+    {
+      "word": "Many",
+      "df": 1
+    },
+    {
+      "word": "Matrix",
+      "df": 1
+    },
+    {
+      "word": "MaxRL",
+      "df": 1
+    },
+    {
+      "word": "McLeod",
+      "df": 1
+    },
+    {
+      "word": "Metals",
+      "df": 1
+    },
+    {
+      "word": "Milky",
+      "df": 1
+    },
+    {
+      "word": "Molecular",
+      "df": 1
+    },
+    {
+      "word": "More",
+      "df": 1
+    },
+    {
+      "word": "NDP",
+      "df": 1
+    },
+    {
+      "word": "NWRMSLE",
+      "df": 1
+    },
+    {
+      "word": "Necessity",
+      "df": 1
+    },
+    {
+      "word": "Nekrasov",
+      "df": 1
+    },
+    {
+      "word": "Neumann",
+      "df": 1
+    },
+    {
+      "word": "Nijboer",
+      "df": 1
+    },
+    {
+      "word": "Nikodym",
+      "df": 1
+    },
+    {
+      "word": "Nikolskii",
+      "df": 1
+    },
+    {
+      "word": "Now",
+      "df": 1
+    },
+    {
+      "word": "Oberman",
+      "df": 1
+    },
+    {
+      "word": "Objective",
+      "df": 1
+    },
+    {
+      "word": "Okounkov",
+      "df": 1
+    },
+    {
+      "word": "Optimistic",
+      "df": 1
+    },
+    {
+      "word": "Ostriker",
+      "df": 1
+    },
+    {
+      "word": "Other",
+      "df": 1
+    },
+    {
+      "word": "Over",
+      "df": 1
+    },
+    {
+      "word": "Overall",
+      "df": 1
+    },
+    {
+      "word": "PP",
+      "df": 1
+    },
+    {
+      "word": "Pandharipande",
+      "df": 1
+    },
+    {
+      "word": "Parametrisation",
+      "df": 1
+    },
+    {
+      "word": "Particular",
+      "df": 1
+    },
+    {
+      "word": "Patlak",
+      "df": 1
+    },
+    {
+      "word": "Peres",
+      "df": 1
+    },
+    {
+      "word": "Phi",
+      "df": 1
+    },
+    {
+      "word": "Plummer",
+      "df": 1
+    },
+    {
+      "word": "Point",
+      "df": 1
+    },
+    {
+      "word": "Polish",
+      "df": 1
+    },
+    {
+      "word": "Pop",
+      "df": 1
+    },
+    {
+      "word": "Problem",
+      "df": 1
+    },
+    {
+      "word": "Qwen",
+      "df": 1
+    },
+    {
+      "word": "RHS",
+      "df": 1
+    },
+    {
+      "word": "RLOO",
+      "df": 1
+    },
+    {
+      "word": "Radon",
+      "df": 1
+    },
+    {
+      "word": "Randers",
+      "df": 1
+    },
+    {
+      "word": "Rao",
+      "df": 1
+    },
+    {
+      "word": "Refs",
+      "df": 1
+    },
+    {
+      "word": "Region",
+      "df": 1
+    },
+    {
+      "word": "Rejecting",
+      "df": 1
+    },
+    {
+      "word": "Related",
+      "df": 1
+    },
+    {
+      "word": "Rep",
+      "df": 1
+    },
+    {
+      "word": "Resources",
+      "df": 1
+    },
+    {
+      "word": "Results",
+      "df": 1
+    },
+    {
+      "word": "SA",
+      "df": 1
+    },
+    {
+      "word": "SDSS",
+      "df": 1
+    },
+    {
+      "word": "SE",
+      "df": 1
+    },
+    {
+      "word": "SZK",
+      "df": 1
+    },
+    {
+      "word": "Sachdeva",
+      "df": 1
+    },
+    {
+      "word": "SageMath",
+      "df": 1
+    },
+    {
+      "word": "Schramm",
+      "df": 1
+    },
+    {
+      "word": "Sec",
+      "df": 1
+    },
+    {
+      "word": "Segel",
+      "df": 1
+    },
+    {
+      "word": "Setting",
+      "df": 1
+    },
+    {
+      "word": "Shapley",
+      "df": 1
+    },
+    {
+      "word": "Sheffield",
+      "df": 1
+    },
+    {
+      "word": "Sigma",
+      "df": 1
+    },
+    {
+      "word": "Since",
+      "df": 1
+    },
+    {
+      "word": "Sinkhorn",
+      "df": 1
+    },
+    {
+      "word": "Smith",
+      "df": 1
+    },
+    {
+      "word": "Smoluchowski",
+      "df": 1
+    },
+    {
+      "word": "Specializing",
+      "df": 1
+    },
+    {
+      "word": "Specifically",
+      "df": 1
+    },
+    {
+      "word": "Spielman",
+      "df": 1
+    },
+    {
+      "word": "Spread",
+      "df": 1
+    },
+    {
+      "word": "Statistical",
+      "df": 1
+    },
+    {
+      "word": "Step",
+      "df": 1
+    },
+    {
+      "word": "Stratonovich",
+      "df": 1
+    },
+    {
+      "word": "Such",
+      "df": 1
+    },
+    {
+      "word": "TU",
+      "df": 1
+    },
+    {
+      "word": "Taking",
+      "df": 1
+    },
+    {
+      "word": "That",
+      "df": 1
+    },
+    {
+      "word": "There",
+      "df": 1
+    },
+    {
+      "word": "Thomas",
+      "df": 1
+    },
+    {
+      "word": "Total",
+      "df": 1
+    },
+    {
+      "word": "Tr",
+      "df": 1
+    },
+    {
+      "word": "Training",
+      "df": 1
+    },
+    {
+      "word": "Tullock",
+      "df": 1
+    },
+    {
+      "word": "Type",
+      "df": 1
+    },
+    {
+      "word": "UV",
+      "df": 1
+    },
+    {
+      "word": "Universe",
+      "df": 1
+    },
+    {
+      "word": "Up",
+      "df": 1
+    },
+    {
+      "word": "Upon",
+      "df": 1
+    },
+    {
+      "word": "Use",
+      "df": 1
+    },
+    {
+      "word": "VCG",
+      "df": 1
+    },
+    {
+      "word": "Viscosity",
+      "df": 1
+    },
+    {
+      "word": "Way",
+      "df": 1
+    },
+    {
+      "word": "Wette",
+      "df": 1
+    },
+    {
+      "word": "While",
+      "df": 1
+    },
+    {
+      "word": "Wilson",
+      "df": 1
+    },
+    {
+      "word": "XRISM",
+      "df": 1
+    },
+    {
+      "word": "XXZ",
+      "df": 1
+    },
+    {
+      "word": "ZTF",
+      "df": 1
+    },
+    {
+      "word": "aMT",
+      "df": 1
+    },
+    {
+      "word": "ablations",
+      "df": 1
+    },
+    {
+      "word": "absorb",
+      "df": 1
+    },
+    {
+      "word": "absorbing",
+      "df": 1
+    },
+    {
+      "word": "abundances",
+      "df": 1
+    },
+    {
+      "word": "accelerated",
+      "df": 1
+    },
+    {
+      "word": "accepts",
+      "df": 1
+    },
+    {
+      "word": "account",
+      "df": 1
+    },
+    {
+      "word": "accumulation",
+      "df": 1
+    },
+    {
+      "word": "accuracy",
+      "df": 1
+    },
+    {
+      "word": "achieving",
+      "df": 1
+    },
+    {
+      "word": "action",
+      "df": 1
+    },
+    {
+      "word": "acts",
+      "df": 1
+    },
+    {
+      "word": "actually",
+      "df": 1
+    },
+    {
+      "word": "adapt",
+      "df": 1
+    },
+    {
+      "word": "adapted",
+      "df": 1
+    },
+    {
+      "word": "addition",
+      "df": 1
+    },
+    {
+      "word": "address",
+      "df": 1
+    },
+    {
+      "word": "addressed",
+      "df": 1
+    },
+    {
+      "word": "adjacency",
+      "df": 1
+    },
+    {
+      "word": "adjusted",
+      "df": 1
+    },
+    {
+      "word": "admit",
+      "df": 1
+    },
+    {
+      "word": "advance",
+      "df": 1
+    },
+    {
+      "word": "aeSFT",
+      "df": 1
+    },
+    {
+      "word": "affects",
+      "df": 1
+    },
+    {
+      "word": "affine",
+      "df": 1
+    },
+    {
+      "word": "age",
+      "df": 1
+    },
+    {
+      "word": "agents",
+      "df": 1
+    },
+    {
+      "word": "agreement",
+      "df": 1
+    },
+    {
+      "word": "ahead",
+      "df": 1
+    },
+    {
+      "word": "aim",
+      "df": 1
+    },
+    {
+      "word": "algebraic",
+      "df": 1
+    },
+    {
+      "word": "algorithms",
+      "df": 1
+    },
+    {
+      "word": "align",
+      "df": 1
+    },
+    {
+      "word": "allow",
+      "df": 1
+    },
+    {
+      "word": "allowed",
+      "df": 1
+    },
+    {
+      "word": "alphabet",
+      "df": 1
+    },
+    {
+      "word": "alternative",
+      "df": 1
+    },
+    {
+      "word": "although",
+      "df": 1
+    },
+    {
+      "word": "amount",
+      "df": 1
+    },
+    {
+      "word": "amplitude",
+      "df": 1
+    },
+    {
+      "word": "analogous",
+      "df": 1
+    },
+    {
+      "word": "analogy",
+      "df": 1
+    },
+    {
+      "word": "analyses",
+      "df": 1
+    },
+    {
+      "word": "analyzed",
+      "df": 1
+    },
+    {
+      "word": "anomalously",
+      "df": 1
+    },
+    {
+      "word": "ante",
+      "df": 1
+    },
+    {
+      "word": "antithetic",
+      "df": 1
+    },
+    {
+      "word": "aperture",
+      "df": 1
+    },
+    {
+      "word": "appears",
+      "df": 1
+    },
+    {
+      "word": "appendix",
+      "df": 1
+    },
+    {
+      "word": "applying",
+      "df": 1
+    },
+    {
+      "word": "approaches",
+      "df": 1
+    },
+    {
+      "word": "appropriately",
+      "df": 1
+    },
+    {
+      "word": "approximate",
+      "df": 1
+    },
+    {
+      "word": "approximately",
+      "df": 1
+    },
+    {
+      "word": "approximations",
+      "df": 1
+    },
+    {
+      "word": "archive",
+      "df": 1
+    },
+    {
+      "word": "area",
+      "df": 1
+    },
+    {
+      "word": "arg",
+      "df": 1
+    },
+    {
+      "word": "arguing",
+      "df": 1
+    },
+    {
+      "word": "arithmetic",
+      "df": 1
+    },
+    {
+      "word": "arrow",
+      "df": 1
+    },
+    {
+      "word": "arrows",
+      "df": 1
+    },
+    {
+      "word": "art",
+      "df": 1
+    },
+    {
+      "word": "artifact",
+      "df": 1
+    },
+    {
+      "word": "assembled",
+      "df": 1
+    },
+    {
+      "word": "assertion",
+      "df": 1
+    },
+    {
+      "word": "asset",
+      "df": 1
+    },
+    {
+      "word": "assign",
+      "df": 1
+    },
+    {
+      "word": "assigned",
+      "df": 1
+    },
+    {
+      "word": "asymmetric",
+      "df": 1
+    },
+    {
+      "word": "asymptotics",
+      "df": 1
+    },
+    {
+      "word": "attaining",
+      "df": 1
+    },
+    {
+      "word": "attempt",
+      "df": 1
+    },
+    {
+      "word": "attractors",
+      "df": 1
+    },
+    {
+      "word": "attribution",
+      "df": 1
+    },
+    {
+      "word": "auction",
+      "df": 1
+    },
+    {
+      "word": "automatically",
+      "df": 1
+    },
+    {
+      "word": "auxiliary",
+      "df": 1
+    },
+    {
+      "word": "availability",
+      "df": 1
+    },
+    {
+      "word": "average",
+      "df": 1
+    },
+    {
+      "word": "averaged",
+      "df": 1
+    },
+    {
+      "word": "averages",
+      "df": 1
+    },
+    {
+      "word": "away",
+      "df": 1
+    },
+    {
+      "word": "axis",
+      "df": 1
+    },
+    {
+      "word": "back",
+      "df": 1
+    },
+    {
+      "word": "bacteria",
+      "df": 1
+    },
+    {
+      "word": "bacterial",
+      "df": 1
+    },
+    {
+      "word": "balance",
+      "df": 1
+    },
+    {
+      "word": "bandwidth",
+      "df": 1
+    },
+    {
+      "word": "barrier",
+      "df": 1
+    },
+    {
+      "word": "bases",
+      "df": 1
+    },
+    {
+      "word": "batch",
+      "df": 1
+    },
+    {
+      "word": "battlefield",
+      "df": 1
+    },
+    {
+      "word": "battlefields",
+      "df": 1
+    },
+    {
+      "word": "bct's",
+      "df": 1
+    },
+    {
+      "word": "behavioral",
+      "df": 1
+    },
+    {
+      "word": "beled",
+      "df": 1
+    },
+    {
+      "word": "belongs",
+      "df": 1
+    },
+    {
+      "word": "best",
+      "df": 1
+    },
+    {
+      "word": "bet",
+      "df": 1
+    },
+    {
+      "word": "betting",
+      "df": 1
+    },
+    {
+      "word": "beyond",
+      "df": 1
+    },
+    {
+      "word": "bidders",
+      "df": 1
+    },
+    {
+      "word": "big",
+      "df": 1
+    },
+    {
+      "word": "bijection",
+      "df": 1
+    },
+    {
+      "word": "bijective",
+      "df": 1
+    },
+    {
+      "word": "bilinear",
+      "df": 1
+    },
+    {
+      "word": "bin",
+      "df": 1
+    },
+    {
+      "word": "binary",
+      "df": 1
+    },
+    {
+      "word": "biorthogonal",
+      "df": 1
+    },
+    {
+      "word": "biorthogonality",
+      "df": 1
+    },
+    {
+      "word": "bistable",
+      "df": 1
+    },
+    {
+      "word": "black",
+      "df": 1
+    },
+    {
+      "word": "blocklength",
+      "df": 1
+    },
+    {
+      "word": "blowup",
+      "df": 1
+    },
+    {
+      "word": "blueshifted",
+      "df": 1
+    },
+    {
+      "word": "blueward",
+      "df": 1
+    },
+    {
+      "word": "borrowing",
+      "df": 1
+    },
+    {
+      "word": "bottleneck",
+      "df": 1
+    },
+    {
+      "word": "bottom",
+      "df": 1
+    },
+    {
+      "word": "boundedly",
+      "df": 1
+    },
+    {
+      "word": "boxcounting",
+      "df": 1
+    },
+    {
+      "word": "bridge",
+      "df": 1
+    },
+    {
+      "word": "brief",
+      "df": 1
+    },
+    {
+      "word": "briefly",
+      "df": 1
+    },
+    {
+      "word": "budgets",
+      "df": 1
+    },
+    {
+      "word": "built",
+      "df": 1
+    },
+    {
+      "word": "bundles",
+      "df": 1
+    },
+    {
+      "word": "cL",
+      "df": 1
+    },
+    {
+      "word": "calculate",
+      "df": 1
+    },
+    {
+      "word": "calculation",
+      "df": 1
+    },
+    {
+      "word": "calibrated",
+      "df": 1
+    },
+    {
+      "word": "campaign",
+      "df": 1
+    },
+    {
+      "word": "campus",
+      "df": 1
+    },
+    {
+      "word": "cancellation",
+      "df": 1
+    },
+    {
+      "word": "captured",
+      "df": 1
+    },
+    {
+      "word": "carried",
+      "df": 1
+    },
+    {
+      "word": "carries",
+      "df": 1
+    },
+    {
+      "word": "casino",
+      "df": 1
+    },
+    {
+      "word": "catalogues",
+      "df": 1
+    },
+    {
+      "word": "catalysts",
+      "df": 1
+    },
+    {
+      "word": "cavity",
+      "df": 1
+    },
+    {
+      "word": "cell",
+      "df": 1
+    },
+    {
+      "word": "cent",
+      "df": 1
+    },
+    {
+      "word": "centrality",
+      "df": 1
+    },
+    {
+      "word": "cert",
+      "df": 1
+    },
+    {
+      "word": "certainly",
+      "df": 1
+    },
+    {
+      "word": "certainty",
+      "df": 1
+    },
+    {
+      "word": "certified",
+      "df": 1
+    },
+    {
+      "word": "chains",
+      "df": 1
+    },
+    {
+      "word": "changes",
+      "df": 1
+    },
+    {
+      "word": "channel",
+      "df": 1
+    },
+    {
+      "word": "channels",
+      "df": 1
+    },
+    {
+      "word": "characterise",
+      "df": 1
+    },
+    {
+      "word": "characteristic",
+      "df": 1
+    },
+    {
+      "word": "characterization",
+      "df": 1
+    },
+    {
+      "word": "characterizations",
+      "df": 1
+    },
+    {
+      "word": "charged",
+      "df": 1
+    },
+    {
+      "word": "checked",
+      "df": 1
+    },
+    {
+      "word": "checkpoint",
+      "df": 1
+    },
+    {
+      "word": "chemical",
+      "df": 1
+    },
+    {
+      "word": "chiral",
+      "df": 1
+    },
+    {
+      "word": "chord",
+      "df": 1
+    },
+    {
+      "word": "circ",
+      "df": 1
+    },
+    {
+      "word": "claim",
+      "df": 1
+    },
+    {
+      "word": "clarity",
+      "df": 1
+    },
+    {
+      "word": "classical",
+      "df": 1
+    },
+    {
+      "word": "clean",
+      "df": 1
+    },
+    {
+      "word": "closure",
+      "df": 1
+    },
+    {
+      "word": "closures",
+      "df": 1
+    },
+    {
+      "word": "codes",
+      "df": 1
+    },
+    {
+      "word": "coding",
+      "df": 1
+    },
+    {
+      "word": "coefficients",
+      "df": 1
+    },
+    {
+      "word": "coincides",
+      "df": 1
+    },
+    {
+      "word": "collapse",
+      "df": 1
+    },
+    {
+      "word": "collection",
+      "df": 1
+    },
+    {
+      "word": "collective",
+      "df": 1
+    },
+    {
+      "word": "collisionless",
+      "df": 1
+    },
+    {
+      "word": "column",
+      "df": 1
+    },
+    {
+      "word": "combining",
+      "df": 1
+    },
+    {
+      "word": "coming",
+      "df": 1
+    },
+    {
+      "word": "compared",
+      "df": 1
+    },
+    {
+      "word": "compensated",
+      "df": 1
+    },
+    {
+      "word": "compensation",
+      "df": 1
+    },
+    {
+      "word": "compensator",
+      "df": 1
+    },
+    {
+      "word": "compiled",
+      "df": 1
+    },
+    {
+      "word": "complement",
+      "df": 1
+    },
+    {
+      "word": "complete",
+      "df": 1
+    },
+    {
+      "word": "completed",
+      "df": 1
+    },
+    {
+      "word": "completely",
+      "df": 1
+    },
+    {
+      "word": "complex",
+      "df": 1
+    },
+    {
+      "word": "complexity",
+      "df": 1
+    },
+    {
+      "word": "composition",
+      "df": 1
+    },
+    {
+      "word": "compresses",
+      "df": 1
+    },
+    {
+      "word": "computation",
+      "df": 1
+    },
+    {
+      "word": "computational",
+      "df": 1
+    },
+    {
+      "word": "computations",
+      "df": 1
+    },
+    {
+      "word": "compute",
+      "df": 1
+    },
+    {
+      "word": "concavity",
+      "df": 1
+    },
+    {
+      "word": "concentrate",
+      "df": 1
+    },
+    {
+      "word": "concentration",
+      "df": 1
+    },
+    {
+      "word": "concept",
+      "df": 1
+    },
+    {
+      "word": "conceptually",
+      "df": 1
+    },
+    {
+      "word": "concerned",
+      "df": 1
+    },
+    {
+      "word": "conclude",
+      "df": 1
+    },
+    {
+      "word": "concrete",
+      "df": 1
+    },
+    {
+      "word": "conditionally",
+      "df": 1
+    },
+    {
+      "word": "conditioning",
+      "df": 1
+    },
+    {
+      "word": "configured",
+      "df": 1
+    },
+    {
+      "word": "confirming",
+      "df": 1
+    },
+    {
+      "word": "confirms",
+      "df": 1
+    },
+    {
+      "word": "connected",
+      "df": 1
+    },
+    {
+      "word": "consequently",
+      "df": 1
+    },
+    {
+      "word": "conservation",
+      "df": 1
+    },
+    {
+      "word": "consider",
+      "df": 1
+    },
+    {
+      "word": "considerably",
+      "df": 1
+    },
+    {
+      "word": "consistency",
+      "df": 1
+    },
+    {
+      "word": "constituents",
+      "df": 1
+    },
+    {
+      "word": "consult",
+      "df": 1
+    },
+    {
+      "word": "consumer",
+      "df": 1
+    },
+    {
+      "word": "contact",
+      "df": 1
+    },
+    {
+      "word": "contained",
+      "df": 1
+    },
+    {
+      "word": "containing",
+      "df": 1
+    },
+    {
+      "word": "context",
+      "df": 1
+    },
+    {
+      "word": "continue",
+      "df": 1
+    },
+    {
+      "word": "continuum",
+      "df": 1
+    },
+    {
+      "word": "contractor",
+      "df": 1
+    },
+    {
+      "word": "contracts",
+      "df": 1
+    },
+    {
+      "word": "contribute",
+      "df": 1
+    },
+    {
+      "word": "contributes",
+      "df": 1
+    },
+    {
+      "word": "contribution",
+      "df": 1
+    },
+    {
+      "word": "controls",
+      "df": 1
+    },
+    {
+      "word": "cool",
+      "df": 1
+    },
+    {
+      "word": "cooled",
+      "df": 1
+    },
+    {
+      "word": "cooling",
+      "df": 1
+    },
+    {
+      "word": "corner",
+      "df": 1
+    },
+    {
+      "word": "corpus",
+      "df": 1
+    },
+    {
+      "word": "correctly",
+      "df": 1
+    },
+    {
+      "word": "correlates",
+      "df": 1
+    },
+    {
+      "word": "coset",
+      "df": 1
+    },
+    {
+      "word": "cosmic",
+      "df": 1
+    },
+    {
+      "word": "counts",
+      "df": 1
+    },
+    {
+      "word": "couple",
+      "df": 1
+    },
+    {
+      "word": "coupled",
+      "df": 1
+    },
+    {
+      "word": "coupling",
+      "df": 1
+    },
+    {
+      "word": "coupon",
+      "df": 1
+    },
+    {
+      "word": "coverage",
+      "df": 1
+    },
+    {
+      "word": "covering",
+      "df": 1
+    },
+    {
+      "word": "crosses",
+      "df": 1
+    },
+    {
+      "word": "crossing",
+      "df": 1
+    },
+    {
+      "word": "crucial",
+      "df": 1
+    },
+    {
+      "word": "cubature",
+      "df": 1
+    },
+    {
+      "word": "cube",
+      "df": 1
+    },
+    {
+      "word": "curve",
+      "df": 1
+    },
+    {
+      "word": "curves",
+      "df": 1
+    },
+    {
+      "word": "cutoff",
+      "df": 1
+    },
+    {
+      "word": "dQ",
+      "df": 1
+    },
+    {
+      "word": "dW",
+      "df": 1
+    },
+    {
+      "word": "dashed",
+      "df": 1
+    },
+    {
+      "word": "database",
+      "df": 1
+    },
+    {
+      "word": "dataset",
+      "df": 1
+    },
+    {
+      "word": "de",
+      "df": 1
+    },
+    {
+      "word": "decay",
+      "df": 1
+    },
+    {
+      "word": "decompositions",
+      "df": 1
+    },
+    {
+      "word": "decoupling",
+      "df": 1
+    },
+    {
+      "word": "decrement",
+      "df": 1
+    },
+    {
+      "word": "deeply",
+      "df": 1
+    },
+    {
+      "word": "defect",
+      "df": 1
+    },
+    {
+      "word": "define",
+      "df": 1
+    },
+    {
+      "word": "defining",
+      "df": 1
+    },
+    {
+      "word": "deformation",
+      "df": 1
+    },
+    {
+      "word": "deleting",
+      "df": 1
+    },
+    {
+      "word": "demonstrate",
+      "df": 1
+    },
+    {
+      "word": "denote",
+      "df": 1
+    },
+    {
+      "word": "dense",
+      "df": 1
+    },
+    {
+      "word": "densest",
+      "df": 1
+    },
+    {
+      "word": "densities",
+      "df": 1
+    },
+    {
+      "word": "depends",
+      "df": 1
+    },
+    {
+      "word": "depleted",
+      "df": 1
+    },
+    {
+      "word": "depth",
+      "df": 1
+    },
+    {
+      "word": "derivatives",
+      "df": 1
+    },
+    {
+      "word": "description",
+      "df": 1
+    },
+    {
+      "word": "design",
+      "df": 1
+    },
+    {
+      "word": "despite",
+      "df": 1
+    },
+    {
+      "word": "destruction",
+      "df": 1
+    },
+    {
+      "word": "detailed",
+      "df": 1
+    },
+    {
+      "word": "detected",
+      "df": 1
+    },
+    {
+      "word": "detection",
+      "df": 1
+    },
+    {
+      "word": "detector",
+      "df": 1
+    },
+    {
+      "word": "determines",
+      "df": 1
+    },
+    {
+      "word": "detuning",
+      "df": 1
+    },
+    {
+      "word": "devised",
+      "df": 1
+    },
+    {
+      "word": "devoted",
+      "df": 1
+    },
+    {
+      "word": "diagonal",
+      "df": 1
+    },
+    {
+      "word": "diagonalization",
+      "df": 1
+    },
+    {
+      "word": "did",
+      "df": 1
+    },
+    {
+      "word": "differences",
+      "df": 1
+    },
+    {
+      "word": "differentiate",
+      "df": 1
+    },
+    {
+      "word": "differently",
+      "df": 1
+    },
+    {
+      "word": "difficult",
+      "df": 1
+    },
+    {
+      "word": "difficulty",
+      "df": 1
+    },
+    {
+      "word": "disaster",
+      "df": 1
+    },
+    {
+      "word": "disc",
+      "df": 1
+    },
+    {
+      "word": "discounted",
+      "df": 1
+    },
+    {
+      "word": "discourages",
+      "df": 1
+    },
+    {
+      "word": "discretizes",
+      "df": 1
+    },
+    {
+      "word": "discussed",
+      "df": 1
+    },
+    {
+      "word": "disjoint",
+      "df": 1
+    },
+    {
+      "word": "disk",
+      "df": 1
+    },
+    {
+      "word": "dispersed",
+      "df": 1
+    },
+    {
+      "word": "displayed",
+      "df": 1
+    },
+    {
+      "word": "disproportionately",
+      "df": 1
+    },
+    {
+      "word": "dissipation",
+      "df": 1
+    },
+    {
+      "word": "dist",
+      "df": 1
+    },
+    {
+      "word": "distinct",
+      "df": 1
+    },
+    {
+      "word": "divides",
+      "df": 1
+    },
+    {
+      "word": "documents",
+      "df": 1
+    },
+    {
+      "word": "dollars",
+      "df": 1
+    },
+    {
+      "word": "dominated",
+      "df": 1
+    },
+    {
+      "word": "dots",
+      "df": 1
+    },
+    {
+      "word": "dotted",
+      "df": 1
+    },
+    {
+      "word": "downarrow",
+      "df": 1
+    },
+    {
+      "word": "downstream",
+      "df": 1
+    },
+    {
+      "word": "downward",
+      "df": 1
+    },
+    {
+      "word": "drags",
+      "df": 1
+    },
+    {
+      "word": "draw",
+      "df": 1
+    },
+    {
+      "word": "draws",
+      "df": 1
+    },
+    {
+      "word": "duality",
+      "df": 1
+    },
+    {
+      "word": "dynamic",
+      "df": 1
+    },
+    {
+      "word": "dynamically",
+      "df": 1
+    },
+    {
+      "word": "early",
+      "df": 1
+    },
+    {
+      "word": "ease",
+      "df": 1
+    },
+    {
+      "word": "easier",
+      "df": 1
+    },
+    {
+      "word": "easy",
+      "df": 1
+    },
+    {
+      "word": "economy",
+      "df": 1
+    },
+    {
+      "word": "edge",
+      "df": 1
+    },
+    {
+      "word": "effects",
+      "df": 1
+    },
+    {
+      "word": "efficiency",
+      "df": 1
+    },
+    {
+      "word": "efficiently",
+      "df": 1
+    },
+    {
+      "word": "eighteen",
+      "df": 1
+    },
+    {
+      "word": "ejection",
+      "df": 1
+    },
+    {
+      "word": "el",
+      "df": 1
+    },
+    {
+      "word": "election",
+      "df": 1
+    },
+    {
+      "word": "emerges",
+      "df": 1
+    },
+    {
+      "word": "emphasize",
+      "df": 1
+    },
+    {
+      "word": "empirically",
+      "df": 1
+    },
+    {
+      "word": "employ",
+      "df": 1
+    },
+    {
+      "word": "encoded",
+      "df": 1
+    },
+    {
+      "word": "encoder",
+      "df": 1
+    },
+    {
+      "word": "ensemble",
+      "df": 1
+    },
+    {
+      "word": "ent",
+      "df": 1
+    },
+    {
+      "word": "entail",
+      "df": 1
+    },
+    {
+      "word": "entrains",
+      "df": 1
+    },
+    {
+      "word": "entries",
+      "df": 1
+    },
+    {
+      "word": "entry",
+      "df": 1
+    },
+    {
+      "word": "episodes",
+      "df": 1
+    },
+    {
+      "word": "epoch",
+      "df": 1
+    },
+    {
+      "word": "epsilon",
+      "df": 1
+    },
+    {
+      "word": "equality",
+      "df": 1
+    },
+    {
+      "word": "equalization",
+      "df": 1
+    },
+    {
+      "word": "equally",
+      "df": 1
+    },
+    {
+      "word": "equivalents",
+      "df": 1
+    },
+    {
+      "word": "erasure",
+      "df": 1
+    },
+    {
+      "word": "ergotropy",
+      "df": 1
+    },
+    {
+      "word": "errors",
+      "df": 1
+    },
+    {
+      "word": "especially",
+      "df": 1
+    },
+    {
+      "word": "established",
+      "df": 1
+    },
+    {
+      "word": "establishing",
+      "df": 1
+    },
+    {
+      "word": "estimating",
+      "df": 1
+    },
+    {
+      "word": "estimation",
+      "df": 1
+    },
+    {
+      "word": "evaluate",
+      "df": 1
+    },
+    {
+      "word": "evening",
+      "df": 1
+    },
+    {
+      "word": "evidence",
+      "df": 1
+    },
+    {
+      "word": "evolves",
+      "df": 1
+    },
+    {
+      "word": "exception",
+      "df": 1
+    },
+    {
+      "word": "excited",
+      "df": 1
+    },
+    {
+      "word": "exclude",
+      "df": 1
+    },
+    {
+      "word": "exclusive",
+      "df": 1
+    },
+    {
+      "word": "exhaust",
+      "df": 1
+    },
+    {
+      "word": "exhausting",
+      "df": 1
+    },
+    {
+      "word": "exhibits",
+      "df": 1
+    },
+    {
+      "word": "exists",
+      "df": 1
+    },
+    {
+      "word": "exp",
+      "df": 1
+    },
+    {
+      "word": "expansion",
+      "df": 1
+    },
+    {
+      "word": "expansions",
+      "df": 1
+    },
+    {
+      "word": "explain",
+      "df": 1
+    },
+    {
+      "word": "explained",
+      "df": 1
+    },
+    {
+      "word": "explanation",
+      "df": 1
+    },
+    {
+      "word": "exploit",
+      "df": 1
+    },
+    {
+      "word": "exploiting",
+      "df": 1
+    },
+    {
+      "word": "expressions",
+      "df": 1
+    },
+    {
+      "word": "extends",
+      "df": 1
+    },
+    {
+      "word": "extension",
+      "df": 1
+    },
+    {
+      "word": "extensions",
+      "df": 1
+    },
+    {
+      "word": "extensively",
+      "df": 1
+    },
+    {
+      "word": "extent",
+      "df": 1
+    },
+    {
+      "word": "extinct",
+      "df": 1
+    },
+    {
+      "word": "extracted",
+      "df": 1
+    },
+    {
+      "word": "extremal",
+      "df": 1
+    },
+    {
+      "word": "fact",
+      "df": 1
+    },
+    {
+      "word": "factor",
+      "df": 1
+    },
+    {
+      "word": "factorially",
+      "df": 1
+    },
+    {
+      "word": "factorisation",
+      "df": 1
+    },
+    {
+      "word": "factors",
+      "df": 1
+    },
+    {
+      "word": "fails",
+      "df": 1
+    },
+    {
+      "word": "familiar",
+      "df": 1
+    },
+    {
+      "word": "families",
+      "df": 1
+    },
+    {
+      "word": "fast",
+      "df": 1
+    },
+    {
+      "word": "favors",
+      "df": 1
+    },
+    {
+      "word": "fcc",
+      "df": 1
+    },
+    {
+      "word": "fearful",
+      "df": 1
+    },
+    {
+      "word": "feasibility",
+      "df": 1
+    },
+    {
+      "word": "features",
+      "df": 1
+    },
+    {
+      "word": "fermions",
+      "df": 1
+    },
+    {
+      "word": "fewer",
+      "df": 1
+    },
+    {
+      "word": "fictitious",
+      "df": 1
+    },
+    {
+      "word": "fiducial",
+      "df": 1
+    },
+    {
+      "word": "fields",
+      "df": 1
+    },
+    {
+      "word": "figures",
+      "df": 1
+    },
+    {
+      "word": "filter",
+      "df": 1
+    },
+    {
+      "word": "fin",
+      "df": 1
+    },
+    {
+      "word": "finder",
+      "df": 1
+    },
+    {
+      "word": "fine",
+      "df": 1
+    },
+    {
+      "word": "fit",
+      "df": 1
+    },
+    {
+      "word": "fix",
+      "df": 1
+    },
+    {
+      "word": "fixing",
+      "df": 1
+    },
+    {
+      "word": "flight",
+      "df": 1
+    },
+    {
+      "word": "flip",
+      "df": 1
+    },
+    {
+      "word": "formal",
+      "df": 1
+    },
+    {
+      "word": "format",
+      "df": 1
+    },
+    {
+      "word": "found",
+      "df": 1
+    },
+    {
+      "word": "foundation",
+      "df": 1
+    },
+    {
+      "word": "fourth",
+      "df": 1
+    },
+    {
+      "word": "fraction",
+      "df": 1
+    },
+    {
+      "word": "fractions",
+      "df": 1
+    },
+    {
+      "word": "framework",
+      "df": 1
+    },
+    {
+      "word": "frequencies",
+      "df": 1
+    },
+    {
+      "word": "frequency",
+      "df": 1
+    },
+    {
+      "word": "front's",
+      "df": 1
+    },
+    {
+      "word": "future",
+      "df": 1
+    },
+    {
+      "word": "gambler",
+      "df": 1
+    },
+    {
+      "word": "games",
+      "df": 1
+    },
+    {
+      "word": "gapless",
+      "df": 1
+    },
+    {
+      "word": "generality",
+      "df": 1
+    },
+    {
+      "word": "generalizations",
+      "df": 1
+    },
+    {
+      "word": "generally",
+      "df": 1
+    },
+    {
+      "word": "generate",
+      "df": 1
+    },
+    {
+      "word": "generates",
+      "df": 1
+    },
+    {
+      "word": "generating",
+      "df": 1
+    },
+    {
+      "word": "geodesic",
+      "df": 1
+    },
+    {
+      "word": "geometries",
+      "df": 1
+    },
+    {
+      "word": "get",
+      "df": 1
+    },
+    {
+      "word": "global",
+      "df": 1
+    },
+    {
+      "word": "globally",
+      "df": 1
+    },
+    {
+      "word": "go",
+      "df": 1
+    },
+    {
+      "word": "goal",
+      "df": 1
+    },
+    {
+      "word": "going",
+      "df": 1
+    },
+    {
+      "word": "good",
+      "df": 1
+    },
+    {
+      "word": "grain",
+      "df": 1
+    },
+    {
+      "word": "grains",
+      "df": 1
+    },
+    {
+      "word": "graph",
+      "df": 1
+    },
+    {
+      "word": "graphs",
+      "df": 1
+    },
+    {
+      "word": "greater",
+      "df": 1
+    },
+    {
+      "word": "gross",
+      "df": 1
+    },
+    {
+      "word": "groups",
+      "df": 1
+    },
+    {
+      "word": "grow",
+      "df": 1
+    },
+    {
+      "word": "growing",
+      "df": 1
+    },
+    {
+      "word": "gtrsim",
+      "df": 1
+    },
+    {
+      "word": "halos",
+      "df": 1
+    },
+    {
+      "word": "hard",
+      "df": 1
+    },
+    {
+      "word": "harmonic",
+      "df": 1
+    },
+    {
+      "word": "he",
+      "df": 1
+    },
+    {
+      "word": "heat",
+      "df": 1
+    },
+    {
+      "word": "heavier",
+      "df": 1
+    },
+    {
+      "word": "help",
+      "df": 1
+    },
+    {
+      "word": "helpful",
+      "df": 1
+    },
+    {
+      "word": "highlight",
+      "df": 1
+    },
+    {
+      "word": "highly",
+      "df": 1
+    },
+    {
+      "word": "hindsight",
+      "df": 1
+    },
+    {
+      "word": "hire",
+      "df": 1
+    },
+    {
+      "word": "hired",
+      "df": 1
+    },
+    {
+      "word": "hires",
+      "df": 1
+    },
+    {
+      "word": "hit",
+      "df": 1
+    },
+    {
+      "word": "hole",
+      "df": 1
+    },
+    {
+      "word": "homomorphism",
+      "df": 1
+    },
+    {
+      "word": "homotopy",
+      "df": 1
+    },
+    {
+      "word": "honeycomb",
+      "df": 1
+    },
+    {
+      "word": "horizons",
+      "df": 1
+    },
+    {
+      "word": "host",
+      "df": 1
+    },
+    {
+      "word": "hot",
+      "df": 1
+    },
+    {
+      "word": "hypergraph",
+      "df": 1
+    },
+    {
+      "word": "hyperinterpolation",
+      "df": 1
+    },
+    {
+      "word": "hypotheses",
+      "df": 1
+    },
+    {
+      "word": "hypothesis",
+      "df": 1
+    },
+    {
+      "word": "identical",
+      "df": 1
+    },
+    {
+      "word": "identification",
+      "df": 1
+    },
+    {
+      "word": "identifies",
+      "df": 1
+    },
+    {
+      "word": "illustrating",
+      "df": 1
+    },
+    {
+      "word": "images",
+      "df": 1
+    },
+    {
+      "word": "immediate",
+      "df": 1
+    },
+    {
+      "word": "immediately",
+      "df": 1
+    },
+    {
+      "word": "immune",
+      "df": 1
+    },
+    {
+      "word": "implementation",
+      "df": 1
+    },
+    {
+      "word": "implemented",
+      "df": 1
+    },
+    {
+      "word": "implements",
+      "df": 1
+    },
+    {
+      "word": "implicit",
+      "df": 1
+    },
+    {
+      "word": "implies",
+      "df": 1
+    },
+    {
+      "word": "impose",
+      "df": 1
+    },
+    {
+      "word": "improve",
+      "df": 1
+    },
+    {
+      "word": "improving",
+      "df": 1
+    },
+    {
+      "word": "incentive",
+      "df": 1
+    },
+    {
+      "word": "including",
+      "df": 1
+    },
+    {
+      "word": "income",
+      "df": 1
+    },
+    {
+      "word": "independently",
+      "df": 1
+    },
+    {
+      "word": "index",
+      "df": 1
+    },
+    {
+      "word": "indicates",
+      "df": 1
+    },
+    {
+      "word": "indicating",
+      "df": 1
+    },
+    {
+      "word": "indices",
+      "df": 1
+    },
+    {
+      "word": "indifferent",
+      "df": 1
+    },
+    {
+      "word": "indirect",
+      "df": 1
+    },
+    {
+      "word": "indistinguishable",
+      "df": 1
+    },
+    {
+      "word": "induced",
+      "df": 1
+    },
+    {
+      "word": "inference",
+      "df": 1
+    },
+    {
+      "word": "infimal",
+      "df": 1
+    },
+    {
+      "word": "influx",
+      "df": 1
+    },
+    {
+      "word": "informative",
+      "df": 1
+    },
+    {
+      "word": "ingestion",
+      "df": 1
+    },
+    {
+      "word": "injection",
+      "df": 1
+    },
+    {
+      "word": "inner",
+      "df": 1
+    },
+    {
+      "word": "inradius",
+      "df": 1
+    },
+    {
+      "word": "insertion",
+      "df": 1
+    },
+    {
+      "word": "instances",
+      "df": 1
+    },
+    {
+      "word": "integrability",
+      "df": 1
+    },
+    {
+      "word": "intensity",
+      "df": 1
+    },
+    {
+      "word": "interest",
+      "df": 1
+    },
+    {
+      "word": "interface",
+      "df": 1
+    },
+    {
+      "word": "interior",
+      "df": 1
+    },
+    {
+      "word": "interpolate",
+      "df": 1
+    },
+    {
+      "word": "interpolation",
+      "df": 1
+    },
+    {
+      "word": "interpret",
+      "df": 1
+    },
+    {
+      "word": "interpretation",
+      "df": 1
+    },
+    {
+      "word": "interpretations",
+      "df": 1
+    },
+    {
+      "word": "intersection",
+      "df": 1
+    },
+    {
+      "word": "intranight",
+      "df": 1
+    },
+    {
+      "word": "introduce",
+      "df": 1
+    },
+    {
+      "word": "introduces",
+      "df": 1
+    },
+    {
+      "word": "invariants",
+      "df": 1
+    },
+    {
+      "word": "inverse",
+      "df": 1
+    },
+    {
+      "word": "invest",
+      "df": 1
+    },
+    {
+      "word": "irrelevant",
+      "df": 1
+    },
+    {
+      "word": "isolate",
+      "df": 1
+    },
+    {
+      "word": "isolated",
+      "df": 1
+    },
+    {
+      "word": "isolates",
+      "df": 1
+    },
+    {
+      "word": "issue",
+      "df": 1
+    },
+    {
+      "word": "item",
+      "df": 1
+    },
+    {
+      "word": "iteratively",
+      "df": 1
+    },
+    {
+      "word": "job",
+      "df": 1
+    },
+    {
+      "word": "jump",
+      "df": 1
+    },
+    {
+      "word": "jumps",
+      "df": 1
+    },
+    {
+      "word": "just",
+      "df": 1
+    },
+    {
+      "word": "kernels",
+      "df": 1
+    },
+    {
+      "word": "kinematic",
+      "df": 1
+    },
+    {
+      "word": "knob",
+      "df": 1
+    },
+    {
+      "word": "la",
+      "df": 1
+    },
+    {
+      "word": "labels",
+      "df": 1
+    },
+    {
+      "word": "labor",
+      "df": 1
+    },
+    {
+      "word": "lack",
+      "df": 1
+    },
+    {
+      "word": "landscape",
+      "df": 1
+    },
+    {
+      "word": "langle",
+      "df": 1
+    },
+    {
+      "word": "large",
+      "df": 1
+    },
+    {
+      "word": "largely",
+      "df": 1
+    },
+    {
+      "word": "late",
+      "df": 1
+    },
+    {
+      "word": "latent",
+      "df": 1
+    },
+    {
+      "word": "lattices",
+      "df": 1
+    },
+    {
+      "word": "layers",
+      "df": 1
+    },
+    {
+      "word": "leakage",
+      "df": 1
+    },
+    {
+      "word": "learn",
+      "df": 1
+    },
+    {
+      "word": "learned",
+      "df": 1
+    },
+    {
+      "word": "leaves",
+      "df": 1
+    },
+    {
+      "word": "led",
+      "df": 1
+    },
+    {
+      "word": "lengths",
+      "df": 1
+    },
+    {
+      "word": "let",
+      "df": 1
+    },
+    {
+      "word": "levels",
+      "df": 1
+    },
+    {
+      "word": "lie",
+      "df": 1
+    },
+    {
+      "word": "lift",
+      "df": 1
+    },
+    {
+      "word": "light",
+      "df": 1
+    },
+    {
+      "word": "like",
+      "df": 1
+    },
+    {
+      "word": "limiting",
+      "df": 1
+    },
+    {
+      "word": "limits",
+      "df": 1
+    },
+    {
+      "word": "linearly",
+      "df": 1
+    },
+    {
+      "word": "lines",
+      "df": 1
+    },
+    {
+      "word": "little",
+      "df": 1
+    },
+    {
+      "word": "loading",
+      "df": 1
+    },
+    {
+      "word": "location",
+      "df": 1
+    },
+    {
+      "word": "logarithmically",
+      "df": 1
+    },
+    {
+      "word": "logged",
+      "df": 1
+    },
+    {
+      "word": "logicals",
+      "df": 1
+    },
+    {
+      "word": "look",
+      "df": 1
+    },
+    {
+      "word": "loses",
+      "df": 1
+    },
+    {
+      "word": "luminosity",
+      "df": 1
+    },
+    {
+      "word": "magnetic",
+      "df": 1
+    },
+    {
+      "word": "magnitude",
+      "df": 1
+    },
+    {
+      "word": "majority",
+      "df": 1
+    },
+    {
+      "word": "mapping",
+      "df": 1
+    },
+    {
+      "word": "matching",
+      "df": 1
+    },
+    {
+      "word": "mathematical",
+      "df": 1
+    },
+    {
+      "word": "mathscr",
+      "df": 1
+    },
+    {
+      "word": "matrices",
+      "df": 1
+    },
+    {
+      "word": "maximal",
+      "df": 1
+    },
+    {
+      "word": "maximizes",
+      "df": 1
+    },
+    {
+      "word": "measurements",
+      "df": 1
+    },
+    {
+      "word": "mechanisms",
+      "df": 1
+    },
+    {
+      "word": "member",
+      "df": 1
+    },
+    {
+      "word": "menu",
+      "df": 1
+    },
+    {
+      "word": "merger",
+      "df": 1
+    },
+    {
+      "word": "metallicities",
+      "df": 1
+    },
+    {
+      "word": "metals",
+      "df": 1
+    },
+    {
+      "word": "methodology",
+      "df": 1
+    },
+    {
+      "word": "metrics",
+      "df": 1
+    },
+    {
+      "word": "mid",
+      "df": 1
+    },
+    {
+      "word": "middle",
+      "df": 1
+    },
+    {
+      "word": "midplane",
+      "df": 1
+    },
+    {
+      "word": "midrange",
+      "df": 1
+    },
+    {
+      "word": "min",
+      "df": 1
+    },
+    {
+      "word": "minimise",
+      "df": 1
+    },
+    {
+      "word": "minimize",
+      "df": 1
+    },
+    {
+      "word": "minimizing",
+      "df": 1
+    },
+    {
+      "word": "minor",
+      "df": 1
+    },
+    {
+      "word": "mirror",
+      "df": 1
+    },
+    {
+      "word": "miscellaneous",
+      "df": 1
+    },
+    {
+      "word": "mixed",
+      "df": 1
+    },
+    {
+      "word": "mod",
+      "df": 1
+    },
+    {
+      "word": "modes",
+      "df": 1
+    },
+    {
+      "word": "modification",
+      "df": 1
+    },
+    {
+      "word": "molecule",
+      "df": 1
+    },
+    {
+      "word": "monotone",
+      "df": 1
+    },
+    {
+      "word": "moving",
+      "df": 1
+    },
+    {
+      "word": "mr",
+      "df": 1
+    },
+    {
+      "word": "multi",
+      "df": 1
+    },
+    {
+      "word": "multiplied",
+      "df": 1
+    },
+    {
+      "word": "mutually",
+      "df": 1
+    },
+    {
+      "word": "my",
+      "df": 1
+    },
+    {
+      "word": "nD",
+      "df": 1
+    },
+    {
+      "word": "nL",
+      "df": 1
+    },
+    {
+      "word": "namely",
+      "df": 1
+    },
+    {
+      "word": "narrower",
+      "df": 1
+    },
+    {
+      "word": "nd",
+      "df": 1
+    },
+    {
+      "word": "ne",
+      "df": 1
+    },
+    {
+      "word": "nearby",
+      "df": 1
+    },
+    {
+      "word": "nearest",
+      "df": 1
+    },
+    {
+      "word": "nearly",
+      "df": 1
+    },
+    {
+      "word": "necessarily",
+      "df": 1
+    },
+    {
+      "word": "necessary",
+      "df": 1
+    },
+    {
+      "word": "neighborhoods",
+      "df": 1
+    },
+    {
+      "word": "neighbour",
+      "df": 1
+    },
+    {
+      "word": "network",
+      "df": 1
+    },
+    {
+      "word": "neural",
+      "df": 1
+    },
+    {
+      "word": "never",
+      "df": 1
+    },
+    {
+      "word": "newsvendor",
+      "df": 1
+    },
+    {
+      "word": "noisier",
+      "df": 1
+    },
+    {
+      "word": "nonconstant",
+      "df": 1
+    },
+    {
+      "word": "nonempty",
+      "df": 1
+    },
+    {
+      "word": "nonhomogeneous",
+      "df": 1
+    },
+    {
+      "word": "nonnegligible",
+      "df": 1
+    },
+    {
+      "word": "nontrivial",
+      "df": 1
+    },
+    {
+      "word": "nonumber",
+      "df": 1
+    },
+    {
+      "word": "northeast",
+      "df": 1
+    },
+    {
+      "word": "notion",
+      "df": 1
+    },
+    {
+      "word": "novelty",
+      "df": 1
+    },
+    {
+      "word": "nucleosynthesis",
+      "df": 1
+    },
+    {
+      "word": "null",
+      "df": 1
+    },
+    {
+      "word": "numerically",
+      "df": 1
+    },
+    {
+      "word": "o",
+      "df": 1
+    },
+    {
+      "word": "observable",
+      "df": 1
+    },
+    {
+      "word": "occupies",
+      "df": 1
+    },
+    {
+      "word": "occurs",
+      "df": 1
+    },
+    {
+      "word": "odd",
+      "df": 1
+    },
+    {
+      "word": "offers",
+      "df": 1
+    },
+    {
+      "word": "once",
+      "df": 1
+    },
+    {
+      "word": "open",
+      "df": 1
+    },
+    {
+      "word": "operation",
+      "df": 1
+    },
+    {
+      "word": "oplus",
+      "df": 1
+    },
+    {
+      "word": "opponent",
+      "df": 1
+    },
+    {
+      "word": "optically",
+      "df": 1
+    },
+    {
+      "word": "optimised",
+      "df": 1
+    },
+    {
+      "word": "optimum",
+      "df": 1
+    },
+    {
+      "word": "oracle",
+      "df": 1
+    },
+    {
+      "word": "orbit",
+      "df": 1
+    },
+    {
+      "word": "otherwise",
+      "df": 1
+    },
+    {
+      "word": "outcome",
+      "df": 1
+    },
+    {
+      "word": "outline",
+      "df": 1
+    },
+    {
+      "word": "output",
+      "df": 1
+    },
+    {
+      "word": "outputs",
+      "df": 1
+    },
+    {
+      "word": "outradius",
+      "df": 1
+    },
+    {
+      "word": "owing",
+      "df": 1
+    },
+    {
+      "word": "packets",
+      "df": 1
+    },
+    {
+      "word": "packing",
+      "df": 1
+    },
+    {
+      "word": "paired",
+      "df": 1
+    },
+    {
+      "word": "pairs",
+      "df": 1
+    },
+    {
+      "word": "panel's",
+      "df": 1
+    },
+    {
+      "word": "papers",
+      "df": 1
+    },
+    {
+      "word": "parent",
+      "df": 1
+    },
+    {
+      "word": "parity",
+      "df": 1
+    },
+    {
+      "word": "paths",
+      "df": 1
+    },
+    {
+      "word": "pathwise",
+      "df": 1
+    },
+    {
+      "word": "perfect",
+      "df": 1
+    },
+    {
+      "word": "perform",
+      "df": 1
+    },
+    {
+      "word": "perimeter",
+      "df": 1
+    },
+    {
+      "word": "periodic",
+      "df": 1
+    },
+    {
+      "word": "permit",
+      "df": 1
+    },
+    {
+      "word": "permutation",
+      "df": 1
+    },
+    {
+      "word": "perturbation",
+      "df": 1
+    },
+    {
+      "word": "perturbations",
+      "df": 1
+    },
+    {
+      "word": "pessimistic",
+      "df": 1
+    },
+    {
+      "word": "photometric",
+      "df": 1
+    },
+    {
+      "word": "photometry",
+      "df": 1
+    },
+    {
+      "word": "photons",
+      "df": 1
+    },
+    {
+      "word": "piece",
+      "df": 1
+    },
+    {
+      "word": "pixels",
+      "df": 1
+    },
+    {
+      "word": "plane",
+      "df": 1
+    },
+    {
+      "word": "planning",
+      "df": 1
+    },
+    {
+      "word": "player's",
+      "df": 1
+    },
+    {
+      "word": "plays",
+      "df": 1
+    },
+    {
+      "word": "plot",
+      "df": 1
+    },
+    {
+      "word": "plug",
+      "df": 1
+    },
+    {
+      "word": "plugging",
+      "df": 1
+    },
+    {
+      "word": "pointing",
+      "df": 1
+    },
+    {
+      "word": "polarized",
+      "df": 1
+    },
+    {
+      "word": "pool",
+      "df": 1
+    },
+    {
+      "word": "poor",
+      "df": 1
+    },
+    {
+      "word": "posedness",
+      "df": 1
+    },
+    {
+      "word": "posited",
+      "df": 1
+    },
+    {
+      "word": "possibility",
+      "df": 1
+    },
+    {
+      "word": "possibly",
+      "df": 1
+    },
+    {
+      "word": "post",
+      "df": 1
+    },
+    {
+      "word": "postulate",
+      "df": 1
+    },
+    {
+      "word": "practice",
+      "df": 1
+    },
+    {
+      "word": "pre",
+      "df": 1
+    },
+    {
+      "word": "predicted",
+      "df": 1
+    },
+    {
+      "word": "prediction",
+      "df": 1
+    },
+    {
+      "word": "preferred",
+      "df": 1
+    },
+    {
+      "word": "prescribed",
+      "df": 1
+    },
+    {
+      "word": "preserves",
+      "df": 1
+    },
+    {
+      "word": "prespecified",
+      "df": 1
+    },
+    {
+      "word": "pretraining",
+      "df": 1
+    },
+    {
+      "word": "previously",
+      "df": 1
+    },
+    {
+      "word": "prices",
+      "df": 1
+    },
+    {
+      "word": "primitives",
+      "df": 1
+    },
+    {
+      "word": "primordial",
+      "df": 1
+    },
+    {
+      "word": "principle",
+      "df": 1
+    },
+    {
+      "word": "private",
+      "df": 1
+    },
+    {
+      "word": "probabilities",
+      "df": 1
+    },
+    {
+      "word": "probing",
+      "df": 1
+    },
+    {
+      "word": "processes",
+      "df": 1
+    },
+    {
+      "word": "processing",
+      "df": 1
+    },
+    {
+      "word": "procurement",
+      "df": 1
+    },
+    {
+      "word": "programming",
+      "df": 1
+    },
+    {
+      "word": "projected",
+      "df": 1
+    },
+    {
+      "word": "projection",
+      "df": 1
+    },
+    {
+      "word": "prominent",
+      "df": 1
+    },
+    {
+      "word": "promoted",
+      "df": 1
+    },
+    {
+      "word": "promotion",
+      "df": 1
+    },
+    {
+      "word": "proper",
+      "df": 1
+    },
+    {
+      "word": "property",
+      "df": 1
+    },
+    {
+      "word": "proposals",
+      "df": 1
+    },
+    {
+      "word": "proposed",
+      "df": 1
+    },
+    {
+      "word": "propto",
+      "df": 1
+    },
+    {
+      "word": "protocol",
+      "df": 1
+    },
+    {
+      "word": "provided",
+      "df": 1
+    },
+    {
+      "word": "prudence",
+      "df": 1
+    },
+    {
+      "word": "psi",
+      "df": 1
+    },
+    {
+      "word": "pull",
+      "df": 1
+    },
+    {
+      "word": "purpose",
+      "df": 1
+    },
+    {
+      "word": "pushforward",
+      "df": 1
+    },
+    {
+      "word": "qFDPC",
+      "df": 1
+    },
+    {
+      "word": "quantile",
+      "df": 1
+    },
+    {
+      "word": "quantisation",
+      "df": 1
+    },
+    {
+      "word": "quantity",
+      "df": 1
+    },
+    {
+      "word": "quickly",
+      "df": 1
+    },
+    {
+      "word": "radially",
+      "df": 1
+    },
+    {
+      "word": "radiate",
+      "df": 1
+    },
+    {
+      "word": "radiation",
+      "df": 1
+    },
+    {
+      "word": "radii",
+      "df": 1
+    },
+    {
+      "word": "raised",
+      "df": 1
+    },
+    {
+      "word": "raises",
+      "df": 1
+    },
+    {
+      "word": "ranged",
+      "df": 1
+    },
+    {
+      "word": "ranges",
+      "df": 1
+    },
+    {
+      "word": "rank",
+      "df": 1
+    },
+    {
+      "word": "ranking",
+      "df": 1
+    },
+    {
+      "word": "rare",
+      "df": 1
+    },
+    {
+      "word": "ratios",
+      "df": 1
+    },
+    {
+      "word": "ray",
+      "df": 1
+    },
+    {
+      "word": "rays",
+      "df": 1
+    },
+    {
+      "word": "reached",
+      "df": 1
+    },
+    {
+      "word": "reaction",
+      "df": 1
+    },
+    {
+      "word": "realisation",
+      "df": 1
+    },
+    {
+      "word": "realisations",
+      "df": 1
+    },
+    {
+      "word": "realization",
+      "df": 1
+    },
+    {
+      "word": "realized",
+      "df": 1
+    },
+    {
+      "word": "reason",
+      "df": 1
+    },
+    {
+      "word": "reasonable",
+      "df": 1
+    },
+    {
+      "word": "reasoning",
+      "df": 1
+    },
+    {
+      "word": "recently",
+      "df": 1
+    },
+    {
+      "word": "reciprocal",
+      "df": 1
+    },
+    {
+      "word": "recombination",
+      "df": 1
+    },
+    {
+      "word": "recomputed",
+      "df": 1
+    },
+    {
+      "word": "recovers",
+      "df": 1
+    },
+    {
+      "word": "reduce",
+      "df": 1
+    },
+    {
+      "word": "reduced",
+      "df": 1
+    },
+    {
+      "word": "reducing",
+      "df": 1
+    },
+    {
+      "word": "refer",
+      "df": 1
+    },
+    {
+      "word": "reference",
+      "df": 1
+    },
+    {
+      "word": "refine",
+      "df": 1
+    },
+    {
+      "word": "reflection",
+      "df": 1
+    },
+    {
+      "word": "regarded",
+      "df": 1
+    },
+    {
+      "word": "regarding",
+      "df": 1
+    },
+    {
+      "word": "regime",
+      "df": 1
+    },
+    {
+      "word": "regions",
+      "df": 1
+    },
+    {
+      "word": "regularity",
+      "df": 1
+    },
+    {
+      "word": "regularized",
+      "df": 1
+    },
+    {
+      "word": "rejected",
+      "df": 1
+    },
+    {
+      "word": "rejection",
+      "df": 1
+    },
+    {
+      "word": "rejects",
+      "df": 1
+    },
+    {
+      "word": "relativistic",
+      "df": 1
+    },
+    {
+      "word": "relaxation",
+      "df": 1
+    },
+    {
+      "word": "reliance",
+      "df": 1
+    },
+    {
+      "word": "remaining",
+      "df": 1
+    },
+    {
+      "word": "rent",
+      "df": 1
+    },
+    {
+      "word": "rents",
+      "df": 1
+    },
+    {
+      "word": "repeated",
+      "df": 1
+    },
+    {
+      "word": "repetition",
+      "df": 1
+    },
+    {
+      "word": "replay",
+      "df": 1
+    },
+    {
+      "word": "replica",
+      "df": 1
+    },
+    {
+      "word": "reporting",
+      "df": 1
+    },
+    {
+      "word": "reports",
+      "df": 1
+    },
+    {
+      "word": "representations",
+      "df": 1
+    },
+    {
+      "word": "representing",
+      "df": 1
+    },
+    {
+      "word": "represents",
+      "df": 1
+    },
+    {
+      "word": "reproduction",
+      "df": 1
+    },
+    {
+      "word": "requires",
+      "df": 1
+    },
+    {
+      "word": "resampling",
+      "df": 1
+    },
+    {
+      "word": "rescaling",
+      "df": 1
+    },
+    {
+      "word": "researchers",
+      "df": 1
+    },
+    {
+      "word": "residuals",
+      "df": 1
+    },
+    {
+      "word": "resolve",
+      "df": 1
+    },
+    {
+      "word": "resolves",
+      "df": 1
+    },
+    {
+      "word": "resource",
+      "df": 1
+    },
+    {
+      "word": "respects",
+      "df": 1
+    },
+    {
+      "word": "response",
+      "df": 1
+    },
+    {
+      "word": "restart",
+      "df": 1
+    },
+    {
+      "word": "restriction",
+      "df": 1
+    },
+    {
+      "word": "restrictions",
+      "df": 1
+    },
+    {
+      "word": "rests",
+      "df": 1
+    },
+    {
+      "word": "retaining",
+      "df": 1
+    },
+    {
+      "word": "return",
+      "df": 1
+    },
+    {
+      "word": "reveals",
+      "df": 1
+    },
+    {
+      "word": "reverse",
+      "df": 1
+    },
+    {
+      "word": "reversing",
+      "df": 1
+    },
+    {
+      "word": "review",
+      "df": 1
+    },
+    {
+      "word": "revival",
+      "df": 1
+    },
+    {
+      "word": "rewrite",
+      "df": 1
+    },
+    {
+      "word": "rhombohedral",
+      "df": 1
+    },
+    {
+      "word": "ridge",
+      "df": 1
+    },
+    {
+      "word": "rk",
+      "df": 1
+    },
+    {
+      "word": "role",
+      "df": 1
+    },
+    {
+      "word": "rollouts",
+      "df": 1
+    },
+    {
+      "word": "rotational",
+      "df": 1
+    },
+    {
+      "word": "roughly",
+      "df": 1
+    },
+    {
+      "word": "rules",
+      "df": 1
+    },
+    {
+      "word": "sabotage",
+      "df": 1
+    },
+    {
+      "word": "sales",
+      "df": 1
+    },
+    {
+      "word": "satisfy",
+      "df": 1
+    },
+    {
+      "word": "saturation",
+      "df": 1
+    },
+    {
+      "word": "save",
+      "df": 1
+    },
+    {
+      "word": "say",
+      "df": 1
+    },
+    {
+      "word": "says",
+      "df": 1
+    },
+    {
+      "word": "scan",
+      "df": 1
+    },
+    {
+      "word": "scattering",
+      "df": 1
+    },
+    {
+      "word": "scheduling",
+      "df": 1
+    },
+    {
+      "word": "scheme",
+      "df": 1
+    },
+    {
+      "word": "schemes",
+      "df": 1
+    },
+    {
+      "word": "science",
+      "df": 1
+    },
+    {
+      "word": "search",
+      "df": 1
+    },
+    {
+      "word": "sections",
+      "df": 1
+    },
+    {
+      "word": "sectors",
+      "df": 1
+    },
+    {
+      "word": "seed",
+      "df": 1
+    },
+    {
+      "word": "seeing",
+      "df": 1
+    },
+    {
+      "word": "select",
+      "df": 1
+    },
+    {
+      "word": "semicontinuity",
+      "df": 1
+    },
+    {
+      "word": "semigroup",
+      "df": 1
+    },
+    {
+      "word": "sensitive",
+      "df": 1
+    },
+    {
+      "word": "separates",
+      "df": 1
+    },
+    {
+      "word": "separating",
+      "df": 1
+    },
+    {
+      "word": "sequence",
+      "df": 1
+    },
+    {
+      "word": "sessions",
+      "df": 1
+    },
+    {
+      "word": "setting",
+      "df": 1
+    },
+    {
+      "word": "shaded",
+      "df": 1
+    },
+    {
+      "word": "shall",
+      "df": 1
+    },
+    {
+      "word": "share",
+      "df": 1
+    },
+    {
+      "word": "sharpness",
+      "df": 1
+    },
+    {
+      "word": "she",
+      "df": 1
+    },
+    {
+      "word": "shell",
+      "df": 1
+    },
+    {
+      "word": "shocks",
+      "df": 1
+    },
+    {
+      "word": "shorter",
+      "df": 1
+    },
+    {
+      "word": "shot",
+      "df": 1
+    },
+    {
+      "word": "should",
+      "df": 1
+    },
+    {
+      "word": "showcasing",
+      "df": 1
+    },
+    {
+      "word": "sides",
+      "df": 1
+    },
+    {
+      "word": "signatures",
+      "df": 1
+    },
+    {
+      "word": "significant",
+      "df": 1
+    },
+    {
+      "word": "simple",
+      "df": 1
+    },
+    {
+      "word": "simplify",
+      "df": 1
+    },
+    {
+      "word": "simulation",
+      "df": 1
+    },
+    {
+      "word": "simulations",
+      "df": 1
+    },
+    {
+      "word": "simultaneous",
+      "df": 1
+    },
+    {
+      "word": "singleton",
+      "df": 1
+    },
+    {
+      "word": "singular",
+      "df": 1
+    },
+    {
+      "word": "singularity",
+      "df": 1
+    },
+    {
+      "word": "slice",
+      "df": 1
+    },
+    {
+      "word": "slightly",
+      "df": 1
+    },
+    {
+      "word": "slows",
+      "df": 1
+    },
+    {
+      "word": "smaller",
+      "df": 1
+    },
+    {
+      "word": "smallest",
+      "df": 1
+    },
+    {
+      "word": "smoothness",
+      "df": 1
+    },
+    {
+      "word": "solvability",
+      "df": 1
+    },
+    {
+      "word": "solving",
+      "df": 1
+    },
+    {
+      "word": "sources",
+      "df": 1
+    },
+    {
+      "word": "southwest",
+      "df": 1
+    },
+    {
+      "word": "spaces",
+      "df": 1
+    },
+    {
+      "word": "span",
+      "df": 1
+    },
+    {
+      "word": "sparse",
+      "df": 1
+    },
+    {
+      "word": "sparsified",
+      "df": 1
+    },
+    {
+      "word": "spatially",
+      "df": 1
+    },
+    {
+      "word": "speaking",
+      "df": 1
+    },
+    {
+      "word": "specification",
+      "df": 1
+    },
+    {
+      "word": "spectrally",
+      "df": 1
+    },
+    {
+      "word": "spectroscopic",
+      "df": 1
+    },
+    {
+      "word": "speculative",
+      "df": 1
+    },
+    {
+      "word": "sphere",
+      "df": 1
+    },
+    {
+      "word": "spherical",
+      "df": 1
+    },
+    {
+      "word": "spline",
+      "df": 1
+    },
+    {
+      "word": "spread",
+      "df": 1
+    },
+    {
+      "word": "spurious",
+      "df": 1
+    },
+    {
+      "word": "squares",
+      "df": 1
+    },
+    {
+      "word": "st",
+      "df": 1
+    },
+    {
+      "word": "stability",
+      "df": 1
+    },
+    {
+      "word": "stabilization",
+      "df": 1
+    },
+    {
+      "word": "stabilizer",
+      "df": 1
+    },
+    {
+      "word": "stake",
+      "df": 1
+    },
+    {
+      "word": "stars",
+      "df": 1
+    },
+    {
+      "word": "statements",
+      "df": 1
+    },
+    {
+      "word": "static",
+      "df": 1
+    },
+    {
+      "word": "statistical",
+      "df": 1
+    },
+    {
+      "word": "steadily",
+      "df": 1
+    },
+    {
+      "word": "steps",
+      "df": 1
+    },
+    {
+      "word": "stop",
+      "df": 1
+    },
+    {
+      "word": "stopping",
+      "df": 1
+    },
+    {
+      "word": "store",
+      "df": 1
+    },
+    {
+      "word": "strategy",
+      "df": 1
+    },
+    {
+      "word": "stroboscopic",
+      "df": 1
+    },
+    {
+      "word": "strong",
+      "df": 1
+    },
+    {
+      "word": "stronger",
+      "df": 1
+    },
+    {
+      "word": "structured",
+      "df": 1
+    },
+    {
+      "word": "structures",
+      "df": 1
+    },
+    {
+      "word": "students",
+      "df": 1
+    },
+    {
+      "word": "studies",
+      "df": 1
+    },
+    {
+      "word": "subset",
+      "df": 1
+    },
+    {
+      "word": "substantially",
+      "df": 1
+    },
+    {
+      "word": "substitution",
+      "df": 1
+    },
+    {
+      "word": "subtracts",
+      "df": 1
+    },
+    {
+      "word": "succeeds",
+      "df": 1
+    },
+    {
+      "word": "success",
+      "df": 1
+    },
+    {
+      "word": "suffice",
+      "df": 1
+    },
+    {
+      "word": "sufficiency",
+      "df": 1
+    },
+    {
+      "word": "summarize",
+      "df": 1
+    },
+    {
+      "word": "summation",
+      "df": 1
+    },
+    {
+      "word": "supernova",
+      "df": 1
+    },
+    {
+      "word": "supersolution",
+      "df": 1
+    },
+    {
+      "word": "supersymmetry",
+      "df": 1
+    },
+    {
+      "word": "supplemented",
+      "df": 1
+    },
+    {
+      "word": "support",
+      "df": 1
+    },
+    {
+      "word": "supported",
+      "df": 1
+    },
+    {
+      "word": "supporting",
+      "df": 1
+    },
+    {
+      "word": "supports",
+      "df": 1
+    },
+    {
+      "word": "supremal",
+      "df": 1
+    },
+    {
+      "word": "supremum",
+      "df": 1
+    },
+    {
+      "word": "surfaces",
+      "df": 1
+    },
+    {
+      "word": "survey",
+      "df": 1
+    },
+    {
+      "word": "symmetrized",
+      "df": 1
+    },
+    {
+      "word": "syn",
+      "df": 1
+    },
+    {
+      "word": "systematics",
+      "df": 1
+    },
+    {
+      "word": "tangent",
+      "df": 1
+    },
+    {
+      "word": "teacher",
+      "df": 1
+    },
+    {
+      "word": "technical",
+      "df": 1
+    },
+    {
+      "word": "temporal",
+      "df": 1
+    },
+    {
+      "word": "tender",
+      "df": 1
+    },
+    {
+      "word": "tendering",
+      "df": 1
+    },
+    {
+      "word": "tens",
+      "df": 1
+    },
+    {
+      "word": "tenths",
+      "df": 1
+    },
+    {
+      "word": "terminate",
+      "df": 1
+    },
+    {
+      "word": "tests",
+      "df": 1
+    },
+    {
+      "word": "tetragonal",
+      "df": 1
+    },
+    {
+      "word": "tf",
+      "df": 1
+    },
+    {
+      "word": "th",
+      "df": 1
+    },
+    {
+      "word": "themselves",
+      "df": 1
+    },
+    {
+      "word": "theorems",
+      "df": 1
+    },
+    {
+      "word": "theoretic",
+      "df": 1
+    },
+    {
+      "word": "theory",
+      "df": 1
+    },
+    {
+      "word": "thermalization",
+      "df": 1
+    },
+    {
+      "word": "things",
+      "df": 1
+    },
+    {
+      "word": "think",
+      "df": 1
+    },
+    {
+      "word": "throughout",
+      "df": 1
+    },
+    {
+      "word": "thus",
+      "df": 1
+    },
+    {
+      "word": "tilde",
+      "df": 1
+    },
+    {
+      "word": "tools",
+      "df": 1
+    },
+    {
+      "word": "top",
+      "df": 1
+    },
+    {
+      "word": "topic",
+      "df": 1
+    },
+    {
+      "word": "tot",
+      "df": 1
+    },
+    {
+      "word": "track",
+      "df": 1
+    },
+    {
+      "word": "tractable",
+      "df": 1
+    },
+    {
+      "word": "traditional",
+      "df": 1
+    },
+    {
+      "word": "train",
+      "df": 1
+    },
+    {
+      "word": "training",
+      "df": 1
+    },
+    {
+      "word": "transformation",
+      "df": 1
+    },
+    {
+      "word": "transformed",
+      "df": 1
+    },
+    {
+      "word": "translation",
+      "df": 1
+    },
+    {
+      "word": "transparent",
+      "df": 1
+    },
+    {
+      "word": "transported",
+      "df": 1
+    },
+    {
+      "word": "traverse",
+      "df": 1
+    },
+    {
+      "word": "treating",
+      "df": 1
+    },
+    {
+      "word": "treats",
+      "df": 1
+    },
+    {
+      "word": "trend",
+      "df": 1
+    },
+    {
+      "word": "triangleq",
+      "df": 1
+    },
+    {
+      "word": "trivially",
+      "df": 1
+    },
+    {
+      "word": "truncated",
+      "df": 1
+    },
+    {
+      "word": "truncation",
+      "df": 1
+    },
+    {
+      "word": "truthful",
+      "df": 1
+    },
+    {
+      "word": "tug",
+      "df": 1
+    },
+    {
+      "word": "turns",
+      "df": 1
+    },
+    {
+      "word": "twenty",
+      "df": 1
+    },
+    {
+      "word": "twice",
+      "df": 1
+    },
+    {
+      "word": "typically",
+      "df": 1
+    },
+    {
+      "word": "unattainable",
+      "df": 1
+    },
+    {
+      "word": "unbiased",
+      "df": 1
+    },
+    {
+      "word": "unbounded",
+      "df": 1
+    },
+    {
+      "word": "unboundedness",
+      "df": 1
+    },
+    {
+      "word": "underline",
+      "df": 1
+    },
+    {
+      "word": "understood",
+      "df": 1
+    },
+    {
+      "word": "unembedding",
+      "df": 1
+    },
+    {
+      "word": "uniformity",
+      "df": 1
+    },
+    {
+      "word": "unilateral",
+      "df": 1
+    },
+    {
+      "word": "uniqueness",
+      "df": 1
+    },
+    {
+      "word": "universal",
+      "df": 1
+    },
+    {
+      "word": "unrestricted",
+      "df": 1
+    },
+    {
+      "word": "unsparsified",
+      "df": 1
+    },
+    {
+      "word": "unsqueezed",
+      "df": 1
+    },
+    {
+      "word": "unstable",
+      "df": 1
+    },
+    {
+      "word": "until",
+      "df": 1
+    },
+    {
+      "word": "unweighted",
+      "df": 1
+    },
+    {
+      "word": "uparrow",
+      "df": 1
+    },
+    {
+      "word": "updates",
+      "df": 1
+    },
+    {
+      "word": "upward",
+      "df": 1
+    },
+    {
+      "word": "useful",
+      "df": 1
+    },
+    {
+      "word": "usefulness",
+      "df": 1
+    },
+    {
+      "word": "validate",
+      "df": 1
+    },
+    {
+      "word": "validates",
+      "df": 1
+    },
+    {
+      "word": "variability",
+      "df": 1
+    },
+    {
+      "word": "variables",
+      "df": 1
+    },
+    {
+      "word": "variance",
+      "df": 1
+    },
+    {
+      "word": "variants",
+      "df": 1
+    },
+    {
+      "word": "variational",
+      "df": 1
+    },
+    {
+      "word": "variations",
+      "df": 1
+    },
+    {
+      "word": "various",
+      "df": 1
+    },
+    {
+      "word": "verified",
+      "df": 1
+    },
+    {
+      "word": "versions",
+      "df": 1
+    },
+    {
+      "word": "vertex",
+      "df": 1
+    },
+    {
+      "word": "vertical",
+      "df": 1
+    },
+    {
+      "word": "via",
+      "df": 1
+    },
+    {
+      "word": "vibrational",
+      "df": 1
+    },
+    {
+      "word": "violate",
+      "df": 1
+    },
+    {
+      "word": "viscosity",
+      "df": 1
+    },
+    {
+      "word": "viscous",
+      "df": 1
+    },
+    {
+      "word": "wage",
+      "df": 1
+    },
+    {
+      "word": "war",
+      "df": 1
+    },
+    {
+      "word": "waypoints",
+      "df": 1
+    },
+    {
+      "word": "weaker",
+      "df": 1
+    },
+    {
+      "word": "weakly",
+      "df": 1
+    },
+    {
+      "word": "wealth",
+      "df": 1
+    },
+    {
+      "word": "weighting",
+      "df": 1
+    },
+    {
+      "word": "whereas",
+      "df": 1
+    },
+    {
+      "word": "widetilde",
+      "df": 1
+    },
+    {
+      "word": "width",
+      "df": 1
+    },
+    {
+      "word": "win",
+      "df": 1
+    },
+    {
+      "word": "winding",
+      "df": 1
+    },
+    {
+      "word": "windings",
+      "df": 1
+    },
+    {
+      "word": "window",
+      "df": 1
+    },
+    {
+      "word": "winds",
+      "df": 1
+    },
+    {
+      "word": "winner",
+      "df": 1
+    },
+    {
+      "word": "winners",
+      "df": 1
+    },
+    {
+      "word": "winning",
+      "df": 1
+    },
+    {
+      "word": "wins",
+      "df": 1
+    },
+    {
+      "word": "word",
+      "df": 1
+    },
+    {
+      "word": "words",
+      "df": 1
+    },
+    {
+      "word": "world",
+      "df": 1
+    },
+    {
+      "word": "xk",
+      "df": 1
+    },
+    {
+      "word": "yielding",
+      "df": 1
+    }
+  ],
+  "words": [
+    "the",
+    "a",
+    "of",
+    "in",
+    "is",
+    "to",
+    "and",
+    "The",
+    "that",
+    "frac",
+    "ref",
+    "with",
+    "for",
+    "as",
+    "A",
+    "x",
+    "from",
+    "e",
+    "we",
+    "on",
+    "by",
+    "this",
+    "pi",
+    "are",
+    "k",
+    "n",
+    "an",
+    "r",
+    "not",
+    "E",
+    "This",
+    "at",
+    "i",
+    "infty",
+    "one",
+    "b",
+    "f",
+    "In",
+    "right",
+    "B",
+    "We",
+    "c",
+    "P",
+    "sqrt",
+    "d",
+    "left",
+    "times",
+    "which",
+    "it",
+    "line",
+    "t",
+    "all",
+    "F",
+    "mu",
+    "note",
+    "sum",
+    "For",
+    "be",
+    "dx",
+    "states",
+    "two",
+    "its",
+    "H",
+    "It",
+    "body",
+    "can",
+    "equals",
+    "first",
+    "m",
+    "mathbf",
+    "number",
+    "over",
+    "sigma",
+    "so",
+    "then",
+    "S",
+    "equation",
+    "estimate",
+    "flow",
+    "s",
+    "separated",
+    "us",
+    "used",
+    "Footnote",
+    "PDF",
+    "int",
+    "print",
+    "show",
+    "also",
+    "cos",
+    "h",
+    "proof",
+    "same",
+    "was",
+    "when",
+    "N",
+    "across",
+    "later",
+    "positive",
+    "sin",
+    "time",
+    "Both",
+    "any",
+    "because",
+    "energy",
+    "fixed",
+    "only",
+    "result",
+    "single",
+    "state",
+    "As",
+    "To",
+    "analysis",
+    "constants",
+    "field",
+    "has",
+    "have",
+    "identity",
+    "notes",
+    "problem",
+    "second",
+    "while",
+    "Note",
+    "alpha",
+    "each",
+    "mass",
+    "nu",
+    "text",
+    "though",
+    "varepsilon",
+    "G",
+    "V",
+    "bound",
+    "cdot",
+    "do",
+    "end",
+    "even",
+    "g",
+    "law",
+    "mathrm",
+    "mv",
+    "next",
+    "or",
+    "our",
+    "q",
+    "table",
+    "terms",
+    "value",
+    "well",
+    "At",
+    "C",
+    "K",
+    "L",
+    "M",
+    "converges",
+    "density",
+    "exercise",
+    "given",
+    "hat",
+    "ix",
+    "lim",
+    "mathcal",
+    "neither",
+    "p",
+    "partial",
+    "results",
+    "rho",
+    "side",
+    "textbook",
+    "together",
+    "under",
+    "vert",
+    "y",
+    "Ek",
+    "Euler's",
+    "J",
+    "Two",
+    "ample",
+    "answers",
+    "before",
+    "begin",
+    "block",
+    "boundary",
+    "classic",
+    "conditions",
+    "derivation",
+    "initial",
+    "involve",
+    "local",
+    "model",
+    "more",
+    "nabla",
+    "net",
+    "order",
+    "ote",
+    "respect",
+    "rm",
+    "roceedings",
+    "section",
+    "shows",
+    "structure",
+    "term",
+    "than",
+    "use",
+    "using",
+    "uthor",
+    "D",
+    "Figure",
+    "First",
+    "One",
+    "R",
+    "Second",
+    "T",
+    "These",
+    "below",
+    "circle",
+    "compares",
+    "does",
+    "error",
+    "every",
+    "finite",
+    "five",
+    "gas",
+    "if",
+    "integral",
+    "into",
+    "lower",
+    "mentions",
+    "negative",
+    "position",
+    "real",
+    "relation",
+    "therefore",
+    "u",
+    "up",
+    "v",
+    "will",
+    "zero",
+    "According",
+    "Author",
+    "Newton's",
+    "Proceedings",
+    "Sample",
+    "Section",
+    "above",
+    "ar",
+    "argument",
+    "between",
+    "both",
+    "case",
+    "corresponding",
+    "derivative",
+    "endpoint",
+    "establish",
+    "follows",
+    "force",
+    "fundamental",
+    "gives",
+    "his",
+    "integers",
+    "limit",
+    "matrix",
+    "monthly",
+    "nonlinear",
+    "obtain",
+    "other",
+    "probability",
+    "prose",
+    "rate",
+    "related",
+    "resulting",
+    "set",
+    "spectral",
+    "tells",
+    "their",
+    "theta",
+    "ties",
+    "were",
+    "yields",
+    "z",
+    "Gamma",
+    "If",
+    "ab",
+    "after",
+    "along",
+    "based",
+    "begins",
+    "but",
+    "chosen",
+    "data",
+    "delta",
+    "directly",
+    "equilibrium",
+    "family",
+    "find",
+    "follow",
+    "following",
+    "formula",
+    "higher",
+    "holds",
+    "know",
+    "lab",
+    "le",
+    "linear",
+    "main",
+    "new",
+    "operator",
+    "pair",
+    "prove",
+    "provides",
+    "shown",
+    "slope",
+    "space",
+    "step",
+    "strength",
+    "these",
+    "through",
+    "vacuum",
+    "values",
+    "velocity",
+    "verify",
+    "xi",
+    "Consider",
+    "Eq",
+    "I",
+    "Once",
+    "Thus",
+    "aligned",
+    "appear",
+    "asks",
+    "cells",
+    "chain",
+    "condition",
+    "definition",
+    "distribution",
+    "du",
+    "dy",
+    "ei",
+    "equations",
+    "function",
+    "hand",
+    "homework",
+    "known",
+    "lambda",
+    "lecture",
+    "lemma",
+    "less",
+    "level",
+    "ln",
+    "low",
+    "max",
+    "may",
+    "mc",
+    "metric",
+    "milliliters",
+    "minus",
+    "must",
+    "noting",
+    "numbers",
+    "numerical",
+    "oscillation",
+    "out",
+    "part",
+    "plus",
+    "power",
+    "required",
+    "rest",
+    "reward",
+    "rule",
+    "sample",
+    "scale",
+    "size",
+    "solution",
+    "squared",
+    "standard",
+    "theorem",
+    "those",
+    "three",
+    "transform",
+    "uncertainty",
+    "update",
+    "where",
+    "whose",
+    "Appendix",
+    "Basel",
+    "Gaussian",
+    "He",
+    "Jacobian",
+    "Let",
+    "Omega",
+    "On",
+    "Psi",
+    "Theorem",
+    "U",
+    "absolute",
+    "ac",
+    "acceleration",
+    "ad",
+    "again",
+    "ambient",
+    "baseline",
+    "bc",
+    "beta",
+    "box",
+    "calibration",
+    "celebrated",
+    "check",
+    "collapses",
+    "come",
+    "comes",
+    "compact",
+    "compare",
+    "computed",
+    "consequences",
+    "construction",
+    "convention",
+    "det",
+    "distance",
+    "dt",
+    "during",
+    "dynamics",
+    "empirical",
+    "entropy",
+    "estimated",
+    "evolution",
+    "exact",
+    "expected",
+    "explicit",
+    "f'g",
+    "fg",
+    "free",
+    "frictionless",
+    "functional",
+    "geometry",
+    "give",
+    "had",
+    "hbar",
+    "here",
+    "how",
+    "infinity",
+    "information",
+    "input",
+    "kB",
+    "kappa",
+    "ke",
+    "keep",
+    "keeps",
+    "kinetic",
+    "least",
+    "letter",
+    "limh",
+    "ma",
+    "margin",
+    "models",
+    "name",
+    "non",
+    "norm",
+    "now",
+    "paper",
+    "paragraph",
+    "pm",
+    "pmatrix",
+    "policy",
+    "polynomial",
+    "prior",
+    "pushed",
+    "range",
+    "rangle",
+    "refined",
+    "report",
+    "representation",
+    "scaling",
+    "setup",
+    "several",
+    "short",
+    "signs",
+    "simplifies",
+    "speed",
+    "starts",
+    "stated",
+    "strictly",
+    "study",
+    "substitute",
+    "such",
+    "there",
+    "threshold",
+    "tracks",
+    "transitions",
+    "type",
+    "units",
+    "would",
+    "zeta",
+    "An",
+    "December",
+    "Fig",
+    "Finally",
+    "Our",
+    "PV",
+    "Physically",
+    "Substituting",
+    "W",
+    "about",
+    "adds",
+    "agent",
+    "algorithm",
+    "alternates",
+    "angle",
+    "applied",
+    "apply",
+    "arbitrarily",
+    "assistant",
+    "assumption",
+    "belong",
+    "benchmark",
+    "bounds",
+    "candidate",
+    "cannot",
+    "chi",
+    "class",
+    "classifiers",
+    "closed",
+    "coefficient",
+    "cohort",
+    "comments",
+    "common",
+    "components",
+    "compounded",
+    "compounding",
+    "computes",
+    "concave",
+    "constant",
+    "constraint",
+    "continuous",
+    "contrast",
+    "convergence",
+    "copy",
+    "correction",
+    "date",
+    "defined",
+    "degree",
+    "determinant",
+    "deterministic",
+    "different",
+    "dimensions",
+    "discussing",
+    "drift",
+    "driven",
+    "ds",
+    "dye",
+    "eix",
+    "electrodynamics",
+    "equivalent",
+    "equivalently",
+    "estimates",
+    "estimator",
+    "eta",
+    "exactly",
+    "example",
+    "form",
+    "formation",
+    "four",
+    "functions",
+    "gamma",
+    "geq",
+    "growth",
+    "half",
+    "horizon",
+    "hour",
+    "ideal",
+    "identities",
+    "includes",
+    "increases",
+    "independent",
+    "inputs",
+    "invoke",
+    "j",
+    "kpc",
+    "labeled",
+    "link",
+    "log",
+    "logistic",
+    "loss",
+    "makes",
+    "making",
+    "map",
+    "mathbb",
+    "mean",
+    "means",
+    "measure",
+    "measured",
+    "metadata",
+    "most",
+    "much",
+    "nRT",
+    "neighboring",
+    "no",
+    "nominal",
+    "normalization",
+    "nothing",
+    "nr",
+    "nt",
+    "objective",
+    "observed",
+    "odds",
+    "optimal",
+    "overline",
+    "own",
+    "payoff",
+    "percent",
+    "percentage",
+    "population",
+    "posterior",
+    "preference",
+    "present",
+    "procedure",
+    "product",
+    "profiles",
+    "proofs",
+    "reader",
+    "region",
+    "repeatedly",
+    "require",
+    "reserve",
+    "reused",
+    "rewrites",
+    "rewritten",
+    "rollout",
+    "root",
+    "rounding",
+    "run",
+    "sampling",
+    "see",
+    "sentence",
+    "sharp",
+    "sheet",
+    "since",
+    "small",
+    "square",
+    "stress",
+    "substitutions",
+    "summarizes",
+    "summary",
+    "symbolic",
+    "symmetric",
+    "teaching",
+    "temperature",
+    "test",
+    "thermodynamics",
+    "they",
+    "toy",
+    "turn",
+    "upper",
+    "uses",
+    "utility",
+    "variable",
+    "viewpoints",
+    "weight",
+    "windows",
+    "worksheet",
+    "write",
+    "written",
+    "AJC",
+    "Delta",
+    "Hence",
+    "Its",
+    "Lambda",
+    "Moreover",
+    "O",
+    "Proposition",
+    "Recall",
+    "Therefore",
+    "With",
+    "X",
+    "absolutely",
+    "additional",
+    "advantage",
+    "against",
+    "al",
+    "allows",
+    "alone",
+    "already",
+    "among",
+    "apples",
+    "applies",
+    "approach",
+    "approx",
+    "approximation",
+    "around",
+    "ball",
+    "become",
+    "becomes",
+    "binom",
+    "bounded",
+    "capital",
+    "choice",
+    "close",
+    "code",
+    "comparison",
+    "component",
+    "conditional",
+    "considered",
+    "costs",
+    "current",
+    "decreases",
+    "defines",
+    "derive",
+    "deviation",
+    "differ",
+    "difference",
+    "diffusion",
+    "direct",
+    "divided",
+    "domain",
+    "dominant",
+    "effect",
+    "efficient",
+    "effort",
+    "elements",
+    "ell",
+    "evaluated",
+    "evaluation",
+    "existence",
+    "experiment",
+    "exponent",
+    "expression",
+    "failure",
+    "few",
+    "figure",
+    "forms",
+    "full",
+    "game",
+    "ge",
+    "ground",
+    "group",
+    "identify",
+    "implement",
+    "included",
+    "increasing",
+    "individual",
+    "instead",
+    "itself",
+    "kernel",
+    "key",
+    "last",
+    "lattice",
+    "learning",
+    "length",
+    "literature",
+    "long",
+    "loops",
+    "lunch",
+    "marginal",
+    "mathfrak",
+    "maximum",
+    "mechanism",
+    "metallicity",
+    "moments",
+    "needed",
+    "noise",
+    "normalized",
+    "observation",
+    "obtained",
+    "offline",
+    "omega",
+    "orbits",
+    "original",
+    "outside",
+    "parameter",
+    "particular",
+    "per",
+    "performance",
+    "phase",
+    "player",
+    "point",
+    "points",
+    "precisely",
+    "previous",
+    "quad",
+    "quantum",
+    "radial",
+    "random",
+    "raw",
+    "recovered",
+    "reduction",
+    "relevant",
+    "remain",
+    "remains",
+    "risk",
+    "room",
+    "row",
+    "runs",
+    "satisfies",
+    "scales",
+    "scrutiny",
+    "selected",
+    "sense",
+    "serve",
+    "signal",
+    "sim",
+    "six",
+    "some",
+    "spatial",
+    "special",
+    "species",
+    "squeezed",
+    "statement",
+    "stationary",
+    "steady",
+    "strict",
+    "succsim",
+    "sufficiently",
+    "suitable",
+    "supply",
+    "symmetry",
+    "system",
+    "take",
+    "target",
+    "total",
+    "transition",
+    "trivial",
+    "true",
+    "truth",
+    "uniform",
+    "unique",
+    "weak",
+    "weights",
+    "what",
+    "widehat",
+    "work",
+    "ABM",
+    "All",
+    "Applying",
+    "Because",
+    "Before",
+    "CSS",
+    "Conversely",
+    "Darbo",
+    "Darbo's",
+    "Equation",
+    "FDPC",
+    "Fock",
+    "From",
+    "Furthermore",
+    "Gyr",
+    "Hamiltonian",
+    "Here",
+    "However",
+    "III",
+    "IR",
+    "Indeed",
+    "Kerr",
+    "Nash",
+    "Neither",
+    "PSF",
+    "Q",
+    "QCP",
+    "RCCBM",
+    "SO",
+    "September",
+    "She",
+    "Table",
+    "Tuesday",
+    "Under",
+    "Unless",
+    "Using",
+    "When",
+    "Which",
+    "Z",
+    "aProceedings",
+    "ability",
+    "abundance",
+    "according",
+    "adaptive",
+    "admissible",
+    "agree",
+    "algebra",
+    "aligns",
+    "appearing",
+    "applications",
+    "ark",
+    "arrived",
+    "assigns",
+    "associated",
+    "assume",
+    "asymptotic",
+    "attraction",
+    "attractor",
+    "bar",
+    "basis",
+    "bct",
+    "been",
+    "behavior",
+    "better",
+    "bid",
+    "bids",
+    "blocks",
+    "boldsymbol",
+    "boundedness",
+    "broad",
+    "budget",
+    "call",
+    "canonical",
+    "cap",
+    "captures",
+    "cases",
+    "caused",
+    "centred",
+    "chapter",
+    "choose",
+    "classes",
+    "clear",
+    "closely",
+    "cloud",
+    "cludes",
+    "coincide",
+    "compactness",
+    "comparable",
+    "compatible",
+    "competing",
+    "confidence",
+    "conjecture",
+    "consistent",
+    "construct",
+    "constructed",
+    "consumption",
+    "content",
+    "contour",
+    "contraction",
+    "control",
+    "convergent",
+    "convex",
+    "coolant",
+    "correspondence",
+    "corresponds",
+    "cosine",
+    "cost",
+    "could",
+    "criterion",
+    "critical",
+    "cross",
+    "crossings",
+    "crucially",
+    "cubic",
+    "dagger",
+    "decision",
+    "decisions",
+    "decomposition",
+    "demand",
+    "dependent",
+    "desired",
+    "determined",
+    "develop",
+    "developed",
+    "diameter",
+    "differs",
+    "dimension",
+    "dimensionality",
+    "direction",
+    "diverges",
+    "dust",
+    "dz",
+    "eSFT",
+    "either",
+    "element",
+    "emission",
+    "ensures",
+    "entanglement",
+    "enters",
+    "entire",
+    "eq",
+    "equal",
+    "equiv",
+    "equivalence",
+    "et",
+    "event",
+    "ex",
+    "excitation",
+    "existing",
+    "experiments",
+    "explicitly",
+    "exponential",
+    "extended",
+    "extract",
+    "face",
+    "feature",
+    "feedback",
+    "final",
+    "firm",
+    "fitted",
+    "fitting",
+    "fluid",
+    "flux",
+    "formulation",
+    "fractional",
+    "frame",
+    "front",
+    "further",
+    "galaxy",
+    "gap",
+    "gather",
+    "general",
+    "generalized",
+    "generalizes",
+    "generated",
+    "geodesics",
+    "geometric",
+    "gradient",
+    "grows",
+    "guarantee",
+    "guarantees",
+    "having",
+    "head",
+    "held",
+    "helium",
+    "her",
+    "highest",
+    "homogeneous",
+    "horizontal",
+    "hydrogen",
+    "identified",
+    "impatience",
+    "important",
+    "incentives",
+    "incoherent",
+    "increase",
+    "indeed",
+    "inequality",
+    "infinite",
+    "informed",
+    "intermediate",
+    "internal",
+    "iteration",
+    "joint",
+    "ket",
+    "knowledge",
+    "l",
+    "laboratory",
+    "ladder",
+    "larger",
+    "laws",
+    "leading",
+    "leads",
+    "leave",
+    "leq",
+    "lesssim",
+    "lies",
+    "likelihood",
+    "localization",
+    "ly",
+    "made",
+    "make",
+    "manager",
+    "maps",
+    "masses",
+    "matched",
+    "mathsf",
+    "measures",
+    "method",
+    "methods",
+    "midterm",
+    "modified",
+    "moment",
+    "monthP",
+    "multiplicity",
+    "natural",
+    "nature",
+    "need",
+    "neq",
+    "nor",
+    "observing",
+    "odot",
+    "oint",
+    "onto",
+    "operatorname",
+    "optimization",
+    "origin",
+    "orthogonal",
+    "package",
+    "packet",
+    "panel",
+    "panels",
+    "parameters",
+    "particle",
+    "path",
+    "peak",
+    "pendulum",
+    "period",
+    "phi",
+    "physical",
+    "pieces",
+    "plateau",
+    "play",
+    "plots",
+    "poles",
+    "possible",
+    "potential",
+    "predictive",
+    "presented",
+    "price",
+    "primary",
+    "principal",
+    "principles",
+    "problems",
+    "process",
+    "produced",
+    "production",
+    "professor",
+    "propagation",
+    "properties",
+    "proved",
+    "proves",
+    "provide",
+    "pullback",
+    "pure",
+    "purposes",
+    "qLDPC",
+    "quadrature",
+    "quasilinear",
+    "question",
+    "rad",
+    "radius",
+    "randomized",
+    "rapidly",
+    "rates",
+    "rational",
+    "reaches",
+    "recall",
+    "receives",
+    "reduces",
+    "refinement",
+    "regression",
+    "relative",
+    "relies",
+    "rely",
+    "replaces",
+    "reported",
+    "representative",
+    "requiring",
+    "respectively",
+    "restricted",
+    "returns",
+    "rewards",
+    "rotation",
+    "round",
+    "samples",
+    "saving",
+    "scatter",
+    "scored",
+    "seen",
+    "selection",
+    "selector",
+    "selects",
+    "self",
+    "semidiscrete",
+    "separatrix",
+    "series",
+    "sets",
+    "shape",
+    "shift",
+    "shrink",
+    "sign",
+    "significantly",
+    "similar",
+    "simply",
+    "sine",
+    "smooth",
+    "snapshot",
+    "snapshots",
+    "solutions",
+    "solve",
+    "source",
+    "sparsity",
+    "specific",
+    "spin",
+    "star",
+    "start",
+    "stellar",
+    "still",
+    "stochastic",
+    "studied",
+    "sub",
+    "subsolutions",
+    "sums",
+    "sup",
+    "super",
+    "survive",
+    "synthetic",
+    "systems",
+    "tail",
+    "task",
+    "tasks",
+    "tau",
+    "temperatures",
+    "tends",
+    "terminal",
+    "them",
+    "theoretical",
+    "thermal",
+    "timescales",
+    "told",
+    "tolerance",
+    "topology",
+    "toward",
+    "transfers",
+    "transport",
+    "trapped",
+    "treat",
+    "treated",
+    "trial",
+    "types",
+    "underlying",
+    "unigram",
+    "unit",
+    "valid",
+    "validation",
+    "valued",
+    "vanishes",
+    "vary",
+    "vector",
+    "vectors",
+    "virial",
+    "w",
+    "weighted",
+    "whether",
+    "why",
+    "wide",
+    "wind",
+    "without",
+    "worry",
+    "AGNs",
+    "Accordingly",
+    "After",
+    "Aitchison",
+    "Although",
+    "Amir",
+    "Any",
+    "App",
+    "Ashcroft",
+    "Assumptions",
+    "Atomic",
+    "Au",
+    "BCG",
+    "BH",
+    "BPP",
+    "Bang",
+    "Based",
+    "Bayes",
+    "Bayesian",
+    "Bellman",
+    "Best",
+    "Bewley",
+    "Big",
+    "Black",
+    "Brock",
+    "By",
+    "CDF",
+    "CGM",
+    "CII",
+    "CRRA",
+    "Carnot",
+    "Clifford",
+    "Clutton",
+    "Cobb",
+    "Coleman",
+    "Combine",
+    "Communicability",
+    "Compatibility",
+    "Conclusion",
+    "CondSOC",
+    "Condition",
+    "Consequently",
+    "DAOPHOT",
+    "DR",
+    "Das",
+    "Define",
+    "Definition",
+    "Dicke",
+    "Difference",
+    "Dirichlet",
+    "Douglas",
+    "Draw",
+    "Each",
+    "Euclidean",
+    "Ewald's",
+    "Exact",
+    "Example",
+    "Exponential",
+    "FD",
+    "FDP",
+    "FOC",
+    "Fe",
+    "Fife",
+    "Figs",
+    "Filtered",
+    "Final",
+    "Firm",
+    "Fisher",
+    "Following",
+    "Fourier",
+    "Frequency",
+    "Full",
+    "Function",
+    "GNY",
+    "GUE",
+    "GUM",
+    "Gemma",
+    "Gram",
+    "Green's",
+    "Groves",
+    "HARA",
+    "HS",
+    "Hausdorff",
+    "Heisenberg",
+    "Henry",
+    "Herein",
+    "Hernquist",
+    "Hubbard",
+    "Hyperinterpolation",
+    "II",
+    "ISM",
+    "Independent",
+    "Information",
+    "Interestingly",
+    "Intuitively",
+    "Inzamamul",
+    "JC",
+    "JSC",
+    "KH",
+    "KL",
+    "KP",
+    "KP's",
+    "KPP",
+    "Kalnajs",
+    "Keller",
+    "Kyng",
+    "LLM",
+    "LMAGN",
+    "LMAGNs",
+    "Laboratory",
+    "Laplacian",
+    "Lastly",
+    "Later",
+    "Launch",
+    "Lemma",
+    "Lemmas",
+    "Levy",
+    "Lie",
+    "Lipschitz",
+    "Liu",
+    "Llama",
+    "LoS",
+    "Lorentz",
+    "Lowering",
+    "MBL",
+    "MSE",
+    "Main",
+    "Many",
+    "Matrix",
+    "MaxRL",
+    "McLeod",
+    "Metals",
+    "Milky",
+    "Molecular",
+    "More",
+    "NDP",
+    "NWRMSLE",
+    "Necessity",
+    "Nekrasov",
+    "Neumann",
+    "Nijboer",
+    "Nikodym",
+    "Nikolskii",
+    "Now",
+    "Oberman",
+    "Objective",
+    "Okounkov",
+    "Optimistic",
+    "Ostriker",
+    "Other",
+    "Over",
+    "Overall",
+    "PP",
+    "Pandharipande",
+    "Parametrisation",
+    "Particular",
+    "Patlak",
+    "Peres",
+    "Phi",
+    "Plummer",
+    "Point",
+    "Polish",
+    "Pop",
+    "Problem",
+    "Qwen",
+    "RHS",
+    "RLOO",
+    "Radon",
+    "Randers",
+    "Rao",
+    "Refs",
+    "Region",
+    "Rejecting",
+    "Related",
+    "Rep",
+    "Resources",
+    "Results",
+    "SA",
+    "SDSS",
+    "SE",
+    "SZK",
+    "Sachdeva",
+    "SageMath",
+    "Schramm",
+    "Sec",
+    "Segel",
+    "Setting",
+    "Shapley",
+    "Sheffield",
+    "Sigma",
+    "Since",
+    "Sinkhorn",
+    "Smith",
+    "Smoluchowski",
+    "Specializing",
+    "Specifically",
+    "Spielman",
+    "Spread",
+    "Statistical",
+    "Step",
+    "Stratonovich",
+    "Such",
+    "TU",
+    "Taking",
+    "That",
+    "There",
+    "Thomas",
+    "Total",
+    "Tr",
+    "Training",
+    "Tullock",
+    "Type",
+    "UV",
+    "Universe",
+    "Up",
+    "Upon",
+    "Use",
+    "VCG",
+    "Viscosity",
+    "Way",
+    "Wette",
+    "While",
+    "Wilson",
+    "XRISM",
+    "XXZ",
+    "ZTF",
+    "aMT",
+    "ablations",
+    "absorb",
+    "absorbing",
+    "abundances",
+    "accelerated",
+    "accepts",
+    "account",
+    "accumulation",
+    "accuracy",
+    "achieving",
+    "action",
+    "acts",
+    "actually",
+    "adapt",
+    "adapted",
+    "addition",
+    "address",
+    "addressed",
+    "adjacency",
+    "adjusted",
+    "admit",
+    "advance",
+    "aeSFT",
+    "affects",
+    "affine",
+    "age",
+    "agents",
+    "agreement",
+    "ahead",
+    "aim",
+    "algebraic",
+    "algorithms",
+    "align",
+    "allow",
+    "allowed",
+    "alphabet",
+    "alternative",
+    "although",
+    "amount",
+    "amplitude",
+    "analogous",
+    "analogy",
+    "analyses",
+    "analyzed",
+    "anomalously",
+    "ante",
+    "antithetic",
+    "aperture",
+    "appears",
+    "appendix",
+    "applying",
+    "approaches",
+    "appropriately",
+    "approximate",
+    "approximately",
+    "approximations",
+    "archive",
+    "area",
+    "arg",
+    "arguing",
+    "arithmetic",
+    "arrow",
+    "arrows",
+    "art",
+    "artifact",
+    "assembled",
+    "assertion",
+    "asset",
+    "assign",
+    "assigned",
+    "asymmetric",
+    "asymptotics",
+    "attaining",
+    "attempt",
+    "attractors",
+    "attribution",
+    "auction",
+    "automatically",
+    "auxiliary",
+    "availability",
+    "average",
+    "averaged",
+    "averages",
+    "away",
+    "axis",
+    "back",
+    "bacteria",
+    "bacterial",
+    "balance",
+    "bandwidth",
+    "barrier",
+    "bases",
+    "batch",
+    "battlefield",
+    "battlefields",
+    "bct's",
+    "behavioral",
+    "beled",
+    "belongs",
+    "best",
+    "bet",
+    "betting",
+    "beyond",
+    "bidders",
+    "big",
+    "bijection",
+    "bijective",
+    "bilinear",
+    "bin",
+    "binary",
+    "biorthogonal",
+    "biorthogonality",
+    "bistable",
+    "black",
+    "blocklength",
+    "blowup",
+    "blueshifted",
+    "blueward",
+    "borrowing",
+    "bottleneck",
+    "bottom",
+    "boundedly",
+    "boxcounting",
+    "bridge",
+    "brief",
+    "briefly",
+    "budgets",
+    "built",
+    "bundles",
+    "cL",
+    "calculate",
+    "calculation",
+    "calibrated",
+    "campaign",
+    "campus",
+    "cancellation",
+    "captured",
+    "carried",
+    "carries",
+    "casino",
+    "catalogues",
+    "catalysts",
+    "cavity",
+    "cell",
+    "cent",
+    "centrality",
+    "cert",
+    "certainly",
+    "certainty",
+    "certified",
+    "chains",
+    "changes",
+    "channel",
+    "channels",
+    "characterise",
+    "characteristic",
+    "characterization",
+    "characterizations",
+    "charged",
+    "checked",
+    "checkpoint",
+    "chemical",
+    "chiral",
+    "chord",
+    "circ",
+    "claim",
+    "clarity",
+    "classical",
+    "clean",
+    "closure",
+    "closures",
+    "codes",
+    "coding",
+    "coefficients",
+    "coincides",
+    "collapse",
+    "collection",
+    "collective",
+    "collisionless",
+    "column",
+    "combining",
+    "coming",
+    "compared",
+    "compensated",
+    "compensation",
+    "compensator",
+    "compiled",
+    "complement",
+    "complete",
+    "completed",
+    "completely",
+    "complex",
+    "complexity",
+    "composition",
+    "compresses",
+    "computation",
+    "computational",
+    "computations",
+    "compute",
+    "concavity",
+    "concentrate",
+    "concentration",
+    "concept",
+    "conceptually",
+    "concerned",
+    "conclude",
+    "concrete",
+    "conditionally",
+    "conditioning",
+    "configured",
+    "confirming",
+    "confirms",
+    "connected",
+    "consequently",
+    "conservation",
+    "consider",
+    "considerably",
+    "consistency",
+    "constituents",
+    "consult",
+    "consumer",
+    "contact",
+    "contained",
+    "containing",
+    "context",
+    "continue",
+    "continuum",
+    "contractor",
+    "contracts",
+    "contribute",
+    "contributes",
+    "contribution",
+    "controls",
+    "cool",
+    "cooled",
+    "cooling",
+    "corner",
+    "corpus",
+    "correctly",
+    "correlates",
+    "coset",
+    "cosmic",
+    "counts",
+    "couple",
+    "coupled",
+    "coupling",
+    "coupon",
+    "coverage",
+    "covering",
+    "crosses",
+    "crossing",
+    "crucial",
+    "cubature",
+    "cube",
+    "curve",
+    "curves",
+    "cutoff",
+    "dQ",
+    "dW",
+    "dashed",
+    "database",
+    "dataset",
+    "de",
+    "decay",
+    "decompositions",
+    "decoupling",
+    "decrement",
+    "deeply",
+    "defect",
+    "define",
+    "defining",
+    "deformation",
+    "deleting",
+    "demonstrate",
+    "denote",
+    "dense",
+    "densest",
+    "densities",
+    "depends",
+    "depleted",
+    "depth",
+    "derivatives",
+    "description",
+    "design",
+    "despite",
+    "destruction",
+    "detailed",
+    "detected",
+    "detection",
+    "detector",
+    "determines",
+    "detuning",
+    "devised",
+    "devoted",
+    "diagonal",
+    "diagonalization",
+    "did",
+    "differences",
+    "differentiate",
+    "differently",
+    "difficult",
+    "difficulty",
+    "disaster",
+    "disc",
+    "discounted",
+    "discourages",
+    "discretizes",
+    "discussed",
+    "disjoint",
+    "disk",
+    "dispersed",
+    "displayed",
+    "disproportionately",
+    "dissipation",
+    "dist",
+    "distinct",
+    "divides",
+    "documents",
+    "dollars",
+    "dominated",
+    "dots",
+    "dotted",
+    "downarrow",
+    "downstream",
+    "downward",
+    "drags",
+    "draw",
+    "draws",
+    "duality",
+    "dynamic",
+    "dynamically",
+    "early",
+    "ease",
+    "easier",
+    "easy",
+    "economy",
+    "edge",
+    "effects",
+    "efficiency",
+    "efficiently",
+    "eighteen",
+    "ejection",
+    "el",
+    "election",
+    "emerges",
+    "emphasize",
+    "empirically",
+    "employ",
+    "encoded",
+    "encoder",
+    "ensemble",
+    "ent",
+    "entail",
+    "entrains",
+    "entries",
+    "entry",
+    "episodes",
+    "epoch",
+    "epsilon",
+    "equality",
+    "equalization",
+    "equally",
+    "equivalents",
+    "erasure",
+    "ergotropy",
+    "errors",
+    "especially",
+    "established",
+    "establishing",
+    "estimating",
+    "estimation",
+    "evaluate",
+    "evening",
+    "evidence",
+    "evolves",
+    "exception",
+    "excited",
+    "exclude",
+    "exclusive",
+    "exhaust",
+    "exhausting",
+    "exhibits",
+    "exists",
+    "exp",
+    "expansion",
+    "expansions",
+    "explain",
+    "explained",
+    "explanation",
+    "exploit",
+    "exploiting",
+    "expressions",
+    "extends",
+    "extension",
+    "extensions",
+    "extensively",
+    "extent",
+    "extinct",
+    "extracted",
+    "extremal",
+    "fact",
+    "factor",
+    "factorially",
+    "factorisation",
+    "factors",
+    "fails",
+    "familiar",
+    "families",
+    "fast",
+    "favors",
+    "fcc",
+    "fearful",
+    "feasibility",
+    "features",
+    "fermions",
+    "fewer",
+    "fictitious",
+    "fiducial",
+    "fields",
+    "figures",
+    "filter",
+    "fin",
+    "finder",
+    "fine",
+    "fit",
+    "fix",
+    "fixing",
+    "flight",
+    "flip",
+    "formal",
+    "format",
+    "found",
+    "foundation",
+    "fourth",
+    "fraction",
+    "fractions",
+    "framework",
+    "frequencies",
+    "frequency",
+    "front's",
+    "future",
+    "gambler",
+    "games",
+    "gapless",
+    "generality",
+    "generalizations",
+    "generally",
+    "generate",
+    "generates",
+    "generating",
+    "geodesic",
+    "geometries",
+    "get",
+    "global",
+    "globally",
+    "go",
+    "goal",
+    "going",
+    "good",
+    "grain",
+    "grains",
+    "graph",
+    "graphs",
+    "greater",
+    "gross",
+    "groups",
+    "grow",
+    "growing",
+    "gtrsim",
+    "halos",
+    "hard",
+    "harmonic",
+    "he",
+    "heat",
+    "heavier",
+    "help",
+    "helpful",
+    "highlight",
+    "highly",
+    "hindsight",
+    "hire",
+    "hired",
+    "hires",
+    "hit",
+    "hole",
+    "homomorphism",
+    "homotopy",
+    "honeycomb",
+    "horizons",
+    "host",
+    "hot",
+    "hypergraph",
+    "hyperinterpolation",
+    "hypotheses",
+    "hypothesis",
+    "identical",
+    "identification",
+    "identifies",
+    "illustrating",
+    "images",
+    "immediate",
+    "immediately",
+    "immune",
+    "implementation",
+    "implemented",
+    "implements",
+    "implicit",
+    "implies",
+    "impose",
+    "improve",
+    "improving",
+    "incentive",
+    "including",
+    "income",
+    "independently",
+    "index",
+    "indicates",
+    "indicating",
+    "indices",
+    "indifferent",
+    "indirect",
+    "indistinguishable",
+    "induced",
+    "inference",
+    "infimal",
+    "influx",
+    "informative",
+    "ingestion",
+    "injection",
+    "inner",
+    "inradius",
+    "insertion",
+    "instances",
+    "integrability",
+    "intensity",
+    "interest",
+    "interface",
+    "interior",
+    "interpolate",
+    "interpolation",
+    "interpret",
+    "interpretation",
+    "interpretations",
+    "intersection",
+    "intranight",
+    "introduce",
+    "introduces",
+    "invariants",
+    "inverse",
+    "invest",
+    "irrelevant",
+    "isolate",
+    "isolated",
+    "isolates",
+    "issue",
+    "item",
+    "iteratively",
+    "job",
+    "jump",
+    "jumps",
+    "just",
+    "kernels",
+    "kinematic",
+    "knob",
+    "la",
+    "labels",
+    "labor",
+    "lack",
+    "landscape",
+    "langle",
+    "large",
+    "largely",
+    "late",
+    "latent",
+    "lattices",
+    "layers",
+    "leakage",
+    "learn",
+    "learned",
+    "leaves",
+    "led",
+    "lengths",
+    "let",
+    "levels",
+    "lie",
+    "lift",
+    "light",
+    "like",
+    "limiting",
+    "limits",
+    "linearly",
+    "lines",
+    "little",
+    "loading",
+    "location",
+    "logarithmically",
+    "logged",
+    "logicals",
+    "look",
+    "loses",
+    "luminosity",
+    "magnetic",
+    "magnitude",
+    "majority",
+    "mapping",
+    "matching",
+    "mathematical",
+    "mathscr",
+    "matrices",
+    "maximal",
+    "maximizes",
+    "measurements",
+    "mechanisms",
+    "member",
+    "menu",
+    "merger",
+    "metallicities",
+    "metals",
+    "methodology",
+    "metrics",
+    "mid",
+    "middle",
+    "midplane",
+    "midrange",
+    "min",
+    "minimise",
+    "minimize",
+    "minimizing",
+    "minor",
+    "mirror",
+    "miscellaneous",
+    "mixed",
+    "mod",
+    "modes",
+    "modification",
+    "molecule",
+    "monotone",
+    "moving",
+    "mr",
+    "multi",
+    "multiplied",
+    "mutually",
+    "my",
+    "nD",
+    "nL",
+    "namely",
+    "narrower",
+    "nd",
+    "ne",
+    "nearby",
+    "nearest",
+    "nearly",
+    "necessarily",
+    "necessary",
+    "neighborhoods",
+    "neighbour",
+    "network",
+    "neural",
+    "never",
+    "newsvendor",
+    "noisier",
+    "nonconstant",
+    "nonempty",
+    "nonhomogeneous",
+    "nonnegligible",
+    "nontrivial",
+    "nonumber",
+    "northeast",
+    "notion",
+    "novelty",
+    "nucleosynthesis",
+    "null",
+    "numerically",
+    "o",
+    "observable",
+    "occupies",
+    "occurs",
+    "odd",
+    "offers",
+    "once",
+    "open",
+    "operation",
+    "oplus",
+    "opponent",
+    "optically",
+    "optimised",
+    "optimum",
+    "oracle",
+    "orbit",
+    "otherwise",
+    "outcome",
+    "outline",
+    "output",
+    "outputs",
+    "outradius",
+    "owing",
+    "packets",
+    "packing",
+    "paired",
+    "pairs",
+    "panel's",
+    "papers",
+    "parent",
+    "parity",
+    "paths",
+    "pathwise",
+    "perfect",
+    "perform",
+    "perimeter",
+    "periodic",
+    "permit",
+    "permutation",
+    "perturbation",
+    "perturbations",
+    "pessimistic",
+    "photometric",
+    "photometry",
+    "photons",
+    "piece",
+    "pixels",
+    "plane",
+    "planning",
+    "player's",
+    "plays",
+    "plot",
+    "plug",
+    "plugging",
+    "pointing",
+    "polarized",
+    "pool",
+    "poor",
+    "posedness",
+    "posited",
+    "possibility",
+    "possibly",
+    "post",
+    "postulate",
+    "practice",
+    "pre",
+    "predicted",
+    "prediction",
+    "preferred",
+    "prescribed",
+    "preserves",
+    "prespecified",
+    "pretraining",
+    "previously",
+    "prices",
+    "primitives",
+    "primordial",
+    "principle",
+    "private",
+    "probabilities",
+    "probing",
+    "processes",
+    "processing",
+    "procurement",
+    "programming",
+    "projected",
+    "projection",
+    "prominent",
+    "promoted",
+    "promotion",
+    "proper",
+    "property",
+    "proposals",
+    "proposed",
+    "propto",
+    "protocol",
+    "provided",
+    "prudence",
+    "psi",
+    "pull",
+    "purpose",
+    "pushforward",
+    "qFDPC",
+    "quantile",
+    "quantisation",
+    "quantity",
+    "quickly",
+    "radially",
+    "radiate",
+    "radiation",
+    "radii",
+    "raised",
+    "raises",
+    "ranged",
+    "ranges",
+    "rank",
+    "ranking",
+    "rare",
+    "ratios",
+    "ray",
+    "rays",
+    "reached",
+    "reaction",
+    "realisation",
+    "realisations",
+    "realization",
+    "realized",
+    "reason",
+    "reasonable",
+    "reasoning",
+    "recently",
+    "reciprocal",
+    "recombination",
+    "recomputed",
+    "recovers",
+    "reduce",
+    "reduced",
+    "reducing",
+    "refer",
+    "reference",
+    "refine",
+    "reflection",
+    "regarded",
+    "regarding",
+    "regime",
+    "regions",
+    "regularity",
+    "regularized",
+    "rejected",
+    "rejection",
+    "rejects",
+    "relativistic",
+    "relaxation",
+    "reliance",
+    "remaining",
+    "rent",
+    "rents",
+    "repeated",
+    "repetition",
+    "replay",
+    "replica",
+    "reporting",
+    "reports",
+    "representations",
+    "representing",
+    "represents",
+    "reproduction",
+    "requires",
+    "resampling",
+    "rescaling",
+    "researchers",
+    "residuals",
+    "resolve",
+    "resolves",
+    "resource",
+    "respects",
+    "response",
+    "restart",
+    "restriction",
+    "restrictions",
+    "rests",
+    "retaining",
+    "return",
+    "reveals",
+    "reverse",
+    "reversing",
+    "review",
+    "revival",
+    "rewrite",
+    "rhombohedral",
+    "ridge",
+    "rk",
+    "role",
+    "rollouts",
+    "rotational",
+    "roughly",
+    "rules",
+    "sabotage",
+    "sales",
+    "satisfy",
+    "saturation",
+    "save",
+    "say",
+    "says",
+    "scan",
+    "scattering",
+    "scheduling",
+    "scheme",
+    "schemes",
+    "science",
+    "search",
+    "sections",
+    "sectors",
+    "seed",
+    "seeing",
+    "select",
+    "semicontinuity",
+    "semigroup",
+    "sensitive",
+    "separates",
+    "separating",
+    "sequence",
+    "sessions",
+    "setting",
+    "shaded",
+    "shall",
+    "share",
+    "sharpness",
+    "she",
+    "shell",
+    "shocks",
+    "shorter",
+    "shot",
+    "should",
+    "showcasing",
+    "sides",
+    "signatures",
+    "significant",
+    "simple",
+    "simplify",
+    "simulation",
+    "simulations",
+    "simultaneous",
+    "singleton",
+    "singular",
+    "singularity",
+    "slice",
+    "slightly",
+    "slows",
+    "smaller",
+    "smallest",
+    "smoothness",
+    "solvability",
+    "solving",
+    "sources",
+    "southwest",
+    "spaces",
+    "span",
+    "sparse",
+    "sparsified",
+    "spatially",
+    "speaking",
+    "specification",
+    "spectrally",
+    "spectroscopic",
+    "speculative",
+    "sphere",
+    "spherical",
+    "spline",
+    "spread",
+    "spurious",
+    "squares",
+    "st",
+    "stability",
+    "stabilization",
+    "stabilizer",
+    "stake",
+    "stars",
+    "statements",
+    "static",
+    "statistical",
+    "steadily",
+    "steps",
+    "stop",
+    "stopping",
+    "store",
+    "strategy",
+    "stroboscopic",
+    "strong",
+    "stronger",
+    "structured",
+    "structures",
+    "students",
+    "studies",
+    "subset",
+    "substantially",
+    "substitution",
+    "subtracts",
+    "succeeds",
+    "success",
+    "suffice",
+    "sufficiency",
+    "summarize",
+    "summation",
+    "supernova",
+    "supersolution",
+    "supersymmetry",
+    "supplemented",
+    "support",
+    "supported",
+    "supporting",
+    "supports",
+    "supremal",
+    "supremum",
+    "surfaces",
+    "survey",
+    "symmetrized",
+    "syn",
+    "systematics",
+    "tangent",
+    "teacher",
+    "technical",
+    "temporal",
+    "tender",
+    "tendering",
+    "tens",
+    "tenths",
+    "terminate",
+    "tests",
+    "tetragonal",
+    "tf",
+    "th",
+    "themselves",
+    "theorems",
+    "theoretic",
+    "theory",
+    "thermalization",
+    "things",
+    "think",
+    "throughout",
+    "thus",
+    "tilde",
+    "tools",
+    "top",
+    "topic",
+    "tot",
+    "track",
+    "tractable",
+    "traditional",
+    "train",
+    "training",
+    "transformation",
+    "transformed",
+    "translation",
+    "transparent",
+    "transported",
+    "traverse",
+    "treating",
+    "treats",
+    "trend",
+    "triangleq",
+    "trivially",
+    "truncated",
+    "truncation",
+    "truthful",
+    "tug",
+    "turns",
+    "twenty",
+    "twice",
+    "typically",
+    "unattainable",
+    "unbiased",
+    "unbounded",
+    "unboundedness",
+    "underline",
+    "understood",
+    "unembedding",
+    "uniformity",
+    "unilateral",
+    "uniqueness",
+    "universal",
+    "unrestricted",
+    "unsparsified",
+    "unsqueezed",
+    "unstable",
+    "until",
+    "unweighted",
+    "uparrow",
+    "updates",
+    "upward",
+    "useful",
+    "usefulness",
+    "validate",
+    "validates",
+    "variability",
+    "variables",
+    "variance",
+    "variants",
+    "variational",
+    "variations",
+    "various",
+    "verified",
+    "versions",
+    "vertex",
+    "vertical",
+    "via",
+    "vibrational",
+    "violate",
+    "viscosity",
+    "viscous",
+    "wage",
+    "war",
+    "waypoints",
+    "weaker",
+    "weakly",
+    "wealth",
+    "weighting",
+    "whereas",
+    "widetilde",
+    "width",
+    "win",
+    "winding",
+    "windings",
+    "window",
+    "winds",
+    "winner",
+    "winners",
+    "winning",
+    "wins",
+    "word",
+    "words",
+    "world",
+    "xk",
+    "yielding"
+  ]
+}

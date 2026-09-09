@@ -1,0 +1,24 @@
+{
+  "vocab_size": 6414,
+  "active_vocab_size": 6414,
+  "stop_token_ids": [
+    6388,
+    6390
+  ],
+  "stop_token_ids_source_mismatches": [
+    {
+      "index": 0,
+      "declared_stop_token_id": 151643,
+      "stop_str": "<|endoftext|>",
+      "token_at_declared_id": "\u0120\u00eb\u0124\u00b4\u00ec\u013c\u00a9",
+      "corrected_old_id": 248044
+    },
+    {
+      "index": 1,
+      "declared_stop_token_id": 151645,
+      "stop_str": "<|im_end|>",
+      "token_at_declared_id": "\u00e0\u00b8\u00ab\u00e0\u00b8\u013b\u00e0\u00b8\u00b1\u00e0\u00b8\u0129",
+      "corrected_old_id": 248046
+    }
+  ]
+}
