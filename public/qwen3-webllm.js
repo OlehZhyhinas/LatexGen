@@ -164,6 +164,26 @@ export function parseForce(search = "") {
   return undefined;
 }
 
+// A K-token burst (or any lookahead) issues more decode steps than the CPU has
+// consumed, then rolls the surplus positions back at stop time with
+// vm.builtin.kv_state_popn. That pop is only valid against an attention KV
+// cache. A model with recurrent (space-state) layers keeps no per-token
+// history, so the pop fails its own check and TVM aborts the WASM runtime
+// mid-run (rnn_state.cc RNNStateImpObj::PopN, "0 available history"), which
+// kills the engine after the tokens have already streamed out — the visible
+// symptom is the pipeline's repair pass silently failing. Clamp here rather
+// than trusting the catalog, so a hand-picked variant row or a forced
+// ?webllm=catalog:<variant> cannot reintroduce it. The pop-free knobs
+// (batchPass, flushEvery, bindGroupCache) are left alone.
+export function safeTuning(model, tuning) {
+  if (!tuning) return {};
+  if (!model?.recurrentState) return tuning;
+  const safe = { ...tuning };
+  if (typeof safe.greedyBurst === "number" && safe.greedyBurst > 1) safe.greedyBurst = 1;
+  delete safe.lookahead;
+  return safe;
+}
+
 export async function planEngine(modelId, catalog, { force, nav = globalThis.navigator, storage = globalThis.localStorage, stockRecord } = {}) {
   const model = catalog?.models?.[modelId];
   if (!model) return stockPlan("not in catalog");
@@ -188,7 +208,7 @@ export async function planEngine(modelId, catalog, { force, nav = globalThis.nav
     kind: "catalog",
     variant: variantId,
     runtime,
-    tuning: variant.tuning ?? {},
+    tuning: safeTuning(model, variant.tuning),
     label: `catalog ${variantId}`,
     appConfig: { model_list: [{ ...stockRecord, model_lib: model.modelLib.url }] },
   };
