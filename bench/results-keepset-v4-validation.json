@@ -1,0 +1,1029 @@
+{
+  "qwen35": {
+    "24576": {
+      "check1_failures_gone": {
+        "maths_symbols": {
+          "'\u03c6'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              24031
+            ]
+          },
+          "'\u2190'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              23752
+            ]
+          },
+          "'\u2194'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              21998,
+              242
+            ]
+          },
+          "'\u2193'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              23909
+            ]
+          },
+          "'\u00d7'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              17044
+            ]
+          }
+        },
+        "rare_words": {
+          "Nikolskii": {
+            "roundtrip_ok": true,
+            "decoded": "Nikolskii"
+          },
+          "Randers": {
+            "roundtrip_ok": true,
+            "decoded": "Randers"
+          },
+          "Lissajous": {
+            "roundtrip_ok": true,
+            "decoded": "Lissajous"
+          },
+          "Kullback": {
+            "roundtrip_ok": true,
+            "decoded": "Kullback"
+          },
+          "Hausdorff": {
+            "roundtrip_ok": true,
+            "decoded": "Hausdorff"
+          },
+          "Chebyshev": {
+            "roundtrip_ok": true,
+            "decoded": "Chebyshev"
+          },
+          "Sobolev": {
+            "roundtrip_ok": true,
+            "decoded": "Sobolev"
+          }
+        },
+        "maths_symbols_all_ok": true,
+        "rare_words_all_ok": true,
+        "latexgen_prompt_texts": {
+          "all_ok": true,
+          "n_texts": 6,
+          "failures": []
+        },
+        "named_failure1_ids": {
+          "all_7_named_ids_in_keepset": true,
+          "detail": {
+            "80757": {
+              "token": "\u0120oscillator",
+              "in_keepset": true
+            },
+            "80636": {
+              "token": "\u0120damping",
+              "in_keepset": true
+            },
+            "77019": {
+              "token": "\u0120converge",
+              "in_keepset": true
+            },
+            "65088": {
+              "token": "\u0120flattened",
+              "in_keepset": true
+            },
+            "80313": {
+              "token": "\u0120reorder",
+              "in_keepset": true
+            },
+            "72452": {
+              "token": "\u00c2\u00a8",
+              "in_keepset": true
+            },
+            "94498": {
+              "token": "\u0120\u00cf\u00a8",
+              "in_keepset": true
+            }
+          }
+        }
+      },
+      "check2_short_piece_completeness": {
+        "n_reference_strings": 120,
+        "n_reference_pass": 120,
+        "n_random_words": 2000,
+        "n_random_words_pass": 2000,
+        "all_pass": true,
+        "failures": [],
+        "n_failures_total": 0
+      },
+      "check3_fertility": {
+        "n_texts": 240,
+        "total_chars": 108318,
+        "fertility_before_tokens_per_char": 0.24314518362599014,
+        "fertility_after_tokens_per_char": 0.24314518362599014,
+        "fertility_inflation_relative": 0.0
+      },
+      "check4_prompt_coverage": {
+        "plain_prompt": {
+          "n_items": 120,
+          "n_full_in_keepset": 120,
+          "fraction": 1.0,
+          "missing_items": []
+        },
+        "pdf_prompt": {
+          "n_items": 120,
+          "n_full_in_keepset": 120,
+          "fraction": 1.0,
+          "missing_items": []
+        }
+      },
+      "check6_accented_greek_codepoints": {
+        "n_codepoints_probed": 932,
+        "n_pass": 932,
+        "all_pass": true,
+        "failures": [],
+        "n_failures_total": 0
+      },
+      "check7_accented_author_names": {
+        "all_ok": true,
+        "detail": {
+          "L\u00f3pez-Monsalvo": {
+            "roundtrip_ok": true,
+            "decoded": "L\u00f3pez-Monsalvo"
+          },
+          "A\u00e7\u0131kg\u00f6z": {
+            "roundtrip_ok": true,
+            "decoded": "A\u00e7\u0131kg\u00f6z"
+          },
+          "Erd\u0151s": {
+            "roundtrip_ok": true,
+            "decoded": "Erd\u0151s"
+          },
+          "Schr\u00f6dinger": {
+            "roundtrip_ok": true,
+            "decoded": "Schr\u00f6dinger"
+          },
+          "M\u00fcller": {
+            "roundtrip_ok": true,
+            "decoded": "M\u00fcller"
+          },
+          "Poincar\u00e9": {
+            "roundtrip_ok": true,
+            "decoded": "Poincar\u00e9"
+          },
+          "Rios-Ram\u00edrez": {
+            "roundtrip_ok": true,
+            "decoded": "Rios-Ram\u00edrez"
+          },
+          "\u00c7etin": {
+            "roundtrip_ok": true,
+            "decoded": "\u00c7etin"
+          },
+          "Bia\u0142ynicki-Birula": {
+            "roundtrip_ok": true,
+            "decoded": "Bia\u0142ynicki-Birula"
+          }
+        }
+      },
+      "regressions": [],
+      "is_candidate": true
+    },
+    "32768": {
+      "check1_failures_gone": {
+        "maths_symbols": {
+          "'\u03c6'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              32223
+            ]
+          },
+          "'\u2190'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              31944
+            ]
+          },
+          "'\u2194'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              25098,
+              242
+            ]
+          },
+          "'\u2193'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              32101
+            ]
+          },
+          "'\u00d7'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              17044
+            ]
+          }
+        },
+        "rare_words": {
+          "Nikolskii": {
+            "roundtrip_ok": true,
+            "decoded": "Nikolskii"
+          },
+          "Randers": {
+            "roundtrip_ok": true,
+            "decoded": "Randers"
+          },
+          "Lissajous": {
+            "roundtrip_ok": true,
+            "decoded": "Lissajous"
+          },
+          "Kullback": {
+            "roundtrip_ok": true,
+            "decoded": "Kullback"
+          },
+          "Hausdorff": {
+            "roundtrip_ok": true,
+            "decoded": "Hausdorff"
+          },
+          "Chebyshev": {
+            "roundtrip_ok": true,
+            "decoded": "Chebyshev"
+          },
+          "Sobolev": {
+            "roundtrip_ok": true,
+            "decoded": "Sobolev"
+          }
+        },
+        "maths_symbols_all_ok": true,
+        "rare_words_all_ok": true,
+        "latexgen_prompt_texts": {
+          "all_ok": true,
+          "n_texts": 6,
+          "failures": []
+        },
+        "named_failure1_ids": {
+          "all_7_named_ids_in_keepset": true,
+          "detail": {
+            "80757": {
+              "token": "\u0120oscillator",
+              "in_keepset": true
+            },
+            "80636": {
+              "token": "\u0120damping",
+              "in_keepset": true
+            },
+            "77019": {
+              "token": "\u0120converge",
+              "in_keepset": true
+            },
+            "65088": {
+              "token": "\u0120flattened",
+              "in_keepset": true
+            },
+            "80313": {
+              "token": "\u0120reorder",
+              "in_keepset": true
+            },
+            "72452": {
+              "token": "\u00c2\u00a8",
+              "in_keepset": true
+            },
+            "94498": {
+              "token": "\u0120\u00cf\u00a8",
+              "in_keepset": true
+            }
+          }
+        }
+      },
+      "check2_short_piece_completeness": {
+        "n_reference_strings": 120,
+        "n_reference_pass": 120,
+        "n_random_words": 2000,
+        "n_random_words_pass": 2000,
+        "all_pass": true,
+        "failures": [],
+        "n_failures_total": 0
+      },
+      "check3_fertility": {
+        "n_texts": 240,
+        "total_chars": 108318,
+        "fertility_before_tokens_per_char": 0.24314518362599014,
+        "fertility_after_tokens_per_char": 0.24314518362599014,
+        "fertility_inflation_relative": 0.0
+      },
+      "check4_prompt_coverage": {
+        "plain_prompt": {
+          "n_items": 120,
+          "n_full_in_keepset": 120,
+          "fraction": 1.0,
+          "missing_items": []
+        },
+        "pdf_prompt": {
+          "n_items": 120,
+          "n_full_in_keepset": 120,
+          "fraction": 1.0,
+          "missing_items": []
+        }
+      },
+      "check6_accented_greek_codepoints": {
+        "n_codepoints_probed": 932,
+        "n_pass": 932,
+        "all_pass": true,
+        "failures": [],
+        "n_failures_total": 0
+      },
+      "check7_accented_author_names": {
+        "all_ok": true,
+        "detail": {
+          "L\u00f3pez-Monsalvo": {
+            "roundtrip_ok": true,
+            "decoded": "L\u00f3pez-Monsalvo"
+          },
+          "A\u00e7\u0131kg\u00f6z": {
+            "roundtrip_ok": true,
+            "decoded": "A\u00e7\u0131kg\u00f6z"
+          },
+          "Erd\u0151s": {
+            "roundtrip_ok": true,
+            "decoded": "Erd\u0151s"
+          },
+          "Schr\u00f6dinger": {
+            "roundtrip_ok": true,
+            "decoded": "Schr\u00f6dinger"
+          },
+          "M\u00fcller": {
+            "roundtrip_ok": true,
+            "decoded": "M\u00fcller"
+          },
+          "Poincar\u00e9": {
+            "roundtrip_ok": true,
+            "decoded": "Poincar\u00e9"
+          },
+          "Rios-Ram\u00edrez": {
+            "roundtrip_ok": true,
+            "decoded": "Rios-Ram\u00edrez"
+          },
+          "\u00c7etin": {
+            "roundtrip_ok": true,
+            "decoded": "\u00c7etin"
+          },
+          "Bia\u0142ynicki-Birula": {
+            "roundtrip_ok": true,
+            "decoded": "Bia\u0142ynicki-Birula"
+          }
+        }
+      },
+      "regressions": [],
+      "is_candidate": true
+    },
+    "49152": {
+      "check1_failures_gone": {
+        "maths_symbols": {
+          "'\u03c6'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              48607
+            ]
+          },
+          "'\u2190'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              48328
+            ]
+          },
+          "'\u2194'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              25098,
+              242
+            ]
+          },
+          "'\u2193'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              48485
+            ]
+          },
+          "'\u00d7'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              17044
+            ]
+          }
+        },
+        "rare_words": {
+          "Nikolskii": {
+            "roundtrip_ok": true,
+            "decoded": "Nikolskii"
+          },
+          "Randers": {
+            "roundtrip_ok": true,
+            "decoded": "Randers"
+          },
+          "Lissajous": {
+            "roundtrip_ok": true,
+            "decoded": "Lissajous"
+          },
+          "Kullback": {
+            "roundtrip_ok": true,
+            "decoded": "Kullback"
+          },
+          "Hausdorff": {
+            "roundtrip_ok": true,
+            "decoded": "Hausdorff"
+          },
+          "Chebyshev": {
+            "roundtrip_ok": true,
+            "decoded": "Chebyshev"
+          },
+          "Sobolev": {
+            "roundtrip_ok": true,
+            "decoded": "Sobolev"
+          }
+        },
+        "maths_symbols_all_ok": true,
+        "rare_words_all_ok": true,
+        "latexgen_prompt_texts": {
+          "all_ok": true,
+          "n_texts": 6,
+          "failures": []
+        },
+        "named_failure1_ids": {
+          "all_7_named_ids_in_keepset": true,
+          "detail": {
+            "80757": {
+              "token": "\u0120oscillator",
+              "in_keepset": true
+            },
+            "80636": {
+              "token": "\u0120damping",
+              "in_keepset": true
+            },
+            "77019": {
+              "token": "\u0120converge",
+              "in_keepset": true
+            },
+            "65088": {
+              "token": "\u0120flattened",
+              "in_keepset": true
+            },
+            "80313": {
+              "token": "\u0120reorder",
+              "in_keepset": true
+            },
+            "72452": {
+              "token": "\u00c2\u00a8",
+              "in_keepset": true
+            },
+            "94498": {
+              "token": "\u0120\u00cf\u00a8",
+              "in_keepset": true
+            }
+          }
+        }
+      },
+      "check2_short_piece_completeness": {
+        "n_reference_strings": 120,
+        "n_reference_pass": 120,
+        "n_random_words": 2000,
+        "n_random_words_pass": 2000,
+        "all_pass": true,
+        "failures": [],
+        "n_failures_total": 0
+      },
+      "check3_fertility": {
+        "n_texts": 240,
+        "total_chars": 108318,
+        "fertility_before_tokens_per_char": 0.24314518362599014,
+        "fertility_after_tokens_per_char": 0.24314518362599014,
+        "fertility_inflation_relative": 0.0
+      },
+      "check4_prompt_coverage": {
+        "plain_prompt": {
+          "n_items": 120,
+          "n_full_in_keepset": 120,
+          "fraction": 1.0,
+          "missing_items": []
+        },
+        "pdf_prompt": {
+          "n_items": 120,
+          "n_full_in_keepset": 120,
+          "fraction": 1.0,
+          "missing_items": []
+        }
+      },
+      "check6_accented_greek_codepoints": {
+        "n_codepoints_probed": 932,
+        "n_pass": 932,
+        "all_pass": true,
+        "failures": [],
+        "n_failures_total": 0
+      },
+      "check7_accented_author_names": {
+        "all_ok": true,
+        "detail": {
+          "L\u00f3pez-Monsalvo": {
+            "roundtrip_ok": true,
+            "decoded": "L\u00f3pez-Monsalvo"
+          },
+          "A\u00e7\u0131kg\u00f6z": {
+            "roundtrip_ok": true,
+            "decoded": "A\u00e7\u0131kg\u00f6z"
+          },
+          "Erd\u0151s": {
+            "roundtrip_ok": true,
+            "decoded": "Erd\u0151s"
+          },
+          "Schr\u00f6dinger": {
+            "roundtrip_ok": true,
+            "decoded": "Schr\u00f6dinger"
+          },
+          "M\u00fcller": {
+            "roundtrip_ok": true,
+            "decoded": "M\u00fcller"
+          },
+          "Poincar\u00e9": {
+            "roundtrip_ok": true,
+            "decoded": "Poincar\u00e9"
+          },
+          "Rios-Ram\u00edrez": {
+            "roundtrip_ok": true,
+            "decoded": "Rios-Ram\u00edrez"
+          },
+          "\u00c7etin": {
+            "roundtrip_ok": true,
+            "decoded": "\u00c7etin"
+          },
+          "Bia\u0142ynicki-Birula": {
+            "roundtrip_ok": true,
+            "decoded": "Bia\u0142ynicki-Birula"
+          }
+        }
+      },
+      "regressions": [],
+      "is_candidate": true
+    }
+  },
+  "minicpm5-2b": {
+    "24576": {
+      "check1_failures_gone": {
+        "maths_symbols": {
+          "'\u03c6'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              21810
+            ]
+          },
+          "'\u2190'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              23203
+            ]
+          },
+          "'\u2194'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              20948,
+              264
+            ]
+          },
+          "'\u2193'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              21959
+            ]
+          },
+          "'\u00d7'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              11743
+            ]
+          }
+        },
+        "rare_words": {
+          "Nikolskii": {
+            "roundtrip_ok": true,
+            "decoded": "Nikolskii"
+          },
+          "Randers": {
+            "roundtrip_ok": true,
+            "decoded": "Randers"
+          },
+          "Lissajous": {
+            "roundtrip_ok": true,
+            "decoded": "Lissajous"
+          },
+          "Kullback": {
+            "roundtrip_ok": true,
+            "decoded": "Kullback"
+          },
+          "Hausdorff": {
+            "roundtrip_ok": true,
+            "decoded": "Hausdorff"
+          },
+          "Chebyshev": {
+            "roundtrip_ok": true,
+            "decoded": "Chebyshev"
+          },
+          "Sobolev": {
+            "roundtrip_ok": true,
+            "decoded": "Sobolev"
+          }
+        },
+        "maths_symbols_all_ok": true,
+        "rare_words_all_ok": true,
+        "latexgen_prompt_texts": {
+          "all_ok": true,
+          "n_texts": 6,
+          "failures": []
+        }
+      },
+      "check2_short_piece_completeness": {
+        "n_reference_strings": 120,
+        "n_reference_pass": 120,
+        "n_random_words": 2000,
+        "n_random_words_pass": 2000,
+        "all_pass": true,
+        "failures": [],
+        "n_failures_total": 0
+      },
+      "check3_fertility": {
+        "n_texts": 240,
+        "total_chars": 108318,
+        "fertility_before_tokens_per_char": 0.2259181299507007,
+        "fertility_after_tokens_per_char": 0.2259181299507007,
+        "fertility_inflation_relative": 0.0
+      },
+      "check4_prompt_coverage": {
+        "plain_prompt": {
+          "n_items": 120,
+          "n_full_in_keepset": 120,
+          "fraction": 1.0,
+          "missing_items": []
+        },
+        "pdf_prompt": {
+          "n_items": 120,
+          "n_full_in_keepset": 120,
+          "fraction": 1.0,
+          "missing_items": []
+        }
+      },
+      "check6_accented_greek_codepoints": {
+        "n_codepoints_probed": 932,
+        "n_pass": 932,
+        "all_pass": true,
+        "failures": [],
+        "n_failures_total": 0
+      },
+      "check7_accented_author_names": {
+        "all_ok": true,
+        "detail": {
+          "L\u00f3pez-Monsalvo": {
+            "roundtrip_ok": true,
+            "decoded": "L\u00f3pez-Monsalvo"
+          },
+          "A\u00e7\u0131kg\u00f6z": {
+            "roundtrip_ok": true,
+            "decoded": "A\u00e7\u0131kg\u00f6z"
+          },
+          "Erd\u0151s": {
+            "roundtrip_ok": true,
+            "decoded": "Erd\u0151s"
+          },
+          "Schr\u00f6dinger": {
+            "roundtrip_ok": true,
+            "decoded": "Schr\u00f6dinger"
+          },
+          "M\u00fcller": {
+            "roundtrip_ok": true,
+            "decoded": "M\u00fcller"
+          },
+          "Poincar\u00e9": {
+            "roundtrip_ok": true,
+            "decoded": "Poincar\u00e9"
+          },
+          "Rios-Ram\u00edrez": {
+            "roundtrip_ok": true,
+            "decoded": "Rios-Ram\u00edrez"
+          },
+          "\u00c7etin": {
+            "roundtrip_ok": true,
+            "decoded": "\u00c7etin"
+          },
+          "Bia\u0142ynicki-Birula": {
+            "roundtrip_ok": true,
+            "decoded": "Bia\u0142ynicki-Birula"
+          }
+        }
+      },
+      "regressions": [],
+      "is_candidate": true
+    },
+    "32768": {
+      "check1_failures_gone": {
+        "maths_symbols": {
+          "'\u03c6'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              30002
+            ]
+          },
+          "'\u2190'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              31395
+            ]
+          },
+          "'\u2194'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              23846,
+              264
+            ]
+          },
+          "'\u2193'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              30151
+            ]
+          },
+          "'\u00d7'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              11743
+            ]
+          }
+        },
+        "rare_words": {
+          "Nikolskii": {
+            "roundtrip_ok": true,
+            "decoded": "Nikolskii"
+          },
+          "Randers": {
+            "roundtrip_ok": true,
+            "decoded": "Randers"
+          },
+          "Lissajous": {
+            "roundtrip_ok": true,
+            "decoded": "Lissajous"
+          },
+          "Kullback": {
+            "roundtrip_ok": true,
+            "decoded": "Kullback"
+          },
+          "Hausdorff": {
+            "roundtrip_ok": true,
+            "decoded": "Hausdorff"
+          },
+          "Chebyshev": {
+            "roundtrip_ok": true,
+            "decoded": "Chebyshev"
+          },
+          "Sobolev": {
+            "roundtrip_ok": true,
+            "decoded": "Sobolev"
+          }
+        },
+        "maths_symbols_all_ok": true,
+        "rare_words_all_ok": true,
+        "latexgen_prompt_texts": {
+          "all_ok": true,
+          "n_texts": 6,
+          "failures": []
+        }
+      },
+      "check2_short_piece_completeness": {
+        "n_reference_strings": 120,
+        "n_reference_pass": 120,
+        "n_random_words": 2000,
+        "n_random_words_pass": 2000,
+        "all_pass": true,
+        "failures": [],
+        "n_failures_total": 0
+      },
+      "check3_fertility": {
+        "n_texts": 240,
+        "total_chars": 108318,
+        "fertility_before_tokens_per_char": 0.2259181299507007,
+        "fertility_after_tokens_per_char": 0.2259181299507007,
+        "fertility_inflation_relative": 0.0
+      },
+      "check4_prompt_coverage": {
+        "plain_prompt": {
+          "n_items": 120,
+          "n_full_in_keepset": 120,
+          "fraction": 1.0,
+          "missing_items": []
+        },
+        "pdf_prompt": {
+          "n_items": 120,
+          "n_full_in_keepset": 120,
+          "fraction": 1.0,
+          "missing_items": []
+        }
+      },
+      "check6_accented_greek_codepoints": {
+        "n_codepoints_probed": 932,
+        "n_pass": 932,
+        "all_pass": true,
+        "failures": [],
+        "n_failures_total": 0
+      },
+      "check7_accented_author_names": {
+        "all_ok": true,
+        "detail": {
+          "L\u00f3pez-Monsalvo": {
+            "roundtrip_ok": true,
+            "decoded": "L\u00f3pez-Monsalvo"
+          },
+          "A\u00e7\u0131kg\u00f6z": {
+            "roundtrip_ok": true,
+            "decoded": "A\u00e7\u0131kg\u00f6z"
+          },
+          "Erd\u0151s": {
+            "roundtrip_ok": true,
+            "decoded": "Erd\u0151s"
+          },
+          "Schr\u00f6dinger": {
+            "roundtrip_ok": true,
+            "decoded": "Schr\u00f6dinger"
+          },
+          "M\u00fcller": {
+            "roundtrip_ok": true,
+            "decoded": "M\u00fcller"
+          },
+          "Poincar\u00e9": {
+            "roundtrip_ok": true,
+            "decoded": "Poincar\u00e9"
+          },
+          "Rios-Ram\u00edrez": {
+            "roundtrip_ok": true,
+            "decoded": "Rios-Ram\u00edrez"
+          },
+          "\u00c7etin": {
+            "roundtrip_ok": true,
+            "decoded": "\u00c7etin"
+          },
+          "Bia\u0142ynicki-Birula": {
+            "roundtrip_ok": true,
+            "decoded": "Bia\u0142ynicki-Birula"
+          }
+        }
+      },
+      "regressions": [],
+      "is_candidate": true
+    },
+    "49152": {
+      "check1_failures_gone": {
+        "maths_symbols": {
+          "'\u03c6'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              36018
+            ]
+          },
+          "'\u2190'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              47779
+            ]
+          },
+          "'\u2194'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              23846,
+              264
+            ]
+          },
+          "'\u2193'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              38852
+            ]
+          },
+          "'\u00d7'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              11743
+            ]
+          }
+        },
+        "rare_words": {
+          "Nikolskii": {
+            "roundtrip_ok": true,
+            "decoded": "Nikolskii"
+          },
+          "Randers": {
+            "roundtrip_ok": true,
+            "decoded": "Randers"
+          },
+          "Lissajous": {
+            "roundtrip_ok": true,
+            "decoded": "Lissajous"
+          },
+          "Kullback": {
+            "roundtrip_ok": true,
+            "decoded": "Kullback"
+          },
+          "Hausdorff": {
+            "roundtrip_ok": true,
+            "decoded": "Hausdorff"
+          },
+          "Chebyshev": {
+            "roundtrip_ok": true,
+            "decoded": "Chebyshev"
+          },
+          "Sobolev": {
+            "roundtrip_ok": true,
+            "decoded": "Sobolev"
+          }
+        },
+        "maths_symbols_all_ok": true,
+        "rare_words_all_ok": true,
+        "latexgen_prompt_texts": {
+          "all_ok": true,
+          "n_texts": 6,
+          "failures": []
+        }
+      },
+      "check2_short_piece_completeness": {
+        "n_reference_strings": 120,
+        "n_reference_pass": 120,
+        "n_random_words": 2000,
+        "n_random_words_pass": 2000,
+        "all_pass": true,
+        "failures": [],
+        "n_failures_total": 0
+      },
+      "check3_fertility": {
+        "n_texts": 240,
+        "total_chars": 108318,
+        "fertility_before_tokens_per_char": 0.2259181299507007,
+        "fertility_after_tokens_per_char": 0.2259181299507007,
+        "fertility_inflation_relative": 0.0
+      },
+      "check4_prompt_coverage": {
+        "plain_prompt": {
+          "n_items": 120,
+          "n_full_in_keepset": 120,
+          "fraction": 1.0,
+          "missing_items": []
+        },
+        "pdf_prompt": {
+          "n_items": 120,
+          "n_full_in_keepset": 120,
+          "fraction": 1.0,
+          "missing_items": []
+        }
+      },
+      "check6_accented_greek_codepoints": {
+        "n_codepoints_probed": 932,
+        "n_pass": 932,
+        "all_pass": true,
+        "failures": [],
+        "n_failures_total": 0
+      },
+      "check7_accented_author_names": {
+        "all_ok": true,
+        "detail": {
+          "L\u00f3pez-Monsalvo": {
+            "roundtrip_ok": true,
+            "decoded": "L\u00f3pez-Monsalvo"
+          },
+          "A\u00e7\u0131kg\u00f6z": {
+            "roundtrip_ok": true,
+            "decoded": "A\u00e7\u0131kg\u00f6z"
+          },
+          "Erd\u0151s": {
+            "roundtrip_ok": true,
+            "decoded": "Erd\u0151s"
+          },
+          "Schr\u00f6dinger": {
+            "roundtrip_ok": true,
+            "decoded": "Schr\u00f6dinger"
+          },
+          "M\u00fcller": {
+            "roundtrip_ok": true,
+            "decoded": "M\u00fcller"
+          },
+          "Poincar\u00e9": {
+            "roundtrip_ok": true,
+            "decoded": "Poincar\u00e9"
+          },
+          "Rios-Ram\u00edrez": {
+            "roundtrip_ok": true,
+            "decoded": "Rios-Ram\u00edrez"
+          },
+          "\u00c7etin": {
+            "roundtrip_ok": true,
+            "decoded": "\u00c7etin"
+          },
+          "Bia\u0142ynicki-Birula": {
+            "roundtrip_ok": true,
+            "decoded": "Bia\u0142ynicki-Birula"
+          }
+        }
+      },
+      "regressions": [],
+      "is_candidate": true
+    }
+  }
+}

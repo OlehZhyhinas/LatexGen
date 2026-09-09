@@ -1,0 +1,413 @@
+{
+  "fertility_before": {
+    "qwen35": 0.25993817032034533,
+    "minicpm5-2b": 0.24232586635493616
+  },
+  "fertility_v1_65536": {
+    "qwen35": 0.26010718083420775,
+    "minicpm5-2b": 0.24253712949726414
+  },
+  "held_out": {
+    "n_arxiv": 120,
+    "n_bench_ext": 93,
+    "n_texts": 426
+  },
+  "models": {
+    "Qwen3.5-0.8B": {
+      "tokenizer_label": "qwen35",
+      "V": 248320,
+      "hidden": 1024,
+      "tied": true,
+      "head_ms": [
+        0.648,
+        0.658
+      ],
+      "total_ms": 5.24
+    },
+    "Qwen3.5-4B": {
+      "tokenizer_label": "qwen35",
+      "V": 248320,
+      "hidden": 2560,
+      "tied": true,
+      "head_ms": [
+        1.372,
+        1.372
+      ],
+      "total_ms": 15.61
+    },
+    "Qwen3.5-9B": {
+      "tokenizer_label": "qwen35",
+      "V": 248320,
+      "hidden": 4096,
+      "tied": false,
+      "head_ms": [
+        1.068,
+        1.2282
+      ],
+      "total_ms": 26.7
+    },
+    "MiniCPM5-2B": {
+      "tokenizer_label": "minicpm5-2b",
+      "V": 130560,
+      "hidden": 2048,
+      "tied": false,
+      "head_ms": [
+        0.6657,
+        0.6657
+      ],
+      "total_ms": 9.74
+    }
+  },
+  "rows": [
+    {
+      "model": "Qwen3.5-0.8B",
+      "variant": "v1",
+      "K": 65536,
+      "fertility_inflation": 0.0006501950585175997,
+      "net_lo": 1.0988189849568957,
+      "net_hi": 1.1017409524522286,
+      "mb_saved": 100.40625
+    },
+    {
+      "model": "Qwen3.5-0.8B",
+      "variant": "A",
+      "K": 24576,
+      "fertility": 0.2631141595600093,
+      "fertility_inflation": 0.012218248807975618,
+      "net_lo": 1.111576973933778,
+      "net_hi": 1.1142062335556018,
+      "mb_saved": 122.90625
+    },
+    {
+      "model": "Qwen3.5-0.8B",
+      "variant": "v4",
+      "K": 24576,
+      "fertility": 0.25993817032034533,
+      "fertility_inflation": 0.0,
+      "net_lo": 1.1251584979705176,
+      "net_hi": 1.1278198825405814,
+      "mb_saved": 122.90625
+    },
+    {
+      "model": "Qwen3.5-0.8B",
+      "variant": "A",
+      "K": 32768,
+      "fertility": 0.261226875488546,
+      "fertility_inflation": 0.00495773732119642,
+      "net_lo": 1.1144134066890596,
+      "net_hi": 1.1171160687427404,
+      "mb_saved": 118.40625
+    },
+    {
+      "model": "Qwen3.5-0.8B",
+      "variant": "v4",
+      "K": 32768,
+      "fertility": 0.25993817032034533,
+      "fertility_inflation": 0.0,
+      "net_lo": 1.1199383756266437,
+      "net_hi": 1.1226544367688545,
+      "mb_saved": 118.40625
+    },
+    {
+      "model": "Qwen3.5-0.8B",
+      "variant": "A",
+      "K": 49152,
+      "fertility": 0.2605015386998866,
+      "fertility_inflation": 0.0021673168617253324,
+      "net_lo": 1.1072423611063604,
+      "net_hi": 1.110058355884173,
+      "mb_saved": 109.40625
+    },
+    {
+      "model": "Qwen3.5-0.8B",
+      "variant": "v4",
+      "K": 49152,
+      "fertility": 0.25993817032034533,
+      "fertility_inflation": 0.0,
+      "net_lo": 1.1096421061456025,
+      "net_hi": 1.11246420407638,
+      "mb_saved": 109.40625
+    },
+    {
+      "model": "Qwen3.5-4B",
+      "variant": "v1",
+      "K": 65536,
+      "fertility_inflation": 0.0006501950585175997,
+      "net_lo": 1.0684764184932223,
+      "net_hi": 1.0684764184932223,
+      "mb_saved": 251.015625
+    },
+    {
+      "model": "Qwen3.5-4B",
+      "variant": "A",
+      "K": 24576,
+      "fertility": 0.2631141595600093,
+      "fertility_inflation": 0.012218248807975618,
+      "net_lo": 1.072895882814095,
+      "net_hi": 1.072895882814095,
+      "mb_saved": 307.265625
+    },
+    {
+      "model": "Qwen3.5-4B",
+      "variant": "v4",
+      "K": 24576,
+      "fertility": 0.25993817032034533,
+      "fertility_inflation": 0.0,
+      "net_lo": 1.0860047916553703,
+      "net_hi": 1.0860047916553703,
+      "mb_saved": 307.265625
+    },
+    {
+      "model": "Qwen3.5-4B",
+      "variant": "A",
+      "K": 32768,
+      "fertility": 0.261226875488546,
+      "fertility_inflation": 0.00495773732119642,
+      "net_lo": 1.077255040014428,
+      "net_hi": 1.077255040014428,
+      "mb_saved": 296.015625
+    },
+    {
+      "model": "Qwen3.5-4B",
+      "variant": "v4",
+      "K": 32768,
+      "fertility": 0.25993817032034533,
+      "fertility_inflation": 0.0,
+      "net_lo": 1.0825957875307546,
+      "net_hi": 1.0825957875307546,
+      "mb_saved": 296.015625
+    },
+    {
+      "model": "Qwen3.5-4B",
+      "variant": "A",
+      "K": 49152,
+      "fertility": 0.2605015386998866,
+      "fertility_inflation": 0.0021673168617253324,
+      "net_lo": 1.073514937526949,
+      "net_hi": 1.073514937526949,
+      "mb_saved": 273.515625
+    },
+    {
+      "model": "Qwen3.5-4B",
+      "variant": "v4",
+      "K": 49152,
+      "fertility": 0.25993817032034533,
+      "fertility_inflation": 0.0,
+      "net_lo": 1.0758415845523652,
+      "net_hi": 1.0758415845523652,
+      "mb_saved": 273.515625
+    },
+    {
+      "model": "Qwen3.5-9B",
+      "variant": "v1",
+      "K": 65536,
+      "fertility_inflation": 0.0006501950585175997,
+      "net_lo": 1.0279898116153443,
+      "net_hi": 1.0360720384320459,
+      "mb_saved": 803.25
+    },
+    {
+      "model": "Qwen3.5-9B",
+      "variant": "A",
+      "K": 24576,
+      "fertility": 0.2631141595600093,
+      "fertility_inflation": 0.012218248807975618,
+      "net_lo": 1.0242357524458232,
+      "net_hi": 1.0312857641466513,
+      "mb_saved": 983.25
+    },
+    {
+      "model": "Qwen3.5-9B",
+      "variant": "v4",
+      "K": 24576,
+      "fertility": 0.25993817032034533,
+      "fertility_inflation": 0.0,
+      "net_lo": 1.0367501197072304,
+      "net_hi": 1.0438862702051184,
+      "mb_saved": 983.25
+    },
+    {
+      "model": "Qwen3.5-9B",
+      "variant": "A",
+      "K": 32768,
+      "fertility": 0.261226875488546,
+      "fertility_inflation": 0.00495773732119642,
+      "net_lo": 1.0300150241650945,
+      "net_hi": 1.0373075969530574,
+      "mb_saved": 947.25
+    },
+    {
+      "model": "Qwen3.5-9B",
+      "variant": "v4",
+      "K": 32768,
+      "fertility": 0.25993817032034533,
+      "fertility_inflation": 0.0,
+      "net_lo": 1.035121568091791,
+      "net_hi": 1.0424502955400323,
+      "mb_saved": 947.25
+    },
+    {
+      "model": "Qwen3.5-9B",
+      "variant": "A",
+      "K": 49152,
+      "fertility": 0.2605015386998866,
+      "fertility_inflation": 0.0021673168617253324,
+      "net_lo": 1.0296481919072416,
+      "net_hi": 1.0373419170631557,
+      "mb_saved": 875.25
+    },
+    {
+      "model": "Qwen3.5-9B",
+      "variant": "v4",
+      "K": 49152,
+      "fertility": 0.25993817032034533,
+      "fertility_inflation": 0.0,
+      "net_lo": 1.031879765795207,
+      "net_hi": 1.039590165691381,
+      "mb_saved": 875.25
+    },
+    {
+      "model": "MiniCPM5-2B",
+      "variant": "v1",
+      "K": 65536,
+      "fertility_inflation": 0.0008718142454446909,
+      "net_lo": 1.0343372659559178,
+      "net_hi": 1.0343372659559178,
+      "mb_saved": 142.875
+    },
+    {
+      "model": "MiniCPM5-2B",
+      "variant": "A",
+      "K": 24576,
+      "fertility": 0.24600184503144298,
+      "fertility_inflation": 0.015169567870738865,
+      "net_lo": 1.0429200895753967,
+      "net_hi": 1.0429200895753967,
+      "mb_saved": 232.875
+    },
+    {
+      "model": "MiniCPM5-2B",
+      "variant": "v4",
+      "K": 24576,
+      "fertility": 0.24232586635493616,
+      "fertility_inflation": 0.0,
+      "net_lo": 1.0587407366579678,
+      "net_hi": 1.0587407366579678,
+      "mb_saved": 232.875
+    },
+    {
+      "model": "MiniCPM5-2B",
+      "variant": "A",
+      "K": 32768,
+      "fertility": 0.24429061357858636,
+      "fertility_inflation": 0.008107872482636447,
+      "net_lo": 1.0454788047419181,
+      "net_hi": 1.0454788047419181,
+      "mb_saved": 214.875
+    },
+    {
+      "model": "MiniCPM5-2B",
+      "variant": "v4",
+      "K": 32768,
+      "fertility": 0.24232586635493616,
+      "fertility_inflation": 0.0,
+      "net_lo": 1.0539554135740647,
+      "net_hi": 1.0539554135740647,
+      "mb_saved": 214.875
+    },
+    {
+      "model": "MiniCPM5-2B",
+      "variant": "A",
+      "K": 49152,
+      "fertility": 0.24284698210601185,
+      "fertility_inflation": 0.0021504751387637633,
+      "net_lo": 1.0422719977384625,
+      "net_hi": 1.0422719977384625,
+      "mb_saved": 178.875
+    },
+    {
+      "model": "MiniCPM5-2B",
+      "variant": "v4",
+      "K": 49152,
+      "fertility": 0.24232586635493616,
+      "fertility_inflation": 0.0,
+      "net_lo": 1.0445133777574287,
+      "net_hi": 1.0445133777574287,
+      "mb_saved": 178.875
+    }
+  ],
+  "disjoint_rows_32768": [
+    {
+      "model": "Qwen3.5-0.8B",
+      "variant": "A-disjoint",
+      "K": 32768,
+      "fertility_inflation": 0.01969549198092757,
+      "net_lo": 1.0983066851173164,
+      "net_hi": 1.1009702853426488,
+      "mb_saved": 118.40625
+    },
+    {
+      "model": "Qwen3.5-0.8B",
+      "variant": "v4-disjoint",
+      "K": 32768,
+      "fertility_inflation": 0.008858907672301797,
+      "net_lo": 1.1101040661975528,
+      "net_hi": 1.112796277290259,
+      "mb_saved": 118.40625
+    },
+    {
+      "model": "Qwen3.5-4B",
+      "variant": "A-disjoint",
+      "K": 32768,
+      "fertility_inflation": 0.01969549198092757,
+      "net_lo": 1.0616853718041186,
+      "net_hi": 1.0616853718041186,
+      "mb_saved": 296.015625
+    },
+    {
+      "model": "Qwen3.5-4B",
+      "variant": "v4-disjoint",
+      "K": 32768,
+      "fertility_inflation": 0.008858907672301797,
+      "net_lo": 1.0730893877208092,
+      "net_hi": 1.0730893877208092,
+      "mb_saved": 296.015625
+    },
+    {
+      "model": "Qwen3.5-9B",
+      "variant": "A-disjoint",
+      "K": 32768,
+      "fertility_inflation": 0.01969549198092757,
+      "net_lo": 1.0151281203380587,
+      "net_hi": 1.0223152928869967,
+      "mb_saved": 947.25
+    },
+    {
+      "model": "Qwen3.5-9B",
+      "variant": "v4-disjoint",
+      "K": 32768,
+      "fertility_inflation": 0.008858907672301797,
+      "net_lo": 1.026032044936872,
+      "net_hi": 1.0332964179750708,
+      "mb_saved": 947.25
+    },
+    {
+      "model": "MiniCPM5-2B",
+      "variant": "A-disjoint",
+      "K": 32768,
+      "fertility_inflation": 0.024265496498212746,
+      "net_lo": 1.0289865441893304,
+      "net_hi": 1.0289865441893304,
+      "mb_saved": 214.875
+    },
+    {
+      "model": "MiniCPM5-2B",
+      "variant": "v4-disjoint",
+      "K": 32768,
+      "fertility_inflation": 0.012583185609252867,
+      "net_lo": 1.0408581028727224,
+      "net_hi": 1.0408581028727224,
+      "mb_saved": 214.875
+    }
+  ]
+}

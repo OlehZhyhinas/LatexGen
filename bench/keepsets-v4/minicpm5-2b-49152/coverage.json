@@ -1,0 +1,355 @@
+{
+  "tokenizer_label": "minicpm5-2b",
+  "tokenizer_path": "/Users/oleh/.cache/huggingface/hub/models--ozhyhinas--MiniCPM5-2B-q4f16_1-MLC/snapshots/2318f37d9c39277ff01dc64086491028c95d4db4/tokenizer.json",
+  "keepset_version": "v4",
+  "target_size": 49152,
+  "actual_size": 49152,
+  "length_check": {
+    "expected_K": 49152,
+    "tokenizers_from_file_len": 49152,
+    "hf_autotokenizer_from_pretrained_len": 49152
+  },
+  "merges": {
+    "before": 129794,
+    "after": 48386,
+    "dropped": 81408,
+    "dropped_fraction": 0.6272092700741174
+  },
+  "tokenizer_config_phantom_added_tokens_dropped": 0,
+  "tokenizer_config_extra_special_tokens_dropped": 0,
+  "stop_token_id_mismatches_found": [],
+  "held_out_fertility": {
+    "n_texts": 426,
+    "total_chars": 142003,
+    "total_tokens_v4": 34411,
+    "fertility_v4": 0.24232586635493616,
+    "fertility_strategy_A": 0.24284698210601185,
+    "fertility_inflation_v4_vs_A": -0.0021458605190662894
+  },
+  "verify_all_held_out_texts": {
+    "exact_match_total": 426,
+    "exact_match_passed": 426,
+    "exact_match_failures": [],
+    "oos_texts_n": 0,
+    "oos_texts_fertility_before": 0.0,
+    "oos_texts_fertility_after_real": 0.0
+  },
+  "force_add_accounting": {
+    "tokenizer_label": "minicpm5-2b",
+    "strategy_a_natural_size": 7583,
+    "group1_single_codepoint": {
+      "total": 242,
+      "by_class": {
+        "accented_latin_letter": 114,
+        "typographic": 2,
+        "greek_letter": 59,
+        "math_operator_relation": 61,
+        "superscript_subscript_digit": 6
+      },
+      "sample": [
+        {
+          "id": 858,
+          "char": "\u00e9",
+          "class": "accented_latin_letter",
+          "leading_space": false
+        },
+        {
+          "id": 2151,
+          "char": "\u00e1",
+          "class": "accented_latin_letter",
+          "leading_space": false
+        },
+        {
+          "id": 2159,
+          "char": "\u00f3",
+          "class": "accented_latin_letter",
+          "leading_space": false
+        },
+        {
+          "id": 2579,
+          "char": "\u00ed",
+          "class": "accented_latin_letter",
+          "leading_space": false
+        },
+        {
+          "id": 2693,
+          "char": "\u00e3",
+          "class": "accented_latin_letter",
+          "leading_space": false
+        },
+        {
+          "id": 2716,
+          "char": "\u00fc",
+          "class": "accented_latin_letter",
+          "leading_space": false
+        },
+        {
+          "id": 2792,
+          "char": "\u00e7",
+          "class": "accented_latin_letter",
+          "leading_space": false
+        },
+        {
+          "id": 3046,
+          "char": "\u00e4",
+          "class": "accented_latin_letter",
+          "leading_space": false
+        },
+        {
+          "id": 3573,
+          "char": "\u00e0",
+          "class": "accented_latin_letter",
+          "leading_space": true
+        },
+        {
+          "id": 3896,
+          "char": "\u00e9",
+          "class": "accented_latin_letter",
+          "leading_space": true
+        },
+        {
+          "id": 4109,
+          "char": "\u00e8",
+          "class": "accented_latin_letter",
+          "leading_space": false
+        },
+        {
+          "id": 4182,
+          "char": "\u00f6",
+          "class": "accented_latin_letter",
+          "leading_space": false
+        },
+        {
+          "id": 5064,
+          "char": "\u00ea",
+          "class": "accented_latin_letter",
+          "leading_space": false
+        },
+        {
+          "id": 6878,
+          "char": "\u00f1",
+          "class": "accented_latin_letter",
+          "leading_space": false
+        },
+        {
+          "id": 7310,
+          "char": "\u00fa",
+          "class": "accented_latin_letter",
+          "leading_space": false
+        },
+        {
+          "id": 8070,
+          "char": "\u00f4",
+          "class": "accented_latin_letter",
+          "leading_space": false
+        },
+        {
+          "id": 8072,
+          "char": "\u00b0",
+          "class": "typographic",
+          "leading_space": false
+        },
+        {
+          "id": 8240,
+          "char": "\u03b1",
+          "class": "greek_letter",
+          "leading_space": false
+        },
+        {
+          "id": 8371,
+          "char": "\u00df",
+          "class": "accented_latin_letter",
+          "leading_space": false
+        },
+        {
+          "id": 9195,
+          "char": "\u00b1",
+          "class": "math_operator_relation",
+          "leading_space": true
+        }
+      ]
+    },
+    "group2_latex_macro_completion": {
+      "total": 1250,
+      "n_macro_strings": 1241,
+      "n_ids_bare_only": 1099,
+      "n_ids_bare_or_leadspace": 1250
+    },
+    "group3_latexgen_prompt_and_chat_template": {
+      "total": 249,
+      "n_renders": 8,
+      "n_chars": 10248,
+      "n_named_ids": 0,
+      "named_ids_missing_from_render": [],
+      "conv_template_present": true
+    },
+    "overlaps": {
+      "group1_and_group2": 6,
+      "group1_and_group3": 11,
+      "group2_and_group3": 62,
+      "all_three": 1
+    },
+    "force_add_union_pre_closure": 1663,
+    "closure": {
+      "extra_ancestor_ids": 1841,
+      "sample_extra_ids": [
+        311,
+        325,
+        340,
+        384,
+        404,
+        412,
+        418,
+        424,
+        463,
+        472,
+        474,
+        478,
+        480,
+        499,
+        506,
+        509,
+        514,
+        522,
+        524,
+        528
+      ]
+    },
+    "v4_natural_total_post_closure": 9681,
+    "v4_natural_new_vs_strategy_a": 2098,
+    "by_target_size": {
+      "24576": {
+        "target_size": 24576,
+        "strategy_a_size": 24576,
+        "strategy_a_closure_extra": 228,
+        "strategy_a_fertility": 0.24600184503144298,
+        "v4_actual_size": 24576,
+        "v4_closure_extra_pre_fold": 0,
+        "v4_closure_extra_post_fold": 0,
+        "new_force_add_cost_vs_strategy_a": 190,
+        "new_force_add_cost_vs_strategy_a_by_class": {
+          "accented_latin_letter": 87,
+          "greek_letter": 13,
+          "math_operator_relation": 23,
+          "typographic": 1,
+          "superscript_subscript_digit": 2
+        },
+        "group_missing_breakdown": {
+          "group1_single_codepoint": 126,
+          "group2_latex_macro_completion": 46,
+          "group3_latexgen_prompt_and_chat_template": 20
+        },
+        "displaced_merge_rank_fill_slots": 458,
+        "displaced_whole_word_tokens": 180,
+        "v4_fertility": 0.24232586635493616,
+        "keep_idx_sha256": "a70b82ff64f444a2b3f3ac173fdfaedbf2da021fcd2960bcfd75fe35bfc82b76"
+      },
+      "32768": {
+        "target_size": 32768,
+        "strategy_a_size": 32768,
+        "strategy_a_closure_extra": 127,
+        "strategy_a_fertility": 0.24429061357858636,
+        "v4_actual_size": 32768,
+        "v4_closure_extra_pre_fold": 0,
+        "v4_closure_extra_post_fold": 0,
+        "new_force_add_cost_vs_strategy_a": 173,
+        "new_force_add_cost_vs_strategy_a_by_class": {
+          "accented_latin_letter": 79,
+          "greek_letter": 12,
+          "math_operator_relation": 23,
+          "typographic": 1,
+          "superscript_subscript_digit": 2
+        },
+        "group_missing_breakdown": {
+          "group1_single_codepoint": 117,
+          "group2_latex_macro_completion": 39,
+          "group3_latexgen_prompt_and_chat_template": 19
+        },
+        "displaced_merge_rank_fill_slots": 327,
+        "displaced_whole_word_tokens": 110,
+        "v4_fertility": 0.24232586635493616,
+        "keep_idx_sha256": "7bdedfa377e4c87e77e93c6caa55a3f00aa98c93e88abcb09b90fb487d5b5581"
+      }
+    },
+    "issue_27_tail_claim_verified_against_strategy_A_32768": {
+      "\\(": {
+        "ids": [
+          42550
+        ],
+        "all_present_in_strategy_A_32768": true,
+        "missing": []
+      },
+      "\\[": {
+        "ids": [
+          91036
+        ],
+        "all_present_in_strategy_A_32768": true,
+        "missing": []
+      },
+      "mathrm": {
+        "ids": [
+          610
+        ],
+        "all_present_in_strategy_A_32768": true,
+        "missing": []
+      },
+      "partial": {
+        "ids": [
+          2692
+        ],
+        "all_present_in_strategy_A_32768": true,
+        "missing": []
+      },
+      "rangle": {
+        "ids": [
+          4015
+        ],
+        "all_present_in_strategy_A_32768": true,
+        "missing": []
+      },
+      "Gamma": {
+        "ids": [
+          4617
+        ],
+        "all_present_in_strategy_A_32768": true,
+        "missing": []
+      },
+      "Psi": {
+        "ids": [
+          8638
+        ],
+        "all_present_in_strategy_A_32768": true,
+        "missing": []
+      },
+      "{n": {
+        "ids": [
+          13991
+        ],
+        "all_present_in_strategy_A_32768": true,
+        "missing": []
+      },
+      "}=": {
+        "ids": [
+          31184
+        ],
+        "all_present_in_strategy_A_32768": true,
+        "missing": []
+      }
+    },
+    "leakage_sanity_check_strategy_A_32768": {
+      "note": "A's default corpus includes 2 of this task's held-out files (arxiv-pastes.json, bench-data-extended.json), per keepset-v3's finding. This drops those 2 from A's training corpus only (disjoint_labels below) and re-measures fertility against the SAME unmodified held-out text, as a spot check at K=32,768. v4-disjoint additionally unions in the (corpus-independent) force-add groups + closure on top of the disjoint A base, so it isolates the force-add layer's true, leakage-free cost.",
+      "disjoint_corpus_labels": [
+        "bench",
+        "pdf",
+        "synth-latex"
+      ],
+      "disjoint_natural_size": 6863,
+      "fertility_unpruned": 0.24232586635493616,
+      "fertility_A_disjoint_32768": 0.24820602381639825,
+      "inflation_A_disjoint_32768": 0.024265496498212746,
+      "fertility_v4_disjoint_32768": 0.24537509770920332,
+      "inflation_v4_disjoint_32768": 0.012583185609252867,
+      "v4_vs_A_cost_disjoint_32768": -0.011405549565908224
+    }
+  }
+}
