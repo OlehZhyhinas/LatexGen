@@ -261,7 +261,15 @@ kbd { font: inherit; font-size: 11px; padding: 0 4px; border: 1px solid var(--bo
 .dd-row:hover { background: var(--surface-2); }
 .dd-row.disabled { opacity: 0.4; cursor: not-allowed; }
 .dd-row.disabled:hover { background: none; }
-.dd-name { font-weight: 600; }
+/* Above the estimated GPU budget: still selectable by hand, never auto-picked. */
+.dd-row.over-budget .dd-meta { color: var(--warn); }
+.dd-group {
+  padding: 8px 12px 4px; font-size: 11px; font-weight: 600; letter-spacing: 0.04em;
+  text-transform: uppercase; color: var(--muted); cursor: default;
+}
+.dd-group + .dd-row { border-top: 0; }
+.dd-row + .dd-group { border-top: 1px solid var(--border); margin-top: 4px; }
+.dd-name { font-weight: 600; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; }
 #load-progress { height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
 #load-progress-fill { width: 0; height: 100%; background: var(--success); transition: width 0.2s; }
 

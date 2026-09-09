@@ -5,7 +5,7 @@ import * as webllm from "./vendor/webllm/index.js";
 import { validateLatex, checkSyntax } from "./validator.js";
 import { loadModel, onProgress as onModelProgress, runtimeUsed } from "./models.js";
 import { createPipeline, streamServerChat, toFormat, IMAGE_MODELS, MAX_REPAIR_ATTEMPTS, specialistEligible } from "./pipeline.js";
-import { loadCatalog, parseForce, planEngine, rememberRuntime } from "./qwen3-webllm.js";
+import { loadCatalog, parseForce, planEngine, probeTarget, rememberRuntime } from "./qwen3-webllm.js";
 import { STATIC_BUILD } from "./config.js";
 
 window.__validate = validateLatex; // debugging hook
@@ -342,10 +342,19 @@ async function backgroundJudge(text, latex) {
 // catalog's tuned decode libs (qwen3-webllm.js) cover Qwen3 only, so these
 // run on stock WebLLM until Qwen3.5 libs are compiled.
 const CURATED = [
-  { id: "Qwen3.5-9B-q4f16_1-MLC", name: "Qwen 3.5 · 9B", score: 5, multiline: true },
-  { id: "Qwen3.5-4B-q4f16_1-MLC", name: "Qwen 3.5 · 4B", score: 4, multiline: true },
-  { id: "MiniCPM5-2B-q4f16_1-MLC", name: "MiniCPM5 · 2B", score: 3 },
-  { id: "Qwen3.5-0.8B-q4f16_1-MLC", name: "Qwen 3.5 · 0.8B", score: 2 },
+  // Percentages are judge-correct over all 105 items of the 2026-09-07 tier
+  // benchmark (bench/judged-text-tiers-2026-09-07.json). The 8B and 9B were not
+  // run locally; they are ranked above the 4B class on size. Order is the
+  // auto-selection order: the ladder takes the highest-scoring row that fits,
+  // so a device that cannot hold Qwen3.5 4B falls to Qwen3 4B rather than to 2B.
+  { id: "Qwen3.5-9B-q4f16_1-MLC", name: "Qwen 3.5 \u00b7 9B", score: 5, multiline: true },
+  { id: "Qwen3-8B-q4f16_1-MLC", name: "Qwen 3 \u00b7 8B", score: 5, multiline: true },
+  { id: "Qwen3.5-4B-q4f16_1-MLC", name: "Qwen 3.5 \u00b7 4B", score: 4, multiline: true },   // 64%
+  { id: "Qwen3-4B-q4f16_1-MLC", name: "Qwen 3 \u00b7 4B", score: 4, multiline: true },       // 59%
+  { id: "MiniCPM5-2B-q4f16_1-MLC", name: "MiniCPM5 \u00b7 2B", score: 3 },                   // 52%
+  { id: "Qwen3.5-0.8B-q4f16_1-MLC", name: "Qwen 3.5 \u00b7 0.8B", score: 2 },                // 34%
+  { id: "Qwen3-1.7B-q4f16_1-MLC", name: "Qwen 3 \u00b7 1.7B", score: 1 },                    // 13%
+  { id: "Qwen3-0.6B-q4f16_1-MLC", name: "Qwen 3 \u00b7 0.6B", score: 1 },                    // 10%
 ];
 const gb = (mb) => `${(mb / 1024).toFixed(1)} GB`;
 const stars = (n) => "★".repeat(n) + "☆".repeat(5 - n);
@@ -378,24 +387,62 @@ async function detectVramBudgetMB() {
 function selectModel(id) {
   selectedModelId = id;
   const row = modelRows.find((r) => r.id === id);
-  ddBtn.innerHTML = `${row.name} <span class="dd-meta">${stars(row.score)} · ${gb(row.vram)}</span> <span class="dd-caret">▾</span>`;
+  ddBtn.innerHTML = `<span class="dd-name">${row.id}</span> <span class="dd-meta">${stars(row.score)} · ${gb(row.vram)}</span> <span class="dd-caret">▾</span>`;
 }
 async function buildModelPicker() {
   const budget = await detectVramBudgetMB();
   let storageFreeMB = Infinity;
   try { const est = await navigator.storage.estimate(); if (est.quota) storageFreeMB = (est.quota - (est.usage ?? 0)) / (1024 * 1024); } catch {}
+  // Two different questions. Browser storage is a hard blocker: without the
+  // quota the weights cannot land at all. The GPU budget is a heuristic from
+  // `navigator.deviceMemory`, which is coarse and often conservative, so a
+  // model above it stays pickable by hand and is only kept out of the
+  // automatic ladder. `canRun` gates auto-selection, `selectable` gates clicks.
+  // Whether a model decodes through the graph catalog's tuned runtime is a
+  // property of the model *and* this device: the probe wants an Apple GPU
+  // exposing subgroups behind a recent Chromium. Everywhere else, and for any
+  // model the catalog has no library for, WebLLM's stock path runs instead.
+  let tunedIds = new Set();
+  try {
+    const catalog = await loadCatalog();
+    const probe = await probeTarget(catalog);
+    if (probe.ok) tunedIds = new Set(Object.keys(catalog?.models ?? {}));
+  } catch { /* no catalog reachable: every model is standard */ }
+
   modelRows = CURATED.filter((c) => prebuilt.has(c.id)).map((c) => {
     const vram = prebuilt.get(c.id).vram_required_MB;
     const fitsGpu = vram <= budget, fitsStorage = vram * 1.2 <= storageFreeMB;
-    return { ...c, vram, canRun: fitsGpu && fitsStorage, why: !fitsGpu ? "too big for this device" : !fitsStorage ? "not enough browser storage" : "" };
+    return {
+      ...c, vram, fitsGpu, tuned: tunedIds.has(c.id),
+      canRun: fitsGpu && fitsStorage, selectable: fitsStorage,
+      why: !fitsStorage ? "not enough browser storage" : !fitsGpu ? "over budget" : "",
+    };
   });
-  ddMenu.innerHTML = "";
-  for (const r of modelRows) {
+
+  const renderRow = (r) => {
     const row = document.createElement("div");
-    row.className = `dd-row${r.canRun ? "" : " disabled"}`; row.setAttribute("role", "option");
-    row.innerHTML = `<span class="dd-name">${r.name}</span><span class="dd-meta">${stars(r.score)} · ${gb(r.vram)}${r.canRun ? "" : ` · ${r.why}`}</span>`;
-    if (r.canRun) row.addEventListener("click", () => { selectModel(r.id); ddMenu.hidden = true; if (r.id !== loadedModel) loadPicked(r); });
+    row.className = `dd-row${r.selectable ? (r.canRun ? "" : " over-budget") : " disabled"}`; row.setAttribute("role", "option");
+    row.innerHTML = `<span class="dd-name">${r.id}</span><span class="dd-meta">${stars(r.score)} · ${gb(r.vram)}${r.canRun ? "" : ` · ${r.why}`}</span>`;
+    if (r.selectable && !r.fitsGpu) row.title = `${gb(r.vram)} is above this device's estimated ${gb(budget)} budget, so it is not picked automatically. Select it to try anyway; if it fails to load you can pick a smaller one.`;
+    if (r.selectable) row.addEventListener("click", () => { selectModel(r.id); ddMenu.hidden = true; if (r.id !== loadedModel) loadPicked(r); });
     ddMenu.appendChild(row);
+  };
+
+  ddMenu.innerHTML = "";
+  const tuned = modelRows.filter((r) => r.tuned), standard = modelRows.filter((r) => !r.tuned);
+  // Only label the split when there is actually a split to see.
+  const groups = tuned.length && standard.length
+    ? [["Catalog runtime", tuned, "Decodes through the graph catalog's runtime: device-resident greedy argmax and batched command encoding."],
+       ["Stock WebLLM", standard, "Runs WebLLM's stock decoding path."]]
+    : [[null, modelRows, null]];
+  for (const [label, rows, hint] of groups) {
+    if (label) {
+      const head = document.createElement("div");
+      head.className = "dd-group"; head.textContent = label;
+      if (hint) head.title = hint;
+      ddMenu.appendChild(head);
+    }
+    rows.forEach(renderRow);
   }
   const best = modelRows.find((r) => r.canRun);
   if (best) {
@@ -407,7 +454,17 @@ async function buildModelPicker() {
       $("model-status").textContent = "On-device model: specialist only";
     }
   } else {
-    ddBtn.textContent = "No browser model fits this device"; ddBtn.disabled = true; loadBtn.disabled = true;
+    // Nothing is inside the estimated budget. Storage permitting, still let the
+    // smallest model be chosen by hand instead of dead-ending the picker.
+    const manual = [...modelRows].reverse().find((r) => r.selectable);
+    if (manual) {
+      selectModel(manual.id);
+      loadBtn.hidden = false;
+      loadStatus.textContent = "No model fits this device automatically \u2014 pick one to try it anyway.";
+      $("model-status").textContent = "On-device model: specialist only";
+    } else {
+      ddBtn.textContent = "No browser model fits this device"; ddBtn.disabled = true; loadBtn.disabled = true;
+    }
   }
 }
 
