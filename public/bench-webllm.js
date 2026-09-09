@@ -40,6 +40,13 @@ const log = (cls, msg) => {
   document.getElementById("log").prepend(el);
 };
 const progress = (msg) => { document.getElementById("progress").textContent = msg; };
+const errText = (e) => {
+  if (e instanceof Error) return `${e.name}: ${e.message}`;
+  if (typeof e === "string") return e;
+  // WebLLM worker rejections arrive as plain objects over postMessage, so
+  // String(e) would be "[object Object]" and lose the whole failure.
+  try { return JSON.stringify(e, Object.getOwnPropertyNames(e ?? {})); } catch { return String(e); }
+};
 const post = (row, enabled) => {
   if (!enabled) return;
   try { fetch("api/bench", { method: "POST", body: JSON.stringify(row) }).catch(() => {}); } catch {}
@@ -220,7 +227,7 @@ async function main() {
       try {
         plan = await buildPlan(model, catalog, stockRecord, arm);
       } catch (e) {
-        record({ approach, round, item: "__load__", tier: "meta", ms: -1, ttftMs: null, completionTokens: null, decodeMsPerTok: null, usageExtra: null, output: "", identicalToStock: null, error: String(e).slice(0, 300) });
+        record({ approach, round, item: "__load__", tier: "meta", ms: -1, ttftMs: null, completionTokens: null, decodeMsPerTok: null, usageExtra: null, output: "", identicalToStock: null, error: errText(e).slice(0, 600) });
         log("err", `${approach} round${round} PLAN FAILED: ${e}`);
         continue;
       }
@@ -239,7 +246,7 @@ async function main() {
         record({ approach, round, item: "__load__", tier: "meta", ms: loadMs, ttftMs: null, completionTokens: null, decodeMsPerTok: null, usageExtra: null, output: "", identicalToStock: null, planLabel: plan.label, planKind: plan.kind });
         log("ok", `${approach} round${round} loaded in ${loadMs}ms (${plan.label})`);
       } catch (e) {
-        record({ approach, round, item: "__load__", tier: "meta", ms: -1, ttftMs: null, completionTokens: null, decodeMsPerTok: null, usageExtra: null, output: "", identicalToStock: null, error: String(e).slice(0, 300) });
+        record({ approach, round, item: "__load__", tier: "meta", ms: -1, ttftMs: null, completionTokens: null, decodeMsPerTok: null, usageExtra: null, output: "", identicalToStock: null, error: errText(e).slice(0, 600) });
         log("err", `${approach} round${round} LOAD FAILED: ${e}`);
         try { if (eng) await eng.unload(); } catch {}
         try { if (worker) worker.terminate(); } catch {}
@@ -265,7 +272,7 @@ async function main() {
             const tok = res.completionTokens > 0 && res.ms > 0 ? (res.completionTokens / (res.ms / 1000)).toFixed(1) : "?";
             log(identicalToStock === false ? "bad" : "ok", `${approach} round${round} ${item.id} ${res.ms}ms ttft=${res.ttftMs ?? "—"} ${tok}tok/s${identicalToStock === false ? " DIFF" : ""}`);
           } catch (e) {
-            record({ approach, round, item: item.id, tier: item.tier, ms: -1, ttftMs: null, completionTokens: null, decodeMsPerTok: null, usageExtra: null, output: "", identicalToStock: null, error: String(e).slice(0, 300) });
+            record({ approach, round, item: item.id, tier: item.tier, ms: -1, ttftMs: null, completionTokens: null, decodeMsPerTok: null, usageExtra: null, output: "", identicalToStock: null, error: errText(e).slice(0, 600) });
             log("err", `${approach} round${round} ${item.id} FAILED: ${e}`);
           }
           renderArmSummary(rows, approach, arm);
