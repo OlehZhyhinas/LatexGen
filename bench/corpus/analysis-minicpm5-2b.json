@@ -1,0 +1,1210 @@
+{
+  "tokenizer_label": "minicpm5-2b",
+  "vocab_size": 130560,
+  "total_tokens": 615981036,
+  "total_docs": 1919116,
+  "source_totals": {
+    "arxiv": 47551429,
+    "wikipedia": 9396331,
+    "wikibooks": 5777719,
+    "stackexchange:cs.stackexchange.com": 25689786,
+    "stackexchange:tex.stackexchange.com": 244483984,
+    "stackexchange:stats.stackexchange.com": 125166902,
+    "stackexchange:physics.stackexchange.com": 145407675,
+    "openstax": 12507210
+  },
+  "analysis_1_overlap_with_merge_rank": {
+    "32768": {
+      "overlap_count": 18350,
+      "overlap_fraction_of_k": 0.55999755859375,
+      "corpus_only": 14418,
+      "merge_only": 14418
+    },
+    "65536": {
+      "overlap_count": 42342,
+      "overlap_fraction_of_k": 0.646087646484375,
+      "corpus_only": 23194,
+      "merge_only": 23194
+    }
+  },
+  "analysis_2_contested_band": {
+    "k": 65536,
+    "n_promoted_total": 23194,
+    "n_demoted_total": 23194,
+    "n_demoted_in_byte_alphabet_ids_lt_256": 77,
+    "n_demoted_ge_256": 23117,
+    "promoted_top50_by_corpus_count": [
+      {
+        "id": 129057,
+        "token": "\\usepackage",
+        "corpus_count": 1040072,
+        "merge_rank_id": 129057
+      },
+      {
+        "id": 99487,
+        "token": "TeX",
+        "corpus_count": 306894,
+        "merge_rank_id": 99487
+      },
+      {
+        "id": 73042,
+        "token": "abular",
+        "corpus_count": 174090,
+        "merge_rank_id": 73042
+      },
+      {
+        "id": 95997,
+        "token": "{#",
+        "corpus_count": 168514,
+        "merge_rank_id": 95997
+      },
+      {
+        "id": 125907,
+        "token": "ĠĠĠĠĠĠĠĠĠĠĊ",
+        "corpus_count": 143494,
+        "merge_rank_id": 125907
+      },
+      {
+        "id": 109322,
+        "token": "bib",
+        "corpus_count": 143425,
+        "merge_rank_id": 109322
+      },
+      {
+        "id": 70478,
+        "token": "renew",
+        "corpus_count": 141046,
+        "merge_rank_id": 70478
+      },
+      {
+        "id": 76150,
+        "token": "]{\\",
+        "corpus_count": 124876,
+        "merge_rank_id": 76150
+      },
+      {
+        "id": 121696,
+        "token": "atex",
+        "corpus_count": 123027,
+        "merge_rank_id": 121696
+      },
+      {
+        "id": 105516,
+        "token": "latex",
+        "corpus_count": 95849,
+        "merge_rank_id": 105516
+      },
+      {
+        "id": 87042,
+        "token": "raphics",
+        "corpus_count": 94013,
+        "merge_rank_id": 87042
+      },
+      {
+        "id": 72832,
+        "token": "sep",
+        "corpus_count": 90495,
+        "merge_rank_id": 72832
+      },
+      {
+        "id": 93661,
+        "token": "usepackage",
+        "corpus_count": 84740,
+        "merge_rank_id": 93661
+      },
+      {
+        "id": 86356,
+        "token": "subsection",
+        "corpus_count": 84033,
+        "merge_rank_id": 86356
+      },
+      {
+        "id": 126046,
+        "token": "indent",
+        "corpus_count": 80296,
+        "merge_rank_id": 126046
+      },
+      {
+        "id": 74950,
+        "token": "ĠĠĠĠĠĠĠĠĠĠĠĠĠĠĠĠĊ",
+        "corpus_count": 72514,
+        "merge_rank_id": 74950
+      },
+      {
+        "id": 108311,
+        "token": "macro",
+        "corpus_count": 72182,
+        "merge_rank_id": 108311
+      },
+      {
+        "id": 94087,
+        "token": "kip",
+        "corpus_count": 70041,
+        "merge_rank_id": 94087
+      },
+      {
+        "id": 121244,
+        "token": "Ġ$$Ċ",
+        "corpus_count": 69504,
+        "merge_rank_id": 121244
+      },
+      {
+        "id": 104051,
+        "token": "relax",
+        "corpus_count": 68971,
+        "merge_rank_id": 104051
+      },
+      {
+        "id": 70973,
+        "token": "*\\",
+        "corpus_count": 67317,
+        "merge_rank_id": 70973
+      },
+      {
+        "id": 102544,
+        "token": "*{",
+        "corpus_count": 63858,
+        "merge_rank_id": 102544
+      },
+      {
+        "id": 72913,
+        "token": "series",
+        "corpus_count": 63016,
+        "merge_rank_id": 72913
+      },
+      {
+        "id": 130063,
+        "token": "ĊĊ",
+        "corpus_count": 61268,
+        "merge_rank_id": 130063
+      },
+      {
+        "id": 66265,
+        "token": ")$.",
+        "corpus_count": 55840,
+        "merge_rank_id": 66265
+      },
+      {
+        "id": 72041,
+        "token": "hspace",
+        "corpus_count": 55000,
+        "merge_rank_id": 72041
+      },
+      {
+        "id": 81483,
+        "token": "foreach",
+        "corpus_count": 54331,
+        "merge_rank_id": 81483
+      },
+      {
+        "id": 122393,
+        "token": ")--",
+        "corpus_count": 53479,
+        "merge_rank_id": 122393
+      },
+      {
+        "id": 88020,
+        "token": "Package",
+        "corpus_count": 52237,
+        "merge_rank_id": 88020
+      },
+      {
+        "id": 113927,
+        "token": "}}}Ċ",
+        "corpus_count": 49925,
+        "merge_rank_id": 113927
+      },
+      {
+        "id": 80250,
+        "token": "-dist",
+        "corpus_count": 47295,
+        "merge_rank_id": 80250
+      },
+      {
+        "id": 78269,
+        "token": "\\h",
+        "corpus_count": 47075,
+        "merge_rank_id": 78269
+      },
+      {
+        "id": 107773,
+        "token": "{itemize",
+        "corpus_count": 46255,
+        "merge_rank_id": 107773
+      },
+      {
+        "id": 83451,
+        "token": "coordinate",
+        "corpus_count": 46140,
+        "merge_rank_id": 83451
+      },
+      {
+        "id": 110512,
+        "token": "\\f",
+        "corpus_count": 46051,
+        "merge_rank_id": 110512
+      },
+      {
+        "id": 78280,
+        "token": "$)",
+        "corpus_count": 44819,
+        "merge_rank_id": 78280
+      },
+      {
+        "id": 104823,
+        "token": "%%%%%%%%%%%%%%%%",
+        "corpus_count": 44689,
+        "merge_rank_id": 104823
+      },
+      {
+        "id": 69056,
+        "token": "=true",
+        "corpus_count": 43863,
+        "merge_rank_id": 69056
+      },
+      {
+        "id": 106356,
+        "token": "\\v",
+        "corpus_count": 42625,
+        "merge_rank_id": 106356
+      },
+      {
+        "id": 89047,
+        "token": ",...,",
+        "corpus_count": 41707,
+        "merge_rank_id": 89047
+      },
+      {
+        "id": 79871,
+        "token": "thick",
+        "corpus_count": 39741,
+        "merge_rank_id": 79871
+      },
+      {
+        "id": 85472,
+        "token": "=false",
+        "corpus_count": 39678,
+        "merge_rank_id": 85472
+      },
+      {
+        "id": 89910,
+        "token": "Ġ&\\",
+        "corpus_count": 39005,
+        "merge_rank_id": 89910
+      },
+      {
+        "id": 86622,
+        "token": ")$$Ċ",
+        "corpus_count": 38234,
+        "merge_rank_id": 86622
+      },
+      {
+        "id": 70990,
+        "token": "Ġlatex",
+        "corpus_count": 37527,
+        "merge_rank_id": 70990
+      },
+      {
+        "id": 89579,
+        "token": "ĠTik",
+        "corpus_count": 36961,
+        "merge_rank_id": 89579
+      },
+      {
+        "id": 77179,
+        "token": "arab",
+        "corpus_count": 36012,
+        "merge_rank_id": 77179
+      },
+      {
+        "id": 74926,
+        "token": "&\\",
+        "corpus_count": 35281,
+        "merge_rank_id": 74926
+      },
+      {
+        "id": 99899,
+        "token": "}{|",
+        "corpus_count": 34441,
+        "merge_rank_id": 99899
+      },
+      {
+        "id": 77964,
+        "token": "\\vec",
+        "corpus_count": 34349,
+        "merge_rank_id": 77964
+      }
+    ],
+    "demoted_top50_by_lowest_merge_rank_id": [
+      {
+        "id": 1,
+        "token": "</s>",
+        "corpus_count": 30,
+        "merge_rank_id": 1
+      },
+      {
+        "id": 2,
+        "token": "<tool_call>",
+        "corpus_count": 0,
+        "merge_rank_id": 2
+      },
+      {
+        "id": 3,
+        "token": "</tool_call>",
+        "corpus_count": 0,
+        "merge_rank_id": 3
+      },
+      {
+        "id": 4,
+        "token": "<|im_sep|>",
+        "corpus_count": 0,
+        "merge_rank_id": 4
+      },
+      {
+        "id": 5,
+        "token": "<|fim_prefix|>",
+        "corpus_count": 0,
+        "merge_rank_id": 5
+      },
+      {
+        "id": 6,
+        "token": "<|fim_middle|>",
+        "corpus_count": 0,
+        "merge_rank_id": 6
+      },
+      {
+        "id": 7,
+        "token": "<|fim_suffix|>",
+        "corpus_count": 0,
+        "merge_rank_id": 7
+      },
+      {
+        "id": 8,
+        "token": "<think>",
+        "corpus_count": 0,
+        "merge_rank_id": 8
+      },
+      {
+        "id": 9,
+        "token": "</think>",
+        "corpus_count": 0,
+        "merge_rank_id": 9
+      },
+      {
+        "id": 10,
+        "token": "<tool_response>",
+        "corpus_count": 0,
+        "merge_rank_id": 10
+      },
+      {
+        "id": 11,
+        "token": "</tool_response>",
+        "corpus_count": 0,
+        "merge_rank_id": 11
+      },
+      {
+        "id": 12,
+        "token": "<tools>",
+        "corpus_count": 0,
+        "merge_rank_id": 12
+      },
+      {
+        "id": 13,
+        "token": "</tools>",
+        "corpus_count": 0,
+        "merge_rank_id": 13
+      },
+      {
+        "id": 14,
+        "token": "<arguments>",
+        "corpus_count": 10,
+        "merge_rank_id": 14
+      },
+      {
+        "id": 15,
+        "token": "</arguments>",
+        "corpus_count": 1,
+        "merge_rank_id": 15
+      },
+      {
+        "id": 16,
+        "token": "<parameters>",
+        "corpus_count": 12,
+        "merge_rank_id": 16
+      },
+      {
+        "id": 17,
+        "token": "</parameters>",
+        "corpus_count": 0,
+        "merge_rank_id": 17
+      },
+      {
+        "id": 19,
+        "token": "</function>",
+        "corpus_count": 0,
+        "merge_rank_id": 19
+      },
+      {
+        "id": 21,
+        "token": "</param>",
+        "corpus_count": 43,
+        "merge_rank_id": 21
+      },
+      {
+        "id": 146,
+        "token": "À",
+        "corpus_count": 0,
+        "merge_rank_id": 146
+      },
+      {
+        "id": 147,
+        "token": "Á",
+        "corpus_count": 0,
+        "merge_rank_id": 147
+      },
+      {
+        "id": 176,
+        "token": "Þ",
+        "corpus_count": 14,
+        "merge_rank_id": 176
+      },
+      {
+        "id": 177,
+        "token": "ß",
+        "corpus_count": 13,
+        "merge_rank_id": 177
+      },
+      {
+        "id": 183,
+        "token": "å",
+        "corpus_count": 0,
+        "merge_rank_id": 183
+      },
+      {
+        "id": 184,
+        "token": "æ",
+        "corpus_count": 1,
+        "merge_rank_id": 184
+      },
+      {
+        "id": 185,
+        "token": "ç",
+        "corpus_count": 0,
+        "merge_rank_id": 185
+      },
+      {
+        "id": 186,
+        "token": "è",
+        "corpus_count": 0,
+        "merge_rank_id": 186
+      },
+      {
+        "id": 187,
+        "token": "é",
+        "corpus_count": 17,
+        "merge_rank_id": 187
+      },
+      {
+        "id": 189,
+        "token": "ë",
+        "corpus_count": 6,
+        "merge_rank_id": 189
+      },
+      {
+        "id": 190,
+        "token": "ì",
+        "corpus_count": 3,
+        "merge_rank_id": 190
+      },
+      {
+        "id": 191,
+        "token": "í",
+        "corpus_count": 0,
+        "merge_rank_id": 191
+      },
+      {
+        "id": 194,
+        "token": "ð",
+        "corpus_count": 6,
+        "merge_rank_id": 194
+      },
+      {
+        "id": 195,
+        "token": "ñ",
+        "corpus_count": 0,
+        "merge_rank_id": 195
+      },
+      {
+        "id": 196,
+        "token": "ò",
+        "corpus_count": 0,
+        "merge_rank_id": 196
+      },
+      {
+        "id": 197,
+        "token": "ó",
+        "corpus_count": 0,
+        "merge_rank_id": 197
+      },
+      {
+        "id": 198,
+        "token": "ô",
+        "corpus_count": 0,
+        "merge_rank_id": 198
+      },
+      {
+        "id": 199,
+        "token": "õ",
+        "corpus_count": 0,
+        "merge_rank_id": 199
+      },
+      {
+        "id": 200,
+        "token": "ö",
+        "corpus_count": 0,
+        "merge_rank_id": 200
+      },
+      {
+        "id": 201,
+        "token": "÷",
+        "corpus_count": 0,
+        "merge_rank_id": 201
+      },
+      {
+        "id": 202,
+        "token": "ø",
+        "corpus_count": 0,
+        "merge_rank_id": 202
+      },
+      {
+        "id": 203,
+        "token": "ù",
+        "corpus_count": 0,
+        "merge_rank_id": 203
+      },
+      {
+        "id": 204,
+        "token": "ú",
+        "corpus_count": 0,
+        "merge_rank_id": 204
+      },
+      {
+        "id": 205,
+        "token": "û",
+        "corpus_count": 0,
+        "merge_rank_id": 205
+      },
+      {
+        "id": 206,
+        "token": "ü",
+        "corpus_count": 0,
+        "merge_rank_id": 206
+      },
+      {
+        "id": 207,
+        "token": "ý",
+        "corpus_count": 0,
+        "merge_rank_id": 207
+      },
+      {
+        "id": 208,
+        "token": "þ",
+        "corpus_count": 0,
+        "merge_rank_id": 208
+      },
+      {
+        "id": 209,
+        "token": "ÿ",
+        "corpus_count": 0,
+        "merge_rank_id": 209
+      },
+      {
+        "id": 210,
+        "token": "Ā",
+        "corpus_count": 0,
+        "merge_rank_id": 210
+      },
+      {
+        "id": 211,
+        "token": "ā",
+        "corpus_count": 0,
+        "merge_rank_id": 211
+      },
+      {
+        "id": 212,
+        "token": "Ă",
+        "corpus_count": 0,
+        "merge_rank_id": 212
+      }
+    ],
+    "demoted_ge256_top50_by_lowest_corpus_count": [
+      {
+        "id": 363,
+        "token": "çļ",
+        "corpus_count": 0,
+        "merge_rank_id": 363
+      },
+      {
+        "id": 431,
+        "token": "æľ",
+        "corpus_count": 0,
+        "merge_rank_id": 431
+      },
+      {
+        "id": 568,
+        "token": "ç»",
+        "corpus_count": 0,
+        "merge_rank_id": 568
+      },
+      {
+        "id": 620,
+        "token": "æī",
+        "corpus_count": 0,
+        "merge_rank_id": 620
+      },
+      {
+        "id": 629,
+        "token": "ä¼",
+        "corpus_count": 0,
+        "merge_rank_id": 629
+      },
+      {
+        "id": 655,
+        "token": "åĩ",
+        "corpus_count": 0,
+        "merge_rank_id": 655
+      },
+      {
+        "id": 693,
+        "token": "èĢ",
+        "corpus_count": 0,
+        "merge_rank_id": 693
+      },
+      {
+        "id": 719,
+        "token": "ĥ½",
+        "corpus_count": 0,
+        "merge_rank_id": 719
+      },
+      {
+        "id": 778,
+        "token": "èµ",
+        "corpus_count": 0,
+        "merge_rank_id": 778
+      },
+      {
+        "id": 820,
+        "token": "à¹Ģà¸",
+        "corpus_count": 0,
+        "merge_rank_id": 820
+      },
+      {
+        "id": 831,
+        "token": "æĬ",
+        "corpus_count": 0,
+        "merge_rank_id": 831
+      },
+      {
+        "id": 920,
+        "token": "ìĿ",
+        "corpus_count": 0,
+        "merge_rank_id": 920
+      },
+      {
+        "id": 961,
+        "token": "æ³",
+        "corpus_count": 0,
+        "merge_rank_id": 961
+      },
+      {
+        "id": 1167,
+        "token": "çĦ",
+        "corpus_count": 0,
+        "merge_rank_id": 1167
+      },
+      {
+        "id": 1218,
+        "token": "éĺ",
+        "corpus_count": 0,
+        "merge_rank_id": 1218
+      },
+      {
+        "id": 1252,
+        "token": "ä¾",
+        "corpus_count": 0,
+        "merge_rank_id": 1252
+      },
+      {
+        "id": 1267,
+        "token": "çĤ",
+        "corpus_count": 0,
+        "merge_rank_id": 1267
+      },
+      {
+        "id": 1275,
+        "token": "èĤ",
+        "corpus_count": 0,
+        "merge_rank_id": 1275
+      },
+      {
+        "id": 1278,
+        "token": "íķ",
+        "corpus_count": 0,
+        "merge_rank_id": 1278
+      },
+      {
+        "id": 1357,
+        "token": "åĢ",
+        "corpus_count": 0,
+        "merge_rank_id": 1357
+      },
+      {
+        "id": 1359,
+        "token": "åŁ",
+        "corpus_count": 0,
+        "merge_rank_id": 1359
+      },
+      {
+        "id": 1412,
+        "token": "è·",
+        "corpus_count": 0,
+        "merge_rank_id": 1412
+      },
+      {
+        "id": 1416,
+        "token": "æ±",
+        "corpus_count": 0,
+        "merge_rank_id": 1416
+      },
+      {
+        "id": 1430,
+        "token": "ëĭ",
+        "corpus_count": 0,
+        "merge_rank_id": 1430
+      },
+      {
+        "id": 1506,
+        "token": "éķ",
+        "corpus_count": 0,
+        "merge_rank_id": 1506
+      },
+      {
+        "id": 1606,
+        "token": "å§",
+        "corpus_count": 0,
+        "merge_rank_id": 1606
+      },
+      {
+        "id": 1617,
+        "token": "çĻ",
+        "corpus_count": 0,
+        "merge_rank_id": 1617
+      },
+      {
+        "id": 1698,
+        "token": "ç©",
+        "corpus_count": 0,
+        "merge_rank_id": 1698
+      },
+      {
+        "id": 1739,
+        "token": "æŁ",
+        "corpus_count": 0,
+        "merge_rank_id": 1739
+      },
+      {
+        "id": 1744,
+        "token": "åĿ",
+        "corpus_count": 0,
+        "merge_rank_id": 1744
+      },
+      {
+        "id": 1799,
+        "token": "åħ³",
+        "corpus_count": 0,
+        "merge_rank_id": 1799
+      },
+      {
+        "id": 1810,
+        "token": "äº§",
+        "corpus_count": 0,
+        "merge_rank_id": 1810
+      },
+      {
+        "id": 1830,
+        "token": "ìĹ",
+        "corpus_count": 0,
+        "merge_rank_id": 1830
+      },
+      {
+        "id": 1927,
+        "token": "èĥ",
+        "corpus_count": 0,
+        "merge_rank_id": 1927
+      },
+      {
+        "id": 2017,
+        "token": "èĲ",
+        "corpus_count": 0,
+        "merge_rank_id": 2017
+      },
+      {
+        "id": 2070,
+        "token": "à¸·",
+        "corpus_count": 0,
+        "merge_rank_id": 2070
+      },
+      {
+        "id": 2097,
+        "token": "ä»Ģ",
+        "corpus_count": 0,
+        "merge_rank_id": 2097
+      },
+      {
+        "id": 2170,
+        "token": "ç¼",
+        "corpus_count": 0,
+        "merge_rank_id": 2170
+      },
+      {
+        "id": 2185,
+        "token": "èµĦ",
+        "corpus_count": 0,
+        "merge_rank_id": 2185
+      },
+      {
+        "id": 2258,
+        "token": "ç¡",
+        "corpus_count": 0,
+        "merge_rank_id": 2258
+      },
+      {
+        "id": 2325,
+        "token": "éĴ",
+        "corpus_count": 0,
+        "merge_rank_id": 2325
+      },
+      {
+        "id": 2396,
+        "token": "éª",
+        "corpus_count": 0,
+        "merge_rank_id": 2396
+      },
+      {
+        "id": 2464,
+        "token": "è®¡",
+        "corpus_count": 0,
+        "merge_rank_id": 2464
+      },
+      {
+        "id": 2468,
+        "token": "ç²",
+        "corpus_count": 0,
+        "merge_rank_id": 2468
+      },
+      {
+        "id": 2631,
+        "token": "ìł",
+        "corpus_count": 0,
+        "merge_rank_id": 2631
+      },
+      {
+        "id": 2787,
+        "token": "ì§",
+        "corpus_count": 0,
+        "merge_rank_id": 2787
+      },
+      {
+        "id": 2921,
+        "token": "ë¡",
+        "corpus_count": 0,
+        "merge_rank_id": 2921
+      },
+      {
+        "id": 2933,
+        "token": "èİ",
+        "corpus_count": 0,
+        "merge_rank_id": 2933
+      },
+      {
+        "id": 2936,
+        "token": "åĶ",
+        "corpus_count": 0,
+        "merge_rank_id": 2936
+      },
+      {
+        "id": 2968,
+        "token": "çĬ",
+        "corpus_count": 0,
+        "merge_rank_id": 2968
+      }
+    ]
+  },
+  "analysis_3_known_tokens": {
+    "whole_tokens": {
+      "Ġoscillator": {
+        "found_as_single_token": true,
+        "id": 36560,
+        "corpus_rank": 4889,
+        "corpus_count": 11500,
+        "in_top_32768_by_corpus_rank": true,
+        "in_top_65536_by_corpus_rank": true
+      },
+      "Ġdamping": {
+        "found_as_single_token": true,
+        "id": 37763,
+        "corpus_rank": 9218,
+        "corpus_count": 4654,
+        "in_top_32768_by_corpus_rank": true,
+        "in_top_65536_by_corpus_rank": true
+      },
+      "Ġconverge": {
+        "found_as_single_token": true,
+        "id": 28623,
+        "corpus_rank": 5461,
+        "corpus_count": 9910,
+        "in_top_32768_by_corpus_rank": true,
+        "in_top_65536_by_corpus_rank": true
+      },
+      "Ġflattened": {
+        "found_as_single_token": true,
+        "id": 49689,
+        "corpus_rank": 27488,
+        "corpus_count": 721,
+        "in_top_32768_by_corpus_rank": true,
+        "in_top_65536_by_corpus_rank": true
+      },
+      "Ġreorder": {
+        "found_as_single_token": true,
+        "id": 93098,
+        "corpus_rank": 24596,
+        "corpus_count": 903,
+        "in_top_32768_by_corpus_rank": true,
+        "in_top_65536_by_corpus_rank": true
+      },
+      "Â¨": {
+        "found_as_single_token": false
+      },
+      "ĠÏĨ": {
+        "found_as_single_token": true,
+        "id": 42169,
+        "corpus_rank": 10818,
+        "corpus_count": 3722,
+        "in_top_32768_by_corpus_rank": true,
+        "in_top_65536_by_corpus_rank": true
+      }
+    },
+    "symbols": {
+      "φ": [
+        {
+          "id": 36018,
+          "token": "ÏĨ",
+          "corpus_rank": 9884,
+          "corpus_count": 4230,
+          "in_top_32768_by_corpus_rank": true,
+          "in_top_65536_by_corpus_rank": true
+        }
+      ],
+      "←": [
+        {
+          "id": 76451,
+          "token": "âĨĲ",
+          "corpus_rank": 46704,
+          "corpus_count": 195,
+          "in_top_32768_by_corpus_rank": false,
+          "in_top_65536_by_corpus_rank": true
+        }
+      ],
+      "↔": [
+        {
+          "id": 23846,
+          "token": "âĨ",
+          "corpus_rank": 39575,
+          "corpus_count": 308,
+          "in_top_32768_by_corpus_rank": false,
+          "in_top_65536_by_corpus_rank": true
+        },
+        {
+          "id": 264,
+          "token": "Ķ",
+          "corpus_rank": 8092,
+          "corpus_count": 5628,
+          "in_top_32768_by_corpus_rank": true,
+          "in_top_65536_by_corpus_rank": true
+        }
+      ],
+      "↓": [
+        {
+          "id": 38852,
+          "token": "âĨĵ",
+          "corpus_rank": 38790,
+          "corpus_count": 325,
+          "in_top_32768_by_corpus_rank": false,
+          "in_top_65536_by_corpus_rank": true
+        }
+      ],
+      "×": [
+        {
+          "id": 11743,
+          "token": "ÃĹ",
+          "corpus_rank": 7843,
+          "corpus_count": 5891,
+          "in_top_32768_by_corpus_rank": true,
+          "in_top_65536_by_corpus_rank": true
+        }
+      ]
+    },
+    "proper_nouns": {
+      "Nikolskii": [
+        {
+          "id": 23851,
+          "token": "ĠNik",
+          "corpus_rank": 33550,
+          "corpus_count": 465,
+          "in_top_32768_by_corpus_rank": false,
+          "in_top_65536_by_corpus_rank": true
+        },
+        {
+          "id": 4118,
+          "token": "ols",
+          "corpus_rank": 3458,
+          "corpus_count": 18257,
+          "in_top_32768_by_corpus_rank": true,
+          "in_top_65536_by_corpus_rank": true
+        },
+        {
+          "id": 52434,
+          "token": "kii",
+          "corpus_rank": 17066,
+          "corpus_count": 1810,
+          "in_top_32768_by_corpus_rank": true,
+          "in_top_65536_by_corpus_rank": true
+        }
+      ],
+      "Randers": [
+        {
+          "id": 23469,
+          "token": "ĠRand",
+          "corpus_rank": 26452,
+          "corpus_count": 779,
+          "in_top_32768_by_corpus_rank": true,
+          "in_top_65536_by_corpus_rank": true
+        },
+        {
+          "id": 450,
+          "token": "ers",
+          "corpus_rank": 1391,
+          "corpus_count": 53698,
+          "in_top_32768_by_corpus_rank": true,
+          "in_top_65536_by_corpus_rank": true
+        }
+      ],
+      "Lissajous": [
+        {
+          "id": 111168,
+          "token": "ĠLiss",
+          "corpus_rank": 56104,
+          "corpus_count": 109,
+          "in_top_32768_by_corpus_rank": false,
+          "in_top_65536_by_corpus_rank": true
+        },
+        {
+          "id": 1919,
+          "token": "aj",
+          "corpus_rank": 9925,
+          "corpus_count": 4212,
+          "in_top_32768_by_corpus_rank": true,
+          "in_top_65536_by_corpus_rank": true
+        },
+        {
+          "id": 586,
+          "token": "ous",
+          "corpus_rank": 4585,
+          "corpus_count": 12558,
+          "in_top_32768_by_corpus_rank": true,
+          "in_top_65536_by_corpus_rank": true
+        }
+      ],
+      "Kullback": [
+        {
+          "id": 122791,
+          "token": "ĠKull",
+          "corpus_rank": 21610,
+          "corpus_count": 1168,
+          "in_top_32768_by_corpus_rank": true,
+          "in_top_65536_by_corpus_rank": true
+        },
+        {
+          "id": 3558,
+          "token": "back",
+          "corpus_rank": 1895,
+          "corpus_count": 38364,
+          "in_top_32768_by_corpus_rank": true,
+          "in_top_65536_by_corpus_rank": true
+        }
+      ],
+      "Hausdorff": [
+        {
+          "id": 67024,
+          "token": "ĠHausdorff",
+          "corpus_rank": 21839,
+          "corpus_count": 1145,
+          "in_top_32768_by_corpus_rank": true,
+          "in_top_65536_by_corpus_rank": true
+        }
+      ],
+      "Chebyshev": [
+        {
+          "id": 99410,
+          "token": "ĠChebyshev",
+          "corpus_rank": 22449,
+          "corpus_count": 1085,
+          "in_top_32768_by_corpus_rank": true,
+          "in_top_65536_by_corpus_rank": true
+        }
+      ],
+      "Sobolev": [
+        {
+          "id": 66257,
+          "token": "ĠSobolev",
+          "corpus_rank": 21005,
+          "corpus_count": 1230,
+          "in_top_32768_by_corpus_rank": true,
+          "in_top_65536_by_corpus_rank": true
+        }
+      ]
+    }
+  },
+  "analysis_4_heldout_coverage": {
+    "n_texts": 240,
+    "by_k": {
+      "32768": {
+        "out_of_set_rate_corpus_rank_keepset": 0.021780883494748885,
+        "out_of_set_rate_merge_rank_keepset": 0.09076049201095174,
+        "out_of_set_count_corpus_rank_keepset": 533,
+        "out_of_set_count_merge_rank_keepset": 2221
+      },
+      "65536": {
+        "out_of_set_rate_corpus_rank_keepset": 0.0027787993952024847,
+        "out_of_set_rate_merge_rank_keepset": 0.031588410771934125,
+        "out_of_set_count_corpus_rank_keepset": 68,
+        "out_of_set_count_merge_rank_keepset": 773
+      }
+    },
+    "total_token_occurrences": 24471
+  },
+  "analysis_5_zipf_sanity": {
+    "32768": {
+      "token": "Focus",
+      "id": 58699,
+      "count": 492,
+      "note": null
+    },
+    "65536": {
+      "token": "Lor",
+      "id": 102678,
+      "count": 60,
+      "note": null
+    }
+  }
+}
