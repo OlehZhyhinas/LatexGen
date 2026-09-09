@@ -34,6 +34,7 @@ let serverAvailable = false;
 let browserTokPerSec = null;
 let selectedModelId = null;
 let modelRows = [];
+let vramBudgetMB = 0; // set by buildModelPicker; the ladder needs it too
 
 // ---- settings persisted in localStorage ----
 const PREFS_KEY = "latexgen.prefs";
@@ -390,7 +391,7 @@ function selectModel(id) {
   ddBtn.innerHTML = `<span class="dd-name">${row.id}</span> <span class="dd-meta">${stars(row.score)} · ${gb(row.vram)}</span> <span class="dd-caret">▾</span>`;
 }
 async function buildModelPicker() {
-  const budget = await detectVramBudgetMB();
+  const budget = vramBudgetMB = await detectVramBudgetMB();
   let storageFreeMB = Infinity;
   try { const est = await navigator.storage.estimate(); if (est.quota) storageFreeMB = (est.quota - (est.usage ?? 0)) / (1024 * 1024); } catch {}
   // Two different questions. Browser storage is a hard blocker: without the
@@ -478,12 +479,29 @@ async function warmUp(eng) {
   } catch { /* best-effort */ }
 }
 async function createEngineForPlan(modelId, plan, onProgress) {
-  return webllm.CreateWebWorkerMLCEngine(
-    new Worker(plan.workerUrl, { type: "module" }),
-    modelId,
-    { initProgressCallback: onProgress, appConfig: plan.appConfig },
-    { context_window_size: 2048 }
-  );
+  const worker = new Worker(plan.workerUrl, { type: "module" });
+  try {
+    const eng = await webllm.CreateWebWorkerMLCEngine(
+      worker,
+      modelId,
+      { initProgressCallback: onProgress, appConfig: plan.appConfig },
+      { context_window_size: 2048 }
+    );
+    eng.latexgenWorker = worker;
+    return eng;
+  } catch (err) {
+    worker.terminate(); // a failed create must not strand its worker
+    throw err;
+  }
+}
+// `unload()` frees the GPU buffers, but the worker keeps its WASM heap and the
+// runtime bundle alive until it is terminated. Doing only the first leaves a
+// live worker behind on every model swap, which is what made a few switches in
+// a row bog the whole machine down.
+async function releaseEngine(eng) {
+  if (!eng) return;
+  try { await eng.unload(); } catch { /* the worker goes away regardless */ }
+  try { (eng.latexgenWorker ?? eng.worker)?.terminate(); } catch { /* already gone */ }
 }
 async function loadEngine(modelId, onProgress) {
   const stockRecord = prebuilt.get(modelId);
@@ -520,7 +538,7 @@ function activate(eng, modelId, statusText) {
   const row = modelRows.find((r) => r.id === modelId);
   const speed = browserTokPerSec != null ? ` · ${browserTokPerSec} tok/s` : "";
   $("model-status").textContent = `On-device model: ${row?.name ?? modelId} · ${planLabel}${speed}`;
-  if (old && old !== eng) old.unload().catch(() => {});
+  if (old && old !== eng) releaseEngine(old);
   window.dispatchEvent(new CustomEvent("latexgen:caps-changed"));
 }
 // Progressive ladder: quick model first, best-for-device model swapped in later.
@@ -528,10 +546,18 @@ function logLoadProgress(title, detail, live, p) {
   logEvent({ kind: "step", title, detail, raw: p.text ?? `${Math.round((p.progress ?? 0) * 100)}%`, live });
 }
 async function startModelLadder(best) {
-  const starter = [...modelRows].reverse().find((r) => r.canRun);
+  const smallest = [...modelRows].reverse().find((r) => r.canRun);
+  // The quick model only earns its download if it can keep serving while the
+  // upgrade arrives, and that means both being resident at once. Where that
+  // would push past the same budget the picker enforces for a single model,
+  // skip it and load the best model directly: the IntelliTeX specialist still
+  // covers single equations in the meantime, and the machine is not asked to
+  // hold two language models at a size it cannot afford.
+  const starter = smallest && smallest.id !== best.id
+    && smallest.vram + best.vram <= vramBudgetMB ? smallest : null;
   loadBtn.hidden = true;
   try {
-    if (starter && starter.id !== best.id) {
+    if (starter) {
       loadStatus.textContent = `loading quick model (${starter.name})…`;
       const tQuick = performance.now();
       logEvent({ kind: "step", title: `Loading ${starter.name}`, detail: "A smaller on-device language model first, so conversions can start while the larger one downloads.", live: `load-webllm-${starter.id}` });
@@ -558,6 +584,18 @@ async function loadPicked(row) {
   loadBtn.hidden = true;
   const t0 = performance.now();
   try {
+    // Release the current model before pulling the next one in. Holding both
+    // doubles peak memory, which is exactly what fails on a device that only
+    // just fits one; the ladder still overlaps, because there the point is to
+    // keep answering while a bigger model downloads.
+    if (engine) {
+      const previous = engine;
+      engine = null; loadedModel = null;
+      loadStatus.textContent = "unloading the current model\u2026";
+      $("model-status").textContent = "On-device model: specialist only";
+      window.dispatchEvent(new CustomEvent("latexgen:caps-changed"));
+      await releaseEngine(previous);
+    }
     const eng = await loadEngine(row.id, (p) => { loadStatus.textContent = p.text ?? "loading…"; progressFill.style.width = `${Math.round((p.progress ?? 0) * 100)}%`; logLoadProgress(`Loading ${row.name}`, "On-device language model. Downloaded once, then cached.", `load-webllm-${row.id}`, p); });
     activate(eng, row.id, `loaded: ${row.name}`); progressFill.style.width = "100%";
     logEvent({ kind: "done", title: `${row.name} is ready`, live: `load-webllm-${row.id}`, ms: performance.now() - t0 });
