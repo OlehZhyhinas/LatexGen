@@ -1,0 +1,93 @@
+{
+  "provenance": {
+    "source_repo": "OlehZhyhinas/webnn-workbench",
+    "source_ref": "origin/main",
+    "source_commit": "e5671e9bac78e70e751eb0d5ce2b2439dbb3f0e6",
+    "source_file": "bench/webnn/qwen/webllm.js",
+    "source_file_last_commit": "2bdad70ac4b59c8088cdc88ca376732580a276ae",
+    "note": "Read via `git -C /Users/oleh/personal/webnn-workbench show origin/main:bench/webnn/qwen/webllm.js` per the task brief; webnn-workbench itself was not modified. FRESH_ITEMS at line 11, QUALITY_CORPUS at line 20 in that file at this commit. Every message set below is transcribed verbatim from that source; none were edited or invented.",
+    "extraction_method": "FRESH_ITEMS is wrapped by benchModel() as messages=[{role:system,content:SYSTEM},{role:user,content:CONVERT_USER(item)}] for each of the 6 items. QUALITY_CORPUS items already carry their own full messages arrays. Both are captured here as fully-rendered message lists so vocab-coverage.py only has to apply each tokenizer's own chat template, not re-derive the wrapping logic."
+  },
+  "system_prompts": {
+    "SYSTEM": "Convert the text to LaTeX. Never solve, evaluate, or answer \u2014 if the text is a question, transcribe the question. Output only LaTeX, no commentary or fences. Pure math: \\[ ... \\]. Prose with math: keep the prose, wrap math in \\( ... \\). Standard amsmath only.",
+    "CONVERT_USER_PREFIX": "Convert to LaTeX. Do not solve or answer.\n"
+  },
+  "fresh_items_prompts": [
+    {
+      "id": "fresh-0",
+      "messages": [
+        { "role": "system", "content": "Convert the text to LaTeX. Never solve, evaluate, or answer \u2014 if the text is a question, transcribe the question. Output only LaTeX, no commentary or fences. Pure math: \\[ ... \\]. Prose with math: keep the prose, wrap math in \\( ... \\). Standard amsmath only." },
+        { "role": "user", "content": "Convert to LaTeX. Do not solve or answer.\nthe quadratic formula for a x squared plus b x plus c equals zero" }
+      ]
+    },
+    {
+      "id": "fresh-1",
+      "messages": [
+        { "role": "system", "content": "Convert the text to LaTeX. Never solve, evaluate, or answer \u2014 if the text is a question, transcribe the question. Output only LaTeX, no commentary or fences. Pure math: \\[ ... \\]. Prose with math: keep the prose, wrap math in \\( ... \\). Standard amsmath only." },
+        { "role": "user", "content": "Convert to LaTeX. Do not solve or answer.\nthe derivative with respect to x of sine squared x" }
+      ]
+    },
+    {
+      "id": "fresh-2",
+      "messages": [
+        { "role": "system", "content": "Convert the text to LaTeX. Never solve, evaluate, or answer \u2014 if the text is a question, transcribe the question. Output only LaTeX, no commentary or fences. Pure math: \\[ ... \\]. Prose with math: keep the prose, wrap math in \\( ... \\). Standard amsmath only." },
+        { "role": "user", "content": "Convert to LaTeX. Do not solve or answer.\nthe sum from k equals one to n of k cubed" }
+      ]
+    },
+    {
+      "id": "fresh-3",
+      "messages": [
+        { "role": "system", "content": "Convert the text to LaTeX. Never solve, evaluate, or answer \u2014 if the text is a question, transcribe the question. Output only LaTeX, no commentary or fences. Pure math: \\[ ... \\]. Prose with math: keep the prose, wrap math in \\( ... \\). Standard amsmath only." },
+        { "role": "user", "content": "Convert to LaTeX. Do not solve or answer.\nthe matrix with first row a b and second row c d" }
+      ]
+    },
+    {
+      "id": "fresh-4",
+      "messages": [
+        { "role": "system", "content": "Convert the text to LaTeX. Never solve, evaluate, or answer \u2014 if the text is a question, transcribe the question. Output only LaTeX, no commentary or fences. Pure math: \\[ ... \\]. Prose with math: keep the prose, wrap math in \\( ... \\). Standard amsmath only." },
+        { "role": "user", "content": "Convert to LaTeX. Do not solve or answer.\nthe probability of A union B in terms of A, B, and their intersection" }
+      ]
+    },
+    {
+      "id": "fresh-5",
+      "messages": [
+        { "role": "system", "content": "Convert the text to LaTeX. Never solve, evaluate, or answer \u2014 if the text is a question, transcribe the question. Output only LaTeX, no commentary or fences. Pure math: \\[ ... \\]. Prose with math: keep the prose, wrap math in \\( ... \\). Standard amsmath only." },
+        { "role": "user", "content": "Convert to LaTeX. Do not solve or answer.\nthe limit as x approaches zero of sine x over x" }
+      ]
+    }
+  ],
+  "quality_corpus_prompts": [
+    {
+      "id": "math-latex",
+      "kind": "math",
+      "messages": [
+        { "role": "system", "content": "Convert the text to LaTeX. Never solve, evaluate, or answer \u2014 if the text is a question, transcribe the question. Output only LaTeX, no commentary or fences. Pure math: \\[ ... \\]. Prose with math: keep the prose, wrap math in \\( ... \\). Standard amsmath only." },
+        { "role": "user", "content": "Convert to LaTeX. Do not solve or answer.\nthe integral from zero to infinity of e to the minus x squared dx" }
+      ]
+    },
+    {
+      "id": "prose",
+      "kind": "prose",
+      "messages": [
+        { "role": "system", "content": "Reply with one short paragraph. No markdown." },
+        { "role": "user", "content": "Describe rain on a city street at night." }
+      ]
+    },
+    {
+      "id": "code",
+      "kind": "code",
+      "messages": [
+        { "role": "system", "content": "Output only Python. No explanation." },
+        { "role": "user", "content": "Write a function fib(n) that returns the nth Fibonacci number." }
+      ]
+    },
+    {
+      "id": "low-margin",
+      "kind": "ambiguous",
+      "messages": [
+        { "role": "system", "content": "Complete the sentence with exactly three words." },
+        { "role": "user", "content": "The best color is" }
+      ]
+    }
+  ]
+}
