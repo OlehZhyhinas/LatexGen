@@ -1,0 +1,52 @@
+{
+  "tokenizer_label": "qwen35",
+  "tokenizer_path": "/Users/oleh/.cache/huggingface/hub/models--mlc-ai--Qwen3.5-0.8B-q4f16_1-MLC/snapshots/0ec138972555613c1d7812a821778ad0398c8790/tokenizer.json",
+  "keepset_version": "v3",
+  "selection_strategy": "A-fixed (merge-rank, v1 verbatim, winner of the v3 sweep, plus the LatexGen-prompt layer + merge-ancestor closure -- see provenance.md)",
+  "target_size": 32768,
+  "actual_size": 32768,
+  "clipped_to_natural": false,
+  "natural_keep_set_size": 7955,
+  "merges": {
+    "before": 247587,
+    "after": 32486,
+    "dropped": 215101,
+    "dropped_fraction": 0.8687895568022553
+  },
+  "tokenizer_config_phantom_added_tokens_dropped": 7,
+  "tokenizer_config_extra_special_tokens_dropped": 3,
+  "length_check": {
+    "expected_K": 32768,
+    "tokenizers_from_file_len": 32768,
+    "hf_autotokenizer_from_pretrained_len": 32768
+  },
+  "v3_methodology_fertility": {
+    "n_texts": 426,
+    "total_chars": 142003,
+    "total_tokens_before": 36912,
+    "total_tokens_after": 36912,
+    "fertility_before_tokens_per_char": 0.25993817032034533,
+    "fertility_after_tokens_per_char": 0.25993817032034533,
+    "fertility_inflation_relative": 0.0
+  },
+  "v3_held_out_meta": {
+    "n_arxiv_pastes_items": 120,
+    "n_bench_extended_items": 93
+  },
+  "stop_token_id_mismatches_found": [
+    {
+      "index": 0,
+      "declared_stop_token_id": 151643,
+      "stop_str": "<|endoftext|>",
+      "token_at_declared_id": "\u0120\u00eb\u0124\u00b4\u00ec\u013c\u00a9",
+      "corrected_old_id": 248044
+    },
+    {
+      "index": 1,
+      "declared_stop_token_id": 151645,
+      "stop_str": "<|im_end|>",
+      "token_at_declared_id": "\u00e0\u00b8\u00ab\u00e0\u00b8\u013b\u00e0\u00b8\u00b1\u00e0\u00b8\u0129",
+      "corrected_old_id": 248046
+    }
+  ]
+}

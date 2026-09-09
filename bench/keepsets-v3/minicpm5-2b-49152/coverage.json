@@ -1,0 +1,37 @@
+{
+  "tokenizer_label": "minicpm5-2b",
+  "tokenizer_path": "/Users/oleh/.cache/huggingface/hub/models--ozhyhinas--MiniCPM5-2B-q4f16_1-MLC/snapshots/2318f37d9c39277ff01dc64086491028c95d4db4/tokenizer.json",
+  "keepset_version": "v3",
+  "selection_strategy": "A-fixed (merge-rank, v1 verbatim, winner of the v3 sweep, plus the LatexGen-prompt layer + merge-ancestor closure -- see provenance.md)",
+  "target_size": 49152,
+  "actual_size": 49152,
+  "clipped_to_natural": false,
+  "natural_keep_set_size": 9467,
+  "merges": {
+    "before": 129794,
+    "after": 48386,
+    "dropped": 81408,
+    "dropped_fraction": 0.6272092700741174
+  },
+  "tokenizer_config_phantom_added_tokens_dropped": 0,
+  "tokenizer_config_extra_special_tokens_dropped": 0,
+  "length_check": {
+    "expected_K": 49152,
+    "tokenizers_from_file_len": 49152,
+    "hf_autotokenizer_from_pretrained_len": 49152
+  },
+  "v3_methodology_fertility": {
+    "n_texts": 426,
+    "total_chars": 142003,
+    "total_tokens_before": 34411,
+    "total_tokens_after": 34411,
+    "fertility_before_tokens_per_char": 0.24232586635493616,
+    "fertility_after_tokens_per_char": 0.24232586635493616,
+    "fertility_inflation_relative": 0.0
+  },
+  "v3_held_out_meta": {
+    "n_arxiv_pastes_items": 120,
+    "n_bench_extended_items": 93
+  },
+  "stop_token_id_mismatches_found": []
+}

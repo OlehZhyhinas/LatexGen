@@ -1,0 +1,847 @@
+{
+  "qwen35": {
+    "24576": {
+      "check1_failures_gone": {
+        "maths_symbols": {
+          "'\u03c6'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              139,
+              228
+            ]
+          },
+          "'\u2190'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              22366,
+              238
+            ]
+          },
+          "'\u2194'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              22366,
+              242
+            ]
+          },
+          "'\u2193'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              22366,
+              241
+            ]
+          },
+          "'\u00d7'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              17044
+            ]
+          }
+        },
+        "rare_words": {
+          "Nikolskii": {
+            "roundtrip_ok": true,
+            "decoded": "Nikolskii"
+          },
+          "Randers": {
+            "roundtrip_ok": true,
+            "decoded": "Randers"
+          },
+          "Lissajous": {
+            "roundtrip_ok": true,
+            "decoded": "Lissajous"
+          },
+          "Kullback": {
+            "roundtrip_ok": true,
+            "decoded": "Kullback"
+          },
+          "Hausdorff": {
+            "roundtrip_ok": true,
+            "decoded": "Hausdorff"
+          },
+          "Chebyshev": {
+            "roundtrip_ok": true,
+            "decoded": "Chebyshev"
+          },
+          "Sobolev": {
+            "roundtrip_ok": true,
+            "decoded": "Sobolev"
+          }
+        },
+        "maths_symbols_all_ok": true,
+        "rare_words_all_ok": true,
+        "latexgen_prompt_texts": {
+          "all_ok": true,
+          "n_texts": 6,
+          "failures": []
+        },
+        "named_failure1_ids": {
+          "all_7_named_ids_in_keepset": true,
+          "detail": {
+            "80757": {
+              "token": "\u0120oscillator",
+              "in_keepset": true
+            },
+            "80636": {
+              "token": "\u0120damping",
+              "in_keepset": true
+            },
+            "77019": {
+              "token": "\u0120converge",
+              "in_keepset": true
+            },
+            "65088": {
+              "token": "\u0120flattened",
+              "in_keepset": true
+            },
+            "80313": {
+              "token": "\u0120reorder",
+              "in_keepset": true
+            },
+            "72452": {
+              "token": "\u00c2\u00a8",
+              "in_keepset": true
+            },
+            "94498": {
+              "token": "\u0120\u00cf\u00a8",
+              "in_keepset": true
+            }
+          }
+        }
+      },
+      "check2_short_piece_completeness": {
+        "n_reference_strings": 120,
+        "n_reference_pass": 120,
+        "n_random_words": 2000,
+        "n_random_words_pass": 2000,
+        "all_pass": true,
+        "failures": [],
+        "n_failures_total": 0
+      },
+      "check3_fertility_v2_methodology_120_items": {
+        "n_texts": 240,
+        "total_chars": 108318,
+        "fertility_before_tokens_per_char": 0.24314518362599014,
+        "fertility_after_tokens_per_char": 0.24314518362599014,
+        "fertility_inflation_relative": 0.0
+      },
+      "check4_prompt_coverage": {
+        "plain_prompt": {
+          "n_items": 120,
+          "n_full_in_keepset": 120,
+          "fraction": 1.0,
+          "missing_items": []
+        },
+        "pdf_prompt": {
+          "n_items": 120,
+          "n_full_in_keepset": 120,
+          "fraction": 1.0,
+          "missing_items": []
+        }
+      },
+      "check5_selection_accounting": {
+        "selection_strategy": "A-fixed (merge-rank, v1 verbatim, winner of the v3 sweep, plus the LatexGen-prompt layer + merge-ancestor closure -- see provenance.md)",
+        "natural_keep_set_size": 7955,
+        "target_size": 24576,
+        "actual_size": 24576,
+        "padding_admitted": 16621
+      },
+      "v3_methodology_fertility_426_items": {
+        "n_texts": 426,
+        "total_chars": 142003,
+        "total_tokens_before": 36912,
+        "total_tokens_after": 36912,
+        "fertility_before_tokens_per_char": 0.25993817032034533,
+        "fertility_after_tokens_per_char": 0.25993817032034533,
+        "fertility_inflation_relative": 0.0
+      },
+      "IS_CANDIDATE": true
+    },
+    "32768": {
+      "check1_failures_gone": {
+        "maths_symbols": {
+          "'\u03c6'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              139,
+              228
+            ]
+          },
+          "'\u2190'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              25098,
+              238
+            ]
+          },
+          "'\u2194'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              25098,
+              242
+            ]
+          },
+          "'\u2193'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              25098,
+              241
+            ]
+          },
+          "'\u00d7'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              17044
+            ]
+          }
+        },
+        "rare_words": {
+          "Nikolskii": {
+            "roundtrip_ok": true,
+            "decoded": "Nikolskii"
+          },
+          "Randers": {
+            "roundtrip_ok": true,
+            "decoded": "Randers"
+          },
+          "Lissajous": {
+            "roundtrip_ok": true,
+            "decoded": "Lissajous"
+          },
+          "Kullback": {
+            "roundtrip_ok": true,
+            "decoded": "Kullback"
+          },
+          "Hausdorff": {
+            "roundtrip_ok": true,
+            "decoded": "Hausdorff"
+          },
+          "Chebyshev": {
+            "roundtrip_ok": true,
+            "decoded": "Chebyshev"
+          },
+          "Sobolev": {
+            "roundtrip_ok": true,
+            "decoded": "Sobolev"
+          }
+        },
+        "maths_symbols_all_ok": true,
+        "rare_words_all_ok": true,
+        "latexgen_prompt_texts": {
+          "all_ok": true,
+          "n_texts": 6,
+          "failures": []
+        },
+        "named_failure1_ids": {
+          "all_7_named_ids_in_keepset": true,
+          "detail": {
+            "80757": {
+              "token": "\u0120oscillator",
+              "in_keepset": true
+            },
+            "80636": {
+              "token": "\u0120damping",
+              "in_keepset": true
+            },
+            "77019": {
+              "token": "\u0120converge",
+              "in_keepset": true
+            },
+            "65088": {
+              "token": "\u0120flattened",
+              "in_keepset": true
+            },
+            "80313": {
+              "token": "\u0120reorder",
+              "in_keepset": true
+            },
+            "72452": {
+              "token": "\u00c2\u00a8",
+              "in_keepset": true
+            },
+            "94498": {
+              "token": "\u0120\u00cf\u00a8",
+              "in_keepset": true
+            }
+          }
+        }
+      },
+      "check2_short_piece_completeness": {
+        "n_reference_strings": 120,
+        "n_reference_pass": 120,
+        "n_random_words": 2000,
+        "n_random_words_pass": 2000,
+        "all_pass": true,
+        "failures": [],
+        "n_failures_total": 0
+      },
+      "check3_fertility_v2_methodology_120_items": {
+        "n_texts": 240,
+        "total_chars": 108318,
+        "fertility_before_tokens_per_char": 0.24314518362599014,
+        "fertility_after_tokens_per_char": 0.24314518362599014,
+        "fertility_inflation_relative": 0.0
+      },
+      "check4_prompt_coverage": {
+        "plain_prompt": {
+          "n_items": 120,
+          "n_full_in_keepset": 120,
+          "fraction": 1.0,
+          "missing_items": []
+        },
+        "pdf_prompt": {
+          "n_items": 120,
+          "n_full_in_keepset": 120,
+          "fraction": 1.0,
+          "missing_items": []
+        }
+      },
+      "check5_selection_accounting": {
+        "selection_strategy": "A-fixed (merge-rank, v1 verbatim, winner of the v3 sweep, plus the LatexGen-prompt layer + merge-ancestor closure -- see provenance.md)",
+        "natural_keep_set_size": 7955,
+        "target_size": 32768,
+        "actual_size": 32768,
+        "padding_admitted": 24813
+      },
+      "v3_methodology_fertility_426_items": {
+        "n_texts": 426,
+        "total_chars": 142003,
+        "total_tokens_before": 36912,
+        "total_tokens_after": 36912,
+        "fertility_before_tokens_per_char": 0.25993817032034533,
+        "fertility_after_tokens_per_char": 0.25993817032034533,
+        "fertility_inflation_relative": 0.0
+      },
+      "IS_CANDIDATE": true
+    },
+    "49152": {
+      "check1_failures_gone": {
+        "maths_symbols": {
+          "'\u03c6'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              139,
+              228
+            ]
+          },
+          "'\u2190'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              25098,
+              238
+            ]
+          },
+          "'\u2194'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              25098,
+              242
+            ]
+          },
+          "'\u2193'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              25098,
+              241
+            ]
+          },
+          "'\u00d7'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              17044
+            ]
+          }
+        },
+        "rare_words": {
+          "Nikolskii": {
+            "roundtrip_ok": true,
+            "decoded": "Nikolskii"
+          },
+          "Randers": {
+            "roundtrip_ok": true,
+            "decoded": "Randers"
+          },
+          "Lissajous": {
+            "roundtrip_ok": true,
+            "decoded": "Lissajous"
+          },
+          "Kullback": {
+            "roundtrip_ok": true,
+            "decoded": "Kullback"
+          },
+          "Hausdorff": {
+            "roundtrip_ok": true,
+            "decoded": "Hausdorff"
+          },
+          "Chebyshev": {
+            "roundtrip_ok": true,
+            "decoded": "Chebyshev"
+          },
+          "Sobolev": {
+            "roundtrip_ok": true,
+            "decoded": "Sobolev"
+          }
+        },
+        "maths_symbols_all_ok": true,
+        "rare_words_all_ok": true,
+        "latexgen_prompt_texts": {
+          "all_ok": true,
+          "n_texts": 6,
+          "failures": []
+        },
+        "named_failure1_ids": {
+          "all_7_named_ids_in_keepset": true,
+          "detail": {
+            "80757": {
+              "token": "\u0120oscillator",
+              "in_keepset": true
+            },
+            "80636": {
+              "token": "\u0120damping",
+              "in_keepset": true
+            },
+            "77019": {
+              "token": "\u0120converge",
+              "in_keepset": true
+            },
+            "65088": {
+              "token": "\u0120flattened",
+              "in_keepset": true
+            },
+            "80313": {
+              "token": "\u0120reorder",
+              "in_keepset": true
+            },
+            "72452": {
+              "token": "\u00c2\u00a8",
+              "in_keepset": true
+            },
+            "94498": {
+              "token": "\u0120\u00cf\u00a8",
+              "in_keepset": true
+            }
+          }
+        }
+      },
+      "check2_short_piece_completeness": {
+        "n_reference_strings": 120,
+        "n_reference_pass": 120,
+        "n_random_words": 2000,
+        "n_random_words_pass": 2000,
+        "all_pass": true,
+        "failures": [],
+        "n_failures_total": 0
+      },
+      "check3_fertility_v2_methodology_120_items": {
+        "n_texts": 240,
+        "total_chars": 108318,
+        "fertility_before_tokens_per_char": 0.24314518362599014,
+        "fertility_after_tokens_per_char": 0.24314518362599014,
+        "fertility_inflation_relative": 0.0
+      },
+      "check4_prompt_coverage": {
+        "plain_prompt": {
+          "n_items": 120,
+          "n_full_in_keepset": 120,
+          "fraction": 1.0,
+          "missing_items": []
+        },
+        "pdf_prompt": {
+          "n_items": 120,
+          "n_full_in_keepset": 120,
+          "fraction": 1.0,
+          "missing_items": []
+        }
+      },
+      "check5_selection_accounting": {
+        "selection_strategy": "A-fixed (merge-rank, v1 verbatim, winner of the v3 sweep, plus the LatexGen-prompt layer + merge-ancestor closure -- see provenance.md)",
+        "natural_keep_set_size": 7955,
+        "target_size": 49152,
+        "actual_size": 49152,
+        "padding_admitted": 41197
+      },
+      "v3_methodology_fertility_426_items": {
+        "n_texts": 426,
+        "total_chars": 142003,
+        "total_tokens_before": 36912,
+        "total_tokens_after": 36912,
+        "fertility_before_tokens_per_char": 0.25993817032034533,
+        "fertility_after_tokens_per_char": 0.25993817032034533,
+        "fertility_inflation_relative": 0.0
+      },
+      "IS_CANDIDATE": true
+    }
+  },
+  "minicpm5-2b": {
+    "24576": {
+      "check1_failures_gone": {
+        "maths_symbols": {
+          "'\u03c6'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              161,
+              250
+            ]
+          },
+          "'\u2190'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              21116,
+              260
+            ]
+          },
+          "'\u2194'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              21116,
+              264
+            ]
+          },
+          "'\u2193'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              21116,
+              263
+            ]
+          },
+          "'\u00d7'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              11743
+            ]
+          }
+        },
+        "rare_words": {
+          "Nikolskii": {
+            "roundtrip_ok": true,
+            "decoded": "Nikolskii"
+          },
+          "Randers": {
+            "roundtrip_ok": true,
+            "decoded": "Randers"
+          },
+          "Lissajous": {
+            "roundtrip_ok": true,
+            "decoded": "Lissajous"
+          },
+          "Kullback": {
+            "roundtrip_ok": true,
+            "decoded": "Kullback"
+          },
+          "Hausdorff": {
+            "roundtrip_ok": true,
+            "decoded": "Hausdorff"
+          },
+          "Chebyshev": {
+            "roundtrip_ok": true,
+            "decoded": "Chebyshev"
+          },
+          "Sobolev": {
+            "roundtrip_ok": true,
+            "decoded": "Sobolev"
+          }
+        },
+        "maths_symbols_all_ok": true,
+        "rare_words_all_ok": true,
+        "latexgen_prompt_texts": {
+          "all_ok": true,
+          "n_texts": 6,
+          "failures": []
+        }
+      },
+      "check2_short_piece_completeness": {
+        "n_reference_strings": 120,
+        "n_reference_pass": 120,
+        "n_random_words": 2000,
+        "n_random_words_pass": 2000,
+        "all_pass": true,
+        "failures": [],
+        "n_failures_total": 0
+      },
+      "check3_fertility_v2_methodology_120_items": {
+        "n_texts": 240,
+        "total_chars": 108318,
+        "fertility_before_tokens_per_char": 0.2259181299507007,
+        "fertility_after_tokens_per_char": 0.2259181299507007,
+        "fertility_inflation_relative": 0.0
+      },
+      "check4_prompt_coverage": {
+        "plain_prompt": {
+          "n_items": 120,
+          "n_full_in_keepset": 120,
+          "fraction": 1.0,
+          "missing_items": []
+        },
+        "pdf_prompt": {
+          "n_items": 120,
+          "n_full_in_keepset": 120,
+          "fraction": 1.0,
+          "missing_items": []
+        }
+      },
+      "check5_selection_accounting": {
+        "selection_strategy": "A-fixed (merge-rank, v1 verbatim, winner of the v3 sweep, plus the LatexGen-prompt layer + merge-ancestor closure -- see provenance.md)",
+        "natural_keep_set_size": 9467,
+        "target_size": 24576,
+        "actual_size": 24576,
+        "padding_admitted": 15109
+      },
+      "v3_methodology_fertility_426_items": {
+        "n_texts": 426,
+        "total_chars": 142003,
+        "total_tokens_before": 34411,
+        "total_tokens_after": 34411,
+        "fertility_before_tokens_per_char": 0.24232586635493616,
+        "fertility_after_tokens_per_char": 0.24232586635493616,
+        "fertility_inflation_relative": 0.0
+      },
+      "IS_CANDIDATE": true
+    },
+    "32768": {
+      "check1_failures_gone": {
+        "maths_symbols": {
+          "'\u03c6'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              161,
+              250
+            ]
+          },
+          "'\u2190'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              23846,
+              260
+            ]
+          },
+          "'\u2194'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              23846,
+              264
+            ]
+          },
+          "'\u2193'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              23846,
+              263
+            ]
+          },
+          "'\u00d7'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              11743
+            ]
+          }
+        },
+        "rare_words": {
+          "Nikolskii": {
+            "roundtrip_ok": true,
+            "decoded": "Nikolskii"
+          },
+          "Randers": {
+            "roundtrip_ok": true,
+            "decoded": "Randers"
+          },
+          "Lissajous": {
+            "roundtrip_ok": true,
+            "decoded": "Lissajous"
+          },
+          "Kullback": {
+            "roundtrip_ok": true,
+            "decoded": "Kullback"
+          },
+          "Hausdorff": {
+            "roundtrip_ok": true,
+            "decoded": "Hausdorff"
+          },
+          "Chebyshev": {
+            "roundtrip_ok": true,
+            "decoded": "Chebyshev"
+          },
+          "Sobolev": {
+            "roundtrip_ok": true,
+            "decoded": "Sobolev"
+          }
+        },
+        "maths_symbols_all_ok": true,
+        "rare_words_all_ok": true,
+        "latexgen_prompt_texts": {
+          "all_ok": true,
+          "n_texts": 6,
+          "failures": []
+        }
+      },
+      "check2_short_piece_completeness": {
+        "n_reference_strings": 120,
+        "n_reference_pass": 120,
+        "n_random_words": 2000,
+        "n_random_words_pass": 2000,
+        "all_pass": true,
+        "failures": [],
+        "n_failures_total": 0
+      },
+      "check3_fertility_v2_methodology_120_items": {
+        "n_texts": 240,
+        "total_chars": 108318,
+        "fertility_before_tokens_per_char": 0.2259181299507007,
+        "fertility_after_tokens_per_char": 0.2259181299507007,
+        "fertility_inflation_relative": 0.0
+      },
+      "check4_prompt_coverage": {
+        "plain_prompt": {
+          "n_items": 120,
+          "n_full_in_keepset": 120,
+          "fraction": 1.0,
+          "missing_items": []
+        },
+        "pdf_prompt": {
+          "n_items": 120,
+          "n_full_in_keepset": 120,
+          "fraction": 1.0,
+          "missing_items": []
+        }
+      },
+      "check5_selection_accounting": {
+        "selection_strategy": "A-fixed (merge-rank, v1 verbatim, winner of the v3 sweep, plus the LatexGen-prompt layer + merge-ancestor closure -- see provenance.md)",
+        "natural_keep_set_size": 9467,
+        "target_size": 32768,
+        "actual_size": 32768,
+        "padding_admitted": 23301
+      },
+      "v3_methodology_fertility_426_items": {
+        "n_texts": 426,
+        "total_chars": 142003,
+        "total_tokens_before": 34411,
+        "total_tokens_after": 34411,
+        "fertility_before_tokens_per_char": 0.24232586635493616,
+        "fertility_after_tokens_per_char": 0.24232586635493616,
+        "fertility_inflation_relative": 0.0
+      },
+      "IS_CANDIDATE": true
+    },
+    "49152": {
+      "check1_failures_gone": {
+        "maths_symbols": {
+          "'\u03c6'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              36018
+            ]
+          },
+          "'\u2190'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              23846,
+              260
+            ]
+          },
+          "'\u2194'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              23846,
+              264
+            ]
+          },
+          "'\u2193'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              38852
+            ]
+          },
+          "'\u00d7'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              11743
+            ]
+          }
+        },
+        "rare_words": {
+          "Nikolskii": {
+            "roundtrip_ok": true,
+            "decoded": "Nikolskii"
+          },
+          "Randers": {
+            "roundtrip_ok": true,
+            "decoded": "Randers"
+          },
+          "Lissajous": {
+            "roundtrip_ok": true,
+            "decoded": "Lissajous"
+          },
+          "Kullback": {
+            "roundtrip_ok": true,
+            "decoded": "Kullback"
+          },
+          "Hausdorff": {
+            "roundtrip_ok": true,
+            "decoded": "Hausdorff"
+          },
+          "Chebyshev": {
+            "roundtrip_ok": true,
+            "decoded": "Chebyshev"
+          },
+          "Sobolev": {
+            "roundtrip_ok": true,
+            "decoded": "Sobolev"
+          }
+        },
+        "maths_symbols_all_ok": true,
+        "rare_words_all_ok": true,
+        "latexgen_prompt_texts": {
+          "all_ok": true,
+          "n_texts": 6,
+          "failures": []
+        }
+      },
+      "check2_short_piece_completeness": {
+        "n_reference_strings": 120,
+        "n_reference_pass": 120,
+        "n_random_words": 2000,
+        "n_random_words_pass": 2000,
+        "all_pass": true,
+        "failures": [],
+        "n_failures_total": 0
+      },
+      "check3_fertility_v2_methodology_120_items": {
+        "n_texts": 240,
+        "total_chars": 108318,
+        "fertility_before_tokens_per_char": 0.2259181299507007,
+        "fertility_after_tokens_per_char": 0.2259181299507007,
+        "fertility_inflation_relative": 0.0
+      },
+      "check4_prompt_coverage": {
+        "plain_prompt": {
+          "n_items": 120,
+          "n_full_in_keepset": 120,
+          "fraction": 1.0,
+          "missing_items": []
+        },
+        "pdf_prompt": {
+          "n_items": 120,
+          "n_full_in_keepset": 120,
+          "fraction": 1.0,
+          "missing_items": []
+        }
+      },
+      "check5_selection_accounting": {
+        "selection_strategy": "A-fixed (merge-rank, v1 verbatim, winner of the v3 sweep, plus the LatexGen-prompt layer + merge-ancestor closure -- see provenance.md)",
+        "natural_keep_set_size": 9467,
+        "target_size": 49152,
+        "actual_size": 49152,
+        "padding_admitted": 39685
+      },
+      "v3_methodology_fertility_426_items": {
+        "n_texts": 426,
+        "total_chars": 142003,
+        "total_tokens_before": 34411,
+        "total_tokens_after": 34411,
+        "fertility_before_tokens_per_char": 0.24232586635493616,
+        "fertility_after_tokens_per_char": 0.24232586635493616,
+        "fertility_inflation_relative": 0.0
+      },
+      "IS_CANDIDATE": true
+    }
+  }
+}
