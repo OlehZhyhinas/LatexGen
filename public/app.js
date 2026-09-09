@@ -33,7 +33,10 @@ let currentInput = null;
 let serverAvailable = false;
 let browserTokPerSec = null;
 let selectedModelId = null;
+let selectedKey = null;   // rows are (model, decode path), so the id alone is ambiguous
+let loadedKey = null;     // set from the plan that actually loaded, not the one picked
 let modelRows = [];
+let renderMenu = () => {}; // assigned by buildModelPicker; activate() re-renders to move the tick
 let vramBudgetMB = 0; // set by buildModelPicker; the ladder needs it too
 
 // ---- settings persisted in localStorage ----
@@ -385,10 +388,14 @@ async function detectVramBudgetMB() {
     return deviceGB * 1024 * 0.45;
   } catch { return 0; }
 }
-function selectModel(id) {
-  selectedModelId = id;
-  const row = modelRows.find((r) => r.id === id);
-  ddBtn.innerHTML = `<span class="dd-name">${row.id}</span> <span class="dd-meta">${stars(row.score)} · ${gb(row.vram)}</span> <span class="dd-caret">▾</span>`;
+const el = (tag, cls, text) => { const n = document.createElement(tag); n.className = cls; n.textContent = text; return n; };
+function selectRow(r) {
+  selectedKey = r.key; selectedModelId = r.id;
+  ddBtn.replaceChildren(
+    el("span", "dd-name", r.id),
+    el("span", "dd-meta", `${r.sub} · ${stars(r.score)} · ${r.vram == null ? "size unknown" : gb(r.vram)}`),
+    el("span", "dd-caret", "\u25be"),
+  );
 }
 async function buildModelPicker() {
   const budget = vramBudgetMB = await detectVramBudgetMB();
@@ -403,51 +410,98 @@ async function buildModelPicker() {
   // property of the model *and* this device: the probe wants an Apple GPU
   // exposing subgroups behind a recent Chromium. Everywhere else, and for any
   // model the catalog has no library for, WebLLM's stock path runs instead.
-  let tunedIds = new Set();
+  let catalogModels = {}, catalogWhy = "catalog unreachable";
   try {
     const catalog = await loadCatalog();
     const probe = await probeTarget(catalog);
-    if (probe.ok) tunedIds = new Set(Object.keys(catalog?.models ?? {}));
-  } catch { /* no catalog reachable: every model is standard */ }
+    catalogWhy = probe.why;
+    if (probe.ok) catalogModels = catalog?.models ?? {};
+  } catch (err) { /* no catalog reachable: every model runs the stock path */ }
 
-  modelRows = CURATED.filter((c) => prebuilt.has(c.id)).map((c) => {
-    const vram = prebuilt.get(c.id).vram_required_MB;
-    const fitsGpu = vram <= budget, fitsStorage = vram * 1.2 <= storageFreeMB;
-    return {
-      ...c, vram, fitsGpu, tuned: tunedIds.has(c.id),
-      canRun: fitsGpu && fitsStorage, selectable: fitsStorage,
-      why: !fitsStorage ? "not enough browser storage" : !fitsGpu ? "over budget" : "",
+  // A row is a model *and* the path it decodes through, because those are two
+  // separate choices. Every rung keeps a stock WebLLM row, and each catalog
+  // variant the target supports gets its own row: the variants are not
+  // interchangeable tunings of one knob. 1.7B's `lookahead1` trades decode
+  // throughput for per-token streaming against `burst4-flush32`, and 0.6B's
+  // `flush64` only differs under load, so the catalog's measured expectation
+  // rides along on each row instead of being collapsed into `model.default`.
+  // Every curated model lists, always. A model with no WebLLM record cannot be
+  // loaded — it has no weights entry to point the runtime at — but dropping it
+  // from the menu turned that into an invisible gap, so it lists as disabled
+  // with the reason instead.
+  modelRows = [];
+  for (const c of CURATED) {
+    const record = prebuilt.get(c.id);
+    const vram = record?.vram_required_MB ?? null;
+    const fitsGpu = vram != null && vram <= budget;
+    const fitsStorage = vram != null && vram * 1.2 <= storageFreeMB;
+    const fit = {
+      vram, fitsGpu, canRun: fitsGpu && fitsStorage, selectable: vram != null && fitsStorage,
+      why: vram == null ? "no WebLLM record" : !fitsStorage ? "not enough browser storage" : !fitsGpu ? "over budget" : "",
     };
-  });
+    if (!record) {
+      // No stock record means no catalog row either: a catalog plan still needs
+      // the weights entry to graft its model_lib onto.
+      modelRows.push({ ...c, ...fit, kind: "stock", variant: null, sub: "no WebLLM record", key: `${c.id}#stock`, force: "stock", preferred: true, note: "" });
+      continue;
+    }
+    const model = catalogModels[c.id];
+    // Default variant first, then the rest in catalog order.
+    const variants = Object.entries(model?.variants ?? {})
+      .sort((a, b) => (b[0] === model.default) - (a[0] === model.default));
+    for (const [variant, v] of variants) {
+      modelRows.push({
+        ...c, ...fit, kind: "catalog", variant, sub: variant, key: `${c.id}#${variant}`,
+        force: { variant }, preferred: variant === model.default, note: v.expected ?? "",
+      });
+    }
+    modelRows.push({
+      ...c, ...fit, kind: "stock", variant: null, sub: "stock WebLLM", key: `${c.id}#stock`,
+      force: "stock", preferred: !variants.length, note: "",
+    });
+  }
+  // The automatic ladder only ever considers one row per model: the catalog's
+  // own default where it applies, stock otherwise. Everything else is by hand.
+  const auto = modelRows.filter((r) => r.preferred);
 
   const renderRow = (r) => {
     const row = document.createElement("div");
-    row.className = `dd-row${r.selectable ? (r.canRun ? "" : " over-budget") : " disabled"}`; row.setAttribute("role", "option");
-    row.innerHTML = `<span class="dd-name">${r.id}</span><span class="dd-meta">${stars(r.score)} · ${gb(r.vram)}${r.canRun ? "" : ` · ${r.why}`}</span>`;
-    if (r.selectable && !r.fitsGpu) row.title = `${gb(r.vram)} is above this device's estimated ${gb(budget)} budget, so it is not picked automatically. Select it to try anyway; if it fails to load you can pick a smaller one.`;
-    if (r.selectable) row.addEventListener("click", () => { selectModel(r.id); ddMenu.hidden = true; if (r.id !== loadedModel) loadPicked(r); });
+    row.className = `dd-row${r.selectable ? (r.canRun ? "" : " over-budget") : " disabled"}${r.key === loadedKey ? " on" : ""}`;
+    row.setAttribute("role", "option"); row.setAttribute("aria-selected", String(r.key === selectedKey));
+    const main = el("span", "dd-main", "");
+    main.append(el("span", "dd-name", r.id), el("span", "dd-sub", r.sub));
+    row.append(main, el("span", "dd-meta", `${stars(r.score)} · ${r.vram == null ? "size unknown" : gb(r.vram)}${r.canRun ? "" : ` · ${r.why}`}`));
+    const tips = [];
+    if (r.note) tips.push(r.note);
+    if (r.selectable && !r.fitsGpu) tips.push(`${gb(r.vram)} is above this device's estimated ${gb(budget)} budget, so it is not picked automatically. Select it to try anyway; if it fails to load you can pick a smaller one.`);
+    if (tips.length) row.title = tips.join("\n");
+    if (r.selectable) row.addEventListener("click", () => { selectRow(r); ddMenu.hidden = true; if (r.key !== loadedKey) loadPicked(r); });
     ddMenu.appendChild(row);
   };
 
-  ddMenu.innerHTML = "";
-  const tuned = modelRows.filter((r) => r.tuned), standard = modelRows.filter((r) => !r.tuned);
-  // Only label the split when there is actually a split to see.
-  const groups = tuned.length && standard.length
-    ? [["Catalog runtime", tuned, "Decodes through the graph catalog's runtime: device-resident greedy argmax and batched command encoding."],
-       ["Stock WebLLM", standard, "Runs WebLLM's stock decoding path."]]
-    : [[null, modelRows, null]];
-  for (const [label, rows, hint] of groups) {
-    if (label) {
-      const head = document.createElement("div");
-      head.className = "dd-group"; head.textContent = label;
+  // Always label the group, even when there is only one. The rows look alike
+  // whichever path they load, so an unlabelled list gave no way to tell that
+  // the tuned runtime had been ruled out — and no way to see why.
+  renderMenu = () => {
+    ddMenu.replaceChildren();
+    const catalogRows = modelRows.filter((r) => r.kind === "catalog");
+    const stockRows = modelRows.filter((r) => r.kind === "stock");
+    const groups = catalogRows.length
+      ? [["Catalog runtime", catalogRows, "Decodes through the graph catalog's runtime: device-resident greedy argmax and batched command encoding. Hover a row for its measured effect.", null],
+         ["Stock WebLLM", stockRows, "Runs WebLLM's stock decoding path.", null]]
+      : [["Stock WebLLM", stockRows, "Runs WebLLM's stock decoding path.", `No tuned catalog runtime on this device: ${catalogWhy}.`]];
+    for (const [label, rows, hint, note] of groups) {
+      const head = el("div", "dd-group", label);
       if (hint) head.title = hint;
       ddMenu.appendChild(head);
+      if (note) ddMenu.appendChild(el("div", "dd-note", note));
+      rows.forEach(renderRow);
     }
-    rows.forEach(renderRow);
-  }
-  const best = modelRows.find((r) => r.canRun);
+  };
+  renderMenu();
+  const best = auto.find((r) => r.canRun);
   if (best) {
-    selectModel(best.id);
+    selectRow(best);
     if (llmEnabled()) startModelLadder(best);
     else {
       loadBtn.hidden = false;
@@ -457,14 +511,17 @@ async function buildModelPicker() {
   } else {
     // Nothing is inside the estimated budget. Storage permitting, still let the
     // smallest model be chosen by hand instead of dead-ending the picker.
-    const manual = [...modelRows].reverse().find((r) => r.selectable);
+    const manual = [...auto].reverse().find((r) => r.selectable);
     if (manual) {
-      selectModel(manual.id);
+      selectRow(manual);
       loadBtn.hidden = false;
       loadStatus.textContent = "No model fits this device automatically \u2014 pick one to try it anyway.";
       $("model-status").textContent = "On-device model: specialist only";
     } else {
-      ddBtn.textContent = "No browser model fits this device"; ddBtn.disabled = true; loadBtn.disabled = true;
+      // Nothing here can load, but the list stays open so every model is still
+      // visible with the reason beside it. Only loading is switched off.
+      ddBtn.replaceChildren(el("span", "dd-name", "No browser model fits this device"), el("span", "dd-caret", "\u25be"));
+      loadBtn.disabled = true;
     }
   }
 }
@@ -503,12 +560,18 @@ async function releaseEngine(eng) {
   try { await eng.unload(); } catch { /* the worker goes away regardless */ }
   try { (eng.latexgenWorker ?? eng.worker)?.terminate(); } catch { /* already gone */ }
 }
-async function loadEngine(modelId, onProgress) {
+async function loadEngine(row, onProgress, { explicit = false } = {}) {
+  const modelId = row.id;
   const stockRecord = prebuilt.get(modelId);
   if (!stockRecord) throw new Error(`Unknown WebLLM model: ${modelId}`);
   let catalog = null;
   try { catalog = await loadCatalog(); } catch { catalog = null; }
-  const force = parseForce(location.search);
+  // `?webllm=` stays the debugging override. Below it, a pick from the menu is
+  // taken literally — a stock row stays stock, and a catalog row is loaded even
+  // if an earlier failure had this model remembered as stock. The automatic
+  // ladder passes no force at all, so there the remembered fallback and the
+  // catalog's own default still decide.
+  const force = parseForce(location.search) ?? (explicit ? row.force : undefined);
   let plan = await planEngine(modelId, catalog, { force, stockRecord });
   let eng;
   if (plan.kind === "catalog") {
@@ -533,7 +596,12 @@ async function loadEngine(modelId, onProgress) {
 function activate(eng, modelId, statusText) {
   const old = engine;
   engine = eng; loadedModel = modelId;
-  const planLabel = eng?.latexgenPlan?.label ?? "stock WebLLM";
+  // Which row is live is a property of the plan that loaded, not the one that
+  // was clicked: a catalog pick that fails falls back to stock underneath us.
+  const plan = eng?.latexgenPlan;
+  loadedKey = `${modelId}#${plan?.kind === "catalog" ? plan.variant : "stock"}`;
+  renderMenu();
+  const planLabel = plan?.label ?? "stock WebLLM";
   loadStatus.textContent = statusText.startsWith("loaded: ") ? `${statusText} (${planLabel})` : statusText;
   const row = modelRows.find((r) => r.id === modelId);
   const speed = browserTokPerSec != null ? ` · ${browserTokPerSec} tok/s` : "";
@@ -546,7 +614,7 @@ function logLoadProgress(title, detail, live, p) {
   logEvent({ kind: "step", title, detail, raw: p.text ?? `${Math.round((p.progress ?? 0) * 100)}%`, live });
 }
 async function startModelLadder(best) {
-  const smallest = [...modelRows].reverse().find((r) => r.canRun);
+  const smallest = [...modelRows].filter((r) => r.preferred).reverse().find((r) => r.canRun);
   // The quick model only earns its download if it can keep serving while the
   // upgrade arrives, and that means both being resident at once. Where that
   // would push past the same budget the picker enforces for a single model,
@@ -561,7 +629,7 @@ async function startModelLadder(best) {
       loadStatus.textContent = `loading quick model (${starter.name})…`;
       const tQuick = performance.now();
       logEvent({ kind: "step", title: `Loading ${starter.name}`, detail: "A smaller on-device language model first, so conversions can start while the larger one downloads.", live: `load-webllm-${starter.id}` });
-      const quick = await loadEngine(starter.id, (p) => { progressFill.style.width = `${Math.round((p.progress ?? 0) * 100)}%`; logLoadProgress(`Loading ${starter.name}`, "On-device language model. Downloaded once, then cached.", `load-webllm-${starter.id}`, p); });
+      const quick = await loadEngine(starter, (p) => { progressFill.style.width = `${Math.round((p.progress ?? 0) * 100)}%`; logLoadProgress(`Loading ${starter.name}`, "On-device language model. Downloaded once, then cached.", `load-webllm-${starter.id}`, p); });
       activate(quick, starter.id, `ready on ${starter.name} — downloading ${best.name} in background…`);
       logEvent({ kind: "done", title: `${starter.name} is ready`, detail: "Conversions can use this while the larger model loads.", live: `load-webllm-${starter.id}`, ms: performance.now() - tQuick });
     }
@@ -569,7 +637,7 @@ async function startModelLadder(best) {
     const bigStatus = engine
       ? (p) => { progressFill.style.width = `${Math.round((p.progress ?? 0) * 100)}%`; loadStatus.textContent = `ready on ${modelRows.find((r) => r.id === loadedModel)?.name} — ${p.text ?? "downloading upgrade…"}`; logLoadProgress(`Loading ${best.name}`, "Larger on-device language model, in the background.", `load-webllm-${best.id}`, p); }
       : (p) => { loadStatus.textContent = p.text ?? "loading…"; progressFill.style.width = `${Math.round((p.progress ?? 0) * 100)}%`; logLoadProgress(`Loading ${best.name}`, "On-device language model. Downloaded once, then cached.", `load-webllm-${best.id}`, p); };
-    const bigEngine = await loadEngine(best.id, bigStatus);
+    const bigEngine = await loadEngine(best, bigStatus);
     activate(bigEngine, best.id, `loaded: ${best.name}`);
     progressFill.style.width = "100%";
     logEvent({ kind: "done", title: `${best.name} is ready`, detail: engine?.latexgenPlan?.label ?? "stock WebLLM", live: `load-webllm-${best.id}`, ms: performance.now() - tBig });
@@ -596,12 +664,12 @@ async function loadPicked(row) {
       window.dispatchEvent(new CustomEvent("latexgen:caps-changed"));
       await releaseEngine(previous);
     }
-    const eng = await loadEngine(row.id, (p) => { loadStatus.textContent = p.text ?? "loading…"; progressFill.style.width = `${Math.round((p.progress ?? 0) * 100)}%`; logLoadProgress(`Loading ${row.name}`, "On-device language model. Downloaded once, then cached.", `load-webllm-${row.id}`, p); });
+    const eng = await loadEngine(row, (p) => { loadStatus.textContent = p.text ?? "loading…"; progressFill.style.width = `${Math.round((p.progress ?? 0) * 100)}%`; logLoadProgress(`Loading ${row.name} (${row.sub})`, "On-device language model. Downloaded once, then cached.", `load-webllm-${row.key}`, p); }, { explicit: true });
     activate(eng, row.id, `loaded: ${row.name}`); progressFill.style.width = "100%";
-    logEvent({ kind: "done", title: `${row.name} is ready`, live: `load-webllm-${row.id}`, ms: performance.now() - t0 });
+    logEvent({ kind: "done", title: `${row.name} is ready`, detail: eng?.latexgenPlan?.label ?? "stock WebLLM", live: `load-webllm-${row.key}`, ms: performance.now() - t0 });
   } catch (err) { loadStatus.textContent = `load failed: ${err}`; loadBtn.hidden = false; logEvent({ kind: "error", title: "On-device language model failed to load", raw: String(err) }); }
 }
-loadBtn.addEventListener("click", () => { const row = modelRows.find((r) => r.id === selectedModelId); if (row) loadPicked(row); });
+loadBtn.addEventListener("click", () => { const row = modelRows.find((r) => r.key === selectedKey); if (row) loadPicked(row); });
 ddBtn.addEventListener("click", () => { ddMenu.hidden = !ddMenu.hidden; });
 document.addEventListener("click", (e) => { if (!$("model-dd").contains(e.target)) ddMenu.hidden = true; });
 specialistReady.then((ok) => {
@@ -694,7 +762,7 @@ $("input").addEventListener("keydown", (e) => { if ((e.metaKey || e.ctrlKey) && 
 {
   const consent = $("consent");
   if (!prefs().consent) consent.hidden = false;
-  const maybeStartLadder = () => { if (llmEnabled() && !engine) { const best = modelRows.find((r) => r.canRun); if (best) { loadBtn.hidden = true; startModelLadder(best); } } };
+  const maybeStartLadder = () => { if (llmEnabled() && !engine) { const best = modelRows.find((r) => r.preferred && r.canRun); if (best) { loadBtn.hidden = true; startModelLadder(best); } } };
   for (const btn of consent.querySelectorAll(".consent-opt")) {
     btn.addEventListener("click", () => { setPref("consent", btn.dataset.consent); consent.hidden = true; $("llm-enabled").checked = llmEnabled(); maybeStartLadder(); maybeShowWebnnPrompt(); });
   }

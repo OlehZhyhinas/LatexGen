@@ -10,7 +10,11 @@
   "reports": [
    "webnn-workbench/docs/qwen-m5-webgpu-report.md",
    "webnn-workbench/docs/qwen17-m5-webgpu-report.md",
-   "webnn-workbench/docs/qwen4-m5-webgpu-report.md"
+   "webnn-workbench/docs/qwen4-m5-webgpu-report.md",
+   "webnn-workbench/docs/qwen35-08-m5-webgpu-report.md",
+   "webnn-workbench/docs/qwen35-4b-m5-webgpu-report.md",
+   "webnn-workbench/docs/qwen35-9b-m5-webgpu-report.md",
+   "webnn-workbench/docs/minicpm5-2b-m5-webgpu-report.md"
   ]
  },
  "target": {
@@ -211,7 +215,8 @@
       "batchPass": true,
       "flushEvery": 32
      },
-     "entry": "qwen3.5-0.8b-q4f16-1/v1/webgpu-apple-m5-pro-macos26-chrome152-sg32-burst5-flush32"
+     "entry": "qwen3.5-0.8b-q4f16-1/v1/webgpu-apple-m5-pro-macos26-chrome152-sg32-burst5-flush32",
+     "expected": "1.74x decode vs published sg32 (190.8 vs 108.9 tok/s), 8/8 byte-identical"
     }
    }
   },
@@ -231,7 +236,8 @@
       "greedyBurst": 1,
       "lookahead": 1
      },
-     "entry": "qwen3.5-4b-q4f16-1/v1/webgpu-apple-m5-pro-macos26-chrome152-sg32-burst1-lookahead1"
+     "entry": "qwen3.5-4b-q4f16-1/v1/webgpu-apple-m5-pro-macos26-chrome152-sg32-burst1-lookahead1",
+     "expected": "1.28x decode vs published sg32 (64.1 vs 50.6 tok/s), 6/6 byte-identical, per-token streaming"
     }
    }
   },
@@ -252,7 +258,8 @@
       "batchPass": true,
       "flushEvery": 64
      },
-     "entry": "qwen3.5-9b-q4f16-1/v1/webgpu-apple-m5-pro-macos26-chrome152-sg32-burst4-flush64"
+     "entry": "qwen3.5-9b-q4f16-1/v1/webgpu-apple-m5-pro-macos26-chrome152-sg32-burst4-flush64",
+     "expected": "1.07x decode vs published sg32 (37.5 vs 34.8 tok/s) under sibling-roll load, 8/8 byte-identical"
     }
    }
   },
@@ -274,7 +281,8 @@
       "flushEvery": 32,
       "lookahead": 1
      },
-     "entry": "minicpm5-2b-q4f16-1/v1/webgpu-apple-m5-pro-macos26-chrome152-burst1-flush32-lookahead1"
+     "entry": "minicpm5-2b-q4f16-1/v1/webgpu-apple-m5-pro-macos26-chrome152-burst1-flush32-lookahead1",
+     "expected": "1.36x decode vs this project's published lib (102.7 vs 74.9 tok/s), +7.7 ms TTFT, 8/8 byte-identical, per-token streaming"
     }
    }
   }
