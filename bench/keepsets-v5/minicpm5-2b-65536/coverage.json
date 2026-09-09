@@ -1,0 +1,74 @@
+{
+  "tokenizer_label": "minicpm5-2b",
+  "tokenizer_path": "/Users/oleh/.cache/huggingface/hub/models--ozhyhinas--MiniCPM5-2B-q4f16_1-MLC/snapshots/2318f37d9c39277ff01dc64086491028c95d4db4/tokenizer.json",
+  "keepset_version": "v5",
+  "strategy": "C+F",
+  "target_size": 65536,
+  "actual_size": 65536,
+  "natural_size": 2784,
+  "closure_iterations": 4,
+  "length_check": {
+    "expected_K": 65536,
+    "tokenizers_from_file_len": 65536,
+    "hf_autotokenizer_from_pretrained_len": 65536
+  },
+  "merges": {
+    "before": 129794,
+    "after": 64770,
+    "dropped": 65024,
+    "dropped_fraction": 0.5009784735812133
+  },
+  "tokenizer_config_phantom_added_tokens_dropped": 0,
+  "tokenizer_config_extra_special_tokens_dropped": 0,
+  "stop_token_id_mismatches_found": [],
+  "held_out_fertility": {
+    "eval240": {
+      "n_texts": 240,
+      "total_chars": 108318,
+      "oos_rate": 0.00245188181929631,
+      "oos_tokens": 60,
+      "fertility_before": 0.2259181299507007,
+      "fertility_after": 0.22662899979689433,
+      "inflation": 0.0031465816680968928
+    },
+    "held_out_full": {
+      "n_texts": 426,
+      "total_chars": 142003,
+      "oos_rate": 0.0022376565633082444,
+      "oos_tokens": 77,
+      "fertility_before": 0.24232586635493616,
+      "fertility_after": 0.24298782420089715,
+      "inflation": 0.0027316846357268165
+    }
+  },
+  "force_add_accounting": {
+    "group1_single_codepoint": {
+      "total": 242,
+      "by_class": {
+        "accented_latin_letter": 114,
+        "typographic": 2,
+        "greek_letter": 59,
+        "math_operator_relation": 61,
+        "superscript_subscript_digit": 6
+      }
+    },
+    "group2_latex_macro_completion": {
+      "total": 1250,
+      "n_macro_strings": 1241
+    },
+    "group3_latexgen_prompt_and_chat_template": {
+      "total": 249,
+      "n_renders": 8,
+      "n_named_ids": 0
+    },
+    "union_pre_closure": 1663,
+    "closure_extra_beyond_natural_and_pre_closure_union": 478
+  },
+  "corpus_meta": {
+    "total_tokens": 615981036,
+    "total_docs": 1919116,
+    "n_distinct_ids_seen": 100886,
+    "vocab_size": 130560
+  },
+  "text_that_informed_this_keepset": "Structural force-adds (byte alphabet, added/special tokens, single-codepoint accented-Latin/Greek/math-operator/superscript-subscript-digit tokens, LaTeX macro completion from bench/keepset-seed-latex.json, LatexGen's own rendered prompt from public/pipeline.js + public/pdf-prompt.js) plus a ranking derived from bench/corpus/freq-minicpm5-2b.json (external science corpus: TeX/Physics/Stats/CS StackExchange, arXiv abstracts, OpenStax, science Wikipedia/Wikibooks -- PR #58, branch keepset-corpus). NONE of bench/arxiv-pastes.json or bench-data-extended.json was read to build this keep-set; those files are read ONLY in this coverage.json's held_out_fertility block, to MEASURE the result, never to build it."
+}

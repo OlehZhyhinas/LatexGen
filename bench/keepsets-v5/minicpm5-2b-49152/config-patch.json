@@ -1,0 +1,9 @@
+{
+  "vocab_size": 49152,
+  "active_vocab_size": 49152,
+  "stop_token_ids": [
+    1,
+    48665
+  ],
+  "stop_token_ids_source_mismatches": []
+}

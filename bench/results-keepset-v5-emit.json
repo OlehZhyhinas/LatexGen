@@ -1,0 +1,84 @@
+{
+  "qwen35": {
+    "32768": {
+      "out_dir": "/Users/oleh/personal/latexgen-keepset-v5/bench/keepsets-v5/qwen35-32768",
+      "actual_K": 32768,
+      "hashes": {
+        "keep-idx.json": "3c95f3846b0e0789cd8be0822c5054484e6591aab424af48a6d4e68619ee41dc",
+        "tokenizer.json": "b889a1dc69ee21369495213b14c2e0516c7b90af73e81cce47e84ce41167eb70",
+        "special_tokens_map.json": "ac321c6a0a5d8c59db3144bcd1fa61e7ee5b0ee5d27acb41c4812e721bf16500",
+        "config-patch.json": "12181853e10ab0ac9adc1c42d1f775196a1c28913f82d6d408e9b1201217ea43",
+        "coverage.json": "4de503230337bb46c19e6bf86a3082447e6f00789384b03aec747b18aede869f",
+        "provenance.md": "341d3d68f182b1eea1b7e49b67fe252a7574988ad84e8e23aad597de95ee42ca",
+        "tokenizer_config.json": "fb1be68246e43c2dcffdfd81617a139ae186d04999de5c034a32af2b9d29f1c4"
+      }
+    },
+    "49152": {
+      "out_dir": "/Users/oleh/personal/latexgen-keepset-v5/bench/keepsets-v5/qwen35-49152",
+      "actual_K": 49152,
+      "hashes": {
+        "keep-idx.json": "8f487a68baa124687c0b0bbac3a7cee62209a1e110df02cdf061cfd3c596a171",
+        "tokenizer.json": "05c0a3fe79ab5728d4f63d5b9795d311690b03bfa272f3ae6fa6fd397beba714",
+        "special_tokens_map.json": "ac321c6a0a5d8c59db3144bcd1fa61e7ee5b0ee5d27acb41c4812e721bf16500",
+        "config-patch.json": "ce44136119aa6995042b813fd8213b30a59e948d11aba592a8c8f522db37eee0",
+        "coverage.json": "c77771d70b02714c85c94e8af00869a2c87734b8edaae957f00f5ea6f0d36011",
+        "provenance.md": "ae3c0018fa5f0c99901bcbe375a4231e9b4cd3fcc6fddea6a1b65406e37edafa",
+        "tokenizer_config.json": "78d5973eecf355f9d9367cd57fdd1f3ee21561eba8ed57ee5eeda2d5b168b071"
+      }
+    },
+    "65536": {
+      "out_dir": "/Users/oleh/personal/latexgen-keepset-v5/bench/keepsets-v5/qwen35-65536",
+      "actual_K": 65536,
+      "hashes": {
+        "keep-idx.json": "b1f232678c60d877f5aab52cb4ca834bc44297e46a3875f2fdbfeccf1e0d869c",
+        "tokenizer.json": "a616055b16d05090b13b6877442888925acb31c58b93a875bd34d224434d3bc8",
+        "special_tokens_map.json": "ac321c6a0a5d8c59db3144bcd1fa61e7ee5b0ee5d27acb41c4812e721bf16500",
+        "config-patch.json": "764aff43d28f8be2745f6cbe5cc73b7dbfe54de6ad35f27ffbba11d0160675c9",
+        "coverage.json": "c50eb4c0bfc8f06e35d545188b177c58cba7d34e327c132185255494bb038c0e",
+        "provenance.md": "490d34a260be619dd3839e8b7c06e28748bd0770d74977994641f35a3cee4b73",
+        "tokenizer_config.json": "dcc4f62dca382bb4cae8ba83f8ff1be1e55f09fb19d714d04baaa26a163824f1"
+      }
+    }
+  },
+  "minicpm5-2b": {
+    "32768": {
+      "out_dir": "/Users/oleh/personal/latexgen-keepset-v5/bench/keepsets-v5/minicpm5-2b-32768",
+      "actual_K": 32768,
+      "hashes": {
+        "keep-idx.json": "08c15bc4e705d90554ed1c8733d1acbc52e33b935a98382348c66d2d353862c3",
+        "tokenizer.json": "4a4a6d9519c547fcd8c4631a621505c1e2ae91f9e6ac69ee6e2668623b211446",
+        "special_tokens_map.json": "833c7a70faf348f64bc7e62aa070b575205b5acc47201e109ec37a3516e0eba8",
+        "config-patch.json": "da64ee73017fac3c74d9291dbf18ee6b59078eb44c71779aad9198832da2e06a",
+        "coverage.json": "1704028c377b14bbd5a699d1b610749c722171bb040419cfa84223a161873724",
+        "provenance.md": "61282739952624708d08c657e8a46a7325e7a56f9b4a683e471d640350c9459c",
+        "tokenizer_config.json": "14d6e951f333e3420361026b044c9ec7db4a755f5ebfde36dcb61183a49cc672"
+      }
+    },
+    "49152": {
+      "out_dir": "/Users/oleh/personal/latexgen-keepset-v5/bench/keepsets-v5/minicpm5-2b-49152",
+      "actual_K": 49152,
+      "hashes": {
+        "keep-idx.json": "682f4046ad89fa6fb484386cadec61bd22dcc7fa0b822018df88b3ab6f555cad",
+        "tokenizer.json": "bb60abc56f6130e0549302f94d24076186e4501c011fb79b22b1196c952aa539",
+        "special_tokens_map.json": "833c7a70faf348f64bc7e62aa070b575205b5acc47201e109ec37a3516e0eba8",
+        "config-patch.json": "962ed3e6427e7c8d3b34c8f8f842635995f35ab90448caa0cb985c4ed80c75ca",
+        "coverage.json": "88dfedb8e8309e7c8563299a756b80ce315f5be9751acc7940ce94972f1e9b21",
+        "provenance.md": "e226156d6f7994a6119aabf6f2a741d05b6cff3f20d43a53a5de477252a959d1",
+        "tokenizer_config.json": "52160dafc48ac58b46ac5825b3cf866595e3f53f6e82bc373c0b685649d03037"
+      }
+    },
+    "65536": {
+      "out_dir": "/Users/oleh/personal/latexgen-keepset-v5/bench/keepsets-v5/minicpm5-2b-65536",
+      "actual_K": 65536,
+      "hashes": {
+        "keep-idx.json": "ef1791613aaa052ec0ee241db78fb8f4934d0d9cf211b4a75d0c36b6820ee2b1",
+        "tokenizer.json": "eab4157772776dcb9dc76abc9eb9f53370eef6985d8f9f4ca13a7fd6da3b9755",
+        "special_tokens_map.json": "833c7a70faf348f64bc7e62aa070b575205b5acc47201e109ec37a3516e0eba8",
+        "config-patch.json": "7357433afa3618f2bba4bbec06f38e8d7e4c4e2b810a6579ba6c67eee66fd656",
+        "coverage.json": "70bc0b217b2b6136231b8f4005459a322c61cd526b3f0db7628c3f8f633f7055",
+        "provenance.md": "caabc79b863c412a2ad3908fef80337dd38f46f4823b8c7f4287ea134122785f",
+        "tokenizer_config.json": "7240636df6a860f3a2dfa2c56d0ab17626271cd815a7d9876d8ae4b4fa682339"
+      }
+    }
+  }
+}

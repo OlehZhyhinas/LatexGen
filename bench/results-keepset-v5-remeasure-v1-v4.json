@@ -1,0 +1,598 @@
+{
+  "v1": {
+    "minicpm5-2b-16384": {
+      "directory": "/Users/oleh/personal/latexgen-keepset-v5/bench/keepsets/minicpm5-2b-16384",
+      "tokenizer_label": "minicpm5-2b",
+      "K": 16384,
+      "actual_size": 16384,
+      "eval240": {
+        "n_texts": 240,
+        "fertility_before": 0.2259181299507007,
+        "fertility_after": 0.23596262855665726,
+        "inflation": 0.04446079032323991,
+        "oos_rate": 0.0
+      },
+      "held_out_full": {
+        "n_texts": 426,
+        "fertility_before": 0.24232586635493616,
+        "fertility_after": 0.250980613085639,
+        "inflation": 0.03571532358838736,
+        "oos_rate": 0.0
+      },
+      "originally_reported": "(own 138-item input-only LOO set)"
+    },
+    "minicpm5-2b-24576": {
+      "directory": "/Users/oleh/personal/latexgen-keepset-v5/bench/keepsets/minicpm5-2b-24576",
+      "tokenizer_label": "minicpm5-2b",
+      "K": 24576,
+      "actual_size": 24576,
+      "eval240": {
+        "n_texts": 240,
+        "fertility_before": 0.2259181299507007,
+        "fertility_after": 0.23033106224265587,
+        "inflation": 0.019533325160393966,
+        "oos_rate": 0.0
+      },
+      "held_out_full": {
+        "n_texts": 426,
+        "fertility_before": 0.24232586635493616,
+        "fertility_after": 0.24600184503144298,
+        "inflation": 0.015169567870738865,
+        "oos_rate": 0.0
+      },
+      "originally_reported": "(own 138-item input-only LOO set)"
+    },
+    "minicpm5-2b-32768": {
+      "directory": "/Users/oleh/personal/latexgen-keepset-v5/bench/keepsets/minicpm5-2b-32768",
+      "tokenizer_label": "minicpm5-2b",
+      "K": 32768,
+      "actual_size": 32768,
+      "eval240": {
+        "n_texts": 240,
+        "fertility_before": 0.2259181299507007,
+        "fertility_after": 0.22819845270407504,
+        "inflation": 0.010093580156103288,
+        "oos_rate": 0.0
+      },
+      "held_out_full": {
+        "n_texts": 426,
+        "fertility_before": 0.24232586635493616,
+        "fertility_after": 0.24429061357858636,
+        "inflation": 0.008107872482636447,
+        "oos_rate": 0.0
+      },
+      "originally_reported": "(own 138-item input-only LOO set)"
+    },
+    "minicpm5-2b-49152": {
+      "directory": "/Users/oleh/personal/latexgen-keepset-v5/bench/keepsets/minicpm5-2b-49152",
+      "tokenizer_label": "minicpm5-2b",
+      "K": 49152,
+      "actual_size": 49152,
+      "eval240": {
+        "n_texts": 240,
+        "fertility_before": 0.2259181299507007,
+        "fertility_after": 0.22643512620247788,
+        "inflation": 0.002288423031343134,
+        "oos_rate": 0.0
+      },
+      "held_out_full": {
+        "n_texts": 426,
+        "fertility_before": 0.24232586635493616,
+        "fertility_after": 0.24284698210601185,
+        "inflation": 0.0021504751387637633,
+        "oos_rate": 0.0
+      },
+      "originally_reported": "(own 138-item input-only LOO set)"
+    },
+    "minicpm5-2b-65536": {
+      "directory": "/Users/oleh/personal/latexgen-keepset-v5/bench/keepsets/minicpm5-2b-65536",
+      "tokenizer_label": "minicpm5-2b",
+      "K": 65536,
+      "actual_size": 65536,
+      "eval240": {
+        "n_texts": 240,
+        "fertility_before": 0.2259181299507007,
+        "fertility_after": 0.2261581639247401,
+        "inflation": 0.0010624821216951297,
+        "oos_rate": 0.0
+      },
+      "held_out_full": {
+        "n_texts": 426,
+        "fertility_before": 0.24232586635493616,
+        "fertility_after": 0.24253712949726414,
+        "inflation": 0.0008718142454446909,
+        "oos_rate": 0.0
+      },
+      "originally_reported": "(own 138-item input-only LOO set)"
+    },
+    "minicpm5-2b-7583": {
+      "directory": "/Users/oleh/personal/latexgen-keepset-v5/bench/keepsets/minicpm5-2b-7583",
+      "tokenizer_label": "minicpm5-2b",
+      "K": 7583,
+      "actual_size": 7583,
+      "eval240": {
+        "n_texts": 240,
+        "fertility_before": 0.2259181299507007,
+        "fertility_after": 0.39520670617995163,
+        "inflation": 0.7493359486739406,
+        "oos_rate": 0.0
+      },
+      "held_out_full": {
+        "n_texts": 426,
+        "fertility_before": 0.24232586635493616,
+        "fertility_after": 0.401026738871714,
+        "inflation": 0.6549068611781117,
+        "oos_rate": 0.0
+      },
+      "originally_reported": "not reported at this K / not found in that generation's write-up"
+    },
+    "qwen35-16384": {
+      "directory": "/Users/oleh/personal/latexgen-keepset-v5/bench/keepsets/qwen35-16384",
+      "tokenizer_label": "qwen35",
+      "K": 16384,
+      "actual_size": 16384,
+      "eval240": {
+        "n_texts": 240,
+        "fertility_before": 0.24314518362599014,
+        "fertility_after": 0.2506508613526838,
+        "inflation": 0.030869119489691288,
+        "oos_rate": 0.0
+      },
+      "held_out_full": {
+        "n_texts": 426,
+        "fertility_before": 0.25993817032034533,
+        "fertility_after": 0.26694506454088995,
+        "inflation": 0.02695600346770699,
+        "oos_rate": 0.0
+      },
+      "originally_reported": "fertility_after 0.2575 vs before 0.2467 (n=138, input-only, leave-one-out)"
+    },
+    "qwen35-24576": {
+      "directory": "/Users/oleh/personal/latexgen-keepset-v5/bench/keepsets/qwen35-24576",
+      "tokenizer_label": "qwen35",
+      "K": 24576,
+      "actual_size": 24576,
+      "eval240": {
+        "n_texts": 240,
+        "fertility_before": 0.24314518362599014,
+        "fertility_after": 0.24684724607175168,
+        "inflation": 0.015225728063181121,
+        "oos_rate": 0.0
+      },
+      "held_out_full": {
+        "n_texts": 426,
+        "fertility_before": 0.25993817032034533,
+        "fertility_after": 0.2631141595600093,
+        "inflation": 0.012218248807975618,
+        "oos_rate": 0.0
+      },
+      "originally_reported": "(same 138-item input-only LOO set)"
+    },
+    "qwen35-32768": {
+      "directory": "/Users/oleh/personal/latexgen-keepset-v5/bench/keepsets/qwen35-32768",
+      "tokenizer_label": "qwen35",
+      "K": 32768,
+      "actual_size": 32768,
+      "eval240": {
+        "n_texts": 240,
+        "fertility_before": 0.24314518362599014,
+        "fertility_after": 0.24450229878690521,
+        "inflation": 0.005581501309944059,
+        "oos_rate": 0.0
+      },
+      "held_out_full": {
+        "n_texts": 426,
+        "fertility_before": 0.25993817032034533,
+        "fertility_after": 0.261226875488546,
+        "inflation": 0.00495773732119642,
+        "oos_rate": 0.0
+      },
+      "originally_reported": "(same 138-item input-only LOO set)"
+    },
+    "qwen35-49152": {
+      "directory": "/Users/oleh/personal/latexgen-keepset-v5/bench/keepsets/qwen35-49152",
+      "tokenizer_label": "qwen35",
+      "K": 49152,
+      "actual_size": 49152,
+      "eval240": {
+        "n_texts": 240,
+        "fertility_before": 0.24314518362599014,
+        "fertility_after": 0.2436621798777673,
+        "inflation": 0.002126286213312012,
+        "oos_rate": 0.0
+      },
+      "held_out_full": {
+        "n_texts": 426,
+        "fertility_before": 0.25993817032034533,
+        "fertility_after": 0.2605015386998866,
+        "inflation": 0.0021673168617253324,
+        "oos_rate": 0.0
+      },
+      "originally_reported": "(same 138-item input-only LOO set)"
+    },
+    "qwen35-6414": {
+      "directory": "/Users/oleh/personal/latexgen-keepset-v5/bench/keepsets/qwen35-6414",
+      "tokenizer_label": "qwen35",
+      "K": 6414,
+      "actual_size": 6414,
+      "eval240": {
+        "n_texts": 240,
+        "fertility_before": 0.24314518362599014,
+        "fertility_after": 0.40322014808249784,
+        "inflation": 0.6583513687967499,
+        "oos_rate": 0.0
+      },
+      "held_out_full": {
+        "n_texts": 426,
+        "fertility_before": 0.25993817032034533,
+        "fertility_after": 0.4103082329246565,
+        "inflation": 0.5784839618552233,
+        "oos_rate": 0.0
+      },
+      "originally_reported": "not reported at this K / not found in that generation's write-up"
+    },
+    "qwen35-65536": {
+      "directory": "/Users/oleh/personal/latexgen-keepset-v5/bench/keepsets/qwen35-65536",
+      "tokenizer_label": "qwen35",
+      "K": 65536,
+      "actual_size": 65536,
+      "eval240": {
+        "n_texts": 240,
+        "fertility_before": 0.24314518362599014,
+        "fertility_after": 0.24329289684078362,
+        "inflation": 0.0006075103466605114,
+        "oos_rate": 0.0
+      },
+      "held_out_full": {
+        "n_texts": 426,
+        "fertility_before": 0.25993817032034533,
+        "fertility_after": 0.26010718083420775,
+        "inflation": 0.0006501950585175997,
+        "oos_rate": 0.0
+      },
+      "originally_reported": "+0.52% (own 138-item LOO set, brief-quoted headline)"
+    }
+  },
+  "v2": {
+    "minicpm5-2b-32768": {
+      "directory": "/Users/oleh/personal/latexgen-keepset-v2/bench/keepsets-v2/minicpm5-2b-32768",
+      "tokenizer_label": "minicpm5-2b",
+      "K": 32768,
+      "actual_size": 32768,
+      "eval240": {
+        "n_texts": 240,
+        "fertility_before": 0.2259181299507007,
+        "fertility_after": 0.25867353533115456,
+        "inflation": 0.1449879449143885,
+        "oos_rate": 0.07825589473254056
+      },
+      "held_out_full": {
+        "n_texts": 426,
+        "fertility_before": 0.24232586635493616,
+        "fertility_after": 0.2820926318458061,
+        "inflation": 0.16410450146755395,
+        "oos_rate": 0.06997762343436692
+      },
+      "originally_reported": "+14.60% (OOS-subset only, n=237)"
+    },
+    "minicpm5-2b-65536": {
+      "directory": "/Users/oleh/personal/latexgen-keepset-v2/bench/keepsets-v2/minicpm5-2b-65536",
+      "tokenizer_label": "minicpm5-2b",
+      "K": 65536,
+      "actual_size": 65536,
+      "eval240": {
+        "n_texts": 240,
+        "fertility_before": 0.2259181299507007,
+        "fertility_after": 0.2428405251204786,
+        "inflation": 0.07490498957950242,
+        "oos_rate": 0.0187160312206285
+      },
+      "held_out_full": {
+        "n_texts": 426,
+        "fertility_before": 0.24232586635493616,
+        "fertility_after": 0.26771969606275925,
+        "inflation": 0.10479207230246157,
+        "oos_rate": 0.018802127226758884
+      },
+      "originally_reported": "+9.79% (OOS-subset only, n=172)"
+    },
+    "qwen35-32768": {
+      "directory": "/Users/oleh/personal/latexgen-keepset-v2/bench/keepsets-v2/qwen35-32768",
+      "tokenizer_label": "qwen35",
+      "K": 32768,
+      "actual_size": 32768,
+      "eval240": {
+        "n_texts": 240,
+        "fertility_before": 0.24314518362599014,
+        "fertility_after": 0.29060728595431967,
+        "inflation": 0.19520066826138138,
+        "oos_rate": 0.12131222234878687
+      },
+      "held_out_full": {
+        "n_texts": 426,
+        "fertility_before": 0.25993817032034533,
+        "fertility_after": 0.31240889276987105,
+        "inflation": 0.20185847420892933,
+        "oos_rate": 0.10454594711746858
+      },
+      "originally_reported": "+19.53% (OOS-subset only, n=240 out of 120 arxiv items, exact in-set matches excluded)"
+    },
+    "qwen35-65536": {
+      "directory": "/Users/oleh/personal/latexgen-keepset-v2/bench/keepsets-v2/qwen35-65536",
+      "tokenizer_label": "qwen35",
+      "K": 65536,
+      "actual_size": 65536,
+      "eval240": {
+        "n_texts": 240,
+        "fertility_before": 0.24314518362599014,
+        "fertility_after": 0.2637419450137558,
+        "inflation": 0.08470972396248633,
+        "oos_rate": 0.03200820138967992
+      },
+      "held_out_full": {
+        "n_texts": 426,
+        "fertility_before": 0.25993817032034533,
+        "fertility_after": 0.28878967345760304,
+        "inflation": 0.1109937147811011,
+        "oos_rate": 0.029665149544863458
+      },
+      "originally_reported": "+8.99% (OOS-subset only, n=216)"
+    }
+  },
+  "v3": {
+    "minicpm5-2b-24576": {
+      "directory": "/Users/oleh/personal/latexgen-keepset-v3/bench/keepsets-v3/minicpm5-2b-24576",
+      "tokenizer_label": "minicpm5-2b",
+      "K": 24576,
+      "actual_size": 24576,
+      "eval240": {
+        "n_texts": 240,
+        "fertility_before": 0.2259181299507007,
+        "fertility_after": 0.2259181299507007,
+        "inflation": 0.0,
+        "oos_rate": 0.0
+      },
+      "held_out_full": {
+        "n_texts": 426,
+        "fertility_before": 0.24232586635493616,
+        "fertility_after": 0.24232586635493616,
+        "inflation": 0.0,
+        "oos_rate": 0.0
+      },
+      "originally_reported": "+0.00% (same in-sample cause)"
+    },
+    "minicpm5-2b-32768": {
+      "directory": "/Users/oleh/personal/latexgen-keepset-v3/bench/keepsets-v3/minicpm5-2b-32768",
+      "tokenizer_label": "minicpm5-2b",
+      "K": 32768,
+      "actual_size": 32768,
+      "eval240": {
+        "n_texts": 240,
+        "fertility_before": 0.2259181299507007,
+        "fertility_after": 0.2259181299507007,
+        "inflation": 0.0,
+        "oos_rate": 0.0
+      },
+      "held_out_full": {
+        "n_texts": 426,
+        "fertility_before": 0.24232586635493616,
+        "fertility_after": 0.24232586635493616,
+        "inflation": 0.0,
+        "oos_rate": 0.0
+      },
+      "originally_reported": "+0.00% (same in-sample cause)"
+    },
+    "minicpm5-2b-49152": {
+      "directory": "/Users/oleh/personal/latexgen-keepset-v3/bench/keepsets-v3/minicpm5-2b-49152",
+      "tokenizer_label": "minicpm5-2b",
+      "K": 49152,
+      "actual_size": 49152,
+      "eval240": {
+        "n_texts": 240,
+        "fertility_before": 0.2259181299507007,
+        "fertility_after": 0.2259181299507007,
+        "inflation": 0.0,
+        "oos_rate": 0.0
+      },
+      "held_out_full": {
+        "n_texts": 426,
+        "fertility_before": 0.24232586635493616,
+        "fertility_after": 0.24232586635493616,
+        "inflation": 0.0,
+        "oos_rate": 0.0
+      },
+      "originally_reported": "+0.00% (same in-sample cause)"
+    },
+    "qwen35-24576": {
+      "directory": "/Users/oleh/personal/latexgen-keepset-v3/bench/keepsets-v3/qwen35-24576",
+      "tokenizer_label": "qwen35",
+      "K": 24576,
+      "actual_size": 24576,
+      "eval240": {
+        "n_texts": 240,
+        "fertility_before": 0.24314518362599014,
+        "fertility_after": 0.24314518362599014,
+        "inflation": 0.0,
+        "oos_rate": 0.0
+      },
+      "held_out_full": {
+        "n_texts": 426,
+        "fertility_before": 0.25993817032034533,
+        "fertility_after": 0.25993817032034533,
+        "inflation": 0.0,
+        "oos_rate": 0.0
+      },
+      "originally_reported": "+0.00% (v2's 120-item in-set methodology; A-fixed base includes arxiv-pastes.json+bench-data-extended.json as 2 of its 5 corpus files -- in-sample by construction)"
+    },
+    "qwen35-32768": {
+      "directory": "/Users/oleh/personal/latexgen-keepset-v3/bench/keepsets-v3/qwen35-32768",
+      "tokenizer_label": "qwen35",
+      "K": 32768,
+      "actual_size": 32768,
+      "eval240": {
+        "n_texts": 240,
+        "fertility_before": 0.24314518362599014,
+        "fertility_after": 0.24314518362599014,
+        "inflation": 0.0,
+        "oos_rate": 0.0
+      },
+      "held_out_full": {
+        "n_texts": 426,
+        "fertility_before": 0.25993817032034533,
+        "fertility_after": 0.25993817032034533,
+        "inflation": 0.0,
+        "oos_rate": 0.0
+      },
+      "originally_reported": "+0.00% (same in-sample cause)"
+    },
+    "qwen35-49152": {
+      "directory": "/Users/oleh/personal/latexgen-keepset-v3/bench/keepsets-v3/qwen35-49152",
+      "tokenizer_label": "qwen35",
+      "K": 49152,
+      "actual_size": 49152,
+      "eval240": {
+        "n_texts": 240,
+        "fertility_before": 0.24314518362599014,
+        "fertility_after": 0.24314518362599014,
+        "inflation": 0.0,
+        "oos_rate": 0.0
+      },
+      "held_out_full": {
+        "n_texts": 426,
+        "fertility_before": 0.25993817032034533,
+        "fertility_after": 0.25993817032034533,
+        "inflation": 0.0,
+        "oos_rate": 0.0
+      },
+      "originally_reported": "+0.00% (same in-sample cause)"
+    }
+  },
+  "v4": {
+    "minicpm5-2b-24576": {
+      "directory": "/Users/oleh/personal/latexgen-keepset-v4/bench/keepsets-v4/minicpm5-2b-24576",
+      "tokenizer_label": "minicpm5-2b",
+      "K": 24576,
+      "actual_size": 24576,
+      "eval240": {
+        "n_texts": 240,
+        "fertility_before": 0.2259181299507007,
+        "fertility_after": 0.2259181299507007,
+        "inflation": 0.0,
+        "oos_rate": 0.0
+      },
+      "held_out_full": {
+        "n_texts": 426,
+        "fertility_before": 0.24232586635493616,
+        "fertility_after": 0.24232586635493616,
+        "inflation": 0.0,
+        "oos_rate": 0.0
+      },
+      "originally_reported": "not reported at this K / not found in that generation's write-up"
+    },
+    "minicpm5-2b-32768": {
+      "directory": "/Users/oleh/personal/latexgen-keepset-v4/bench/keepsets-v4/minicpm5-2b-32768",
+      "tokenizer_label": "minicpm5-2b",
+      "K": 32768,
+      "actual_size": 32768,
+      "eval240": {
+        "n_texts": 240,
+        "fertility_before": 0.2259181299507007,
+        "fertility_after": 0.2259181299507007,
+        "inflation": 0.0,
+        "oos_rate": 0.0
+      },
+      "held_out_full": {
+        "n_texts": 426,
+        "fertility_before": 0.24232586635493616,
+        "fertility_after": 0.24232586635493616,
+        "inflation": 0.0,
+        "oos_rate": 0.0
+      },
+      "originally_reported": "not reported at this K / not found in that generation's write-up"
+    },
+    "minicpm5-2b-49152": {
+      "directory": "/Users/oleh/personal/latexgen-keepset-v4/bench/keepsets-v4/minicpm5-2b-49152",
+      "tokenizer_label": "minicpm5-2b",
+      "K": 49152,
+      "actual_size": 49152,
+      "eval240": {
+        "n_texts": 240,
+        "fertility_before": 0.2259181299507007,
+        "fertility_after": 0.2259181299507007,
+        "inflation": 0.0,
+        "oos_rate": 0.0
+      },
+      "held_out_full": {
+        "n_texts": 426,
+        "fertility_before": 0.24232586635493616,
+        "fertility_after": 0.24232586635493616,
+        "inflation": 0.0,
+        "oos_rate": 0.0
+      },
+      "originally_reported": "not reported at this K / not found in that generation's write-up"
+    },
+    "qwen35-24576": {
+      "directory": "/Users/oleh/personal/latexgen-keepset-v4/bench/keepsets-v4/qwen35-24576",
+      "tokenizer_label": "qwen35",
+      "K": 24576,
+      "actual_size": 24576,
+      "eval240": {
+        "n_texts": 240,
+        "fertility_before": 0.24314518362599014,
+        "fertility_after": 0.24314518362599014,
+        "inflation": 0.0,
+        "oos_rate": 0.0
+      },
+      "held_out_full": {
+        "n_texts": 426,
+        "fertility_before": 0.25993817032034533,
+        "fertility_after": 0.25993817032034533,
+        "inflation": 0.0,
+        "oos_rate": 0.0
+      },
+      "originally_reported": "not reported at this K / not found in that generation's write-up"
+    },
+    "qwen35-32768": {
+      "directory": "/Users/oleh/personal/latexgen-keepset-v4/bench/keepsets-v4/qwen35-32768",
+      "tokenizer_label": "qwen35",
+      "K": 32768,
+      "actual_size": 32768,
+      "eval240": {
+        "n_texts": 240,
+        "fertility_before": 0.24314518362599014,
+        "fertility_after": 0.24314518362599014,
+        "inflation": 0.0,
+        "oos_rate": 0.0
+      },
+      "held_out_full": {
+        "n_texts": 426,
+        "fertility_before": 0.25993817032034533,
+        "fertility_after": 0.25993817032034533,
+        "inflation": 0.0,
+        "oos_rate": 0.0
+      },
+      "originally_reported": "not reported at this K / not found in that generation's write-up"
+    },
+    "qwen35-49152": {
+      "directory": "/Users/oleh/personal/latexgen-keepset-v4/bench/keepsets-v4/qwen35-49152",
+      "tokenizer_label": "qwen35",
+      "K": 49152,
+      "actual_size": 49152,
+      "eval240": {
+        "n_texts": 240,
+        "fertility_before": 0.24314518362599014,
+        "fertility_after": 0.24314518362599014,
+        "inflation": 0.0,
+        "oos_rate": 0.0
+      },
+      "held_out_full": {
+        "n_texts": 426,
+        "fertility_before": 0.25993817032034533,
+        "fertility_after": 0.25993817032034533,
+        "inflation": 0.0,
+        "oos_rate": 0.0
+      },
+      "originally_reported": "not reported at this K / not found in that generation's write-up"
+    }
+  }
+}

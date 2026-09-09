@@ -1,0 +1,1272 @@
+{
+  "minicpm5-2b": {
+    "natural_base_size": 766,
+    "force_add_accounting": {
+      "group1_single_codepoint": {
+        "total": 242,
+        "by_class": {
+          "accented_latin_letter": 114,
+          "typographic": 2,
+          "greek_letter": 59,
+          "math_operator_relation": 61,
+          "superscript_subscript_digit": 6
+        }
+      },
+      "group2_latex_macro_completion": {
+        "total": 1250,
+        "n_macro_strings": 1241
+      },
+      "group3_latexgen_prompt_and_chat_template": {
+        "total": 249,
+        "n_renders": 8,
+        "n_named_ids": 0
+      },
+      "union_pre_closure": 1663,
+      "closure_extra_beyond_natural_and_pre_closure_union": 478
+    },
+    "force_add_closed_size": 2018,
+    "corpus_meta": {
+      "total_tokens": 615981036,
+      "total_docs": 1919116,
+      "n_distinct_ids_seen": 100886,
+      "vocab_size": 130560
+    },
+    "rows": [
+      {
+        "strategy": "M",
+        "target_K": 16384,
+        "actual_K": 16384,
+        "overflow": false,
+        "natural_size": 766,
+        "closure_iterations": 0,
+        "eval240": {
+          "oos_rate": 0.17355236810919047,
+          "oos_tokens": 4247,
+          "total_tokens": 24471,
+          "fertility_before": 0.2259181299507007,
+          "fertility_after": 0.2718384755996233,
+          "inflation": 0.20326100281966397
+        },
+        "held_out_full": {
+          "oos_rate": 0.16776612129842203,
+          "oos_tokens": 5773,
+          "total_tokens": 34411,
+          "fertility_before": 0.24232586635493616,
+          "fertility_after": 0.2891840313232819,
+          "inflation": 0.19336839963965002
+        }
+      },
+      {
+        "strategy": "M",
+        "target_K": 24576,
+        "actual_K": 24576,
+        "overflow": false,
+        "natural_size": 766,
+        "closure_iterations": 0,
+        "eval240": {
+          "oos_rate": 0.11789465081116424,
+          "oos_tokens": 2885,
+          "total_tokens": 24471,
+          "fertility_before": 0.2259181299507007,
+          "fertility_after": 0.256217803135213,
+          "inflation": 0.1341179355155082
+        },
+        "held_out_full": {
+          "oos_rate": 0.11176658626601958,
+          "oos_tokens": 3846,
+          "total_tokens": 34411,
+          "fertility_before": 0.24232586635493616,
+          "fertility_after": 0.2728745167355619,
+          "inflation": 0.12606433989131371
+        }
+      },
+      {
+        "strategy": "M",
+        "target_K": 32768,
+        "actual_K": 32768,
+        "overflow": false,
+        "natural_size": 766,
+        "closure_iterations": 0,
+        "eval240": {
+          "oos_rate": 0.0919864329205999,
+          "oos_tokens": 2251,
+          "total_tokens": 24471,
+          "fertility_before": 0.2259181299507007,
+          "fertility_after": 0.24873982163629313,
+          "inflation": 0.10101753095500787
+        },
+        "held_out_full": {
+          "oos_rate": 0.08598994507570254,
+          "oos_tokens": 2959,
+          "total_tokens": 34411,
+          "fertility_before": 0.24232586635493616,
+          "fertility_after": 0.2652620015070104,
+          "inflation": 0.09464996658045388
+        }
+      },
+      {
+        "strategy": "M",
+        "target_K": 49152,
+        "actual_K": 49152,
+        "overflow": false,
+        "natural_size": 766,
+        "closure_iterations": 0,
+        "eval240": {
+          "oos_rate": 0.048792448203996565,
+          "oos_tokens": 1194,
+          "total_tokens": 24471,
+          "fertility_before": 0.2259181299507007,
+          "fertility_after": 0.23750438523606418,
+          "inflation": 0.05128519472028126
+        },
+        "held_out_full": {
+          "oos_rate": 0.04893783964429979,
+          "oos_tokens": 1684,
+          "total_tokens": 34411,
+          "fertility_before": 0.24232586635493616,
+          "fertility_after": 0.25505799173256904,
+          "inflation": 0.052541338525471604
+        }
+      },
+      {
+        "strategy": "M",
+        "target_K": 65536,
+        "actual_K": 65536,
+        "overflow": false,
+        "natural_size": 766,
+        "closure_iterations": 0,
+        "eval240": {
+          "oos_rate": 0.03281435168158228,
+          "oos_tokens": 803,
+          "total_tokens": 24471,
+          "fertility_before": 0.2259181299507007,
+          "fertility_after": 0.23354382466441403,
+          "inflation": 0.033754239712312506
+        },
+        "held_out_full": {
+          "oos_rate": 0.03394263462264974,
+          "oos_tokens": 1168,
+          "total_tokens": 34411,
+          "fertility_before": 0.24232586635493616,
+          "fertility_after": 0.251086244656803,
+          "inflation": 0.036151230711109816
+        }
+      },
+      {
+        "strategy": "M+F",
+        "target_K": 16384,
+        "actual_K": 16384,
+        "overflow": false,
+        "natural_size": 2784,
+        "closure_iterations": 0,
+        "eval240": {
+          "oos_rate": 0.13967553430591312,
+          "oos_tokens": 3418,
+          "total_tokens": 24471,
+          "fertility_before": 0.2259181299507007,
+          "fertility_after": 0.2639358186081722,
+          "inflation": 0.16828082219770346
+        },
+        "held_out_full": {
+          "oos_rate": 0.12591903751707303,
+          "oos_tokens": 4333,
+          "total_tokens": 34411,
+          "fertility_before": 0.24232586635493616,
+          "fertility_after": 0.2784800321119976,
+          "inflation": 0.14919647787044843
+        }
+      },
+      {
+        "strategy": "M+F",
+        "target_K": 24576,
+        "actual_K": 24576,
+        "overflow": false,
+        "natural_size": 2784,
+        "closure_iterations": 0,
+        "eval240": {
+          "oos_rate": 0.09725797883208696,
+          "oos_tokens": 2380,
+          "total_tokens": 24471,
+          "fertility_before": 0.2259181299507007,
+          "fertility_after": 0.2514632840340479,
+          "inflation": 0.1130726165665481
+        },
+        "held_out_full": {
+          "oos_rate": 0.08613524744994333,
+          "oos_tokens": 2964,
+          "total_tokens": 34411,
+          "fertility_before": 0.24232586635493616,
+          "fertility_after": 0.26620564354274207,
+          "inflation": 0.09854407021010725
+        }
+      },
+      {
+        "strategy": "M+F",
+        "target_K": 32768,
+        "actual_K": 32768,
+        "overflow": false,
+        "natural_size": 2784,
+        "closure_iterations": 0,
+        "eval240": {
+          "oos_rate": 0.07322953700298312,
+          "oos_tokens": 1792,
+          "total_tokens": 24471,
+          "fertility_before": 0.2259181299507007,
+          "fertility_after": 0.24434535349618716,
+          "inflation": 0.08156593518859068
+        },
+        "held_out_full": {
+          "oos_rate": 0.06436895178867223,
+          "oos_tokens": 2215,
+          "total_tokens": 34411,
+          "fertility_before": 0.24232586635493616,
+          "fertility_after": 0.25962831771159767,
+          "inflation": 0.07140158670192687
+        }
+      },
+      {
+        "strategy": "M+F",
+        "target_K": 49152,
+        "actual_K": 49152,
+        "overflow": false,
+        "natural_size": 2784,
+        "closure_iterations": 0,
+        "eval240": {
+          "oos_rate": 0.042744473049732334,
+          "oos_tokens": 1046,
+          "total_tokens": 24471,
+          "fertility_before": 0.2259181299507007,
+          "fertility_after": 0.23608264554367694,
+          "inflation": 0.04499203138408725
+        },
+        "held_out_full": {
+          "oos_rate": 0.037371770654732496,
+          "oos_tokens": 1286,
+          "total_tokens": 34411,
+          "fertility_before": 0.24232586635493616,
+          "fertility_after": 0.25194538143560347,
+          "inflation": 0.039696608642585174
+        }
+      },
+      {
+        "strategy": "M+F",
+        "target_K": 65536,
+        "actual_K": 65536,
+        "overflow": false,
+        "natural_size": 2784,
+        "closure_iterations": 0,
+        "eval240": {
+          "oos_rate": 0.027787993952024845,
+          "oos_tokens": 680,
+          "total_tokens": 24471,
+          "fertility_before": 0.2259181299507007,
+          "fertility_after": 0.2323713510219908,
+          "inflation": 0.028564423194802124
+        },
+        "held_out_full": {
+          "oos_rate": 0.024468919822149895,
+          "oos_tokens": 842,
+          "total_tokens": 34411,
+          "fertility_before": 0.24232586635493616,
+          "fertility_after": 0.2485017922156574,
+          "inflation": 0.025486036441835447
+        }
+      },
+      {
+        "strategy": "C",
+        "target_K": 16384,
+        "actual_K": 16384,
+        "overflow": false,
+        "natural_size": 766,
+        "closure_iterations": 4,
+        "eval240": {
+          "oos_rate": 0.08642883413019492,
+          "oos_tokens": 2115,
+          "total_tokens": 24471,
+          "fertility_before": 0.2259181299507007,
+          "fertility_after": 0.2494876197861851,
+          "inflation": 0.10432757141105786
+        },
+        "held_out_full": {
+          "oos_rate": 0.07186655429949726,
+          "oos_tokens": 2473,
+          "total_tokens": 34411,
+          "fertility_before": 0.24232586635493616,
+          "fertility_after": 0.2631916227121962,
+          "inflation": 0.0861061869750952
+        }
+      },
+      {
+        "strategy": "C",
+        "target_K": 24576,
+        "actual_K": 24576,
+        "overflow": false,
+        "natural_size": 766,
+        "closure_iterations": 5,
+        "eval240": {
+          "oos_rate": 0.04139593804911937,
+          "oos_tokens": 1013,
+          "total_tokens": 24471,
+          "fertility_before": 0.2259181299507007,
+          "fertility_after": 0.23688583614911649,
+          "inflation": 0.048547260022066885
+        },
+        "held_out_full": {
+          "oos_rate": 0.03408793699689053,
+          "oos_tokens": 1173,
+          "total_tokens": 34411,
+          "fertility_before": 0.24232586635493616,
+          "fertility_after": 0.2520158024830461,
+          "inflation": 0.03998721339106681
+        }
+      },
+      {
+        "strategy": "C",
+        "target_K": 32768,
+        "actual_K": 32768,
+        "overflow": false,
+        "natural_size": 766,
+        "closure_iterations": 4,
+        "eval240": {
+          "oos_rate": 0.02415103592006865,
+          "oos_tokens": 591,
+          "total_tokens": 24471,
+          "fertility_before": 0.2259181299507007,
+          "fertility_after": 0.23245443970531213,
+          "inflation": 0.02893220546769637
+        },
+        "held_out_full": {
+          "oos_rate": 0.019150852924936793,
+          "oos_tokens": 659,
+          "total_tokens": 34411,
+          "fertility_before": 0.24232586635493616,
+          "fertility_after": 0.24779053963648656,
+          "inflation": 0.02255092848217144
+        }
+      },
+      {
+        "strategy": "C",
+        "target_K": 49152,
+        "actual_K": 49152,
+        "overflow": false,
+        "natural_size": 766,
+        "closure_iterations": 4,
+        "eval240": {
+          "oos_rate": 0.006538351518123493,
+          "oos_tokens": 160,
+          "total_tokens": 24471,
+          "fertility_before": 0.2259181299507007,
+          "fertility_after": 0.22769992060414704,
+          "inflation": 0.00788688651873648
+        },
+        "held_out_full": {
+          "oos_rate": 0.005434308796605737,
+          "oos_tokens": 187,
+          "total_tokens": 34411,
+          "fertility_before": 0.24232586635493616,
+          "fertility_after": 0.24387512939867467,
+          "inflation": 0.006393304466594918
+        }
+      },
+      {
+        "strategy": "C",
+        "target_K": 65536,
+        "actual_K": 65536,
+        "overflow": false,
+        "natural_size": 766,
+        "closure_iterations": 4,
+        "eval240": {
+          "oos_rate": 0.00245188181929631,
+          "oos_tokens": 60,
+          "total_tokens": 24471,
+          "fertility_before": 0.2259181299507007,
+          "fertility_after": 0.22662899979689433,
+          "inflation": 0.0031465816680968928
+        },
+        "held_out_full": {
+          "oos_rate": 0.0022376565633082444,
+          "oos_tokens": 77,
+          "total_tokens": 34411,
+          "fertility_before": 0.24232586635493616,
+          "fertility_after": 0.24298782420089715,
+          "inflation": 0.0027316846357268165
+        }
+      },
+      {
+        "strategy": "C+F",
+        "target_K": 16384,
+        "actual_K": 16384,
+        "overflow": false,
+        "natural_size": 2784,
+        "closure_iterations": 4,
+        "eval240": {
+          "oos_rate": 0.07453720730660782,
+          "oos_tokens": 1824,
+          "total_tokens": 24471,
+          "fertility_before": 0.2259181299507007,
+          "fertility_after": 0.24664414040141067,
+          "inflation": 0.09174124473867029
+        },
+        "held_out_full": {
+          "oos_rate": 0.06099793670628578,
+          "oos_tokens": 2099,
+          "total_tokens": 34411,
+          "fertility_before": 0.24232586635493616,
+          "fertility_after": 0.2602902755575586,
+          "inflation": 0.07413327133765368
+        }
+      },
+      {
+        "strategy": "C+F",
+        "target_K": 24576,
+        "actual_K": 24576,
+        "overflow": false,
+        "natural_size": 2784,
+        "closure_iterations": 5,
+        "eval240": {
+          "oos_rate": 0.041436802746107636,
+          "oos_tokens": 1014,
+          "total_tokens": 24471,
+          "fertility_before": 0.2259181299507007,
+          "fertility_after": 0.23688583614911649,
+          "inflation": 0.048547260022066885
+        },
+        "held_out_full": {
+          "oos_rate": 0.03307082037720496,
+          "oos_tokens": 1138,
+          "total_tokens": 34411,
+          "fertility_before": 0.24232586635493616,
+          "fertility_after": 0.2516777814553214,
+          "inflation": 0.03859231059835522
+        }
+      },
+      {
+        "strategy": "C+F",
+        "target_K": 32768,
+        "actual_K": 32768,
+        "overflow": false,
+        "natural_size": 2784,
+        "closure_iterations": 5,
+        "eval240": {
+          "oos_rate": 0.023824118344162478,
+          "oos_tokens": 583,
+          "total_tokens": 24471,
+          "fertility_before": 0.2259181299507007,
+          "fertility_after": 0.2323990472497646,
+          "inflation": 0.028687017285766947
+        },
+        "held_out_full": {
+          "oos_rate": 0.01865682485251809,
+          "oos_tokens": 642,
+          "total_tokens": 34411,
+          "fertility_before": 0.24232586635493616,
+          "fertility_after": 0.24768490806532256,
+          "inflation": 0.022115021359448983
+        }
+      },
+      {
+        "strategy": "C+F",
+        "target_K": 49152,
+        "actual_K": 49152,
+        "overflow": false,
+        "natural_size": 2784,
+        "closure_iterations": 4,
+        "eval240": {
+          "oos_rate": 0.006865269094029668,
+          "oos_tokens": 168,
+          "total_tokens": 24471,
+          "fertility_before": 0.2259181299507007,
+          "fertility_after": 0.2277737772115438,
+          "inflation": 0.008213804094642674
+        },
+        "held_out_full": {
+          "oos_rate": 0.0056667925953910086,
+          "oos_tokens": 195,
+          "total_tokens": 34411,
+          "fertility_before": 0.24232586635493616,
+          "fertility_after": 0.2439314662366288,
+          "inflation": 0.006625788265380184
+        }
+      },
+      {
+        "strategy": "C+F",
+        "target_K": 65536,
+        "actual_K": 65536,
+        "overflow": false,
+        "natural_size": 2784,
+        "closure_iterations": 4,
+        "eval240": {
+          "oos_rate": 0.00245188181929631,
+          "oos_tokens": 60,
+          "total_tokens": 24471,
+          "fertility_before": 0.2259181299507007,
+          "fertility_after": 0.22662899979689433,
+          "inflation": 0.0031465816680968928
+        },
+        "held_out_full": {
+          "oos_rate": 0.0022376565633082444,
+          "oos_tokens": 77,
+          "total_tokens": 34411,
+          "fertility_before": 0.24232586635493616,
+          "fertility_after": 0.24298782420089715,
+          "inflation": 0.0027316846357268165
+        }
+      },
+      {
+        "strategy": "S",
+        "target_K": 16384,
+        "actual_K": 16384,
+        "overflow": false,
+        "natural_size": 766,
+        "closure_iterations": 5,
+        "eval240": {
+          "oos_rate": 0.10400065383515181,
+          "oos_tokens": 2545,
+          "total_tokens": 24471,
+          "fertility_before": 0.2259181299507007,
+          "fertility_after": 0.25197104820990046,
+          "inflation": 0.11532017490090296
+        },
+        "held_out_full": {
+          "oos_rate": 0.09290633808956439,
+          "oos_tokens": 3197,
+          "total_tokens": 34411,
+          "fertility_before": 0.24232586635493616,
+          "fertility_after": 0.2670014013788441,
+          "inflation": 0.10182790386794904
+        }
+      },
+      {
+        "strategy": "S",
+        "target_K": 24576,
+        "actual_K": 24576,
+        "overflow": false,
+        "natural_size": 766,
+        "closure_iterations": 5,
+        "eval240": {
+          "oos_rate": 0.0564341465408034,
+          "oos_tokens": 1381,
+          "total_tokens": 24471,
+          "fertility_before": 0.2259181299507007,
+          "fertility_after": 0.2400432061153271,
+          "inflation": 0.062522986392056
+        },
+        "held_out_full": {
+          "oos_rate": 0.04818226729824766,
+          "oos_tokens": 1658,
+          "total_tokens": 34411,
+          "fertility_before": 0.24232586635493616,
+          "fertility_after": 0.25517066540847727,
+          "inflation": 0.05300630612304191
+        }
+      },
+      {
+        "strategy": "S",
+        "target_K": 32768,
+        "actual_K": 32768,
+        "overflow": false,
+        "natural_size": 766,
+        "closure_iterations": 5,
+        "eval240": {
+          "oos_rate": 0.038494544562952066,
+          "oos_tokens": 942,
+          "total_tokens": 24471,
+          "fertility_before": 0.2259181299507007,
+          "fertility_after": 0.23545486438080468,
+          "inflation": 0.042213231988884825
+        },
+        "held_out_full": {
+          "oos_rate": 0.03309988085205312,
+          "oos_tokens": 1139,
+          "total_tokens": 34411,
+          "fertility_before": 0.24232586635493616,
+          "fertility_after": 0.2510721604473145,
+          "inflation": 0.036093109761413444
+        }
+      },
+      {
+        "strategy": "S",
+        "target_K": 49152,
+        "actual_K": 49152,
+        "overflow": false,
+        "natural_size": 766,
+        "closure_iterations": 5,
+        "eval240": {
+          "oos_rate": 0.010011850762126599,
+          "oos_tokens": 245,
+          "total_tokens": 24471,
+          "fertility_before": 0.2259181299507007,
+          "fertility_after": 0.22866005650030466,
+          "inflation": 0.012136815005516777
+        },
+        "held_out_full": {
+          "oos_rate": 0.008107872482636367,
+          "oos_tokens": 279,
+          "total_tokens": 34411,
+          "fertility_before": 0.24232586635493616,
+          "fertility_after": 0.2446568030252882,
+          "inflation": 0.009619017174740563
+        }
+      },
+      {
+        "strategy": "S",
+        "target_K": 65536,
+        "actual_K": 65536,
+        "overflow": false,
+        "natural_size": 766,
+        "closure_iterations": 5,
+        "eval240": {
+          "oos_rate": 0.003146581668096931,
+          "oos_tokens": 77,
+          "total_tokens": 24471,
+          "fertility_before": 0.2259181299507007,
+          "fertility_after": 0.2267767130116878,
+          "inflation": 0.0038004168199092803
+        },
+        "held_out_full": {
+          "oos_rate": 0.0027898055854232657,
+          "oos_tokens": 96,
+          "total_tokens": 34411,
+          "fertility_before": 0.24232586635493616,
+          "fertility_after": 0.24311458208629394,
+          "inflation": 0.00325477318299372
+        }
+      }
+    ]
+  },
+  "qwen35": {
+    "natural_base_size": 282,
+    "force_add_accounting": {
+      "group1_single_codepoint": {
+        "total": 481,
+        "by_class": {
+          "accented_latin_letter": 316,
+          "math_operator_relation": 64,
+          "typographic": 2,
+          "greek_letter": 93,
+          "superscript_subscript_digit": 6
+        }
+      },
+      "group2_latex_macro_completion": {
+        "total": 950,
+        "n_macro_strings": 1241
+      },
+      "group3_latexgen_prompt_and_chat_template": {
+        "total": 241,
+        "n_renders": 8,
+        "n_named_ids": 7
+      },
+      "union_pre_closure": 1598,
+      "closure_extra_beyond_natural_and_pre_closure_union": 404
+    },
+    "force_add_closed_size": 1875,
+    "corpus_meta": {
+      "total_tokens": 673348838,
+      "total_docs": 1919116,
+      "n_distinct_ids_seen": 148106,
+      "vocab_size": 248070
+    },
+    "rows": [
+      {
+        "strategy": "M",
+        "target_K": 16384,
+        "actual_K": 16384,
+        "overflow": false,
+        "natural_size": 282,
+        "closure_iterations": 0,
+        "eval240": {
+          "oos_rate": 0.16979914189163534,
+          "oos_tokens": 4472,
+          "total_tokens": 26337,
+          "fertility_before": 0.24314518362599014,
+          "fertility_after": 0.29237061245591683,
+          "inflation": 0.20245282302464207
+        },
+        "held_out_full": {
+          "oos_rate": 0.16168183788469875,
+          "oos_tokens": 5968,
+          "total_tokens": 36912,
+          "fertility_before": 0.25993817032034533,
+          "fertility_after": 0.3091343140637874,
+          "inflation": 0.1892609449501519
+        }
+      },
+      {
+        "strategy": "M",
+        "target_K": 24576,
+        "actual_K": 24576,
+        "overflow": false,
+        "natural_size": 282,
+        "closure_iterations": 0,
+        "eval240": {
+          "oos_rate": 0.11440179215552265,
+          "oos_tokens": 3013,
+          "total_tokens": 26337,
+          "fertility_before": 0.24314518362599014,
+          "fertility_after": 0.27484813235104044,
+          "inflation": 0.13038690815202947
+        },
+        "held_out_full": {
+          "oos_rate": 0.11034351972258344,
+          "oos_tokens": 4073,
+          "total_tokens": 36912,
+          "fertility_before": 0.25993817032034533,
+          "fertility_after": 0.2918741153355915,
+          "inflation": 0.12285977459904629
+        }
+      },
+      {
+        "strategy": "M",
+        "target_K": 32768,
+        "actual_K": 32768,
+        "overflow": false,
+        "natural_size": 282,
+        "closure_iterations": 0,
+        "eval240": {
+          "oos_rate": 0.08581083646580856,
+          "oos_tokens": 2260,
+          "total_tokens": 26337,
+          "fertility_before": 0.24314518362599014,
+          "fertility_after": 0.2659668753115826,
+          "inflation": 0.09386034855906145
+        },
+        "held_out_full": {
+          "oos_rate": 0.08132856523623753,
+          "oos_tokens": 3002,
+          "total_tokens": 36912,
+          "fertility_before": 0.25993817032034533,
+          "fertility_after": 0.2827616317965113,
+          "inflation": 0.08780342436064159
+        }
+      },
+      {
+        "strategy": "M",
+        "target_K": 49152,
+        "actual_K": 49152,
+        "overflow": false,
+        "natural_size": 282,
+        "closure_iterations": 0,
+        "eval240": {
+          "oos_rate": 0.048448950146182175,
+          "oos_tokens": 1276,
+          "total_tokens": 26337,
+          "fertility_before": 0.24314518362599014,
+          "fertility_after": 0.2555992540482653,
+          "inflation": 0.051220716102821084
+        },
+        "held_out_full": {
+          "oos_rate": 0.043481794538361505,
+          "oos_tokens": 1605,
+          "total_tokens": 36912,
+          "fertility_before": 0.25993817032034533,
+          "fertility_after": 0.2718393273381548,
+          "inflation": 0.04578456870394443
+        }
+      },
+      {
+        "strategy": "M",
+        "target_K": 65536,
+        "actual_K": 65536,
+        "overflow": false,
+        "natural_size": 282,
+        "closure_iterations": 0,
+        "eval240": {
+          "oos_rate": 0.02608497550973915,
+          "oos_tokens": 687,
+          "total_tokens": 26337,
+          "fertility_before": 0.24314518362599014,
+          "fertility_after": 0.24959840469728023,
+          "inflation": 0.02654060826973459
+        },
+        "held_out_full": {
+          "oos_rate": 0.023732119635890767,
+          "oos_tokens": 876,
+          "total_tokens": 36912,
+          "fertility_before": 0.25993817032034533,
+          "fertility_after": 0.2662197277522306,
+          "inflation": 0.024165583008235902
+        }
+      },
+      {
+        "strategy": "M+F",
+        "target_K": 16384,
+        "actual_K": 16384,
+        "overflow": false,
+        "natural_size": 2157,
+        "closure_iterations": 0,
+        "eval240": {
+          "oos_rate": 0.14037285947526293,
+          "oos_tokens": 3697,
+          "total_tokens": 26337,
+          "fertility_before": 0.24314518362599014,
+          "fertility_after": 0.2839140309089902,
+          "inflation": 0.16767285567832335
+        },
+        "held_out_full": {
+          "oos_rate": 0.11974425661031643,
+          "oos_tokens": 4420,
+          "total_tokens": 36912,
+          "fertility_before": 0.25993817032034533,
+          "fertility_after": 0.29684584128504327,
+          "inflation": 0.14198634590377113
+        }
+      },
+      {
+        "strategy": "M+F",
+        "target_K": 24576,
+        "actual_K": 24576,
+        "overflow": false,
+        "natural_size": 2157,
+        "closure_iterations": 0,
+        "eval240": {
+          "oos_rate": 0.10130235030565364,
+          "oos_tokens": 2668,
+          "total_tokens": 26337,
+          "fertility_before": 0.24314518362599014,
+          "fertility_after": 0.2710352849941838,
+          "inflation": 0.11470554732885296
+        },
+        "held_out_full": {
+          "oos_rate": 0.08615084525357607,
+          "oos_tokens": 3180,
+          "total_tokens": 36912,
+          "fertility_before": 0.25993817032034533,
+          "fertility_after": 0.2850432737336535,
+          "inflation": 0.09658105765062852
+        }
+      },
+      {
+        "strategy": "M+F",
+        "target_K": 32768,
+        "actual_K": 32768,
+        "overflow": false,
+        "natural_size": 2157,
+        "closure_iterations": 0,
+        "eval240": {
+          "oos_rate": 0.07468580324258647,
+          "oos_tokens": 1967,
+          "total_tokens": 26337,
+          "fertility_before": 0.24314518362599014,
+          "fertility_after": 0.2628556657249949,
+          "inflation": 0.08106466188252259
+        },
+        "held_out_full": {
+          "oos_rate": 0.06239163415691374,
+          "oos_tokens": 2303,
+          "total_tokens": 36912,
+          "fertility_before": 0.25993817032034533,
+          "fertility_after": 0.2774941374478004,
+          "inflation": 0.06753901170351106
+        }
+      },
+      {
+        "strategy": "M+F",
+        "target_K": 49152,
+        "actual_K": 49152,
+        "overflow": false,
+        "natural_size": 2157,
+        "closure_iterations": 0,
+        "eval240": {
+          "oos_rate": 0.04408246952955917,
+          "oos_tokens": 1161,
+          "total_tokens": 26337,
+          "fertility_before": 0.24314518362599014,
+          "fertility_after": 0.25451910116508797,
+          "inflation": 0.046778296692865595
+        },
+        "held_out_full": {
+          "oos_rate": 0.036790203727785,
+          "oos_tokens": 1358,
+          "total_tokens": 36912,
+          "fertility_before": 0.25993817032034533,
+          "fertility_after": 0.2700858432568326,
+          "inflation": 0.03903879497182494
+        }
+      },
+      {
+        "strategy": "M+F",
+        "target_K": 65536,
+        "actual_K": 65536,
+        "overflow": false,
+        "natural_size": 2157,
+        "closure_iterations": 0,
+        "eval240": {
+          "oos_rate": 0.02308539317310248,
+          "oos_tokens": 608,
+          "total_tokens": 26337,
+          "fertility_before": 0.24314518362599014,
+          "fertility_after": 0.24885060654738825,
+          "inflation": 0.023465087139765473
+        },
+        "held_out_full": {
+          "oos_rate": 0.01950585175552666,
+          "oos_tokens": 720,
+          "total_tokens": 36912,
+          "fertility_before": 0.25993817032034533,
+          "fertility_after": 0.26510707520263654,
+          "inflation": 0.019885132206328482
+        }
+      },
+      {
+        "strategy": "C",
+        "target_K": 16384,
+        "actual_K": 16384,
+        "overflow": false,
+        "natural_size": 282,
+        "closure_iterations": 5,
+        "eval240": {
+          "oos_rate": 0.04590500056954095,
+          "oos_tokens": 1209,
+          "total_tokens": 26337,
+          "fertility_before": 0.24314518362599014,
+          "fertility_after": 0.2560793219963441,
+          "inflation": 0.05319512472946797
+        },
+        "held_out_full": {
+          "oos_rate": 0.04104356306892067,
+          "oos_tokens": 1515,
+          "total_tokens": 36912,
+          "fertility_before": 0.25993817032034533,
+          "fertility_after": 0.27218439047062387,
+          "inflation": 0.04711205028175125
+        }
+      },
+      {
+        "strategy": "C",
+        "target_K": 24576,
+        "actual_K": 24576,
+        "overflow": false,
+        "natural_size": 282,
+        "closure_iterations": 3,
+        "eval240": {
+          "oos_rate": 0.025743250939742567,
+          "oos_tokens": 678,
+          "total_tokens": 26337,
+          "fertility_before": 0.24314518362599014,
+          "fertility_after": 0.2502169537842279,
+          "inflation": 0.02908455784637587
+        },
+        "held_out_full": {
+          "oos_rate": 0.02110424794104898,
+          "oos_tokens": 779,
+          "total_tokens": 36912,
+          "fertility_before": 0.25993817032034533,
+          "fertility_after": 0.266071843552601,
+          "inflation": 0.023596662332032947
+        }
+      },
+      {
+        "strategy": "C",
+        "target_K": 32768,
+        "actual_K": 32768,
+        "overflow": false,
+        "natural_size": 282,
+        "closure_iterations": 3,
+        "eval240": {
+          "oos_rate": 0.01530166685651365,
+          "oos_tokens": 403,
+          "total_tokens": 26337,
+          "fertility_before": 0.24314518362599014,
+          "fertility_after": 0.2472165291087354,
+          "inflation": 0.01674450392983262
+        },
+        "held_out_full": {
+          "oos_rate": 0.012001517121803208,
+          "oos_tokens": 443,
+          "total_tokens": 36912,
+          "fertility_before": 0.25993817032034533,
+          "fertility_after": 0.2633254227023373,
+          "inflation": 0.013030992631122729
+        }
+      },
+      {
+        "strategy": "C",
+        "target_K": 49152,
+        "actual_K": 49153,
+        "overflow": false,
+        "natural_size": 282,
+        "closure_iterations": 6,
+        "eval240": {
+          "oos_rate": 0.0049360215666173065,
+          "oos_tokens": 130,
+          "total_tokens": 26337,
+          "fertility_before": 0.24314518362599014,
+          "fertility_after": 0.2444099780276593,
+          "inflation": 0.0052018073432813505
+        },
+        "held_out_full": {
+          "oos_rate": 0.004144993498049415,
+          "oos_tokens": 153,
+          "total_tokens": 36912,
+          "fertility_before": 0.25993817032034533,
+          "fertility_after": 0.2610649070794279,
+          "inflation": 0.004334633723450443
+        }
+      },
+      {
+        "strategy": "C",
+        "target_K": 65536,
+        "actual_K": 65536,
+        "overflow": false,
+        "natural_size": 282,
+        "closure_iterations": 3,
+        "eval240": {
+          "oos_rate": 0.001480806469985192,
+          "oos_tokens": 39,
+          "total_tokens": 26337,
+          "fertility_before": 0.24314518362599014,
+          "fertility_after": 0.24352369873889843,
+          "inflation": 0.001556745263317838
+        },
+        "held_out_full": {
+          "oos_rate": 0.001517121803207629,
+          "oos_tokens": 56,
+          "total_tokens": 36912,
+          "fertility_before": 0.25993817032034533,
+          "fertility_after": 0.26034661239551277,
+          "inflation": 0.001571304724750755
+        }
+      },
+      {
+        "strategy": "C+F",
+        "target_K": 16384,
+        "actual_K": 16384,
+        "overflow": false,
+        "natural_size": 2157,
+        "closure_iterations": 3,
+        "eval240": {
+          "oos_rate": 0.046740327296199265,
+          "oos_tokens": 1231,
+          "total_tokens": 26337,
+          "fertility_before": 0.24314518362599014,
+          "fertility_after": 0.2563470521981573,
+          "inflation": 0.05429623723279042
+        },
+        "held_out_full": {
+          "oos_rate": 0.03857824013870828,
+          "oos_tokens": 1424,
+          "total_tokens": 36912,
+          "fertility_before": 0.25993817032034533,
+          "fertility_after": 0.2714801799961973,
+          "inflation": 0.044402904204594806
+        }
+      },
+      {
+        "strategy": "C+F",
+        "target_K": 24576,
+        "actual_K": 24576,
+        "overflow": false,
+        "natural_size": 2157,
+        "closure_iterations": 4,
+        "eval240": {
+          "oos_rate": 0.025781220336408856,
+          "oos_tokens": 679,
+          "total_tokens": 26337,
+          "fertility_before": 0.24314518362599014,
+          "fertility_after": 0.2502631141638509,
+          "inflation": 0.029274404829707334
+        },
+        "held_out_full": {
+          "oos_rate": 0.02075205895101864,
+          "oos_tokens": 766,
+          "total_tokens": 36912,
+          "fertility_before": 0.25993817032034533,
+          "fertility_after": 0.26600846460990263,
+          "inflation": 0.023352839185089014
+        }
+      },
+      {
+        "strategy": "C+F",
+        "target_K": 32768,
+        "actual_K": 32768,
+        "overflow": false,
+        "natural_size": 2157,
+        "closure_iterations": 4,
+        "eval240": {
+          "oos_rate": 0.014997911683183355,
+          "oos_tokens": 395,
+          "total_tokens": 26337,
+          "fertility_before": 0.24314518362599014,
+          "fertility_after": 0.24714267250133864,
+          "inflation": 0.016440748756502144
+        },
+        "held_out_full": {
+          "oos_rate": 0.011703511053315995,
+          "oos_tokens": 432,
+          "total_tokens": 36912,
+          "fertility_before": 0.25993817032034533,
+          "fertility_after": 0.26324795955015035,
+          "inflation": 0.012732986562635551
+        }
+      },
+      {
+        "strategy": "C+F",
+        "target_K": 49152,
+        "actual_K": 49152,
+        "overflow": false,
+        "natural_size": 2157,
+        "closure_iterations": 3,
+        "eval240": {
+          "oos_rate": 0.005049929756616167,
+          "oos_tokens": 133,
+          "total_tokens": 26337,
+          "fertility_before": 0.24314518362599014,
+          "fertility_after": 0.24443767425543309,
+          "inflation": 0.005315715533280141
+        },
+        "held_out_full": {
+          "oos_rate": 0.0042262678803641094,
+          "oos_tokens": 156,
+          "total_tokens": 36912,
+          "fertility_before": 0.25993817032034533,
+          "fertility_after": 0.2610860333936607,
+          "inflation": 0.004415908105765087
+        }
+      },
+      {
+        "strategy": "C+F",
+        "target_K": 65536,
+        "actual_K": 65536,
+        "overflow": false,
+        "natural_size": 2157,
+        "closure_iterations": 4,
+        "eval240": {
+          "oos_rate": 0.001480806469985192,
+          "oos_tokens": 39,
+          "total_tokens": 26337,
+          "fertility_before": 0.24314518362599014,
+          "fertility_after": 0.24352369873889843,
+          "inflation": 0.001556745263317838
+        },
+        "held_out_full": {
+          "oos_rate": 0.001517121803207629,
+          "oos_tokens": 56,
+          "total_tokens": 36912,
+          "fertility_before": 0.25993817032034533,
+          "fertility_after": 0.26034661239551277,
+          "inflation": 0.001571304724750755
+        }
+      },
+      {
+        "strategy": "S",
+        "target_K": 16384,
+        "actual_K": 16385,
+        "overflow": false,
+        "natural_size": 282,
+        "closure_iterations": 6,
+        "eval240": {
+          "oos_rate": 0.053233094126134334,
+          "oos_tokens": 1402,
+          "total_tokens": 26337,
+          "fertility_before": 0.24314518362599014,
+          "fertility_after": 0.2575102937646559,
+          "inflation": 0.059080381212742505
+        },
+        "held_out_full": {
+          "oos_rate": 0.048602080624187256,
+          "oos_tokens": 1794,
+          "total_tokens": 36912,
+          "fertility_before": 0.25993817032034533,
+          "fertility_after": 0.2737054850953853,
+          "inflation": 0.0529638058084092
+        }
+      },
+      {
+        "strategy": "S",
+        "target_K": 24576,
+        "actual_K": 24577,
+        "overflow": false,
+        "natural_size": 282,
+        "closure_iterations": 6,
+        "eval240": {
+          "oos_rate": 0.028704863879712952,
+          "oos_tokens": 756,
+          "total_tokens": 26337,
+          "fertility_before": 0.24314518362599014,
+          "fertility_after": 0.25087243117487396,
+          "inflation": 0.031780385009682055
+        },
+        "held_out_full": {
+          "oos_rate": 0.02481577806675336,
+          "oos_tokens": 916,
+          "total_tokens": 36912,
+          "fertility_before": 0.25993817032034533,
+          "fertility_after": 0.26707182242628674,
+          "inflation": 0.02744364976159508
+        }
+      },
+      {
+        "strategy": "S",
+        "target_K": 32768,
+        "actual_K": 32768,
+        "overflow": false,
+        "natural_size": 282,
+        "closure_iterations": 4,
+        "eval240": {
+          "oos_rate": 0.017314044879826858,
+          "oos_tokens": 456,
+          "total_tokens": 26337,
+          "fertility_before": 0.24314518362599014,
+          "fertility_after": 0.24772429328458798,
+          "inflation": 0.018832820746478296
+        },
+        "held_out_full": {
+          "oos_rate": 0.014846120502817512,
+          "oos_tokens": 548,
+          "total_tokens": 36912,
+          "fertility_before": 0.25993817032034533,
+          "fertility_after": 0.2640789279099737,
+          "inflation": 0.015929778933680083
+        }
+      },
+      {
+        "strategy": "S",
+        "target_K": 49152,
+        "actual_K": 49152,
+        "overflow": false,
+        "natural_size": 282,
+        "closure_iterations": 4,
+        "eval240": {
+          "oos_rate": 0.007290124159927099,
+          "oos_tokens": 192,
+          "total_tokens": 26337,
+          "fertility_before": 0.24314518362599014,
+          "fertility_after": 0.24523163278494803,
+          "inflation": 0.008581083646580945
+        },
+        "held_out_full": {
+          "oos_rate": 0.005878846987429562,
+          "oos_tokens": 217,
+          "total_tokens": 36912,
+          "fertility_before": 0.25993817032034533,
+          "fertility_after": 0.2617057386111561,
+          "inflation": 0.006799956653662731
+        }
+      },
+      {
+        "strategy": "S",
+        "target_K": 65536,
+        "actual_K": 65536,
+        "overflow": false,
+        "natural_size": 282,
+        "closure_iterations": 4,
+        "eval240": {
+          "oos_rate": 0.0022022250066446444,
+          "oos_tokens": 58,
+          "total_tokens": 26337,
+          "fertility_before": 0.24314518362599014,
+          "fertility_after": 0.24369910818146567,
+          "inflation": 0.00227816379997714
+        },
+        "held_out_full": {
+          "oos_rate": 0.00208604247941049,
+          "oos_tokens": 77,
+          "total_tokens": 36912,
+          "fertility_before": 0.25993817032034533,
+          "fertility_after": 0.26049449659514234,
+          "inflation": 0.0021402254009537103
+        }
+      }
+    ]
+  }
+}

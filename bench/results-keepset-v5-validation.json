@@ -1,0 +1,1668 @@
+{
+  "qwen35": {
+    "32768": {
+      "check1_failures_gone": {
+        "maths_symbols": {
+          "'\u03c6'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              30733
+            ]
+          },
+          "'\u2190'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              29134
+            ]
+          },
+          "'\u2194'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              17765,
+              242
+            ]
+          },
+          "'\u2193'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              30075
+            ]
+          },
+          "'\u00d7'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              13548
+            ]
+          }
+        },
+        "rare_words": {
+          "Nikolskii": {
+            "roundtrip_ok": true,
+            "decoded": "Nikolskii"
+          },
+          "Randers": {
+            "roundtrip_ok": true,
+            "decoded": "Randers"
+          },
+          "Lissajous": {
+            "roundtrip_ok": true,
+            "decoded": "Lissajous"
+          },
+          "Kullback": {
+            "roundtrip_ok": true,
+            "decoded": "Kullback"
+          },
+          "Hausdorff": {
+            "roundtrip_ok": true,
+            "decoded": "Hausdorff"
+          },
+          "Chebyshev": {
+            "roundtrip_ok": true,
+            "decoded": "Chebyshev"
+          },
+          "Sobolev": {
+            "roundtrip_ok": true,
+            "decoded": "Sobolev"
+          }
+        },
+        "maths_symbols_all_ok": true,
+        "rare_words_all_ok": true,
+        "latexgen_prompt_texts": {
+          "all_ok": true,
+          "n_texts": 6,
+          "failures": []
+        },
+        "named_failure1_ids": {
+          "all_7_named_ids_in_keepset": true,
+          "detail": {
+            "80757": {
+              "token": "\u0120oscillator",
+              "in_keepset": true
+            },
+            "80636": {
+              "token": "\u0120damping",
+              "in_keepset": true
+            },
+            "77019": {
+              "token": "\u0120converge",
+              "in_keepset": true
+            },
+            "65088": {
+              "token": "\u0120flattened",
+              "in_keepset": true
+            },
+            "80313": {
+              "token": "\u0120reorder",
+              "in_keepset": true
+            },
+            "72452": {
+              "token": "\u00c2\u00a8",
+              "in_keepset": true
+            },
+            "94498": {
+              "token": "\u0120\u00cf\u00a8",
+              "in_keepset": true
+            }
+          }
+        }
+      },
+      "check2_short_piece_completeness": {
+        "n_reference_strings": 120,
+        "n_reference_pass": 120,
+        "n_random_words": 2000,
+        "n_random_words_pass": 2000,
+        "all_pass": true,
+        "failures": [],
+        "n_failures_total": 0
+      },
+      "check3_fertility": {
+        "n_texts": 240,
+        "total_chars": 108318,
+        "fertility_before_tokens_per_char": 0.24314518362599014,
+        "fertility_after_tokens_per_char": 0.24714267250133864,
+        "fertility_inflation_relative": 0.016440748756502366
+      },
+      "check4_prompt_coverage": {
+        "plain_prompt": {
+          "n_items": 120,
+          "n_full_in_keepset": 120,
+          "fraction": 1.0,
+          "missing_items": []
+        },
+        "pdf_prompt": {
+          "n_items": 120,
+          "n_full_in_keepset": 120,
+          "fraction": 1.0,
+          "missing_items": []
+        }
+      },
+      "check5_rare_word_subword_pieces": {
+        "Nikolskii": {
+          "pieces": [
+            {
+              "id": 45,
+              "token": "N",
+              "in_keepset": true
+            },
+            {
+              "id": 1524,
+              "token": "ik",
+              "in_keepset": true
+            },
+            {
+              "id": 2971,
+              "token": "ols",
+              "in_keepset": true
+            },
+            {
+              "id": 74,
+              "token": "k",
+              "in_keepset": true
+            },
+            {
+              "id": 3680,
+              "token": "ii",
+              "in_keepset": true
+            }
+          ],
+          "all_pieces_in_keepset": true
+        },
+        "Randers": {
+          "pieces": [
+            {
+              "id": 54239,
+              "token": "Rand",
+              "in_keepset": true
+            },
+            {
+              "id": 382,
+              "token": "ers",
+              "in_keepset": true
+            }
+          ],
+          "all_pieces_in_keepset": true
+        },
+        "Lissajous": {
+          "pieces": [
+            {
+              "id": 43,
+              "token": "L",
+              "in_keepset": true
+            },
+            {
+              "id": 1003,
+              "token": "iss",
+              "in_keepset": true
+            },
+            {
+              "id": 1573,
+              "token": "aj",
+              "in_keepset": true
+            },
+            {
+              "id": 757,
+              "token": "ous",
+              "in_keepset": true
+            }
+          ],
+          "all_pieces_in_keepset": true
+        },
+        "Kullback": {
+          "pieces": [
+            {
+              "id": 42,
+              "token": "K",
+              "in_keepset": true
+            },
+            {
+              "id": 602,
+              "token": "ull",
+              "in_keepset": true
+            },
+            {
+              "id": 1371,
+              "token": "back",
+              "in_keepset": true
+            }
+          ],
+          "all_pieces_in_keepset": true
+        },
+        "Hausdorff": {
+          "pieces": [
+            {
+              "id": 212165,
+              "token": "Haus",
+              "in_keepset": false
+            },
+            {
+              "id": 180548,
+              "token": "dor",
+              "in_keepset": true
+            },
+            {
+              "id": 529,
+              "token": "ff",
+              "in_keepset": true
+            }
+          ],
+          "all_pieces_in_keepset": false
+        },
+        "Chebyshev": {
+          "pieces": [
+            {
+              "id": 25984,
+              "token": "Che",
+              "in_keepset": true
+            },
+            {
+              "id": 65,
+              "token": "b",
+              "in_keepset": true
+            },
+            {
+              "id": 1012,
+              "token": "ys",
+              "in_keepset": true
+            },
+            {
+              "id": 78025,
+              "token": "hev",
+              "in_keepset": true
+            }
+          ],
+          "all_pieces_in_keepset": true
+        },
+        "Sobolev": {
+          "pieces": [
+            {
+              "id": 50,
+              "token": "S",
+              "in_keepset": true
+            },
+            {
+              "id": 656,
+              "token": "ob",
+              "in_keepset": true
+            },
+            {
+              "id": 1219,
+              "token": "ole",
+              "in_keepset": true
+            },
+            {
+              "id": 85,
+              "token": "v",
+              "in_keepset": true
+            }
+          ],
+          "all_pieces_in_keepset": true
+        }
+      },
+      "check6_accented_latin_and_greek_single_codepoint_roundtrip": {
+        "n_probes": 409,
+        "n_pass": 409,
+        "all_pass": true,
+        "failures": []
+      },
+      "candidate": true
+    },
+    "49152": {
+      "check1_failures_gone": {
+        "maths_symbols": {
+          "'\u03c6'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              44283
+            ]
+          },
+          "'\u2190'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              40892
+            ]
+          },
+          "'\u2194'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              20832,
+              242
+            ]
+          },
+          "'\u2193'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              42809
+            ]
+          },
+          "'\u00d7'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              15043
+            ]
+          }
+        },
+        "rare_words": {
+          "Nikolskii": {
+            "roundtrip_ok": true,
+            "decoded": "Nikolskii"
+          },
+          "Randers": {
+            "roundtrip_ok": true,
+            "decoded": "Randers"
+          },
+          "Lissajous": {
+            "roundtrip_ok": true,
+            "decoded": "Lissajous"
+          },
+          "Kullback": {
+            "roundtrip_ok": true,
+            "decoded": "Kullback"
+          },
+          "Hausdorff": {
+            "roundtrip_ok": true,
+            "decoded": "Hausdorff"
+          },
+          "Chebyshev": {
+            "roundtrip_ok": true,
+            "decoded": "Chebyshev"
+          },
+          "Sobolev": {
+            "roundtrip_ok": true,
+            "decoded": "Sobolev"
+          }
+        },
+        "maths_symbols_all_ok": true,
+        "rare_words_all_ok": true,
+        "latexgen_prompt_texts": {
+          "all_ok": true,
+          "n_texts": 6,
+          "failures": []
+        },
+        "named_failure1_ids": {
+          "all_7_named_ids_in_keepset": true,
+          "detail": {
+            "80757": {
+              "token": "\u0120oscillator",
+              "in_keepset": true
+            },
+            "80636": {
+              "token": "\u0120damping",
+              "in_keepset": true
+            },
+            "77019": {
+              "token": "\u0120converge",
+              "in_keepset": true
+            },
+            "65088": {
+              "token": "\u0120flattened",
+              "in_keepset": true
+            },
+            "80313": {
+              "token": "\u0120reorder",
+              "in_keepset": true
+            },
+            "72452": {
+              "token": "\u00c2\u00a8",
+              "in_keepset": true
+            },
+            "94498": {
+              "token": "\u0120\u00cf\u00a8",
+              "in_keepset": true
+            }
+          }
+        }
+      },
+      "check2_short_piece_completeness": {
+        "n_reference_strings": 120,
+        "n_reference_pass": 120,
+        "n_random_words": 2000,
+        "n_random_words_pass": 2000,
+        "all_pass": true,
+        "failures": [],
+        "n_failures_total": 0
+      },
+      "check3_fertility": {
+        "n_texts": 240,
+        "total_chars": 108318,
+        "fertility_before_tokens_per_char": 0.24314518362599014,
+        "fertility_after_tokens_per_char": 0.24443767425543309,
+        "fertility_inflation_relative": 0.005315715533280141
+      },
+      "check4_prompt_coverage": {
+        "plain_prompt": {
+          "n_items": 120,
+          "n_full_in_keepset": 120,
+          "fraction": 1.0,
+          "missing_items": []
+        },
+        "pdf_prompt": {
+          "n_items": 120,
+          "n_full_in_keepset": 120,
+          "fraction": 1.0,
+          "missing_items": []
+        }
+      },
+      "check5_rare_word_subword_pieces": {
+        "Nikolskii": {
+          "pieces": [
+            {
+              "id": 45,
+              "token": "N",
+              "in_keepset": true
+            },
+            {
+              "id": 1524,
+              "token": "ik",
+              "in_keepset": true
+            },
+            {
+              "id": 2971,
+              "token": "ols",
+              "in_keepset": true
+            },
+            {
+              "id": 74,
+              "token": "k",
+              "in_keepset": true
+            },
+            {
+              "id": 3680,
+              "token": "ii",
+              "in_keepset": true
+            }
+          ],
+          "all_pieces_in_keepset": true
+        },
+        "Randers": {
+          "pieces": [
+            {
+              "id": 54239,
+              "token": "Rand",
+              "in_keepset": true
+            },
+            {
+              "id": 382,
+              "token": "ers",
+              "in_keepset": true
+            }
+          ],
+          "all_pieces_in_keepset": true
+        },
+        "Lissajous": {
+          "pieces": [
+            {
+              "id": 43,
+              "token": "L",
+              "in_keepset": true
+            },
+            {
+              "id": 1003,
+              "token": "iss",
+              "in_keepset": true
+            },
+            {
+              "id": 1573,
+              "token": "aj",
+              "in_keepset": true
+            },
+            {
+              "id": 757,
+              "token": "ous",
+              "in_keepset": true
+            }
+          ],
+          "all_pieces_in_keepset": true
+        },
+        "Kullback": {
+          "pieces": [
+            {
+              "id": 42,
+              "token": "K",
+              "in_keepset": true
+            },
+            {
+              "id": 602,
+              "token": "ull",
+              "in_keepset": true
+            },
+            {
+              "id": 1371,
+              "token": "back",
+              "in_keepset": true
+            }
+          ],
+          "all_pieces_in_keepset": true
+        },
+        "Hausdorff": {
+          "pieces": [
+            {
+              "id": 212165,
+              "token": "Haus",
+              "in_keepset": true
+            },
+            {
+              "id": 180548,
+              "token": "dor",
+              "in_keepset": true
+            },
+            {
+              "id": 529,
+              "token": "ff",
+              "in_keepset": true
+            }
+          ],
+          "all_pieces_in_keepset": true
+        },
+        "Chebyshev": {
+          "pieces": [
+            {
+              "id": 25984,
+              "token": "Che",
+              "in_keepset": true
+            },
+            {
+              "id": 65,
+              "token": "b",
+              "in_keepset": true
+            },
+            {
+              "id": 1012,
+              "token": "ys",
+              "in_keepset": true
+            },
+            {
+              "id": 78025,
+              "token": "hev",
+              "in_keepset": true
+            }
+          ],
+          "all_pieces_in_keepset": true
+        },
+        "Sobolev": {
+          "pieces": [
+            {
+              "id": 50,
+              "token": "S",
+              "in_keepset": true
+            },
+            {
+              "id": 656,
+              "token": "ob",
+              "in_keepset": true
+            },
+            {
+              "id": 1219,
+              "token": "ole",
+              "in_keepset": true
+            },
+            {
+              "id": 85,
+              "token": "v",
+              "in_keepset": true
+            }
+          ],
+          "all_pieces_in_keepset": true
+        }
+      },
+      "check6_accented_latin_and_greek_single_codepoint_roundtrip": {
+        "n_probes": 409,
+        "n_pass": 409,
+        "all_pass": true,
+        "failures": []
+      },
+      "candidate": true
+    },
+    "65536": {
+      "check1_failures_gone": {
+        "maths_symbols": {
+          "'\u03c6'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              55250
+            ]
+          },
+          "'\u2190'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              49647
+            ]
+          },
+          "'\u2194'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              22236,
+              242
+            ]
+          },
+          "'\u2193'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              52814
+            ]
+          },
+          "'\u00d7'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              15673
+            ]
+          }
+        },
+        "rare_words": {
+          "Nikolskii": {
+            "roundtrip_ok": true,
+            "decoded": "Nikolskii"
+          },
+          "Randers": {
+            "roundtrip_ok": true,
+            "decoded": "Randers"
+          },
+          "Lissajous": {
+            "roundtrip_ok": true,
+            "decoded": "Lissajous"
+          },
+          "Kullback": {
+            "roundtrip_ok": true,
+            "decoded": "Kullback"
+          },
+          "Hausdorff": {
+            "roundtrip_ok": true,
+            "decoded": "Hausdorff"
+          },
+          "Chebyshev": {
+            "roundtrip_ok": true,
+            "decoded": "Chebyshev"
+          },
+          "Sobolev": {
+            "roundtrip_ok": true,
+            "decoded": "Sobolev"
+          }
+        },
+        "maths_symbols_all_ok": true,
+        "rare_words_all_ok": true,
+        "latexgen_prompt_texts": {
+          "all_ok": true,
+          "n_texts": 6,
+          "failures": []
+        },
+        "named_failure1_ids": {
+          "all_7_named_ids_in_keepset": true,
+          "detail": {
+            "80757": {
+              "token": "\u0120oscillator",
+              "in_keepset": true
+            },
+            "80636": {
+              "token": "\u0120damping",
+              "in_keepset": true
+            },
+            "77019": {
+              "token": "\u0120converge",
+              "in_keepset": true
+            },
+            "65088": {
+              "token": "\u0120flattened",
+              "in_keepset": true
+            },
+            "80313": {
+              "token": "\u0120reorder",
+              "in_keepset": true
+            },
+            "72452": {
+              "token": "\u00c2\u00a8",
+              "in_keepset": true
+            },
+            "94498": {
+              "token": "\u0120\u00cf\u00a8",
+              "in_keepset": true
+            }
+          }
+        }
+      },
+      "check2_short_piece_completeness": {
+        "n_reference_strings": 120,
+        "n_reference_pass": 120,
+        "n_random_words": 2000,
+        "n_random_words_pass": 2000,
+        "all_pass": true,
+        "failures": [],
+        "n_failures_total": 0
+      },
+      "check3_fertility": {
+        "n_texts": 240,
+        "total_chars": 108318,
+        "fertility_before_tokens_per_char": 0.24314518362599014,
+        "fertility_after_tokens_per_char": 0.24352369873889843,
+        "fertility_inflation_relative": 0.001556745263317838
+      },
+      "check4_prompt_coverage": {
+        "plain_prompt": {
+          "n_items": 120,
+          "n_full_in_keepset": 120,
+          "fraction": 1.0,
+          "missing_items": []
+        },
+        "pdf_prompt": {
+          "n_items": 120,
+          "n_full_in_keepset": 120,
+          "fraction": 1.0,
+          "missing_items": []
+        }
+      },
+      "check5_rare_word_subword_pieces": {
+        "Nikolskii": {
+          "pieces": [
+            {
+              "id": 45,
+              "token": "N",
+              "in_keepset": true
+            },
+            {
+              "id": 1524,
+              "token": "ik",
+              "in_keepset": true
+            },
+            {
+              "id": 2971,
+              "token": "ols",
+              "in_keepset": true
+            },
+            {
+              "id": 74,
+              "token": "k",
+              "in_keepset": true
+            },
+            {
+              "id": 3680,
+              "token": "ii",
+              "in_keepset": true
+            }
+          ],
+          "all_pieces_in_keepset": true
+        },
+        "Randers": {
+          "pieces": [
+            {
+              "id": 54239,
+              "token": "Rand",
+              "in_keepset": true
+            },
+            {
+              "id": 382,
+              "token": "ers",
+              "in_keepset": true
+            }
+          ],
+          "all_pieces_in_keepset": true
+        },
+        "Lissajous": {
+          "pieces": [
+            {
+              "id": 43,
+              "token": "L",
+              "in_keepset": true
+            },
+            {
+              "id": 1003,
+              "token": "iss",
+              "in_keepset": true
+            },
+            {
+              "id": 1573,
+              "token": "aj",
+              "in_keepset": true
+            },
+            {
+              "id": 757,
+              "token": "ous",
+              "in_keepset": true
+            }
+          ],
+          "all_pieces_in_keepset": true
+        },
+        "Kullback": {
+          "pieces": [
+            {
+              "id": 42,
+              "token": "K",
+              "in_keepset": true
+            },
+            {
+              "id": 602,
+              "token": "ull",
+              "in_keepset": true
+            },
+            {
+              "id": 1371,
+              "token": "back",
+              "in_keepset": true
+            }
+          ],
+          "all_pieces_in_keepset": true
+        },
+        "Hausdorff": {
+          "pieces": [
+            {
+              "id": 212165,
+              "token": "Haus",
+              "in_keepset": true
+            },
+            {
+              "id": 180548,
+              "token": "dor",
+              "in_keepset": true
+            },
+            {
+              "id": 529,
+              "token": "ff",
+              "in_keepset": true
+            }
+          ],
+          "all_pieces_in_keepset": true
+        },
+        "Chebyshev": {
+          "pieces": [
+            {
+              "id": 25984,
+              "token": "Che",
+              "in_keepset": true
+            },
+            {
+              "id": 65,
+              "token": "b",
+              "in_keepset": true
+            },
+            {
+              "id": 1012,
+              "token": "ys",
+              "in_keepset": true
+            },
+            {
+              "id": 78025,
+              "token": "hev",
+              "in_keepset": true
+            }
+          ],
+          "all_pieces_in_keepset": true
+        },
+        "Sobolev": {
+          "pieces": [
+            {
+              "id": 50,
+              "token": "S",
+              "in_keepset": true
+            },
+            {
+              "id": 656,
+              "token": "ob",
+              "in_keepset": true
+            },
+            {
+              "id": 1219,
+              "token": "ole",
+              "in_keepset": true
+            },
+            {
+              "id": 85,
+              "token": "v",
+              "in_keepset": true
+            }
+          ],
+          "all_pieces_in_keepset": true
+        }
+      },
+      "check6_accented_latin_and_greek_single_codepoint_roundtrip": {
+        "n_probes": 409,
+        "n_pass": 409,
+        "all_pass": true,
+        "failures": []
+      },
+      "candidate": true
+    }
+  },
+  "minicpm5-2b": {
+    "32768": {
+      "check1_failures_gone": {
+        "maths_symbols": {
+          "'\u03c6'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              20486
+            ]
+          },
+          "'\u2190'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              28282
+            ]
+          },
+          "'\u2194'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              15833,
+              264
+            ]
+          },
+          "'\u2193'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              21359
+            ]
+          },
+          "'\u00d7'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              8698
+            ]
+          }
+        },
+        "rare_words": {
+          "Nikolskii": {
+            "roundtrip_ok": true,
+            "decoded": "Nikolskii"
+          },
+          "Randers": {
+            "roundtrip_ok": true,
+            "decoded": "Randers"
+          },
+          "Lissajous": {
+            "roundtrip_ok": true,
+            "decoded": "Lissajous"
+          },
+          "Kullback": {
+            "roundtrip_ok": true,
+            "decoded": "Kullback"
+          },
+          "Hausdorff": {
+            "roundtrip_ok": true,
+            "decoded": "Hausdorff"
+          },
+          "Chebyshev": {
+            "roundtrip_ok": true,
+            "decoded": "Chebyshev"
+          },
+          "Sobolev": {
+            "roundtrip_ok": true,
+            "decoded": "Sobolev"
+          }
+        },
+        "maths_symbols_all_ok": true,
+        "rare_words_all_ok": true,
+        "latexgen_prompt_texts": {
+          "all_ok": true,
+          "n_texts": 6,
+          "failures": []
+        }
+      },
+      "check2_short_piece_completeness": {
+        "n_reference_strings": 120,
+        "n_reference_pass": 120,
+        "n_random_words": 2000,
+        "n_random_words_pass": 2000,
+        "all_pass": true,
+        "failures": [],
+        "n_failures_total": 0
+      },
+      "check3_fertility": {
+        "n_texts": 240,
+        "total_chars": 108318,
+        "fertility_before_tokens_per_char": 0.2259181299507007,
+        "fertility_after_tokens_per_char": 0.2323990472497646,
+        "fertility_inflation_relative": 0.028687017285766725
+      },
+      "check4_prompt_coverage": {
+        "plain_prompt": {
+          "n_items": 120,
+          "n_full_in_keepset": 120,
+          "fraction": 1.0,
+          "missing_items": []
+        },
+        "pdf_prompt": {
+          "n_items": 120,
+          "n_full_in_keepset": 120,
+          "fraction": 1.0,
+          "missing_items": []
+        }
+      },
+      "check5_rare_word_subword_pieces": {
+        "Nikolskii": {
+          "pieces": [
+            {
+              "id": 50874,
+              "token": "Nik",
+              "in_keepset": false
+            },
+            {
+              "id": 4118,
+              "token": "ols",
+              "in_keepset": true
+            },
+            {
+              "id": 52434,
+              "token": "kii",
+              "in_keepset": true
+            }
+          ],
+          "all_pieces_in_keepset": false
+        },
+        "Randers": {
+          "pieces": [
+            {
+              "id": 71,
+              "token": "R",
+              "in_keepset": true
+            },
+            {
+              "id": 69644,
+              "token": "anders",
+              "in_keepset": false
+            }
+          ],
+          "all_pieces_in_keepset": false
+        },
+        "Lissajous": {
+          "pieces": [
+            {
+              "id": 65,
+              "token": "L",
+              "in_keepset": true
+            },
+            {
+              "id": 1018,
+              "token": "iss",
+              "in_keepset": true
+            },
+            {
+              "id": 1919,
+              "token": "aj",
+              "in_keepset": true
+            },
+            {
+              "id": 586,
+              "token": "ous",
+              "in_keepset": true
+            }
+          ],
+          "all_pieces_in_keepset": true
+        },
+        "Kullback": {
+          "pieces": [
+            {
+              "id": 64,
+              "token": "K",
+              "in_keepset": true
+            },
+            {
+              "id": 1149,
+              "token": "ull",
+              "in_keepset": true
+            },
+            {
+              "id": 3558,
+              "token": "back",
+              "in_keepset": true
+            }
+          ],
+          "all_pieces_in_keepset": true
+        },
+        "Hausdorff": {
+          "pieces": [
+            {
+              "id": 61,
+              "token": "H",
+              "in_keepset": true
+            },
+            {
+              "id": 838,
+              "token": "aus",
+              "in_keepset": true
+            },
+            {
+              "id": 55950,
+              "token": "dorff",
+              "in_keepset": true
+            }
+          ],
+          "all_pieces_in_keepset": true
+        },
+        "Chebyshev": {
+          "pieces": [
+            {
+              "id": 15622,
+              "token": "Che",
+              "in_keepset": true
+            },
+            {
+              "id": 89591,
+              "token": "byshev",
+              "in_keepset": true
+            }
+          ],
+          "all_pieces_in_keepset": true
+        },
+        "Sobolev": {
+          "pieces": [
+            {
+              "id": 72,
+              "token": "S",
+              "in_keepset": true
+            },
+            {
+              "id": 913,
+              "token": "ob",
+              "in_keepset": true
+            },
+            {
+              "id": 53749,
+              "token": "olev",
+              "in_keepset": true
+            }
+          ],
+          "all_pieces_in_keepset": true
+        }
+      },
+      "check6_accented_latin_and_greek_single_codepoint_roundtrip": {
+        "n_probes": 173,
+        "n_pass": 173,
+        "all_pass": true,
+        "failures": []
+      },
+      "candidate": true
+    },
+    "49152": {
+      "check1_failures_gone": {
+        "maths_symbols": {
+          "'\u03c6'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              24616
+            ]
+          },
+          "'\u2190'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              39140
+            ]
+          },
+          "'\u2194'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              17618,
+              264
+            ]
+          },
+          "'\u2193'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              26022
+            ]
+          },
+          "'\u00d7'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              9077
+            ]
+          }
+        },
+        "rare_words": {
+          "Nikolskii": {
+            "roundtrip_ok": true,
+            "decoded": "Nikolskii"
+          },
+          "Randers": {
+            "roundtrip_ok": true,
+            "decoded": "Randers"
+          },
+          "Lissajous": {
+            "roundtrip_ok": true,
+            "decoded": "Lissajous"
+          },
+          "Kullback": {
+            "roundtrip_ok": true,
+            "decoded": "Kullback"
+          },
+          "Hausdorff": {
+            "roundtrip_ok": true,
+            "decoded": "Hausdorff"
+          },
+          "Chebyshev": {
+            "roundtrip_ok": true,
+            "decoded": "Chebyshev"
+          },
+          "Sobolev": {
+            "roundtrip_ok": true,
+            "decoded": "Sobolev"
+          }
+        },
+        "maths_symbols_all_ok": true,
+        "rare_words_all_ok": true,
+        "latexgen_prompt_texts": {
+          "all_ok": true,
+          "n_texts": 6,
+          "failures": []
+        }
+      },
+      "check2_short_piece_completeness": {
+        "n_reference_strings": 120,
+        "n_reference_pass": 120,
+        "n_random_words": 2000,
+        "n_random_words_pass": 2000,
+        "all_pass": true,
+        "failures": [],
+        "n_failures_total": 0
+      },
+      "check3_fertility": {
+        "n_texts": 240,
+        "total_chars": 108318,
+        "fertility_before_tokens_per_char": 0.2259181299507007,
+        "fertility_after_tokens_per_char": 0.2277737772115438,
+        "fertility_inflation_relative": 0.008213804094642674
+      },
+      "check4_prompt_coverage": {
+        "plain_prompt": {
+          "n_items": 120,
+          "n_full_in_keepset": 120,
+          "fraction": 1.0,
+          "missing_items": []
+        },
+        "pdf_prompt": {
+          "n_items": 120,
+          "n_full_in_keepset": 120,
+          "fraction": 1.0,
+          "missing_items": []
+        }
+      },
+      "check5_rare_word_subword_pieces": {
+        "Nikolskii": {
+          "pieces": [
+            {
+              "id": 50874,
+              "token": "Nik",
+              "in_keepset": true
+            },
+            {
+              "id": 4118,
+              "token": "ols",
+              "in_keepset": true
+            },
+            {
+              "id": 52434,
+              "token": "kii",
+              "in_keepset": true
+            }
+          ],
+          "all_pieces_in_keepset": true
+        },
+        "Randers": {
+          "pieces": [
+            {
+              "id": 71,
+              "token": "R",
+              "in_keepset": true
+            },
+            {
+              "id": 69644,
+              "token": "anders",
+              "in_keepset": true
+            }
+          ],
+          "all_pieces_in_keepset": true
+        },
+        "Lissajous": {
+          "pieces": [
+            {
+              "id": 65,
+              "token": "L",
+              "in_keepset": true
+            },
+            {
+              "id": 1018,
+              "token": "iss",
+              "in_keepset": true
+            },
+            {
+              "id": 1919,
+              "token": "aj",
+              "in_keepset": true
+            },
+            {
+              "id": 586,
+              "token": "ous",
+              "in_keepset": true
+            }
+          ],
+          "all_pieces_in_keepset": true
+        },
+        "Kullback": {
+          "pieces": [
+            {
+              "id": 64,
+              "token": "K",
+              "in_keepset": true
+            },
+            {
+              "id": 1149,
+              "token": "ull",
+              "in_keepset": true
+            },
+            {
+              "id": 3558,
+              "token": "back",
+              "in_keepset": true
+            }
+          ],
+          "all_pieces_in_keepset": true
+        },
+        "Hausdorff": {
+          "pieces": [
+            {
+              "id": 61,
+              "token": "H",
+              "in_keepset": true
+            },
+            {
+              "id": 838,
+              "token": "aus",
+              "in_keepset": true
+            },
+            {
+              "id": 55950,
+              "token": "dorff",
+              "in_keepset": true
+            }
+          ],
+          "all_pieces_in_keepset": true
+        },
+        "Chebyshev": {
+          "pieces": [
+            {
+              "id": 15622,
+              "token": "Che",
+              "in_keepset": true
+            },
+            {
+              "id": 89591,
+              "token": "byshev",
+              "in_keepset": true
+            }
+          ],
+          "all_pieces_in_keepset": true
+        },
+        "Sobolev": {
+          "pieces": [
+            {
+              "id": 72,
+              "token": "S",
+              "in_keepset": true
+            },
+            {
+              "id": 913,
+              "token": "ob",
+              "in_keepset": true
+            },
+            {
+              "id": 53749,
+              "token": "olev",
+              "in_keepset": true
+            }
+          ],
+          "all_pieces_in_keepset": true
+        }
+      },
+      "check6_accented_latin_and_greek_single_codepoint_roundtrip": {
+        "n_probes": 173,
+        "n_pass": 173,
+        "all_pass": true,
+        "failures": []
+      },
+      "candidate": true
+    },
+    "65536": {
+      "check1_failures_gone": {
+        "maths_symbols": {
+          "'\u03c6'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              26765
+            ]
+          },
+          "'\u2190'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              47881
+            ]
+          },
+          "'\u2194'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              18502,
+              264
+            ]
+          },
+          "'\u2193'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              28553
+            ]
+          },
+          "'\u00d7'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              9388
+            ]
+          }
+        },
+        "rare_words": {
+          "Nikolskii": {
+            "roundtrip_ok": true,
+            "decoded": "Nikolskii"
+          },
+          "Randers": {
+            "roundtrip_ok": true,
+            "decoded": "Randers"
+          },
+          "Lissajous": {
+            "roundtrip_ok": true,
+            "decoded": "Lissajous"
+          },
+          "Kullback": {
+            "roundtrip_ok": true,
+            "decoded": "Kullback"
+          },
+          "Hausdorff": {
+            "roundtrip_ok": true,
+            "decoded": "Hausdorff"
+          },
+          "Chebyshev": {
+            "roundtrip_ok": true,
+            "decoded": "Chebyshev"
+          },
+          "Sobolev": {
+            "roundtrip_ok": true,
+            "decoded": "Sobolev"
+          }
+        },
+        "maths_symbols_all_ok": true,
+        "rare_words_all_ok": true,
+        "latexgen_prompt_texts": {
+          "all_ok": true,
+          "n_texts": 6,
+          "failures": []
+        }
+      },
+      "check2_short_piece_completeness": {
+        "n_reference_strings": 120,
+        "n_reference_pass": 120,
+        "n_random_words": 2000,
+        "n_random_words_pass": 2000,
+        "all_pass": true,
+        "failures": [],
+        "n_failures_total": 0
+      },
+      "check3_fertility": {
+        "n_texts": 240,
+        "total_chars": 108318,
+        "fertility_before_tokens_per_char": 0.2259181299507007,
+        "fertility_after_tokens_per_char": 0.22662899979689433,
+        "fertility_inflation_relative": 0.0031465816680968928
+      },
+      "check4_prompt_coverage": {
+        "plain_prompt": {
+          "n_items": 120,
+          "n_full_in_keepset": 120,
+          "fraction": 1.0,
+          "missing_items": []
+        },
+        "pdf_prompt": {
+          "n_items": 120,
+          "n_full_in_keepset": 120,
+          "fraction": 1.0,
+          "missing_items": []
+        }
+      },
+      "check5_rare_word_subword_pieces": {
+        "Nikolskii": {
+          "pieces": [
+            {
+              "id": 50874,
+              "token": "Nik",
+              "in_keepset": true
+            },
+            {
+              "id": 4118,
+              "token": "ols",
+              "in_keepset": true
+            },
+            {
+              "id": 52434,
+              "token": "kii",
+              "in_keepset": true
+            }
+          ],
+          "all_pieces_in_keepset": true
+        },
+        "Randers": {
+          "pieces": [
+            {
+              "id": 71,
+              "token": "R",
+              "in_keepset": true
+            },
+            {
+              "id": 69644,
+              "token": "anders",
+              "in_keepset": true
+            }
+          ],
+          "all_pieces_in_keepset": true
+        },
+        "Lissajous": {
+          "pieces": [
+            {
+              "id": 65,
+              "token": "L",
+              "in_keepset": true
+            },
+            {
+              "id": 1018,
+              "token": "iss",
+              "in_keepset": true
+            },
+            {
+              "id": 1919,
+              "token": "aj",
+              "in_keepset": true
+            },
+            {
+              "id": 586,
+              "token": "ous",
+              "in_keepset": true
+            }
+          ],
+          "all_pieces_in_keepset": true
+        },
+        "Kullback": {
+          "pieces": [
+            {
+              "id": 64,
+              "token": "K",
+              "in_keepset": true
+            },
+            {
+              "id": 1149,
+              "token": "ull",
+              "in_keepset": true
+            },
+            {
+              "id": 3558,
+              "token": "back",
+              "in_keepset": true
+            }
+          ],
+          "all_pieces_in_keepset": true
+        },
+        "Hausdorff": {
+          "pieces": [
+            {
+              "id": 61,
+              "token": "H",
+              "in_keepset": true
+            },
+            {
+              "id": 838,
+              "token": "aus",
+              "in_keepset": true
+            },
+            {
+              "id": 55950,
+              "token": "dorff",
+              "in_keepset": true
+            }
+          ],
+          "all_pieces_in_keepset": true
+        },
+        "Chebyshev": {
+          "pieces": [
+            {
+              "id": 15622,
+              "token": "Che",
+              "in_keepset": true
+            },
+            {
+              "id": 89591,
+              "token": "byshev",
+              "in_keepset": true
+            }
+          ],
+          "all_pieces_in_keepset": true
+        },
+        "Sobolev": {
+          "pieces": [
+            {
+              "id": 72,
+              "token": "S",
+              "in_keepset": true
+            },
+            {
+              "id": 913,
+              "token": "ob",
+              "in_keepset": true
+            },
+            {
+              "id": 53749,
+              "token": "olev",
+              "in_keepset": true
+            }
+          ],
+          "all_pieces_in_keepset": true
+        }
+      },
+      "check6_accented_latin_and_greek_single_codepoint_roundtrip": {
+        "n_probes": 173,
+        "n_pass": 173,
+        "all_pass": true,
+        "failures": []
+      },
+      "candidate": true
+    }
+  }
+}
