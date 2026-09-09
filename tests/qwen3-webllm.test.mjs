@@ -70,9 +70,9 @@ test("runtime and modelLib urls start with source.base", () => {
   for (const url of urls) assert.ok(url.startsWith(catalog.source.base), url);
 });
 
-test("modelLib file names match qwen3-<size>-argmax-chunk256-sg32-tr32.wasm", () => {
+test("modelLib file names match <model>-argmax-chunk256-{sg32|nosg}[-tr<N>].wasm", () => {
   for (const [modelId, model] of Object.entries(catalog.models)) {
-    assert.match(model.modelLib.file, /^qwen3-[a-z0-9.]+-argmax-chunk256-sg32-tr32\.wasm$/, modelId);
+    assert.match(model.modelLib.file, /^[a-z0-9.-]+-argmax-chunk256-(sg32|nosg)(-tr\d+)?\.wasm$/, modelId);
   }
 });
 
@@ -152,12 +152,12 @@ maybeTest("planEngine: apple+subgroups+Chrome152 picks the model's default catal
   assert.ok(plan.workerUrl.search.includes(`bundle=${runtime.file}`), plan.workerUrl.search);
 });
 
-maybeTest("planEngine: a model without catalog libs (the shipped Qwen3.5 and MiniCPM5 sizes) runs stock", async () => {
+maybeTest("planEngine: the shipped Qwen3.5 and MiniCPM5 sizes resolve through the catalog", async () => {
   const cat = structuredClone(catalog);
   for (const id of ["Qwen3.5-0.8B-q4f16_1-MLC", "MiniCPM5-2B-q4f16_1-MLC", "Qwen3.5-4B-q4f16_1-MLC", "Qwen3.5-9B-q4f16_1-MLC"]) {
     const plan = await mod.planEngine(id, cat, { nav: goodNav(), storage: makeStorage(), stockRecord: stockRecordFor(id) });
-    assert.equal(plan.kind, "stock", id);
-    assert.equal(plan.why, "not in catalog", id);
+    assert.equal(plan.kind, "catalog", id);
+    assert.equal(plan.variant, cat.models[id].default, id);
   }
 });
 
