@@ -255,7 +255,9 @@ kbd { font: inherit; font-size: 11px; padding: 0 4px; border: 1px solid var(--bo
 #dd-menu {
   position: absolute; top: calc(100% + 4px); left: 0; right: 0; z-index: 10;
   background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.12); overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  /* One row per model *and* decode path, so the list no longer fits a screen. */
+  max-height: min(60vh, 420px); overflow-y: auto; overflow-x: hidden;
 }
 .dd-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 9px 12px; font-size: 13px; cursor: pointer; }
 .dd-row:hover { background: var(--surface-2); }
@@ -263,6 +265,13 @@ kbd { font: inherit; font-size: 11px; padding: 0 4px; border: 1px solid var(--bo
 .dd-row.disabled:hover { background: none; }
 /* Above the estimated GPU budget: still selectable by hand, never auto-picked. */
 .dd-row.over-budget .dd-meta { color: var(--warn); }
+/* The decode path sits under the model id: two rows can share an id and differ
+   only in the catalog variant they load. */
+.dd-main { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.dd-sub { font-family: var(--mono); font-size: 11px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; }
+.dd-row.on { background: var(--accent-soft); }
+.dd-row.on .dd-sub { color: var(--accent); }
+.dd-note { padding: 0 12px 6px; font-size: 11px; line-height: 1.4; color: var(--muted); cursor: default; }
 .dd-group {
   padding: 8px 12px 4px; font-size: 11px; font-weight: 600; letter-spacing: 0.04em;
   text-transform: uppercase; color: var(--muted); cursor: default;
