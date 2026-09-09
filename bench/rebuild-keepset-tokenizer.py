@@ -160,7 +160,7 @@ def rebuild_tokenizer_json(raw, keep_ids, new_id_map):
     return new_raw, len(old_merges), len(new_merges), n_dropped
 
 
-def rebuild_tokenizer_config(raw_cfg, keep_ids, new_id_map):
+def rebuild_tokenizer_config(raw_cfg, keep_ids, new_id_map, surviving_strings):
     new_cfg = json.loads(json.dumps(raw_cfg))
     old_atd = raw_cfg.get("added_tokens_decoder", {})
     new_atd = {}
@@ -179,9 +179,56 @@ def rebuild_tokenizer_config(raw_cfg, keep_ids, new_id_map):
             continue
         s = dict(spec)
         new_atd[str(new_id_map[old_id])] = s
-        new_cfg.setdefault("_id_remap_note", None)
     new_cfg["added_tokens_decoder"] = new_atd
-    return new_cfg, n_phantom_dropped
+
+    # added_tokens_decoder is keyed by id, so the keep_ids/new_id_map rewrite
+    # above catches every stale entry there. But several other
+    # tokenizer_config.json fields name a token by its literal STRING
+    # instead -- those are invisible to an id-based prune. If the string no
+    # longer exists in the rebuilt vocab (dropped because it fell outside
+    # the corpus keep-set), the field still points at it, and
+    # transformers.AutoTokenizer.from_pretrained() silently re-adds it as a
+    # brand-new token past the end of the vocabulary on load, growing
+    # len(tokenizer) past K. This is exactly the extra_special_tokens defect
+    # (three deleted Qwen3.5 TTS/audio placeholder tokens -> len 65539
+    # instead of 65536): fix it generically for every such field, not just
+    # that one.
+    n_extra_special_dropped = 0
+    extra_special = new_cfg.get("extra_special_tokens")
+    if isinstance(extra_special, dict):
+        kept_extra = {}
+        for role, value in extra_special.items():
+            if isinstance(value, str) and value not in surviving_strings:
+                n_extra_special_dropped += 1
+                continue
+            kept_extra[role] = value
+        new_cfg["extra_special_tokens"] = kept_extra
+
+    # bos/eos/pad/unk_token and additional_special_tokens name tokens by
+    # string too, but every one of them is required by rebuild_tokenizer_json
+    # to be a real added_tokens entry, which that function already asserts
+    # must survive the prune ("added/special ids must always survive"). So a
+    # stale reference surviving to here would mean that invariant broke
+    # elsewhere -- fail loudly instead of silently shipping it, rather than
+    # quietly dropping something load-bearing the way extra_special_tokens
+    # was being dropped-and-not-noticed before this fix.
+    stale_critical = []
+    additional = new_cfg.get("additional_special_tokens")
+    if isinstance(additional, list):
+        for value in additional:
+            if isinstance(value, str) and value not in surviving_strings:
+                stale_critical.append(("additional_special_tokens", value))
+    for key in ("bos_token", "eos_token", "pad_token", "unk_token"):
+        value = new_cfg.get(key)
+        if isinstance(value, str) and value not in surviving_strings:
+            stale_critical.append((key, value))
+    if stale_critical:
+        raise SystemExit(
+            f"BUG: stale by-string token reference(s) in a field that must "
+            f"never lose its token: {stale_critical}"
+        )
+
+    return new_cfg, n_phantom_dropped, n_extra_special_dropped
 
 
 def build_special_tokens_map(tok_cfg):
@@ -420,6 +467,11 @@ def build_provenance_md(args, K, actual_K, coverage, tok_prov_entry, hashes, scr
     m = coverage["merges"]
     lines.append(f"- BPE merges: {m['before']} -> {m['after']} (dropped {m['dropped']}, {m['dropped_fraction']:.4f})")
     lines.append(f"- tokenizer_config.json phantom added-tokens dropped: {coverage['tokenizer_config_phantom_added_tokens_dropped']}")
+    lines.append(f"- tokenizer_config.json stale extra_special_tokens dropped (named a token pruned from the vocab by string, not id): {coverage['tokenizer_config_extra_special_tokens_dropped']}")
+    lc = coverage["length_check"]
+    lines.append(f"- length check: expected K={lc['expected_K']}, tokenizers.Tokenizer.from_file={lc['tokenizers_from_file_len']}, "
+                 f"transformers.AutoTokenizer.from_pretrained={lc['hf_autotokenizer_from_pretrained_len']} "
+                 f"(the two are asserted equal to K; a mismatch is the extra_special_tokens-class bug this check exists to catch)")
     v = coverage["verify_all_corpus_texts"]
     lines.append(f"- rebuild verification (all corpus texts, in-set-only subset): {v['exact_match_passed']}/{v['exact_match_total']} exact "
                  f"({(v['exact_match_passed']/v['exact_match_total'] if v['exact_match_total'] else 0):.4f}), "
@@ -450,6 +502,7 @@ def build_provenance_md(args, K, actual_K, coverage, tok_prov_entry, hashes, scr
 def main():
     args = parse_args()
     from tokenizers import Tokenizer
+    from transformers import AutoTokenizer
 
     corpus_labels = args.corpus if args.corpus else sorted(vocab_coverage.CORPUS_FILES.keys())
     built = vocab_coverage.build_keep_set_for_tokenizer(args.tokenizer, corpus_labels)
@@ -479,7 +532,10 @@ def main():
         actual_K = len(keep_idx)
 
         new_raw, n_merges_before, n_merges_after, n_merges_dropped = rebuild_tokenizer_json(raw, final_keep, new_id_map)
-        new_cfg, n_phantom_dropped = rebuild_tokenizer_config(raw_cfg, final_keep, new_id_map) if raw_cfg else ({}, 0)
+        surviving_strings = set(new_raw["model"]["vocab"].keys()) | {e["content"] for e in new_raw["added_tokens"]}
+        new_cfg, n_phantom_dropped, n_extra_special_dropped = (
+            rebuild_tokenizer_config(raw_cfg, final_keep, new_id_map, surviving_strings) if raw_cfg else ({}, 0, 0)
+        )
         special_tokens_map = build_special_tokens_map(raw_cfg) if raw_cfg else {}
 
         new_conv_stop_ids, stop_id_mismatches = ([], [])
@@ -514,6 +570,34 @@ def main():
                 f"{new_tok.get_vocab_size(with_added_tokens=True)} entries, expected {actual_K}"
             )
 
+        # THE ASSERTION THAT WOULD HAVE CAUGHT THE extra_special_tokens BUG:
+        # load the emitted directory exactly the way mlc_llm's
+        # gen_config.py does -- transformers.AutoTokenizer.from_pretrained()
+        # against the directory, then len() -- and separately load the
+        # emitted tokenizer.json on disk via tokenizers.Tokenizer.from_file
+        # (from the file, not the in-memory dict used for `new_tok` above).
+        # The two numbers can differ: AutoTokenizer additionally consults
+        # tokenizer_config.json's by-string special-token fields and will
+        # silently re-add any that name a token no longer in the vocab,
+        # which get_vocab_size() on the raw tokenizer.json load will never
+        # see. gen_config.py trusts the AutoTokenizer number and overwrites
+        # active_vocab_size with it (mlc_llm/interface/gen_config.py:270-284),
+        # so a mismatch here is precisely the silent-corruption path this
+        # rebuild must fail loudly on, not just print an anomaly for.
+        file_tok_len = Tokenizer.from_file(str(out_dir / "tokenizer.json")).get_vocab_size(with_added_tokens=True)
+        hf_tok_len = len(AutoTokenizer.from_pretrained(str(out_dir)))
+        length_check = {
+            "expected_K": actual_K,
+            "tokenizers_from_file_len": file_tok_len,
+            "hf_autotokenizer_from_pretrained_len": hf_tok_len,
+        }
+        if file_tok_len != actual_K or hf_tok_len != actual_K:
+            raise SystemExit(
+                f"BUG: {out_dir} length check failed -- expected K={actual_K}, got "
+                f"tokenizers.Tokenizer.from_file={file_tok_len}, "
+                f"transformers.AutoTokenizer.from_pretrained={hf_tok_len}"
+            )
+
         texts = []
         for iid, it in items.items():
             texts.append(it["input"])
@@ -540,6 +624,8 @@ def main():
                 "dropped_fraction": (n_merges_dropped / n_merges_before) if n_merges_before else 0.0,
             },
             "tokenizer_config_phantom_added_tokens_dropped": n_phantom_dropped,
+            "tokenizer_config_extra_special_tokens_dropped": n_extra_special_dropped,
+            "length_check": length_check,
             "verify_all_corpus_texts": verify,
             "verify_input_side_arxiv_pdf": input_verify,
             "real_held_out_fertility_arxiv_pdf": real_fertility,
@@ -572,6 +658,8 @@ def main():
         print(f"=== {args.tokenizer_label} K={K} -> actual={actual_K} ===")
         print(f"  merges: {n_merges_before} -> {n_merges_after} (dropped {n_merges_dropped}, {coverage['merges']['dropped_fraction']:.4f})")
         print(f"  tokenizer_config phantom added-tokens dropped: {n_phantom_dropped}")
+        print(f"  tokenizer_config stale extra_special_tokens dropped: {n_extra_special_dropped}")
+        print(f"  length check: expected K={actual_K}, tokenizers.Tokenizer.from_file={file_tok_len}, transformers.AutoTokenizer={hf_tok_len}")
         print(f"  verify (all corpus texts, in-set only): {verify['exact_match_passed']}/{verify['exact_match_total']} passed, {len(verify['exact_match_failures'])} failures")
         print(f"  verify (arxiv/pdf input, in-set only): {input_verify['exact_match_passed']}/{input_verify['exact_match_total']} passed")
         print(
