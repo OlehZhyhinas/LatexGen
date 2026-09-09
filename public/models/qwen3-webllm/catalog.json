@@ -1,7 +1,7 @@
 {
  "family": "qwen3-webllm",
  "title": "Qwen3, Qwen3.5 and MiniCPM5 q4f16_1 through the graph catalog's WebGPU runtime",
- "summary": "A patched WebLLM 0.2.84 (device-resident greedy argmax, K-token decode bursts, batched command encoding with periodic flushes, optional lookahead) plus a per-model TVM model lib compiled with chunked argmax and (Qwen3/Qwen3.5) subgroup-32 kernels and GEMV TR. Weights are the stock mlc-ai q4f16_1 shards; only the runtime bundle and the model_lib differ from stock WebLLM. Output is byte-identical under greedy decoding on the workbench corpus; the fast path only engages at temperature 0.",
+ "summary": "A patched WebLLM 0.2.84 (device-resident greedy argmax, K-token decode bursts, batched command encoding with periodic flushes, optional lookahead) plus a per-model TVM model lib compiled with chunked argmax and (Qwen3/Qwen3.5) subgroup-32 kernels and GEMV TR. Weights are the stock mlc-ai q4f16_1 shards; only the runtime bundle and the model_lib differ from stock WebLLM. The fast path only engages at temperature 0. Models flagged recurrentState have space-state layers and must not over-fill the decode queue: greedyBurst > 1 and lookahead > 0 roll surplus positions back with kv_state_popn, which has no per-token history to pop and aborts the WASM runtime. planEngine clamps those two knobs for such models; the pop-free knobs (batchPass, flushEvery, bindGroupCache) are unaffected. Output matches stock on most items but is not byte-identical: the subgroup model libs produce slightly different logits, which flips near-tie tokens (see docs/benchmarks.md).",
  "source": {
   "dataset": "ozhyhinas/webnn-catalog",
   "base": "https://huggingface.co/datasets/ozhyhinas/webnn-catalog/resolve/main",
@@ -227,17 +227,18 @@
     "sha256": "5b13f1de06bb205b87ccbcdd565859fc9ef4cb39f1cee161149f3dc956b20829",
     "url": "https://huggingface.co/datasets/ozhyhinas/webnn-catalog/resolve/main/qwen3.5-4b-q4f16-1/v1/webgpu-apple-m5-pro-macos26-chrome152-sg32-burst1-lookahead1/qwen35-4b-argmax-chunk256-sg32-tr32.wasm"
    },
-   "default": "sg32-burst1-lookahead1",
+   "recurrentState": true,
+   "default": "sg32-burst1-flush32",
    "variants": {
-    "sg32-burst1-lookahead1": {
-     "runtime": "m5-lookahead",
+    "sg32-burst1-flush32": {
+     "runtime": "m5-overlap",
      "tuning": {
       "greedyArgmax": true,
       "greedyBurst": 1,
-      "lookahead": 1
+      "batchPass": true,
+      "flushEvery": 32
      },
-     "entry": "qwen3.5-4b-q4f16-1/v1/webgpu-apple-m5-pro-macos26-chrome152-sg32-burst1-lookahead1",
-     "expected": "1.28x decode vs published sg32 (64.1 vs 50.6 tok/s), 6/6 byte-identical, per-token streaming"
+     "expected": "2.30x decode vs the stock model lib (64.2 vs 27.9 tok/s, warm, M5 Pro / Chrome 152, measured in bench-webllm 2026-09-09). Replaces sg32-burst1-lookahead1, which emitted correct tokens and then aborted the WASM runtime in RNNStateImpObj::PopN."
     }
    }
   },
@@ -248,18 +249,18 @@
     "sha256": "b3e5395b14bf8b84edf2d7dec431759e98216c864cd3f24197251e0fce0508a3",
     "url": "https://huggingface.co/datasets/ozhyhinas/webnn-catalog/resolve/main/qwen3.5-9b-q4f16-1/v1/webgpu-apple-m5-pro-macos26-chrome152-sg32-burst4-flush64/qwen35-9b-argmax-chunk256-sg32-tr64.wasm"
    },
-   "default": "sg32-burst4-flush64",
+   "recurrentState": true,
+   "default": "sg32-burst1-flush32",
    "variants": {
-    "sg32-burst4-flush64": {
+    "sg32-burst1-flush32": {
      "runtime": "m5-overlap",
      "tuning": {
       "greedyArgmax": true,
-      "greedyBurst": 4,
+      "greedyBurst": 1,
       "batchPass": true,
-      "flushEvery": 64
+      "flushEvery": 32
      },
-     "entry": "qwen3.5-9b-q4f16-1/v1/webgpu-apple-m5-pro-macos26-chrome152-sg32-burst4-flush64",
-     "expected": "1.07x decode vs published sg32 (37.5 vs 34.8 tok/s) under sibling-roll load, 8/8 byte-identical"
+     "expected": "1.94x decode vs the stock model lib (39.6 vs 20.4 tok/s, warm, M5 Pro / Chrome 152, measured in bench-webllm 2026-09-09). Replaces sg32-burst4-flush64, which truncated output mid-generation and aborted the WASM runtime in RNNStateImpObj::PopN."
     }
    }
   },

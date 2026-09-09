@@ -145,6 +145,51 @@ Reproduce: `public/bench-webllm.html?model=Qwen3-1.7B-q4f16_1-MLC&rounds=2`
 (arms default to stock plus every catalog variant for the model), then
 `python3 bench/judge.py` for the accuracy column.
 
+Everything above is the Qwen3 generation, and its conclusion does not carry to
+Qwen3.5. Qwen3.5 4B and 9B have recurrent (space-state) layers. The decode
+burst and the lookahead both issue more steps than the CPU has consumed and pop
+the surplus positions back at stop time with `vm.builtin.kv_state_popn`; a
+recurrent state keeps no per-token history, so the pop fails its own check and
+TVM aborts the WASM runtime:
+
+```
+rnn_state.cc:366 RNNStateImpObj::PopN
+InternalError: Check failed: n <= it->second.available_history_num (1 vs. 0)
+```
+
+The pop size tracks the over-fill exactly (`greedyBurst: 4` pops 3, `lookahead:
+1` pops 1), so this is not specific to lookahead. It is also not a visible
+crash. On 4B the tokens stream out correctly first and the abort lands on the
+stop-time rollback, leaving the engine dead — so `pipeline.js`'s
+validator-guided repair loop fails into its `catch` and the *un-repaired*
+first-pass LaTeX is what the user sees. On 9B the abort arrives mid-generation
+and truncates the output. This is why an "optimized" run could score worse than
+an unoptimized one: not worse decoding, skipped correction.
+
+Measured warm on M5 Pro / Chrome 152, 2026-09-09, one paste per cell, comparing
+the tuned model lib against the stock lib for the same weights:
+
+| Model | stock lib | as shipped before this fix | `burst1 + flush32` |
+|---|---|---|---|
+| Qwen3.5 0.8B | 41.2 tok/s | 53.3 (`burst5-flush32`) | 113.8 |
+| MiniCPM5 2B | 53.6 | 109.5 (`burst1-flush32-lookahead1`) | 81.1 |
+| Qwen3.5 4B | 27.9 | **aborts** | **64.2** |
+| Qwen3.5 9B | 20.4 | **aborts**, output truncated | **39.6** |
+
+So the subgroup model lib is where the speed is, and the popping knobs were not
+paying for themselves on the two models they break: 4B reaches 64.2 tok/s with
+`greedyBurst: 1`, against the 64.1 the aborting lookahead variant was credited
+with. The two recurrent models now default to `sg32-burst1-flush32`, and
+`planEngine` clamps `greedyBurst` to 1 and drops `lookahead` for any model
+flagged `recurrentState`, so a hand-picked variant row or a forced
+`?webllm=catalog:<variant>` cannot reintroduce the abort. The pop-free knobs
+(`batchPass`, `flushEvery`, `bindGroupCache`) are untouched.
+
+MiniCPM5 2B and Qwen3.5 0.8B are not recurrent and keep their variants. The
+0.8B number above says its shipped `burst5` default may be leaving a lot on the
+table, but that is one paste against a workbench figure measured differently
+(190.8 vs 108.9 tok/s), so it is not settled here.
+
 ## Loading: getting the weights into the browser
 
 Cold means an empty Cache API and a bypassed HTTP cache, weights streamed from the Hugging Face repo the static build uses; warm means the Cache API. Median of three cold runs for the WebGPU rows, single runs elsewhere. M5 Pro, Chromium 148, one evening, both sides measured within the same two hours.

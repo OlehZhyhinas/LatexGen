@@ -325,3 +325,82 @@ maybeTest("BUNDLE_RE only matches bare vendored bundle basenames", () => {
   assert.equal(mod.BUNDLE_RE.test("../index.js"), false);
   assert.equal(mod.BUNDLE_RE.test("index.js"), false);
 });
+
+// --- recurrent-state models must never over-fill the decode queue ------
+//
+// greedyBurst > 1 and lookahead > 0 both issue decode steps past what the CPU
+// has consumed and pop the surplus back with vm.builtin.kv_state_popn. On a
+// model with space-state layers that pop aborts the WASM runtime, so neither
+// knob may reach such a model — not from the catalog, and not from a forced
+// variant.
+
+test("no recurrentState model declares an over-filling variant", () => {
+  for (const [modelId, model] of Object.entries(catalog.models)) {
+    if (!model.recurrentState) continue;
+    for (const [variantId, variant] of Object.entries(model.variants)) {
+      const burst = variant.tuning.greedyBurst;
+      assert.ok(burst === undefined || burst === 1, `${modelId}/${variantId}: greedyBurst ${burst} pops on a recurrent state`);
+      assert.equal(variant.tuning.lookahead, undefined, `${modelId}/${variantId}: lookahead pops on a recurrent state`);
+    }
+  }
+});
+
+test("the models known to have space-state layers are flagged", () => {
+  for (const id of ["Qwen3.5-4B-q4f16_1-MLC", "Qwen3.5-9B-q4f16_1-MLC"]) {
+    assert.equal(catalog.models[id].recurrentState, true, `${id} aborts in RNNStateImpObj::PopN when the queue over-fills`);
+  }
+});
+
+maybeTest("safeTuning clamps the popping knobs only for recurrent models", () => {
+  const unsafe = { greedyArgmax: true, greedyBurst: 4, batchPass: true, flushEvery: 32, lookahead: 1 };
+
+  const clamped = mod.safeTuning({ recurrentState: true }, unsafe);
+  assert.equal(clamped.greedyBurst, 1);
+  assert.equal("lookahead" in clamped, false);
+  // the pop-free knobs survive untouched — they are where the speed comes from
+  assert.equal(clamped.greedyArgmax, true);
+  assert.equal(clamped.batchPass, true);
+  assert.equal(clamped.flushEvery, 32);
+
+  assert.deepEqual(mod.safeTuning({}, unsafe), unsafe);
+  assert.deepEqual(mod.safeTuning(undefined, unsafe), unsafe);
+  assert.deepEqual(mod.safeTuning({ recurrentState: true }, undefined), {});
+});
+
+maybeTest("planEngine clamps a forced over-filling variant on a recurrent model", async () => {
+  const cat = structuredClone(catalog);
+  const id = "Qwen3.5-4B-q4f16_1-MLC";
+  assert.equal(cat.models[id].recurrentState, true);
+  // a stale or hand-edited catalog entry, reachable via ?webllm=catalog:<variant>
+  cat.models[id].variants["legacy-lookahead"] = {
+    runtime: "m5-lookahead",
+    tuning: { greedyArgmax: true, greedyBurst: 4, lookahead: 1 },
+  };
+
+  const plan = await mod.planEngine(id, cat, {
+    nav: goodNav(),
+    storage: makeStorage(),
+    force: { variant: "legacy-lookahead" },
+    stockRecord: stockRecordFor(id),
+  });
+
+  assert.equal(plan.kind, "catalog");
+  assert.equal(plan.variant, "legacy-lookahead");
+  assert.equal(plan.tuning.greedyBurst, 1);
+  assert.equal("lookahead" in plan.tuning, false);
+  // the worker inherits the clamp through the query string, not just the plan
+  assert.equal(plan.workerUrl.searchParams.get("greedyBurst"), "1");
+  assert.equal(plan.workerUrl.searchParams.has("lookahead"), false);
+});
+
+maybeTest("planEngine leaves a non-recurrent model's lookahead variant alone", async () => {
+  const cat = structuredClone(catalog);
+  const id = "MiniCPM5-2B-q4f16_1-MLC";
+  assert.ok(!cat.models[id].recurrentState);
+  const variant = cat.models[id].variants[cat.models[id].default];
+  assert.equal(variant.tuning.lookahead, 1, "fixture expects MiniCPM5 to ship lookahead");
+
+  const plan = await mod.planEngine(id, cat, { nav: goodNav(), storage: makeStorage(), stockRecord: stockRecordFor(id) });
+  assert.deepEqual(plan.tuning, variant.tuning);
+  assert.equal(plan.workerUrl.searchParams.get("lookahead"), "1");
+});
