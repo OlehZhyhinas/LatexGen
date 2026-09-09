@@ -1,0 +1,298 @@
+{
+  "held_out_meta": {
+    "n_arxiv_pastes_items": 120,
+    "n_bench_extended_items": 93
+  },
+  "v1": {
+    "qwen35-16384": {
+      "dir": "keepsets/qwen35-16384",
+      "actual_K": 16384,
+      "remeasured_under_v3_methodology": {
+        "n_texts": 426,
+        "total_chars": 142003,
+        "total_tokens_before": 36912,
+        "total_tokens_after": 37907,
+        "fertility_before_tokens_per_char": 0.25993817032034533,
+        "fertility_after_tokens_per_char": 0.26694506454088995,
+        "fertility_inflation_relative": 0.02695600346770699
+      },
+      "originally_reported": {
+        "methodology": "v1 own: leave-one-out real re-encode, arxiv-paste+pdf-paste INPUT text only (not references), n=138",
+        "fertility_before": 0.2467296137339056,
+        "fertility_after_real": 0.2575107296137339
+      }
+    },
+    "qwen35-24576": {
+      "dir": "keepsets/qwen35-24576",
+      "actual_K": 24576,
+      "remeasured_under_v3_methodology": {
+        "n_texts": 426,
+        "total_chars": 142003,
+        "total_tokens_before": 36912,
+        "total_tokens_after": 37363,
+        "fertility_before_tokens_per_char": 0.25993817032034533,
+        "fertility_after_tokens_per_char": 0.2631141595600093,
+        "fertility_inflation_relative": 0.012218248807975618
+      },
+      "originally_reported": {
+        "methodology": "v1 own: leave-one-out real re-encode, arxiv-paste+pdf-paste INPUT text only (not references), n=138",
+        "fertility_before": 0.2467296137339056,
+        "fertility_after_real": 0.2530472103004292
+      }
+    },
+    "qwen35-32768": {
+      "dir": "keepsets/qwen35-32768",
+      "actual_K": 32768,
+      "remeasured_under_v3_methodology": {
+        "n_texts": 426,
+        "total_chars": 142003,
+        "total_tokens_before": 36912,
+        "total_tokens_after": 37095,
+        "fertility_before_tokens_per_char": 0.25993817032034533,
+        "fertility_after_tokens_per_char": 0.261226875488546,
+        "fertility_inflation_relative": 0.00495773732119642
+      },
+      "originally_reported": {
+        "methodology": "v1 own: leave-one-out real re-encode, arxiv-paste+pdf-paste INPUT text only (not references), n=138",
+        "fertility_before": 0.2467296137339056,
+        "fertility_after_real": 0.2503519313304721
+      }
+    },
+    "qwen35-49152": {
+      "dir": "keepsets/qwen35-49152",
+      "actual_K": 49152,
+      "remeasured_under_v3_methodology": {
+        "n_texts": 426,
+        "total_chars": 142003,
+        "total_tokens_before": 36912,
+        "total_tokens_after": 36992,
+        "fertility_before_tokens_per_char": 0.25993817032034533,
+        "fertility_after_tokens_per_char": 0.2605015386998866,
+        "fertility_inflation_relative": 0.0021673168617253324
+      },
+      "originally_reported": {
+        "methodology": "v1 own: leave-one-out real re-encode, arxiv-paste+pdf-paste INPUT text only (not references), n=138",
+        "fertility_before": 0.2467296137339056,
+        "fertility_after_real": 0.24878969957081545
+      }
+    },
+    "qwen35-6414": {
+      "dir": "keepsets/qwen35-6414",
+      "actual_K": 6414,
+      "remeasured_under_v3_methodology": {
+        "n_texts": 426,
+        "total_chars": 142003,
+        "total_tokens_before": 36912,
+        "total_tokens_after": 58265,
+        "fertility_before_tokens_per_char": 0.25993817032034533,
+        "fertility_after_tokens_per_char": 0.4103082329246565,
+        "fertility_inflation_relative": 0.5784839618552233
+      },
+      "originally_reported": {
+        "methodology": "v1 own: leave-one-out real re-encode, arxiv-paste+pdf-paste INPUT text only (not references), n=138",
+        "fertility_before": 0.2467296137339056,
+        "fertility_after_real": 0.4138025751072961
+      }
+    },
+    "qwen35-65536": {
+      "dir": "keepsets/qwen35-65536",
+      "actual_K": 65536,
+      "remeasured_under_v3_methodology": {
+        "n_texts": 426,
+        "total_chars": 142003,
+        "total_tokens_before": 36912,
+        "total_tokens_after": 36936,
+        "fertility_before_tokens_per_char": 0.25993817032034533,
+        "fertility_after_tokens_per_char": 0.26010718083420775,
+        "fertility_inflation_relative": 0.0006501950585175997
+      },
+      "originally_reported": {
+        "methodology": "v1 own: leave-one-out real re-encode, arxiv-paste+pdf-paste INPUT text only (not references), n=138",
+        "fertility_before": 0.2467296137339056,
+        "fertility_after_real": 0.24801716738197424
+      }
+    },
+    "minicpm5-2b-16384": {
+      "dir": "keepsets/minicpm5-2b-16384",
+      "actual_K": 16384,
+      "remeasured_under_v3_methodology": {
+        "n_texts": 426,
+        "total_chars": 142003,
+        "total_tokens_before": 34411,
+        "total_tokens_after": 35640,
+        "fertility_before_tokens_per_char": 0.24232586635493616,
+        "fertility_after_tokens_per_char": 0.250980613085639,
+        "fertility_inflation_relative": 0.03571532358838736
+      },
+      "originally_reported": {
+        "methodology": "v1 own: leave-one-out real re-encode, arxiv-paste+pdf-paste INPUT text only (not references), n=138",
+        "fertility_before": 0.23476394849785406,
+        "fertility_after_real": 0.24913304721030044
+      }
+    },
+    "minicpm5-2b-24576": {
+      "dir": "keepsets/minicpm5-2b-24576",
+      "actual_K": 24576,
+      "remeasured_under_v3_methodology": {
+        "n_texts": 426,
+        "total_chars": 142003,
+        "total_tokens_before": 34411,
+        "total_tokens_after": 34933,
+        "fertility_before_tokens_per_char": 0.24232586635493616,
+        "fertility_after_tokens_per_char": 0.24600184503144298,
+        "fertility_inflation_relative": 0.015169567870738865
+      },
+      "originally_reported": {
+        "methodology": "v1 own: leave-one-out real re-encode, arxiv-paste+pdf-paste INPUT text only (not references), n=138",
+        "fertility_before": 0.23476394849785406,
+        "fertility_after_real": 0.24250643776824035
+      }
+    },
+    "minicpm5-2b-32768": {
+      "dir": "keepsets/minicpm5-2b-32768",
+      "actual_K": 32768,
+      "remeasured_under_v3_methodology": {
+        "n_texts": 426,
+        "total_chars": 142003,
+        "total_tokens_before": 34411,
+        "total_tokens_after": 34690,
+        "fertility_before_tokens_per_char": 0.24232586635493616,
+        "fertility_after_tokens_per_char": 0.24429061357858636,
+        "fertility_inflation_relative": 0.008107872482636447
+      },
+      "originally_reported": {
+        "methodology": "v1 own: leave-one-out real re-encode, arxiv-paste+pdf-paste INPUT text only (not references), n=138",
+        "fertility_before": 0.23476394849785406,
+        "fertility_after_real": 0.23967381974248927
+      }
+    },
+    "minicpm5-2b-49152": {
+      "dir": "keepsets/minicpm5-2b-49152",
+      "actual_K": 49152,
+      "remeasured_under_v3_methodology": {
+        "n_texts": 426,
+        "total_chars": 142003,
+        "total_tokens_before": 34411,
+        "total_tokens_after": 34485,
+        "fertility_before_tokens_per_char": 0.24232586635493616,
+        "fertility_after_tokens_per_char": 0.24284698210601185,
+        "fertility_inflation_relative": 0.0021504751387637633
+      },
+      "originally_reported": {
+        "methodology": "v1 own: leave-one-out real re-encode, arxiv-paste+pdf-paste INPUT text only (not references), n=138",
+        "fertility_before": 0.23476394849785406,
+        "fertility_after_real": 0.23716738197424891
+      }
+    },
+    "minicpm5-2b-65536": {
+      "dir": "keepsets/minicpm5-2b-65536",
+      "actual_K": 65536,
+      "remeasured_under_v3_methodology": {
+        "n_texts": 426,
+        "total_chars": 142003,
+        "total_tokens_before": 34411,
+        "total_tokens_after": 34441,
+        "fertility_before_tokens_per_char": 0.24232586635493616,
+        "fertility_after_tokens_per_char": 0.24253712949726414,
+        "fertility_inflation_relative": 0.0008718142454446909
+      },
+      "originally_reported": {
+        "methodology": "v1 own: leave-one-out real re-encode, arxiv-paste+pdf-paste INPUT text only (not references), n=138",
+        "fertility_before": 0.23476394849785406,
+        "fertility_after_real": 0.23629184549356222
+      }
+    },
+    "minicpm5-2b-7583": {
+      "dir": "keepsets/minicpm5-2b-7583",
+      "actual_K": 7583,
+      "remeasured_under_v3_methodology": {
+        "n_texts": 426,
+        "total_chars": 142003,
+        "total_tokens_before": 34411,
+        "total_tokens_after": 56947,
+        "fertility_before_tokens_per_char": 0.24232586635493616,
+        "fertility_after_tokens_per_char": 0.401026738871714,
+        "fertility_inflation_relative": 0.6549068611781117
+      },
+      "originally_reported": {
+        "methodology": "v1 own: leave-one-out real re-encode, arxiv-paste+pdf-paste INPUT text only (not references), n=138",
+        "fertility_before": 0.23476394849785406,
+        "fertility_after_real": 0.40667811158798284
+      }
+    }
+  },
+  "v2": {
+    "qwen35-32768": {
+      "dir": "keepsets-v2/qwen35-32768",
+      "actual_K": 32768,
+      "remeasured_under_v3_methodology": {
+        "n_texts": 426,
+        "total_chars": 142003,
+        "total_tokens_before": 36912,
+        "total_tokens_after": 44363,
+        "fertility_before_tokens_per_char": 0.25993817032034533,
+        "fertility_after_tokens_per_char": 0.31240889276987105,
+        "fertility_inflation_relative": 0.20185847420892933
+      },
+      "originally_reported": {
+        "methodology": "v2 own: coverage.json's verify_all_corpus_texts OOS-subset real re-encode, arxiv-pastes.json input+reference only (n=120 items -> 240 OOS-subset texts, in-set exact-match texts excluded from this fertility figure)",
+        "fertility_before": 0.24314518362599014,
+        "fertility_after_real": 0.29060728595431967
+      }
+    },
+    "qwen35-65536": {
+      "dir": "keepsets-v2/qwen35-65536",
+      "actual_K": 65536,
+      "remeasured_under_v3_methodology": {
+        "n_texts": 426,
+        "total_chars": 142003,
+        "total_tokens_before": 36912,
+        "total_tokens_after": 41009,
+        "fertility_before_tokens_per_char": 0.25993817032034533,
+        "fertility_after_tokens_per_char": 0.28878967345760304,
+        "fertility_inflation_relative": 0.1109937147811011
+      },
+      "originally_reported": {
+        "methodology": "v2 own: coverage.json's verify_all_corpus_texts OOS-subset real re-encode, arxiv-pastes.json input+reference only (n=120 items -> 216 OOS-subset texts, in-set exact-match texts excluded from this fertility figure)",
+        "fertility_before": 0.24227990473712652,
+        "fertility_after_real": 0.264584625853063
+      }
+    },
+    "minicpm5-2b-32768": {
+      "dir": "keepsets-v2/minicpm5-2b-32768",
+      "actual_K": 32768,
+      "remeasured_under_v3_methodology": {
+        "n_texts": 426,
+        "total_chars": 142003,
+        "total_tokens_before": 34411,
+        "total_tokens_after": 40058,
+        "fertility_before_tokens_per_char": 0.24232586635493616,
+        "fertility_after_tokens_per_char": 0.2820926318458061,
+        "fertility_inflation_relative": 0.16410450146755395
+      },
+      "originally_reported": {
+        "methodology": "v2 own: coverage.json's verify_all_corpus_texts OOS-subset real re-encode, arxiv-pastes.json input+reference only (n=120 items -> 237 OOS-subset texts, in-set exact-match texts excluded from this fertility figure)",
+        "fertility_before": 0.22563359615152445,
+        "fertility_after_real": 0.25858338208935816
+      }
+    },
+    "minicpm5-2b-65536": {
+      "dir": "keepsets-v2/minicpm5-2b-65536",
+      "actual_K": 65536,
+      "remeasured_under_v3_methodology": {
+        "n_texts": 426,
+        "total_chars": 142003,
+        "total_tokens_before": 34411,
+        "total_tokens_after": 38017,
+        "fertility_before_tokens_per_char": 0.24232586635493616,
+        "fertility_after_tokens_per_char": 0.26771969606275925,
+        "fertility_inflation_relative": 0.10479207230246157
+      },
+      "originally_reported": {
+        "methodology": "v2 own: coverage.json's verify_all_corpus_texts OOS-subset real re-encode, arxiv-pastes.json input+reference only (n=120 items -> 172 OOS-subset texts, in-set exact-match texts excluded from this fertility figure)",
+        "fertility_before": 0.2261627059338096,
+        "fertility_after_real": 0.2482869222918793
+      }
+    }
+  }
+}

@@ -1,0 +1,580 @@
+{
+  "tokenizer_label": "minicpm5-2b",
+  "tokenizer_path": "/Users/oleh/.cache/huggingface/hub/models--ozhyhinas--MiniCPM5-2B-q4f16_1-MLC/snapshots/2318f37d9c39277ff01dc64086491028c95d4db4/tokenizer.json",
+  "vocab_size_with_added": 130560,
+  "held_out_meta": {
+    "n_arxiv_pastes_items": 120,
+    "n_bench_extended_items": 93
+  },
+  "n_held_out_texts": 426,
+  "corpus_landed_for_D": false,
+  "corpus_freq_files": [],
+  "strategy_natural_sizes": {
+    "A": 7583,
+    "B": 1559,
+    "C": 20203,
+    "A-fixed": 9467
+  },
+  "strategy_B_layer_marginal": [
+    {
+      "layer": "byte_alphabet",
+      "layer_size": 256,
+      "new_ids": 256
+    },
+    {
+      "layer": "added_and_special",
+      "layer_size": 510,
+      "new_ids": 510
+    },
+    {
+      "layer": "chat_template_and_prompts",
+      "layer_size": 301,
+      "new_ids": 264
+    },
+    {
+      "layer": "maths_and_greek_symbols",
+      "layer_size": 172,
+      "new_ids": 161
+    },
+    {
+      "layer": "merge_ancestor_closure",
+      "layer_size": 1559,
+      "new_ids": 368
+    }
+  ],
+  "strategy_C_layer_marginal": [
+    {
+      "layer": "byte_alphabet",
+      "layer_size": 256,
+      "new_ids": 256
+    },
+    {
+      "layer": "added_and_special",
+      "layer_size": 510,
+      "new_ids": 510
+    },
+    {
+      "layer": "chat_template_and_prompts",
+      "layer_size": 301,
+      "new_ids": 264
+    },
+    {
+      "layer": "ascii_le3_chars",
+      "layer_size": 18996,
+      "new_ids": 18896
+    },
+    {
+      "layer": "maths_and_greek_symbols",
+      "layer_size": 172,
+      "new_ids": 161
+    },
+    {
+      "layer": "merge_ancestor_closure",
+      "layer_size": 20203,
+      "new_ids": 116
+    }
+  ],
+  "by_strategy": {
+    "A": {
+      "8192": {
+        "target_size": 8192,
+        "actual_size": 8192,
+        "overflow": false,
+        "natural_size": 7583,
+        "padding_admitted": 609,
+        "fertility": {
+          "n_texts": 426,
+          "total_chars": 142003,
+          "total_tokens_before": 34411,
+          "total_tokens_after": 45861,
+          "fertility_before_tokens_per_char": 0.24232586635493616,
+          "fertility_after_tokens_per_char": 0.3229579656767815,
+          "fertility_inflation_relative": 0.3327424370114207,
+          "merges_before": 129794,
+          "merges_after": 5398,
+          "merges_dropped": 124396
+        }
+      },
+      "16384": {
+        "target_size": 16384,
+        "actual_size": 16384,
+        "overflow": false,
+        "natural_size": 7583,
+        "padding_admitted": 8801,
+        "fertility": {
+          "n_texts": 426,
+          "total_chars": 142003,
+          "total_tokens_before": 34411,
+          "total_tokens_after": 35640,
+          "fertility_before_tokens_per_char": 0.24232586635493616,
+          "fertility_after_tokens_per_char": 0.250980613085639,
+          "fertility_inflation_relative": 0.03571532358838736,
+          "merges_before": 129794,
+          "merges_after": 15153,
+          "merges_dropped": 114641
+        }
+      },
+      "24576": {
+        "target_size": 24576,
+        "actual_size": 24576,
+        "overflow": false,
+        "natural_size": 7583,
+        "padding_admitted": 16993,
+        "fertility": {
+          "n_texts": 426,
+          "total_chars": 142003,
+          "total_tokens_before": 34411,
+          "total_tokens_after": 34933,
+          "fertility_before_tokens_per_char": 0.24232586635493616,
+          "fertility_after_tokens_per_char": 0.24600184503144298,
+          "fertility_inflation_relative": 0.015169567870738865,
+          "merges_before": 129794,
+          "merges_after": 23571,
+          "merges_dropped": 106223
+        }
+      },
+      "32768": {
+        "target_size": 32768,
+        "actual_size": 32768,
+        "overflow": false,
+        "natural_size": 7583,
+        "padding_admitted": 25185,
+        "fertility": {
+          "n_texts": 426,
+          "total_chars": 142003,
+          "total_tokens_before": 34411,
+          "total_tokens_after": 34690,
+          "fertility_before_tokens_per_char": 0.24232586635493616,
+          "fertility_after_tokens_per_char": 0.24429061357858636,
+          "fertility_inflation_relative": 0.008107872482636447,
+          "merges_before": 129794,
+          "merges_after": 31874,
+          "merges_dropped": 97920
+        }
+      },
+      "49152": {
+        "target_size": 49152,
+        "actual_size": 49152,
+        "overflow": false,
+        "natural_size": 7583,
+        "padding_admitted": 41569,
+        "fertility": {
+          "n_texts": 426,
+          "total_chars": 142003,
+          "total_tokens_before": 34411,
+          "total_tokens_after": 34485,
+          "fertility_before_tokens_per_char": 0.24232586635493616,
+          "fertility_after_tokens_per_char": 0.24284698210601185,
+          "fertility_inflation_relative": 0.0021504751387637633,
+          "merges_before": 129794,
+          "merges_after": 48345,
+          "merges_dropped": 81449
+        }
+      },
+      "65536": {
+        "target_size": 65536,
+        "actual_size": 65536,
+        "overflow": false,
+        "natural_size": 7583,
+        "padding_admitted": 57953,
+        "fertility": {
+          "n_texts": 426,
+          "total_chars": 142003,
+          "total_tokens_before": 34411,
+          "total_tokens_after": 34441,
+          "fertility_before_tokens_per_char": 0.24232586635493616,
+          "fertility_after_tokens_per_char": 0.24253712949726414,
+          "fertility_inflation_relative": 0.0008718142454446909,
+          "merges_before": 129794,
+          "merges_after": 64750,
+          "merges_dropped": 65044
+        }
+      },
+      "98304": {
+        "target_size": 98304,
+        "actual_size": 98304,
+        "overflow": false,
+        "natural_size": 7583,
+        "padding_admitted": 90721,
+        "fertility": {
+          "n_texts": 426,
+          "total_chars": 142003,
+          "total_tokens_before": 34411,
+          "total_tokens_after": 34419,
+          "fertility_before_tokens_per_char": 0.24232586635493616,
+          "fertility_after_tokens_per_char": 0.24238220319289028,
+          "fertility_inflation_relative": 0.0002324837987852657,
+          "merges_before": 129794,
+          "merges_after": 97534,
+          "merges_dropped": 32260
+        }
+      }
+    },
+    "B": {
+      "8192": {
+        "target_size": 8192,
+        "actual_size": 8192,
+        "overflow": false,
+        "natural_size": 1559,
+        "padding_admitted": 6633,
+        "fertility": {
+          "n_texts": 426,
+          "total_chars": 142003,
+          "total_tokens_before": 34411,
+          "total_tokens_after": 43917,
+          "fertility_before_tokens_per_char": 0.24232586635493616,
+          "fertility_after_tokens_per_char": 0.30926811405392846,
+          "fertility_inflation_relative": 0.2762488739065998,
+          "merges_before": 129794,
+          "merges_after": 7426,
+          "merges_dropped": 122368
+        }
+      },
+      "16384": {
+        "target_size": 16384,
+        "actual_size": 16384,
+        "overflow": false,
+        "natural_size": 1559,
+        "padding_admitted": 14825,
+        "fertility": {
+          "n_texts": 426,
+          "total_chars": 142003,
+          "total_tokens_before": 34411,
+          "total_tokens_after": 39643,
+          "fertility_before_tokens_per_char": 0.24232586635493616,
+          "fertility_after_tokens_per_char": 0.2791701583769357,
+          "fertility_inflation_relative": 0.152044404405568,
+          "merges_before": 129794,
+          "merges_after": 15618,
+          "merges_dropped": 114176
+        }
+      },
+      "24576": {
+        "target_size": 24576,
+        "actual_size": 24576,
+        "overflow": false,
+        "natural_size": 1559,
+        "padding_admitted": 23017,
+        "fertility": {
+          "n_texts": 426,
+          "total_chars": 142003,
+          "total_tokens_before": 34411,
+          "total_tokens_after": 37877,
+          "fertility_before_tokens_per_char": 0.24232586635493616,
+          "fertility_after_tokens_per_char": 0.266733801398562,
+          "fertility_inflation_relative": 0.10072360582371909,
+          "merges_before": 129794,
+          "merges_after": 23810,
+          "merges_dropped": 105984
+        }
+      },
+      "32768": {
+        "target_size": 32768,
+        "actual_size": 32768,
+        "overflow": false,
+        "natural_size": 1559,
+        "padding_admitted": 31209,
+        "fertility": {
+          "n_texts": 426,
+          "total_chars": 142003,
+          "total_tokens_before": 34411,
+          "total_tokens_after": 36907,
+          "fertility_before_tokens_per_char": 0.24232586635493616,
+          "fertility_after_tokens_per_char": 0.25990295979662403,
+          "fertility_inflation_relative": 0.0725349452210049,
+          "merges_before": 129794,
+          "merges_after": 32002,
+          "merges_dropped": 97792
+        }
+      },
+      "49152": {
+        "target_size": 49152,
+        "actual_size": 49152,
+        "overflow": false,
+        "natural_size": 1559,
+        "padding_admitted": 47593,
+        "fertility": {
+          "n_texts": 426,
+          "total_chars": 142003,
+          "total_tokens_before": 34411,
+          "total_tokens_after": 35823,
+          "fertility_before_tokens_per_char": 0.24232586635493616,
+          "fertility_after_tokens_per_char": 0.2522693182538397,
+          "fertility_inflation_relative": 0.041033390485600396,
+          "merges_before": 129794,
+          "merges_after": 48386,
+          "merges_dropped": 81408
+        }
+      },
+      "65536": {
+        "target_size": 65536,
+        "actual_size": 65536,
+        "overflow": false,
+        "natural_size": 1559,
+        "padding_admitted": 63977,
+        "fertility": {
+          "n_texts": 426,
+          "total_chars": 142003,
+          "total_tokens_before": 34411,
+          "total_tokens_after": 35311,
+          "fertility_before_tokens_per_char": 0.24232586635493616,
+          "fertility_after_tokens_per_char": 0.24866376062477552,
+          "fertility_inflation_relative": 0.02615442736334317,
+          "merges_before": 129794,
+          "merges_after": 64770,
+          "merges_dropped": 65024
+        }
+      },
+      "98304": {
+        "target_size": 98304,
+        "actual_size": 98304,
+        "overflow": false,
+        "natural_size": 1559,
+        "padding_admitted": 96745,
+        "fertility": {
+          "n_texts": 426,
+          "total_chars": 142003,
+          "total_tokens_before": 34411,
+          "total_tokens_after": 34720,
+          "fertility_before_tokens_per_char": 0.24232586635493616,
+          "fertility_after_tokens_per_char": 0.24450187672091434,
+          "fertility_inflation_relative": 0.008979686728081138,
+          "merges_before": 129794,
+          "merges_after": 97538,
+          "merges_dropped": 32256
+        }
+      }
+    },
+    "C": {
+      "8192": {
+        "target_size": 8192,
+        "overflow": true,
+        "natural_size": 20203,
+        "minimum_viable_K": 20203
+      },
+      "16384": {
+        "target_size": 16384,
+        "overflow": true,
+        "natural_size": 20203,
+        "minimum_viable_K": 20203
+      },
+      "24576": {
+        "target_size": 24576,
+        "actual_size": 24576,
+        "overflow": false,
+        "natural_size": 20203,
+        "padding_admitted": 4373,
+        "fertility": {
+          "n_texts": 426,
+          "total_chars": 142003,
+          "total_tokens_before": 34411,
+          "total_tokens_after": 43031,
+          "fertility_before_tokens_per_char": 0.24232586635493616,
+          "fertility_after_tokens_per_char": 0.3030288092505088,
+          "fertility_inflation_relative": 0.2505012931911308,
+          "merges_before": 129794,
+          "merges_after": 23794,
+          "merges_dropped": 106000
+        }
+      },
+      "32768": {
+        "target_size": 32768,
+        "actual_size": 32768,
+        "overflow": false,
+        "natural_size": 20203,
+        "padding_admitted": 12565,
+        "fertility": {
+          "n_texts": 426,
+          "total_chars": 142003,
+          "total_tokens_before": 34411,
+          "total_tokens_after": 40058,
+          "fertility_before_tokens_per_char": 0.24232586635493616,
+          "fertility_after_tokens_per_char": 0.2820926318458061,
+          "fertility_inflation_relative": 0.16410450146755395,
+          "merges_before": 129794,
+          "merges_after": 31941,
+          "merges_dropped": 97853
+        }
+      },
+      "49152": {
+        "target_size": 49152,
+        "actual_size": 49152,
+        "overflow": false,
+        "natural_size": 20203,
+        "padding_admitted": 28949,
+        "fertility": {
+          "n_texts": 426,
+          "total_chars": 142003,
+          "total_tokens_before": 34411,
+          "total_tokens_after": 38485,
+          "fertility_before_tokens_per_char": 0.24232586635493616,
+          "fertility_after_tokens_per_char": 0.2710154010830757,
+          "fertility_inflation_relative": 0.11839237453139972,
+          "merges_before": 129794,
+          "merges_after": 48196,
+          "merges_dropped": 81598
+        }
+      },
+      "65536": {
+        "target_size": 65536,
+        "actual_size": 65536,
+        "overflow": false,
+        "natural_size": 20203,
+        "padding_admitted": 45333,
+        "fertility": {
+          "n_texts": 426,
+          "total_chars": 142003,
+          "total_tokens_before": 34411,
+          "total_tokens_after": 38017,
+          "fertility_before_tokens_per_char": 0.24232586635493616,
+          "fertility_after_tokens_per_char": 0.26771969606275925,
+          "fertility_inflation_relative": 0.10479207230246157,
+          "merges_before": 129794,
+          "merges_after": 64418,
+          "merges_dropped": 65376
+        }
+      },
+      "98304": {
+        "target_size": 98304,
+        "actual_size": 90796,
+        "overflow": false,
+        "natural_size": 20203,
+        "padding_admitted": 70593,
+        "fertility": {
+          "n_texts": 426,
+          "total_chars": 142003,
+          "total_tokens_before": 34411,
+          "total_tokens_after": 37716,
+          "fertility_before_tokens_per_char": 0.24232586635493616,
+          "fertility_after_tokens_per_char": 0.2656000225347352,
+          "fertility_inflation_relative": 0.0960448693731657,
+          "merges_before": 129794,
+          "merges_after": 89422,
+          "merges_dropped": 40372
+        }
+      }
+    },
+    "A-fixed": {
+      "8192": {
+        "target_size": 8192,
+        "overflow": true,
+        "natural_size": 9467,
+        "minimum_viable_K": 9467
+      },
+      "16384": {
+        "target_size": 16384,
+        "actual_size": 16384,
+        "overflow": false,
+        "natural_size": 9467,
+        "padding_admitted": 6917,
+        "fertility": {
+          "n_texts": 426,
+          "total_chars": 142003,
+          "total_tokens_before": 34411,
+          "total_tokens_after": 34411,
+          "fertility_before_tokens_per_char": 0.24232586635493616,
+          "fertility_after_tokens_per_char": 0.24232586635493616,
+          "fertility_inflation_relative": 0.0,
+          "merges_before": 129794,
+          "merges_after": 15618,
+          "merges_dropped": 114176
+        }
+      },
+      "24576": {
+        "target_size": 24576,
+        "actual_size": 24576,
+        "overflow": false,
+        "natural_size": 9467,
+        "padding_admitted": 15109,
+        "fertility": {
+          "n_texts": 426,
+          "total_chars": 142003,
+          "total_tokens_before": 34411,
+          "total_tokens_after": 34411,
+          "fertility_before_tokens_per_char": 0.24232586635493616,
+          "fertility_after_tokens_per_char": 0.24232586635493616,
+          "fertility_inflation_relative": 0.0,
+          "merges_before": 129794,
+          "merges_after": 23810,
+          "merges_dropped": 105984
+        }
+      },
+      "32768": {
+        "target_size": 32768,
+        "actual_size": 32768,
+        "overflow": false,
+        "natural_size": 9467,
+        "padding_admitted": 23301,
+        "fertility": {
+          "n_texts": 426,
+          "total_chars": 142003,
+          "total_tokens_before": 34411,
+          "total_tokens_after": 34411,
+          "fertility_before_tokens_per_char": 0.24232586635493616,
+          "fertility_after_tokens_per_char": 0.24232586635493616,
+          "fertility_inflation_relative": 0.0,
+          "merges_before": 129794,
+          "merges_after": 32002,
+          "merges_dropped": 97792
+        }
+      },
+      "49152": {
+        "target_size": 49152,
+        "actual_size": 49152,
+        "overflow": false,
+        "natural_size": 9467,
+        "padding_admitted": 39685,
+        "fertility": {
+          "n_texts": 426,
+          "total_chars": 142003,
+          "total_tokens_before": 34411,
+          "total_tokens_after": 34411,
+          "fertility_before_tokens_per_char": 0.24232586635493616,
+          "fertility_after_tokens_per_char": 0.24232586635493616,
+          "fertility_inflation_relative": 0.0,
+          "merges_before": 129794,
+          "merges_after": 48386,
+          "merges_dropped": 81408
+        }
+      },
+      "65536": {
+        "target_size": 65536,
+        "actual_size": 65536,
+        "overflow": false,
+        "natural_size": 9467,
+        "padding_admitted": 56069,
+        "fertility": {
+          "n_texts": 426,
+          "total_chars": 142003,
+          "total_tokens_before": 34411,
+          "total_tokens_after": 34411,
+          "fertility_before_tokens_per_char": 0.24232586635493616,
+          "fertility_after_tokens_per_char": 0.24232586635493616,
+          "fertility_inflation_relative": 0.0,
+          "merges_before": 129794,
+          "merges_after": 64770,
+          "merges_dropped": 65024
+        }
+      },
+      "98304": {
+        "target_size": 98304,
+        "actual_size": 98304,
+        "overflow": false,
+        "natural_size": 9467,
+        "padding_admitted": 88837,
+        "fertility": {
+          "n_texts": 426,
+          "total_chars": 142003,
+          "total_tokens_before": 34411,
+          "total_tokens_after": 34411,
+          "fertility_before_tokens_per_char": 0.24232586635493616,
+          "fertility_after_tokens_per_char": 0.24232586635493616,
+          "fertility_inflation_relative": 0.0,
+          "merges_before": 129794,
+          "merges_after": 97538,
+          "merges_dropped": 32256
+        }
+      }
+    }
+  }
+}
