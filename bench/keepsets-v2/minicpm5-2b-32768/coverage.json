@@ -1,0 +1,65 @@
+{
+  "tokenizer_label": "minicpm5-2b",
+  "tokenizer_path": "/Users/oleh/.cache/huggingface/hub/models--ozhyhinas--MiniCPM5-2B-q4f16_1-MLC/snapshots/2318f37d9c39277ff01dc64086491028c95d4db4/tokenizer.json",
+  "keepset_version": "v2",
+  "target_size": 32768,
+  "actual_size": 32768,
+  "clipped_to_natural": false,
+  "layer1_natural_size": 20203,
+  "layer2_dropped_count": 39764,
+  "layer3_admitted_count": 12565,
+  "layer_accounting_marginal": [
+    {
+      "layer": "byte_alphabet",
+      "layer_size": 256,
+      "new_ids": 256
+    },
+    {
+      "layer": "added_and_special",
+      "layer_size": 510,
+      "new_ids": 510
+    },
+    {
+      "layer": "chat_template_and_prompts",
+      "layer_size": 301,
+      "new_ids": 264
+    },
+    {
+      "layer": "ascii_le3_chars",
+      "layer_size": 18996,
+      "new_ids": 18896
+    },
+    {
+      "layer": "maths_and_greek_symbols",
+      "layer_size": 172,
+      "new_ids": 161
+    },
+    {
+      "layer": "merge_ancestor_closure",
+      "layer_size": 20203,
+      "new_ids": 116
+    }
+  ],
+  "merges": {
+    "before": 129794,
+    "after": 31941,
+    "dropped": 97853,
+    "dropped_fraction": 0.7539100420666595
+  },
+  "tokenizer_config_phantom_added_tokens_dropped": 0,
+  "tokenizer_config_extra_special_tokens_dropped": 0,
+  "length_check": {
+    "expected_K": 32768,
+    "tokenizers_from_file_len": 32768,
+    "hf_autotokenizer_from_pretrained_len": 32768
+  },
+  "verify_all_corpus_texts": {
+    "exact_match_total": 3,
+    "exact_match_passed": 3,
+    "exact_match_failures": [],
+    "oos_texts_n": 237,
+    "oos_texts_fertility_before": 0.22563359615152445,
+    "oos_texts_fertility_after_real": 0.25858338208935816
+  },
+  "stop_token_id_mismatches_found": []
+}

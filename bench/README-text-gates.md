@@ -431,3 +431,199 @@ and are not consumed as ids by anything downstream. No `config.json` file is
 emitted by this rebuild at all (only `config-patch.json`); the sibling
 agent's `config.json` fix was in its own compiled-model repo, out of scope
 here.
+
+## Keep-set v2 (2026-09-09)
+
+### Why merge rank alone was insufficient
+
+v1 (PR #55, merged into this branch as `7f9c834`) built its keep-set as
+`seen-in-corpus ids | byte-alphabet | added/special | harness-prompt ids |
+KaTeX-macro-seed ids | maths-English-seed-word ids`, then padded whatever
+was left up to K with the first N regular token ids by ascending id (a BPE
+merge-rank proxy). Measured on the Qwen3.5 tokenizer at K=65,536: the
+non-padding union above is only **625 ids**; the remaining **64,911** of
+65,536 are pure merge-rank padding -- "the first 64,911 token ids" of a
+general multilingual vocabulary, not anything pruned *to* English + LaTeX.
+That produced three concrete failures (measured on the 120-item arXiv
+corpus and LatexGen's own conversion prompt):
+
+1. **Prompt-template tokens missing.** 7 tokens from LatexGen's own PDF-paste
+   prompt (`Ġoscillator`, `Ġdamping`, `Ġconverge`, `Ġflattened`, `Ġreorder`,
+   the diaeresis-above byte `Â¨`, and `ĠÏĨ` = " φ") fell outside the v1
+   keep-set. These accounted for the entire divergence rate of the pruned
+   Qwen3.5-0.8B: its OOS item set was exactly its 97 PDF-prompt items, all 23
+   plain-prompt items were byte-identical.
+2. **Dropped subwords risked corrupting rare words.** v1 had no guarantee
+   that every ASCII word decomposes into surviving pieces; the pruned 0.8B
+   emitted `Kolskii` for `Nikolskii`.
+3. **Maths symbols starved.** v1's keep-set contained 88 of 1,642
+   maths/Greek symbol tokens (5.4%) -- `φ ← ↔ ↓ ×` were all dropped -- while
+   merge-rank padding kept unrelated tokens like `ĠXR`, `mint`, `egers`.
+
+v2 replaces frequency-rank padding with **structural, corpus-independent
+layers**: guarantee decomposability and prompt/symbol coverage by
+construction, then use merge rank only for the genuinely residual budget
+(Layer 3), exactly where v1 already argued it is a defensible signal.
+
+### Layer design
+
+**Layer 1 -- structural, must-keep (every item mandatory, no judgement):**
+
+- All 256 byte-alphabet tokens.
+- All added/special tokens.
+- Every token id produced by rendering the tokenizer's own chat template
+  (via each model's `mlc-chat-config.json` `conv_template`, both
+  `enable_thinking` shapes) over: LatexGen's own conversion system prompt,
+  PDF hint and both few-shot pairs (`public/pipeline.js` +
+  `public/pdf-prompt.js`, extracted programmatically by
+  `bench/build-keepset-seed-latexgen-prompts.py` into
+  `bench/keepset-seed-latexgen-prompts.json`, with assertions that the 7
+  failure-1 words/characters are present in the extracted text); and the
+  webnn-workbench harness's `FRESH_ITEMS` + `QUALITY_CORPUS` prompts (v1's
+  `bench/keepset-harness-prompts.json`, reused unchanged). This is the fix
+  for failure 1 and is not optional.
+- **All ASCII tokens of <=3 characters**, measured on token *content*
+  (leading/trailing whitespace boundary markers stripped before counting
+  length, so `" the"` and `"the"` are the same 3-character word): 20,036 on
+  Qwen3.5, 18,996 on MiniCPM5-2B. This is the fix for failure 2: every Latin
+  word, including any proper noun, is guaranteed to decompose into kept
+  pieces (worst case, individual kept bytes), so a miss costs fertility, not
+  a corrupted spelling. Verified explicitly (see Validation #1/#2 below).
+- **All maths and Greek symbol tokens**, derived from Unicode General
+  Category and block properties (`bench/keepset-v2-unicode.py`), not a
+  hand-typed list: 1,004 on Qwen3.5, 172 on MiniCPM5-2B. Method: Unicode
+  category `Sm` (Math_Symbol) in any block, plus the Arrows/Supplemental
+  Arrows/Mathematical Operators/Miscellaneous Mathematical Symbols blocks,
+  plus superscript/subscript digits, primes, Mathematical Alphanumeric
+  Symbols, and maths-accent combining diacritics. **Maths usage is separated
+  from natural-language usage** two ways: (a) in the Greek and Coptic block,
+  only the *unaccented* letters (the standard maths/physics variable
+  alphabet) qualify -- modern Greek-language orthography's accented letters
+  (`ά έ ή ί ό ύ ώ` etc., every one identifiable by "WITH TONOS"/"WITH
+  DIALYTIKA" in its Unicode name) and Greek punctuation (question mark, ano
+  teleia) are excluded by name; (b) CJK/other-script punctuation is never in
+  any of the swept ranges at all, so it is never reachable by this
+  classifier -- it falls straight through to Layer 2.
+- **Merge-ancestor closure** over all of the above: for every kept id, keep
+  both parts of the BPE merge that produced it, transitively, applied here
+  as its own accounted layer (v1 rejected this as a hard invariant baked
+  into everything because it makes K unbounded). Cost: 130 extra ids on
+  Qwen3.5, 116 on MiniCPM5-2B -- small, and did not overflow either target K
+  for either tokenizer (see accounting table).
+
+**Layer 2 -- drop wholesale (diagnostic/exclusionary, no judgement):** every
+token whose text contains no ASCII letter and is not a Layer-1 maths symbol.
+106,614 tokens dropped on Qwen3.5, 39,764 on MiniCPM5-2B -- confirmed by
+direct inspection to be CJK, Hangul, Cyrillic, Arabic, Hebrew, Devanagari,
+Thai, Georgian, Tamil, Malayalam, Gujarati, Telugu, Kannada and accented-Latin
+tokens, not misclassified maths content.
+
+**Layer 3 -- residual ranking (unchanged from v1's method):** the remaining
+budget goes to ASCII-letter-bearing candidates not already kept, ranked by
+ascending original token id (the same BPE-merge-rank proxy v1 used), exactly
+as directed -- no corpus, no ranking invention, out of scope for this task.
+
+### Layer accounting table
+
+**Qwen3.5** (vocab 248,070 with added tokens; natural/no-padding Layer-1 size
+21,597; v1's non-padding "real" contribution was 625 ids at K=65,536):
+
+| layer | layer_size | new ids (marginal) |
+|---|---:|---:|
+| byte_alphabet | 256 | 256 |
+| added_and_special | 26 | 26 |
+| chat_template_and_prompts | 291 | 254 |
+| ascii_le3_chars | 20,036 | 19,936 |
+| maths_and_greek_symbols | 1,004 | 995 |
+| merge_ancestor_closure | 21,597 | 130 |
+
+| K | actual | Layer 1 (structural) | Layer 2 (dropped) | Layer 3 (merge-rank fill) | v1 natural size |
+|---:|---:|---:|---:|---:|---:|
+| 32,768 | 32,768 | 21,597 | 106,614 | 11,171 | 6,414 |
+| 65,536 | 65,536 | 21,597 | 106,614 | 43,939 | 6,414 |
+
+**MiniCPM5-2B** (vocab 130,560; natural/no-padding Layer-1 size 20,203; note
+MiniCPM5-2B's 510 added tokens include 478 `<|unused_N|>` fine-tuning
+placeholders that the brief's "added/special ids always kept" rule keeps
+unconditionally, same inefficiency v1 already flagged):
+
+| layer | layer_size | new ids (marginal) |
+|---|---:|---:|
+| byte_alphabet | 256 | 256 |
+| added_and_special | 510 | 510 |
+| chat_template_and_prompts | 301 | 264 |
+| ascii_le3_chars | 18,996 | 18,896 |
+| maths_and_greek_symbols | 172 | 161 |
+| merge_ancestor_closure | 20,203 | 116 |
+
+| K | actual | Layer 1 (structural) | Layer 2 (dropped) | Layer 3 (merge-rank fill) | v1 natural size |
+|---:|---:|---:|---:|---:|---:|
+| 32,768 | 32,768 | 20,203 | 39,764 | 12,565 | 7,583 |
+| 65,536 | 65,536 | 20,203 | 39,764 | 45,333 | 7,583 |
+
+No overflow at either K for either tokenizer: Layer 1's structural cost
+(~20-22k) leaves ample budget below even the smaller 32,768 target.
+
+### Validation
+
+All five checks below were run by `bench/validate-keepset-v2.py` against all
+four emitted directories; full output in
+`bench/results-keepset-v2-validation.json`. "Roundtrips losslessly" means
+`rebuilt_tok.decode(rebuilt_tok.encode(text))` equals
+`original_tok.decode(original_tok.encode(text))` -- comparing against the
+*original* tokenizer's own roundtrip, not the raw string, because 6 of the
+120 real arXiv `input` texts contain NFD-decomposed accented Latin letters
+(e.g. `Ac\u0327\u0131kgo\u0308z`) that the tokenizer's pre-existing NFC
+normalizer already recomposes on the *unpruned* tokenizer's own roundtrip,
+independent of any pruning; comparing against the raw string would have
+misreported that pre-existing, unrelated normalizer behavior as a keep-set
+miss.
+
+1. **The three failures are gone**, at every K, both tokenizers: the exact 7
+   Qwen3.5 ids named in the brief (`80757/80636/77019/65088/80313/72452/94498`)
+   are all in every Qwen3.5 keep-set; LatexGen's full system prompt, PDF
+   hint and both few-shot pairs roundtrip losslessly; `φ ← ↔ ↓ ×` all
+   roundtrip losslessly; all 7 rare-word probes (`Nikolskii`, `Randers`,
+   `Lissajous`, `Kullback`, `Hausdorff`, `Chebyshev`, `Sobolev`) roundtrip
+   losslessly.
+2. **Short-piece completeness**: all 120 `bench/arxiv-pastes.json` `reference`
+   strings and 2,000 random `/usr/share/dict/words` English words roundtrip
+   losslessly, at both K, both tokenizers (0 failures out of 2,120 x 4).
+3. **Fertility** (real re-encoding with the rebuilt tokenizer, 120 arXiv
+   inputs + references, 108,318 chars): reported, not gated.
+
+   | tokenizer | K | fertility before | fertility after | inflation |
+   |---|---:|---:|---:|---:|
+   | qwen35 | 32,768 | 0.2431 | 0.2906 | +19.52% |
+   | qwen35 | 65,536 | 0.2431 | 0.2637 | +8.47% |
+   | minicpm5-2b | 32,768 | 0.2259 | 0.2587 | +14.50% |
+   | minicpm5-2b | 65,536 | 0.2259 | 0.2428 | +7.49% |
+
+4. **Prompt coverage**: fraction of the 120 arXiv items whose full rendered
+   prompt (plain and PDF-hint-with-few-shot treatments) roundtrips
+   losslessly. v1 scored 23/120 on the PDF prompt; v2 is **120/120 on both
+   treatments, at both K, both tokenizers** (8/8 combinations).
+5. **Layer accounting table**: see above.
+
+### K=32,768 memory note
+
+Using Qwen3.5-4B's tied embedding (`hidden_size=2560`, `tie_word_embeddings:
+true`) against its shipped `vocab_size=248,320` at int4 (0.5 bytes/param):
+`(248,320-65,536)*2560*0.5` = 234.0 MB saved at K=65,536 vs
+`(248,320-32,768)*2560*0.5` = 275.9 MB saved at K=32,768 -- confirms the
+brief's "276 MB instead of 234 MB" figure. Emitted per the brief; not judged
+here (that tradeoff is the model-side agents' call).
+
+### What v2 does not do
+
+- No KaTeX-macro seed or maths-English word seed (v1's `bench/keepset-seed-
+  latex.json` / `bench/keepset-seed-mathsenglish.json`): v2's structural
+  layers make them unnecessary -- any LaTeX macro or maths-English word
+  decomposes via the ASCII<=3-char guarantee even without an explicit seed
+  list. v1's directories and seed files are untouched.
+- No corpus-frequency signal or leave-one-out anywhere in the v2 selection
+  itself (Layer 3 is purely ascending-id merge rank); v1's `bench/vocab-
+  coverage.py` "extended mode" corpus-frequency machinery is unused by v2
+  but left intact for v1's own directories.
+- No byte-identity or roundtrip-exactness gate, and no ranking corpus, and
+  no LLM-judged selection, per the brief.

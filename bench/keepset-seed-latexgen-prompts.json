@@ -1,0 +1,27 @@
+{
+  "provenance": {
+    "source_repo_relative_files": [
+      "public/pipeline.js",
+      "public/pdf-prompt.js"
+    ],
+    "source_file_last_commits": {
+      "public/pipeline.js": "eb0b8a0e2ed493fbad361727501234ec2c60a02b",
+      "public/pdf-prompt.js": "95ecf7698bd538e0c3a7dd5cde65f025fecdad07"
+    },
+    "extraction_method": "Regex-extracted verbatim from the two source files' literal SYSTEM_PROMPT (backtick template), CONVERT_USER (backtick template with one ${text} interpolation point, captured as a fixed prefix string), PDF_HINT (double-quoted string), and PDF_FEWSHOT (JSON array literal, parsed directly with json.loads since the literal's syntax is valid JSON) declarations. Not hand-transcribed: re-running this script against an edited pipeline.js/pdf-prompt.js regenerates this file from the new text.",
+    "note": "This is LatexGen's OWN conversion prompt (what the app actually sends), distinct from keepset-harness-prompts.json which covers the webnn-workbench harness's separate proxy SYSTEM/CONVERT_USER/FRESH_ITEMS/QUALITY_CORPUS strings. v1 only had the harness file, which does not contain PDF_HINT or PDF_FEWSHOT text -- exactly where the 7 tokens keep-set v1 was missing (oscillator, damping, converge, flattened, reorder, a diaeresis-above byte, and literal Greek phi) actually occur."
+  },
+  "system_prompt": "Convert the text to LaTeX. Never solve, evaluate, or answer — if the text is a question, transcribe the question. Output only LaTeX, no commentary or fences. Pure math: \\[ ... \\]. Prose with math: keep the prose, wrap math in \\( ... \\). Standard amsmath only.",
+  "convert_user_prefix": "Convert to LaTeX. Do not solve or answer.\n",
+  "pdf_hint": "The text was copied from a PDF: superscripts/subscripts are flattened (x2 = x^2, kB = k_B),\nfractions and limits are split across lines (a lone symbol on its own line is a numerator,\ndenominator or limit of the nearby formula), zero-width characters and line wraps are noise.\nReturn the passage as plain text in the original order with each formula converted: \\( \\) inline, \\[ \\] for a formula on its own line. Never wrap prose in \\text{}, never use enumerate or equation environments, never drop or reorder sentences, never solve anything.",
+  "pdf_fewshot": [
+    {
+      "user": "A damped oscillator satisfies m x¨ + c x˙ + kx = 0. For light damping the solution decays as x(t) = A e\n−γt\ncos(ωt + φ), where γ =\nc\n2m\n​\n\nand the period is T = 2π/ω. The\nsheet lists ω0 =\n√\nk/m for the undamped case.",
+      "assistant": "A damped oscillator satisfies \\( m\\ddot{x} + c\\dot{x} + kx = 0 \\). For light damping the solution decays as \\( x(t) = A e^{-\\gamma t} \\cos(\\omega t + \\varphi) \\), where \\( \\gamma = \\frac{c}{2m} \\) and the period is \\( T = 2\\pi/\\omega \\). The sheet lists \\( \\omega_0 = \\sqrt{k/m} \\) for the undamped case."
+    },
+    {
+      "user": "The partial sums converge quickly. In particular\n∞\n\n1\nπ2\n∑ 2 =\nk\n8\nk=1, odd\n​\n\nand the ratio test uses lim (ak+1)\nk→∞ ak\n. Both facts appear in chapter 4.",
+      "assistant": "The partial sums converge quickly. In particular \\[ \\sum_{k=1,\\, \\text{odd}}^{\\infty} \\frac{1}{k^2} = \\frac{\\pi^2}{8} \\] and the ratio test uses \\( \\lim_{k\\to\\infty} \\frac{a_{k+1}}{a_k} \\). Both facts appear in chapter 4."
+    }
+  ]
+}

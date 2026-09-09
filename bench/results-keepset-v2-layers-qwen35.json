@@ -1,0 +1,60 @@
+{
+  "tokenizer_label": "qwen35",
+  "tokenizer_path": "/Users/oleh/.cache/huggingface/hub/models--mlc-ai--Qwen3.5-0.8B-q4f16_1-MLC/snapshots/0ec138972555613c1d7812a821778ad0398c8790/tokenizer.json",
+  "vocab_size_with_added": 248070,
+  "layer_accounting_marginal": [
+    {
+      "layer": "byte_alphabet",
+      "layer_size": 256,
+      "new_ids": 256
+    },
+    {
+      "layer": "added_and_special",
+      "layer_size": 26,
+      "new_ids": 26
+    },
+    {
+      "layer": "chat_template_and_prompts",
+      "layer_size": 291,
+      "new_ids": 254
+    },
+    {
+      "layer": "ascii_le3_chars",
+      "layer_size": 20036,
+      "new_ids": 19936
+    },
+    {
+      "layer": "maths_and_greek_symbols",
+      "layer_size": 1004,
+      "new_ids": 995
+    },
+    {
+      "layer": "merge_ancestor_closure",
+      "layer_size": 21597,
+      "new_ids": 130
+    }
+  ],
+  "layer1_natural_size": 21597,
+  "layer2_dropped_count": 106614,
+  "layer3_candidate_pool_size": 119859,
+  "by_target_size": {
+    "32768": {
+      "target_size": 32768,
+      "overflow": false,
+      "actual_size": 32768,
+      "layer1_natural_size": 21597,
+      "layer2_dropped_count": 106614,
+      "layer3_admitted_count": 11171,
+      "keep_idx_sha256": "8c6dbabc30ad27a66609a7ab62633704f3ebbd7cb60c7bf8cee3ce7be77f1e10"
+    },
+    "65536": {
+      "target_size": 65536,
+      "overflow": false,
+      "actual_size": 65536,
+      "layer1_natural_size": 21597,
+      "layer2_dropped_count": 106614,
+      "layer3_admitted_count": 43939,
+      "keep_idx_sha256": "ddd2a2c6f3ec54768ea6d54498e76b389e758086ec950dda87a6e9b51e52e927"
+    }
+  }
+}

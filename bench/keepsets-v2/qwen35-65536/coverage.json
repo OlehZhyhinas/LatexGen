@@ -1,0 +1,171 @@
+{
+  "tokenizer_label": "qwen35",
+  "tokenizer_path": "/Users/oleh/.cache/huggingface/hub/models--mlc-ai--Qwen3.5-0.8B-q4f16_1-MLC/snapshots/0ec138972555613c1d7812a821778ad0398c8790/tokenizer.json",
+  "keepset_version": "v2",
+  "target_size": 65536,
+  "actual_size": 65536,
+  "clipped_to_natural": false,
+  "layer1_natural_size": 21597,
+  "layer2_dropped_count": 106614,
+  "layer3_admitted_count": 43939,
+  "layer_accounting_marginal": [
+    {
+      "layer": "byte_alphabet",
+      "layer_size": 256,
+      "new_ids": 256
+    },
+    {
+      "layer": "added_and_special",
+      "layer_size": 26,
+      "new_ids": 26
+    },
+    {
+      "layer": "chat_template_and_prompts",
+      "layer_size": 291,
+      "new_ids": 254
+    },
+    {
+      "layer": "ascii_le3_chars",
+      "layer_size": 20036,
+      "new_ids": 19936
+    },
+    {
+      "layer": "maths_and_greek_symbols",
+      "layer_size": 1004,
+      "new_ids": 995
+    },
+    {
+      "layer": "merge_ancestor_closure",
+      "layer_size": 21597,
+      "new_ids": 130
+    }
+  ],
+  "merges": {
+    "before": 247587,
+    "after": 64848,
+    "dropped": 182739,
+    "dropped_fraction": 0.7380799476547638
+  },
+  "tokenizer_config_phantom_added_tokens_dropped": 7,
+  "tokenizer_config_extra_special_tokens_dropped": 3,
+  "length_check": {
+    "expected_K": 65536,
+    "tokenizers_from_file_len": 65536,
+    "hf_autotokenizer_from_pretrained_len": 65536
+  },
+  "verify_all_corpus_texts": {
+    "exact_match_total": 24,
+    "exact_match_passed": 23,
+    "exact_match_failures": [
+      {
+        "text": "The most immediate question a reader will have is why\nthe densest packing loses. At unit nearest-neighbour distance fcc has V = 0.707 against bct\u2019s 0.750, so bct is the\nless dense structure, and it wi",
+        "expected_ids": [
+          735,
+          1332,
+          13141,
+          3190,
+          260,
+          6202,
+          647,
+          579,
+          360,
+          2971,
+          198,
+          1663,
+          26218,
+          263,
+          33421,
+          30166,
+          13,
+          2250,
+          4680,
+          22048,
+          37382,
+          43764,
+          5645,
+          277,
+          600,
+          660,
+          609,
+          279,
+          220,
+          15,
+          13,
+          22,
+          15,
+          22,
+          2192,
+          287,
+          295,
+          701,
+          220,
+          15
+        ],
+        "got_ids": [
+          735,
+          1332,
+          13141,
+          3190,
+          260,
+          6202,
+          647,
+          579,
+          360,
+          2971,
+          198,
+          1663,
+          26218,
+          263,
+          33421,
+          30166,
+          13,
+          2250,
+          4680,
+          22048,
+          37382,
+          43764,
+          5645,
+          277,
+          600,
+          660,
+          609,
+          279,
+          220,
+          15,
+          13,
+          22,
+          15,
+          22,
+          2192,
+          287,
+          295,
+          364,
+          247,
+          82
+        ],
+        "decoded": "The most immediate question a reader will have is why\nthe densest packing loses. At unit nearest-neighbour distance fcc has V = 0.707 against bct\u2019s 0.750, so bct is the\nless dense structure, and it wi",
+        "roundtrip_ok": true,
+        "ids_ok": false
+      }
+    ],
+    "oos_texts_n": 216,
+    "oos_texts_fertility_before": 0.24227990473712652,
+    "oos_texts_fertility_after_real": 0.264584625853063
+  },
+  "stop_token_id_mismatches_found": [
+    {
+      "index": 0,
+      "declared_stop_token_id": 151643,
+      "stop_str": "<|endoftext|>",
+      "token_at_declared_id": "\u0120\u00eb\u0124\u00b4\u00ec\u013c\u00a9",
+      "corrected_old_id": 248044
+    },
+    {
+      "index": 1,
+      "declared_stop_token_id": 151645,
+      "stop_str": "<|im_end|>",
+      "token_at_declared_id": "\u00e0\u00b8\u00ab\u00e0\u00b8\u013b\u00e0\u00b8\u00b1\u00e0\u00b8\u0129",
+      "corrected_old_id": 248046
+    }
+  ]
+}

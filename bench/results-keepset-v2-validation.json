@@ -1,0 +1,488 @@
+{
+  "qwen35": {
+    "32768": {
+      "check1_failures_gone": {
+        "maths_symbols": {
+          "'\u03c6'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              27242
+            ]
+          },
+          "'\u2190'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              25466
+            ]
+          },
+          "'\u2194'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              18359,
+              242
+            ]
+          },
+          "'\u2193'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              26452
+            ]
+          },
+          "'\u00d7'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              16539
+            ]
+          }
+        },
+        "rare_words": {
+          "Nikolskii": {
+            "roundtrip_ok": true,
+            "decoded": "Nikolskii"
+          },
+          "Randers": {
+            "roundtrip_ok": true,
+            "decoded": "Randers"
+          },
+          "Lissajous": {
+            "roundtrip_ok": true,
+            "decoded": "Lissajous"
+          },
+          "Kullback": {
+            "roundtrip_ok": true,
+            "decoded": "Kullback"
+          },
+          "Hausdorff": {
+            "roundtrip_ok": true,
+            "decoded": "Hausdorff"
+          },
+          "Chebyshev": {
+            "roundtrip_ok": true,
+            "decoded": "Chebyshev"
+          },
+          "Sobolev": {
+            "roundtrip_ok": true,
+            "decoded": "Sobolev"
+          }
+        },
+        "maths_symbols_all_ok": true,
+        "rare_words_all_ok": true,
+        "latexgen_prompt_texts": {
+          "all_ok": true,
+          "n_texts": 6,
+          "failures": []
+        },
+        "named_failure1_ids": {
+          "all_7_named_ids_in_keepset": true,
+          "detail": {
+            "80757": {
+              "token": "\u0120oscillator",
+              "in_keepset": true
+            },
+            "80636": {
+              "token": "\u0120damping",
+              "in_keepset": true
+            },
+            "77019": {
+              "token": "\u0120converge",
+              "in_keepset": true
+            },
+            "65088": {
+              "token": "\u0120flattened",
+              "in_keepset": true
+            },
+            "80313": {
+              "token": "\u0120reorder",
+              "in_keepset": true
+            },
+            "72452": {
+              "token": "\u00c2\u00a8",
+              "in_keepset": true
+            },
+            "94498": {
+              "token": "\u0120\u00cf\u00a8",
+              "in_keepset": true
+            }
+          }
+        }
+      },
+      "check2_short_piece_completeness": {
+        "n_reference_strings": 120,
+        "n_reference_pass": 120,
+        "n_random_words": 2000,
+        "n_random_words_pass": 2000,
+        "all_pass": true,
+        "failures": [],
+        "n_failures_total": 0
+      },
+      "check3_fertility": {
+        "n_texts": 240,
+        "total_chars": 108318,
+        "fertility_before_tokens_per_char": 0.24314518362599014,
+        "fertility_after_tokens_per_char": 0.29060728595431967,
+        "fertility_inflation_relative": 0.19520066826138138
+      },
+      "check4_prompt_coverage": {
+        "plain_prompt": {
+          "n_items": 120,
+          "n_full_in_keepset": 120,
+          "fraction": 1.0,
+          "missing_items": []
+        },
+        "pdf_prompt": {
+          "n_items": 120,
+          "n_full_in_keepset": 120,
+          "fraction": 1.0,
+          "missing_items": []
+        }
+      }
+    },
+    "65536": {
+      "check1_failures_gone": {
+        "maths_symbols": {
+          "'\u03c6'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              60010
+            ]
+          },
+          "'\u2190'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              58234
+            ]
+          },
+          "'\u2194'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              24339,
+              242
+            ]
+          },
+          "'\u2193'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              59220
+            ]
+          },
+          "'\u00d7'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              16539
+            ]
+          }
+        },
+        "rare_words": {
+          "Nikolskii": {
+            "roundtrip_ok": true,
+            "decoded": "Nikolskii"
+          },
+          "Randers": {
+            "roundtrip_ok": true,
+            "decoded": "Randers"
+          },
+          "Lissajous": {
+            "roundtrip_ok": true,
+            "decoded": "Lissajous"
+          },
+          "Kullback": {
+            "roundtrip_ok": true,
+            "decoded": "Kullback"
+          },
+          "Hausdorff": {
+            "roundtrip_ok": true,
+            "decoded": "Hausdorff"
+          },
+          "Chebyshev": {
+            "roundtrip_ok": true,
+            "decoded": "Chebyshev"
+          },
+          "Sobolev": {
+            "roundtrip_ok": true,
+            "decoded": "Sobolev"
+          }
+        },
+        "maths_symbols_all_ok": true,
+        "rare_words_all_ok": true,
+        "latexgen_prompt_texts": {
+          "all_ok": true,
+          "n_texts": 6,
+          "failures": []
+        },
+        "named_failure1_ids": {
+          "all_7_named_ids_in_keepset": true,
+          "detail": {
+            "80757": {
+              "token": "\u0120oscillator",
+              "in_keepset": true
+            },
+            "80636": {
+              "token": "\u0120damping",
+              "in_keepset": true
+            },
+            "77019": {
+              "token": "\u0120converge",
+              "in_keepset": true
+            },
+            "65088": {
+              "token": "\u0120flattened",
+              "in_keepset": true
+            },
+            "80313": {
+              "token": "\u0120reorder",
+              "in_keepset": true
+            },
+            "72452": {
+              "token": "\u00c2\u00a8",
+              "in_keepset": true
+            },
+            "94498": {
+              "token": "\u0120\u00cf\u00a8",
+              "in_keepset": true
+            }
+          }
+        }
+      },
+      "check2_short_piece_completeness": {
+        "n_reference_strings": 120,
+        "n_reference_pass": 120,
+        "n_random_words": 2000,
+        "n_random_words_pass": 2000,
+        "all_pass": true,
+        "failures": [],
+        "n_failures_total": 0
+      },
+      "check3_fertility": {
+        "n_texts": 240,
+        "total_chars": 108318,
+        "fertility_before_tokens_per_char": 0.24314518362599014,
+        "fertility_after_tokens_per_char": 0.2637419450137558,
+        "fertility_inflation_relative": 0.08470972396248633
+      },
+      "check4_prompt_coverage": {
+        "plain_prompt": {
+          "n_items": 120,
+          "n_full_in_keepset": 120,
+          "fraction": 1.0,
+          "missing_items": []
+        },
+        "pdf_prompt": {
+          "n_items": 120,
+          "n_full_in_keepset": 120,
+          "fraction": 1.0,
+          "missing_items": []
+        }
+      }
+    }
+  },
+  "minicpm5-2b": {
+    "32768": {
+      "check1_failures_gone": {
+        "maths_symbols": {
+          "'\u03c6'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              21973
+            ]
+          },
+          "'\u2190'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              27062
+            ]
+          },
+          "'\u2194'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              18064,
+              264
+            ]
+          },
+          "'\u2193'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              22385
+            ]
+          },
+          "'\u00d7'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              8915
+            ]
+          }
+        },
+        "rare_words": {
+          "Nikolskii": {
+            "roundtrip_ok": true,
+            "decoded": "Nikolskii"
+          },
+          "Randers": {
+            "roundtrip_ok": true,
+            "decoded": "Randers"
+          },
+          "Lissajous": {
+            "roundtrip_ok": true,
+            "decoded": "Lissajous"
+          },
+          "Kullback": {
+            "roundtrip_ok": true,
+            "decoded": "Kullback"
+          },
+          "Hausdorff": {
+            "roundtrip_ok": true,
+            "decoded": "Hausdorff"
+          },
+          "Chebyshev": {
+            "roundtrip_ok": true,
+            "decoded": "Chebyshev"
+          },
+          "Sobolev": {
+            "roundtrip_ok": true,
+            "decoded": "Sobolev"
+          }
+        },
+        "maths_symbols_all_ok": true,
+        "rare_words_all_ok": true,
+        "latexgen_prompt_texts": {
+          "all_ok": true,
+          "n_texts": 6,
+          "failures": []
+        }
+      },
+      "check2_short_piece_completeness": {
+        "n_reference_strings": 120,
+        "n_reference_pass": 120,
+        "n_random_words": 2000,
+        "n_random_words_pass": 2000,
+        "all_pass": true,
+        "failures": [],
+        "n_failures_total": 0
+      },
+      "check3_fertility": {
+        "n_texts": 240,
+        "total_chars": 108318,
+        "fertility_before_tokens_per_char": 0.2259181299507007,
+        "fertility_after_tokens_per_char": 0.25867353533115456,
+        "fertility_inflation_relative": 0.1449879449143885
+      },
+      "check4_prompt_coverage": {
+        "plain_prompt": {
+          "n_items": 120,
+          "n_full_in_keepset": 120,
+          "fraction": 1.0,
+          "missing_items": []
+        },
+        "pdf_prompt": {
+          "n_items": 120,
+          "n_full_in_keepset": 120,
+          "fraction": 1.0,
+          "missing_items": []
+        }
+      }
+    },
+    "65536": {
+      "check1_failures_gone": {
+        "maths_symbols": {
+          "'\u03c6'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              27034
+            ]
+          },
+          "'\u2190'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              55286
+            ]
+          },
+          "'\u2194'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              18064,
+              264
+            ]
+          },
+          "'\u2193'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              29039
+            ]
+          },
+          "'\u00d7'": {
+            "roundtrip_ok": true,
+            "new_ids": [
+              8915
+            ]
+          }
+        },
+        "rare_words": {
+          "Nikolskii": {
+            "roundtrip_ok": true,
+            "decoded": "Nikolskii"
+          },
+          "Randers": {
+            "roundtrip_ok": true,
+            "decoded": "Randers"
+          },
+          "Lissajous": {
+            "roundtrip_ok": true,
+            "decoded": "Lissajous"
+          },
+          "Kullback": {
+            "roundtrip_ok": true,
+            "decoded": "Kullback"
+          },
+          "Hausdorff": {
+            "roundtrip_ok": true,
+            "decoded": "Hausdorff"
+          },
+          "Chebyshev": {
+            "roundtrip_ok": true,
+            "decoded": "Chebyshev"
+          },
+          "Sobolev": {
+            "roundtrip_ok": true,
+            "decoded": "Sobolev"
+          }
+        },
+        "maths_symbols_all_ok": true,
+        "rare_words_all_ok": true,
+        "latexgen_prompt_texts": {
+          "all_ok": true,
+          "n_texts": 6,
+          "failures": []
+        }
+      },
+      "check2_short_piece_completeness": {
+        "n_reference_strings": 120,
+        "n_reference_pass": 120,
+        "n_random_words": 2000,
+        "n_random_words_pass": 2000,
+        "all_pass": true,
+        "failures": [],
+        "n_failures_total": 0
+      },
+      "check3_fertility": {
+        "n_texts": 240,
+        "total_chars": 108318,
+        "fertility_before_tokens_per_char": 0.2259181299507007,
+        "fertility_after_tokens_per_char": 0.2428405251204786,
+        "fertility_inflation_relative": 0.0749049895795022
+      },
+      "check4_prompt_coverage": {
+        "plain_prompt": {
+          "n_items": 120,
+          "n_full_in_keepset": 120,
+          "fraction": 1.0,
+          "missing_items": []
+        },
+        "pdf_prompt": {
+          "n_items": 120,
+          "n_full_in_keepset": 120,
+          "fraction": 1.0,
+          "missing_items": []
+        }
+      }
+    }
+  }
+}
