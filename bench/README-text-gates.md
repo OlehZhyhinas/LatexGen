@@ -11,8 +11,13 @@ Run from the repository root:
 
 ```bash
 uv venv --python 3.12 .venv
-uv pip install --python .venv/bin/python tokenizers numpy
+uv pip install --python .venv/bin/python tokenizers numpy transformers
 ```
+
+`transformers` is required by `bench/rebuild-keepset-tokenizer.py`'s per-directory
+`len(AutoTokenizer)` assertion (see "Keep-set rebuild: extra_special_tokens defect
+and fix" below); it is not needed for `copy-fraction.py` or `vocab-coverage.py`
+themselves and pulls no GPU/torch dependency for tokenizer-only usage.
 
 ## Build pdf-paste tier
 
@@ -320,3 +325,109 @@ looks safe at any size tested; input-side coverage does not clear a "safe"
 bar at any size tested, including the primary K. Whether that is acceptable
 is a product call for whoever reads these numbers, not something this gate
 resolves by picking a bigger K.
+
+## Keep-set rebuild: `extra_special_tokens` defect and fix (2026-09-09)
+
+**The defect.** Two independent downstream consumers of the frozen
+`bench/keepsets/*` artifacts hit the same bug: loading an emitted directory
+the way `mlc_llm/interface/gen_config.py:270-284` does --
+`transformers.AutoTokenizer.from_pretrained(<dir>)` then `len(tokenizer)` --
+came back `K + 3` (e.g. 65539, not 65536) for every `qwen35-*` directory. The
+rebuilt `tokenizer_config.json` had kept an `extra_special_tokens` field that
+names special-token roles by their literal string
+(`audio_bos_token: "<|audio_start|>"`, `audio_eos_token: "<|audio_end|>"`,
+`audio_token: "<|audio_pad|>"`, plus four `vision_*`/`image_token`/
+`video_token` roles). `rebuild-keepset-tokenizer.py`'s id-based prune only
+ever rewrites `added_tokens_decoder` (keyed by id); it never looked at this
+field, so it survived byte-for-byte from the unpruned upstream Qwen3.5
+config. Three of the seven named strings (the audio/TTS placeholders) fall
+outside the K=65536 LaTeX/maths keep-set and are gone from the rebuilt
+vocab; `AutoTokenizer` does not error on that, it silently treats each
+missing name as a brand-new token and appends it past the end of the
+vocabulary -- hence `K + 3`. `gen_config.py` then overwrites
+`active_vocab_size` from that inflated `len(hf_tokenizer)`, so a naive
+`AutoTokenizer.from_pretrained` + `gen_config` consumer ships a compiled
+model with a vocab head three rows too large, with those extra rows' weights
+coming from whatever the loader's identity fallback produces for
+out-of-range indices -- silently, since nothing anywhere validates tokenizer
+length against `vocab_size`. The same latent field, with the same three
+missing strings, exists in the original unpruned upstream Qwen3.5
+`tokenizer_config.json` too (`transformers.AutoTokenizer.from_pretrained`
+against the raw upstream directory also returns 248,323, not 248,320) --
+pruning did not introduce this bug, it was just the first thing to make it
+bite, because the audio/TTS tokens are common enough to always survive a
+248k-token vocab but rare enough in a LaTeX/maths corpus to fall out of a
+64k-token keep-set. `bench/keepsets/minicpm5-2b-*` does not have this
+particular field, so those directories were never K+3, but they get the new
+check too since the underlying class of bug is generic.
+
+**The fix.** `rebuild_tokenizer_config()` in `bench/rebuild-keepset-tokenizer.py`
+now computes the surviving token strings (`new tokenizer.json` vocab ∪
+`added_tokens`) and drops any `extra_special_tokens` entry whose string is
+not in that set, instead of copying the field through unchecked. The same
+function additionally checks every other by-string field
+(`additional_special_tokens`, `bos_token`, `eos_token`, `pad_token`,
+`unk_token`) against the same surviving-strings set and raises loudly
+(`SystemExit`) if any of those ever go stale -- they are all required by
+`rebuild_tokenizer_json()`'s existing "added/special ids must always
+survive" invariant to be real added-token entries, so this should never
+trigger, but a silent drop of a load-bearing field is exactly the failure
+mode this fix exists to close off, not something to reintroduce quietly for
+a different field.
+
+**The new assertion (would have caught this).** For every emitted directory,
+the rebuild now loads the tokenizer back from disk two ways -- exactly like
+`gen_config.py` (`transformers.AutoTokenizer.from_pretrained(<dir>)`) and via
+`tokenizers.Tokenizer.from_file(<dir>/tokenizer.json)` -- and asserts
+`len(...) == K` for both, raising `SystemExit` immediately if either
+disagrees. Both numbers are recorded per directory in `coverage.json`
+(`length_check`) and `provenance.md`. This is a real assertion that runs as
+part of every rebuild, not a one-off check: had it existed before, the
+extra_special_tokens defect would have failed the rebuild instead of
+shipping quietly.
+
+**Per-directory table (post-fix, all 12 keep-sets):**
+
+| directory | K | `extra_special_tokens` entries dropped | `tokenizers.Tokenizer.from_file` len | `transformers.AutoTokenizer.from_pretrained` len |
+|---|---:|---:|---:|---:|
+| minicpm5-2b-7583 | 7583 | 0 | 7583 | 7583 |
+| minicpm5-2b-16384 | 16384 | 0 | 16384 | 16384 |
+| minicpm5-2b-24576 | 24576 | 0 | 24576 | 24576 |
+| minicpm5-2b-32768 | 32768 | 0 | 32768 | 32768 |
+| minicpm5-2b-49152 | 49152 | 0 | 49152 | 49152 |
+| minicpm5-2b-65536 | 65536 | 0 | 65536 | 65536 |
+| qwen35-6414 | 6414 | 3 | 6414 | 6414 |
+| qwen35-16384 | 16384 | 3 | 16384 | 16384 |
+| qwen35-24576 | 24576 | 3 | 24576 | 24576 |
+| qwen35-32768 | 32768 | 3 | 32768 | 32768 |
+| qwen35-49152 | 49152 | 3 | 49152 | 49152 |
+| qwen35-65536 | 65536 | 3 | 65536 | 65536 |
+
+All 12 directories were regenerated from the unpruned source tokenizers with
+the fixed generator (same command lines as recorded in each
+`provenance.md`), every `SHA256SUMS.txt` was regenerated and passes
+`shasum -a 256 -c`, and `bench/annotate-keepset-gate.py` was re-run per label
+to restore the gate annotation. `tokenizer.json`, `keep-idx.json`,
+`special_tokens_map.json`, and `config-patch.json` are byte-identical to the
+pre-fix versions in every directory (only `tokenizer_config.json`,
+`coverage.json`, `provenance.md`, and `SHA256SUMS.txt` changed) -- the
+keep-set contents, BPE merges, roundtrip exactness, and real held-out
+fertility numbers reported earlier in this document are unchanged; primary
+K=65536 for both tokenizers is unchanged.
+
+**Related check: stale original-id-space ids in `config-patch.json`.**
+Checked whether `config-patch.json`'s `stop_token_ids` (the field a
+downstream consumer would load and use for generation) carry stale
+original-vocab-space ids instead of pruned-space ones, as a sibling agent
+found and fixed locally for its own model's `config.json`. In every one of
+the 12 `bench/keepsets/*` directories here, `stop_token_ids` are already
+correctly remapped through `new_id_map` into the pruned id space (e.g.
+`qwen35-65536`: `[65510, 65512]`, both `< 65536`) -- `remap_stop_token_ids()`
+already applies `new_id_map` before writing this field, so there was nothing
+to fix. The old-space ids visible in `stop_token_ids_source_mismatches` are
+intentional documentation of the separate, pre-existing
+`mlc-chat-config.json` stop-id bug (see "Tokenizer findings (Step 1)" above)
+and are not consumed as ids by anything downstream. No `config.json` file is
+emitted by this rebuild at all (only `config-patch.json`); the sibling
+agent's `config.json` fix was in its own compiled-model repo, out of scope
+here.
