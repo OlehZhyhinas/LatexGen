@@ -19,6 +19,12 @@
     "dropped_fraction": 0.80268350115313
   },
   "tokenizer_config_phantom_added_tokens_dropped": 7,
+  "tokenizer_config_extra_special_tokens_dropped": 3,
+  "length_check": {
+    "expected_K": 49152,
+    "tokenizers_from_file_len": 49152,
+    "hf_autotokenizer_from_pretrained_len": 49152
+  },
   "verify_all_corpus_texts": {
     "exact_match_total": 614,
     "exact_match_passed": 569,

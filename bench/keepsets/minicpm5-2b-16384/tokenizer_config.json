@@ -4095,6 +4095,5 @@
   "spaces_between_special_tokens": false,
   "tokenizer_class": "PreTrainedTokenizerFast",
   "unk_token": "<unk>",
-  "use_default_system_prompt": false,
-  "_id_remap_note": null
+  "use_default_system_prompt": false
 }
