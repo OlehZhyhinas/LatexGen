@@ -1,21 +1,20 @@
 # Avenue B: prompt-lookup speculative decoding on the WebLLM text tier
 
 Issue #27, Avenue B. Built end to end and measured paired against a live
-baseline on the 120-paragraph arXiv corpus, three of the four ladder rungs
-(the 9B could not be loaded on this disk; see the caveats).
+baseline on the 120-paragraph arXiv corpus, all four ladder rungs.
 
 ## Verdict
 
 Prompt-lookup drafting with **k = 5** cuts time-to-answer on real pastes by
 **14–26 %** (ms/char ratio treatment/baseline, median, IQR entirely below
-parity) on every rung measured, with the baseline carrying the catalog's own
-tuning knobs:
+parity) on the 0.8B, 4B and MiniCPM5-2B, and is a wash on the 9B, with the
+baseline carrying the catalog's own tuning knobs:
 
 | rung | baseline knobs | ms/char ratio (median, IQR) | tok/s ratio | byte-identical | tokens/pass | draft passes |
 |---|---|---|---|---|---|---|
 | Qwen3.5-0.8B | burst5, batchPass, flush32 | **0.818** [0.740–0.907] | 1.22x | 119/120 | 2.96 | 58 % |
 | Qwen3.5-4B | burst1, batchPass, flush32 | **0.863** [0.790–0.954] | 1.16x | 116/120 | 2.23 | 40 % |
-| Qwen3.5-9B | burst1, batchPass, flush64 | not measured (blocked by disk, see below) | | | | |
+| Qwen3.5-9B | burst1, batchPass, flush64 | 0.938 [0.870–1.0005] — **rejected**, IQR touches parity | 1.07x | 120/120 | 2.21 | 40 % |
 | MiniCPM5-2B | burst1, flush32, lookahead1 | **0.741** [0.651–0.831] | 1.35x | 109/120 | 2.29 | 43 % |
 
 Two things the issue assumed do not hold on this stack, and both are load
@@ -132,6 +131,7 @@ decode step (arXiv runs, shipped knobs):
 |---|---|---|---|
 | Qwen3.5-0.8B | 6.1 | 2.75 | 3.1 (dev run) |
 | Qwen3.5-4B | 22.2 (18.2 without batchPass) | 2.63 (2.29) | 4.02 |
+| Qwen3.5-9B | 24.4 | 3.02 | – |
 | MiniCPM5-2B | 12.2 (15.1) | 2.54 (2.29) | 3.08 |
 
 The intercept is small (≈3 ms on the 4B); the slope is ≈7 ms per verified
@@ -176,13 +176,11 @@ this repo `bench/results-prompt-lookup-acceptance.json`,
 
 ## Not done, and caveats
 
-- **Qwen3.5-9B was not measured.** Its 5.4 GB of shards could not be cached:
-  every load attempt died in `Cache.add()` at 85 % of the download, with 8.7 GB
-  free on the disk (Chrome's cache quota is a fraction of free space). It is
-  the third hybrid rung; the runtime path is the same as the 4B's and the
-  offline acceptance numbers are within 0.05 tokens/pass of the 4B's, but that
-  is an expectation, not a measurement. Freeing ~10 GB and re-running the
-  `qwen35-9b-arxiv-k5-shipped` command is all it takes.
+- **Qwen3.5-9B does not adopt drafting.** Same acceptance as the 4B (2.21
+  tokens/pass, 40 % of passes drafted) but a 6-token verify costs 3.02 decode
+  steps there (24.4 ms/token baseline), and the paired ratio's upper quartile
+  sits at parity (0.938 [0.870–1.0005]); the rule says reject, so its catalog
+  default is unchanged. Output was byte-identical on all 120 items.
 
 - No product wiring: the catalog does not enable the knob. Shipping needs a
   `promptLookup` entry per variant and, for the Qwen3.5 rungs, the fork mode

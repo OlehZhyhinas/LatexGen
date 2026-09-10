@@ -216,7 +216,7 @@ catalog's own knobs. Ratio is treatment/baseline time per output character:
 |---|---|---|---|---|
 | Qwen3.5 0.8B | **0.818** [0.740–0.907] | 1.22x | 119/120 | 0 |
 | Qwen3.5 4B | **0.863** [0.790–0.954] | 1.16x | 116/120 | 0 |
-| Qwen3.5 9B | not yet measured | | | |
+| Qwen3.5 9B | 0.938 [0.870–1.0005] — rejected, IQR touches parity | 1.07x | 120/120 | 0 |
 | MiniCPM5 2B | 0.741 [0.651–0.831] | 1.35x | 109/120 | 2 (p = 0.5) |
 
 Two things the arithmetic assumed do not hold on this stack. Output is not
@@ -227,7 +227,9 @@ exactness claim. Divergent items were judged with `qwen-local`, three repeats
 each: no Qwen3.5 item got worse, MiniCPM5 2B had two, so MiniCPM5 does not get
 the knob. And verification is not free: a 6-token verify costs 2.3–2.8 decode
 steps and an 11-token one about 4 (≈7 ms per verified token on the 4B), which
-is why `k = 10` is a wash and `k = 5` ships. The Qwen3.5 rungs default to
+is why `k = 10` is a wash and `k = 5` ships. On the 9B the verify pass is
+dearer still (3.0 steps) and the paired ratio's upper quartile sits at parity,
+so it keeps `sg32-burst1-flush32`. The 0.8B and 4B default to
 `sg32-burst1-flush32-pl5`. Method, cost curves and reproduction:
 `bench/README-prompt-lookup.md`.
 
