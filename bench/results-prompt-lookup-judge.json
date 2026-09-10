@@ -1,0 +1,2116 @@
+{
+  "judgeModel": "qwen-local",
+  "judgePromptSource": "/Users/oleh/personal/webnn-workbench-prompt-lookup/bench/latexgen-snapshot/bench/judge-rows.py",
+  "seedNote": "No seed is set in reference judge-rows.py and temperature is 0.0; requests are repeated unchanged.",
+  "files": [
+    {
+      "file": "/Users/oleh/personal/webnn-workbench-prompt-lookup/bench/results/prompt-lookup-ab-qwen35-4b-arxiv-k10.json",
+      "label": "qwen35-4b-arxiv-k10",
+      "modelSlug": "qwen35-4b",
+      "judgedCount": 7,
+      "skippedIdenticalCount": 113,
+      "itemsJudged": [
+        {
+          "id": "arxiv-2609.04037-p2",
+          "base": {
+            "repeats": [
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Missing 'fin' superscript and closure bar on U_ex",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Missing 'fin' superscript and closure bar on U_ex\"\n}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Missing 'fin' superscript and closure bar on U_ex",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Missing 'fin' superscript and closure bar on U_ex\"\n}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Missing 'fin' superscript and closure bar on U_ex",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Missing 'fin' superscript and closure bar on U_ex\"\n}"
+              }
+            ],
+            "correctVotes": 0,
+            "majorityVerdict": "incorrect",
+            "majorityCorrect": false,
+            "majorityReason": "Missing 'fin' superscript and closure bar on U_ex"
+          },
+          "treatment": {
+            "repeats": [
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Missing 'fin' superscript and closure bar on U_ex",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Missing 'fin' superscript and closure bar on U_ex\"\n}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Missing 'fin' superscript and closure bar on U_ex",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Missing 'fin' superscript and closure bar on U_ex\"\n}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Missing 'fin' superscript and closure bar on U_ex",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Missing 'fin' superscript and closure bar on U_ex\"\n}"
+              }
+            ],
+            "correctVotes": 0,
+            "majorityVerdict": "incorrect",
+            "majorityCorrect": false,
+            "majorityReason": "Missing 'fin' superscript and closure bar on U_ex"
+          },
+          "classification": "both_wrong",
+          "shortReason": "Missing 'fin' superscript and closure bar on U_ex"
+        },
+        {
+          "id": "arxiv-2609.03634-p1",
+          "base": {
+            "repeats": [
+              {
+                "status": "correct",
+                "correct": true,
+                "reason": "Mathematically equivalent; minor spelling difference (Levy vs L\u00e9vy) is acceptable.",
+                "raw": "{\"correct\": true, \"reason\": \"Mathematically equivalent; minor spelling difference (Levy vs L\u00e9vy) is acceptable.\"}"
+              },
+              {
+                "status": "correct",
+                "correct": true,
+                "reason": "Mathematically equivalent; minor spelling difference (Levy vs L\u00e9vy) is acceptable.",
+                "raw": "{\"correct\": true, \"reason\": \"Mathematically equivalent; minor spelling difference (Levy vs L\u00e9vy) is acceptable.\"}"
+              },
+              {
+                "status": "correct",
+                "correct": true,
+                "reason": "Mathematically equivalent; minor spelling difference (Levy vs L\u00e9vy) is acceptable.",
+                "raw": "{\"correct\": true, \"reason\": \"Mathematically equivalent; minor spelling difference (Levy vs L\u00e9vy) is acceptable.\"}"
+              }
+            ],
+            "correctVotes": 3,
+            "majorityVerdict": "correct",
+            "majorityCorrect": true,
+            "majorityReason": "Mathematically equivalent; minor spelling difference (Levy vs L\u00e9vy) is acceptable."
+          },
+          "treatment": {
+            "repeats": [
+              {
+                "status": "correct",
+                "correct": true,
+                "reason": "Mathematically equivalent; notation and formatting differences are acceptable.",
+                "raw": "{\"correct\": true, \"reason\": \"Mathematically equivalent; notation and formatting differences are acceptable.\"}"
+              },
+              {
+                "status": "correct",
+                "correct": true,
+                "reason": "Mathematically equivalent; notation and formatting differences are acceptable.",
+                "raw": "{\"correct\": true, \"reason\": \"Mathematically equivalent; notation and formatting differences are acceptable.\"}"
+              },
+              {
+                "status": "correct",
+                "correct": true,
+                "reason": "Mathematically equivalent; notation and formatting differences are acceptable.",
+                "raw": "{\"correct\": true, \"reason\": \"Mathematically equivalent; notation and formatting differences are acceptable.\"}"
+              }
+            ],
+            "correctVotes": 3,
+            "majorityVerdict": "correct",
+            "majorityCorrect": true,
+            "majorityReason": "Mathematically equivalent; notation and formatting differences are acceptable."
+          },
+          "classification": "both_correct",
+          "shortReason": "Mathematically equivalent; notation and formatting differences are acceptable."
+        },
+        {
+          "id": "arxiv-2609.02695-p2",
+          "base": {
+            "repeats": [
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Missing closing bracket in citation [14",
+                "raw": "{\"correct\": false, \"reason\": \"Missing closing bracket in citation [14\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Missing closing bracket in citation [14",
+                "raw": "{\"correct\": false, \"reason\": \"Missing closing bracket in citation [14\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Missing closing bracket in citation [14",
+                "raw": "{\"correct\": false, \"reason\": \"Missing closing bracket in citation [14\"}"
+              }
+            ],
+            "correctVotes": 0,
+            "majorityVerdict": "incorrect",
+            "majorityCorrect": false,
+            "majorityReason": "Missing closing bracket in citation [14"
+          },
+          "treatment": {
+            "repeats": [
+              {
+                "status": "correct",
+                "correct": true,
+                "reason": "Mathematically equivalent; notation differences are acceptable.",
+                "raw": "{\"correct\": true, \"reason\": \"Mathematically equivalent; notation differences are acceptable.\"}"
+              },
+              {
+                "status": "correct",
+                "correct": true,
+                "reason": "Mathematically equivalent; notation differences are acceptable.",
+                "raw": "{\"correct\": true, \"reason\": \"Mathematically equivalent; notation differences are acceptable.\"}"
+              },
+              {
+                "status": "correct",
+                "correct": true,
+                "reason": "Mathematically equivalent; notation differences are acceptable.",
+                "raw": "{\"correct\": true, \"reason\": \"Mathematically equivalent; notation differences are acceptable.\"}"
+              }
+            ],
+            "correctVotes": 3,
+            "majorityVerdict": "correct",
+            "majorityCorrect": true,
+            "majorityReason": "Mathematically equivalent; notation differences are acceptable."
+          },
+          "classification": "treatment_better",
+          "shortReason": "Missing closing bracket in citation [14"
+        },
+        {
+          "id": "arxiv-2609.03084-p1",
+          "base": {
+            "repeats": [
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Candidate drops the final variable \\chi and closing quote.",
+                "raw": "{\"correct\": false, \"reason\": \"Candidate drops the final variable \\\\chi and closing quote.\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Candidate drops the final variable \\chi and closing quote.",
+                "raw": "{\"correct\": false, \"reason\": \"Candidate drops the final variable \\\\chi and closing quote.\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Candidate drops the final variable \\chi and closing quote.",
+                "raw": "{\"correct\": false, \"reason\": \"Candidate drops the final variable \\\\chi and closing quote.\"}"
+              }
+            ],
+            "correctVotes": 0,
+            "majorityVerdict": "incorrect",
+            "majorityCorrect": false,
+            "majorityReason": "Candidate drops the final variable \\chi and closing quote."
+          },
+          "treatment": {
+            "repeats": [
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Candidate is incomplete and drops the final math term.",
+                "raw": "{\"correct\": false, \"reason\": \"Candidate is incomplete and drops the final math term.\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Candidate is incomplete and drops the final math term.",
+                "raw": "{\"correct\": false, \"reason\": \"Candidate is incomplete and drops the final math term.\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Candidate is incomplete and drops the final math term.",
+                "raw": "{\"correct\": false, \"reason\": \"Candidate is incomplete and drops the final math term.\"}"
+              }
+            ],
+            "correctVotes": 0,
+            "majorityVerdict": "incorrect",
+            "majorityCorrect": false,
+            "majorityReason": "Candidate is incomplete and drops the final math term."
+          },
+          "classification": "both_wrong",
+          "shortReason": "base: Candidate drops the final variable \\chi and closing quote.; trt: Candidate is incomplete and drops the final math "
+        },
+        {
+          "id": "arxiv-2609.03730-p2",
+          "base": {
+            "repeats": [
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Incorrect exponents and terms in equations (2.3) and (2.4).",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Incorrect exponents and terms in equations (2.3) and (2.4).\"\n}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Incorrect exponents and terms in equations (2.3) and (2.4).",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Incorrect exponents and terms in equations (2.3) and (2.4).\"\n}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Incorrect exponents and terms in equations (2.3) and (2.4).",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Incorrect exponents and terms in equations (2.3) and (2.4).\"\n}"
+              }
+            ],
+            "correctVotes": 0,
+            "majorityVerdict": "incorrect",
+            "majorityCorrect": false,
+            "majorityReason": "Incorrect exponents and terms in equations (2.3) and (2.4)."
+          },
+          "treatment": {
+            "repeats": [
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Exponents and terms in equations (2.3) and (2.4) are incorrect.",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Exponents and terms in equations (2.3) and (2.4) are incorrect.\"\n}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Exponents and terms in equations (2.3) and (2.4) are incorrect.",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Exponents and terms in equations (2.3) and (2.4) are incorrect.\"\n}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Exponents and terms in equations (2.3) and (2.4) are incorrect.",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Exponents and terms in equations (2.3) and (2.4) are incorrect.\"\n}"
+              }
+            ],
+            "correctVotes": 0,
+            "majorityVerdict": "incorrect",
+            "majorityCorrect": false,
+            "majorityReason": "Exponents and terms in equations (2.3) and (2.4) are incorrect."
+          },
+          "classification": "both_wrong",
+          "shortReason": "base: Incorrect exponents and terms in equations (2.3) and (2.4).; trt: Exponents and terms in equations (2.3) and (2.4)"
+        },
+        {
+          "id": "arxiv-2609.04371-p3",
+          "base": {
+            "repeats": [
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled integral equation structure and incorrect domain.",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Mangled integral equation structure and incorrect domain.\"\n}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled integral equation structure and incorrect domain.",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Mangled integral equation structure and incorrect domain.\"\n}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled integral equation structure and incorrect domain.",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Mangled integral equation structure and incorrect domain.\"\n}"
+              }
+            ],
+            "correctVotes": 0,
+            "majorityVerdict": "incorrect",
+            "majorityCorrect": false,
+            "majorityReason": "Mangled integral equation structure and incorrect domain."
+          },
+          "treatment": {
+            "repeats": [
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled integral structure and incorrect domain.",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Mangled integral structure and incorrect domain.\"\n}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled integral structure and incorrect domain.",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Mangled integral structure and incorrect domain.\"\n}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled integral structure and incorrect domain.",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Mangled integral structure and incorrect domain.\"\n}"
+              }
+            ],
+            "correctVotes": 0,
+            "majorityVerdict": "incorrect",
+            "majorityCorrect": false,
+            "majorityReason": "Mangled integral structure and incorrect domain."
+          },
+          "classification": "both_wrong",
+          "shortReason": "base: Mangled integral equation structure and incorrect domain.; trt: Mangled integral structure and incorrect domain."
+        },
+        {
+          "id": "arxiv-2609.03854-p3",
+          "base": {
+            "repeats": [
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled equation structure and incorrect variable notation",
+                "raw": "{\"correct\": false, \"reason\": \"Mangled equation structure and incorrect variable notation\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled equation structure and incorrect variable notation",
+                "raw": "{\"correct\": false, \"reason\": \"Mangled equation structure and incorrect variable notation\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled equation structure and incorrect variable notation",
+                "raw": "{\"correct\": false, \"reason\": \"Mangled equation structure and incorrect variable notation\"}"
+              }
+            ],
+            "correctVotes": 0,
+            "majorityVerdict": "incorrect",
+            "majorityCorrect": false,
+            "majorityReason": "Mangled equation structure and incorrect variable notation"
+          },
+          "treatment": {
+            "repeats": [
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Candidate mangles the equation structure and notation.",
+                "raw": "{\"correct\": false, \"reason\": \"Candidate mangles the equation structure and notation.\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Candidate mangles the equation structure and notation.",
+                "raw": "{\"correct\": false, \"reason\": \"Candidate mangles the equation structure and notation.\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Candidate mangles the equation structure and notation.",
+                "raw": "{\"correct\": false, \"reason\": \"Candidate mangles the equation structure and notation.\"}"
+              }
+            ],
+            "correctVotes": 0,
+            "majorityVerdict": "incorrect",
+            "majorityCorrect": false,
+            "majorityReason": "Candidate mangles the equation structure and notation."
+          },
+          "classification": "both_wrong",
+          "shortReason": "base: Mangled equation structure and incorrect variable notation; trt: Candidate mangles the equation structure and nota"
+        }
+      ],
+      "totals": {
+        "treatment_worse": 0,
+        "treatment_better": 1,
+        "both_correct": 1,
+        "both_wrong": 5,
+        "discordantPairs": 1,
+        "signTestPValueTwoSided": 1.0,
+        "baseMajorityCorrect": 1,
+        "treatmentMajorityCorrect": 2
+      }
+    },
+    {
+      "file": "/Users/oleh/personal/webnn-workbench-prompt-lookup/bench/results/prompt-lookup-ab-qwen35-4b-arxiv-k5.json",
+      "label": "qwen35-4b-arxiv-k5",
+      "modelSlug": "qwen35-4b",
+      "judgedCount": 1,
+      "skippedIdenticalCount": 119,
+      "itemsJudged": [
+        {
+          "id": "arxiv-2609.03730-p2",
+          "base": {
+            "repeats": [
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Incorrect exponents and terms in equations (2.3) and (2.4).",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Incorrect exponents and terms in equations (2.3) and (2.4).\"\n}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Incorrect exponents and terms in equations (2.3) and (2.4).",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Incorrect exponents and terms in equations (2.3) and (2.4).\"\n}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Incorrect exponents and terms in equations (2.3) and (2.4).",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Incorrect exponents and terms in equations (2.3) and (2.4).\"\n}"
+              }
+            ],
+            "correctVotes": 0,
+            "majorityVerdict": "incorrect",
+            "majorityCorrect": false,
+            "majorityReason": "Incorrect exponents and terms in equations (2.3) and (2.4)."
+          },
+          "treatment": {
+            "repeats": [
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Exponents and terms in equations (2.3) and (2.4) are incorrect.",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Exponents and terms in equations (2.3) and (2.4) are incorrect.\"\n}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Exponents and terms in equations (2.3) and (2.4) are incorrect.",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Exponents and terms in equations (2.3) and (2.4) are incorrect.\"\n}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Exponents and terms in equations (2.3) and (2.4) are incorrect.",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Exponents and terms in equations (2.3) and (2.4) are incorrect.\"\n}"
+              }
+            ],
+            "correctVotes": 0,
+            "majorityVerdict": "incorrect",
+            "majorityCorrect": false,
+            "majorityReason": "Exponents and terms in equations (2.3) and (2.4) are incorrect."
+          },
+          "classification": "both_wrong",
+          "shortReason": "base: Incorrect exponents and terms in equations (2.3) and (2.4).; trt: Exponents and terms in equations (2.3) and (2.4)"
+        }
+      ],
+      "totals": {
+        "treatment_worse": 0,
+        "treatment_better": 0,
+        "both_correct": 0,
+        "both_wrong": 1,
+        "discordantPairs": 0,
+        "signTestPValueTwoSided": 1.0,
+        "baseMajorityCorrect": 0,
+        "treatmentMajorityCorrect": 0
+      }
+    },
+    {
+      "file": "/Users/oleh/personal/webnn-workbench-prompt-lookup/bench/results/prompt-lookup-ab-minicpm5-2b-arxiv-k5.json",
+      "label": "minicpm5-2b-arxiv-k5",
+      "modelSlug": "minicpm5-2b",
+      "judgedCount": 11,
+      "skippedIdenticalCount": 109,
+      "itemsJudged": [
+        {
+          "id": "arxiv-2609.01131-p2",
+          "base": {
+            "repeats": [
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled math symbols and dropped tilde notation.",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Mangled math symbols and dropped tilde notation.\"\n}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled math symbols and dropped tilde notation.",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Mangled math symbols and dropped tilde notation.\"\n}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled math symbols and dropped tilde notation.",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Mangled math symbols and dropped tilde notation.\"\n}"
+              }
+            ],
+            "correctVotes": 0,
+            "majorityVerdict": "incorrect",
+            "majorityCorrect": false,
+            "majorityReason": "Mangled math symbols and dropped tilde notation."
+          },
+          "treatment": {
+            "repeats": [
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled math symbols and missing LaTeX delimiters",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Mangled math symbols and missing LaTeX delimiters\"\n}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled math symbols and missing LaTeX delimiters",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Mangled math symbols and missing LaTeX delimiters\"\n}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled math symbols and missing LaTeX delimiters",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Mangled math symbols and missing LaTeX delimiters\"\n}"
+              }
+            ],
+            "correctVotes": 0,
+            "majorityVerdict": "incorrect",
+            "majorityCorrect": false,
+            "majorityReason": "Mangled math symbols and missing LaTeX delimiters"
+          },
+          "classification": "both_wrong",
+          "shortReason": "base: Mangled math symbols and dropped tilde notation.; trt: Mangled math symbols and missing LaTeX delimiters"
+        },
+        {
+          "id": "arxiv-2609.04037-p2",
+          "base": {
+            "repeats": [
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Incorrect sup/max subscripts and missing hats on V.",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Incorrect sup/max subscripts and missing hats on V.\"\n}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Incorrect sup/max subscripts and missing hats on V.",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Incorrect sup/max subscripts and missing hats on V.\"\n}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Incorrect sup/max subscripts and missing hats on V.",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Incorrect sup/max subscripts and missing hats on V.\"\n}"
+              }
+            ],
+            "correctVotes": 0,
+            "majorityVerdict": "incorrect",
+            "majorityCorrect": false,
+            "majorityReason": "Incorrect sup/max subscripts and missing hats on V."
+          },
+          "treatment": {
+            "repeats": [
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Incorrect formula structure and missing constraints",
+                "raw": "{\"correct\": false, \"reason\": \"Incorrect formula structure and missing constraints\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Incorrect formula structure and missing constraints",
+                "raw": "{\"correct\": false, \"reason\": \"Incorrect formula structure and missing constraints\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Incorrect formula structure and missing constraints",
+                "raw": "{\"correct\": false, \"reason\": \"Incorrect formula structure and missing constraints\"}"
+              }
+            ],
+            "correctVotes": 0,
+            "majorityVerdict": "incorrect",
+            "majorityCorrect": false,
+            "majorityReason": "Incorrect formula structure and missing constraints"
+          },
+          "classification": "both_wrong",
+          "shortReason": "base: Incorrect sup/max subscripts and missing hats on V.; trt: Incorrect formula structure and missing constraints"
+        },
+        {
+          "id": "arxiv-2609.02987-p2",
+          "base": {
+            "repeats": [
+              {
+                "status": "correct",
+                "correct": true,
+                "reason": "Mathematically equivalent; notation differences are acceptable.",
+                "raw": "{\"correct\": true, \"reason\": \"Mathematically equivalent; notation differences are acceptable.\"}"
+              },
+              {
+                "status": "correct",
+                "correct": true,
+                "reason": "Mathematically equivalent; notation differences are acceptable.",
+                "raw": "{\"correct\": true, \"reason\": \"Mathematically equivalent; notation differences are acceptable.\"}"
+              },
+              {
+                "status": "correct",
+                "correct": true,
+                "reason": "Mathematically equivalent; notation differences are acceptable.",
+                "raw": "{\"correct\": true, \"reason\": \"Mathematically equivalent; notation differences are acceptable.\"}"
+              }
+            ],
+            "correctVotes": 3,
+            "majorityVerdict": "correct",
+            "majorityCorrect": true,
+            "majorityReason": "Mathematically equivalent; notation differences are acceptable."
+          },
+          "treatment": {
+            "repeats": [
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Candidate lacks LaTeX formatting for math variables",
+                "raw": "{\"correct\": false, \"reason\": \"Candidate lacks LaTeX formatting for math variables\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Candidate lacks LaTeX formatting for math variables",
+                "raw": "{\"correct\": false, \"reason\": \"Candidate lacks LaTeX formatting for math variables\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Candidate lacks LaTeX formatting for math variables",
+                "raw": "{\"correct\": false, \"reason\": \"Candidate lacks LaTeX formatting for math variables\"}"
+              }
+            ],
+            "correctVotes": 0,
+            "majorityVerdict": "incorrect",
+            "majorityCorrect": false,
+            "majorityReason": "Candidate lacks LaTeX formatting for math variables"
+          },
+          "classification": "treatment_worse",
+          "shortReason": "Candidate lacks LaTeX formatting for math variables"
+        },
+        {
+          "id": "arxiv-2609.02031-p1",
+          "base": {
+            "repeats": [
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled variable J to T and sentence structure",
+                "raw": "{\"correct\": false, \"reason\": \"Mangled variable J to T and sentence structure\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled variable J to T and sentence structure",
+                "raw": "{\"correct\": false, \"reason\": \"Mangled variable J to T and sentence structure\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled variable J to T and sentence structure",
+                "raw": "{\"correct\": false, \"reason\": \"Mangled variable J to T and sentence structure\"}"
+              }
+            ],
+            "correctVotes": 0,
+            "majorityVerdict": "incorrect",
+            "majorityCorrect": false,
+            "majorityReason": "Mangled variable J to T and sentence structure"
+          },
+          "treatment": {
+            "repeats": [
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled variable J to T and sentence structure",
+                "raw": "{\"correct\": false, \"reason\": \"Mangled variable J to T and sentence structure\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled variable J to T and sentence structure",
+                "raw": "{\"correct\": false, \"reason\": \"Mangled variable J to T and sentence structure\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled variable J to T and sentence structure",
+                "raw": "{\"correct\": false, \"reason\": \"Mangled variable J to T and sentence structure\"}"
+              }
+            ],
+            "correctVotes": 0,
+            "majorityVerdict": "incorrect",
+            "majorityCorrect": false,
+            "majorityReason": "Mangled variable J to T and sentence structure"
+          },
+          "classification": "both_wrong",
+          "shortReason": "Mangled variable J to T and sentence structure"
+        },
+        {
+          "id": "arxiv-2609.02031-p2",
+          "base": {
+            "repeats": [
+              {
+                "status": "correct",
+                "correct": true,
+                "reason": "Mathematically equivalent; notation differences are acceptable.",
+                "raw": "{\"correct\": true, \"reason\": \"Mathematically equivalent; notation differences are acceptable.\"}"
+              },
+              {
+                "status": "correct",
+                "correct": true,
+                "reason": "Mathematically equivalent; notation differences are acceptable.",
+                "raw": "{\"correct\": true, \"reason\": \"Mathematically equivalent; notation differences are acceptable.\"}"
+              },
+              {
+                "status": "correct",
+                "correct": true,
+                "reason": "Mathematically equivalent; notation differences are acceptable.",
+                "raw": "{\"correct\": true, \"reason\": \"Mathematically equivalent; notation differences are acceptable.\"}"
+              }
+            ],
+            "correctVotes": 3,
+            "majorityVerdict": "correct",
+            "majorityCorrect": true,
+            "majorityReason": "Mathematically equivalent; notation differences are acceptable."
+          },
+          "treatment": {
+            "repeats": [
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled math: \\Phi'(\\Phi) instead of \\Phi'(u)",
+                "raw": "{\"correct\": false, \"reason\": \"Mangled math: \\\\Phi'(\\\\Phi) instead of \\\\Phi'(u)\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled math: \\Phi'(\\Phi) instead of \\Phi'(u)",
+                "raw": "{\"correct\": false, \"reason\": \"Mangled math: \\\\Phi'(\\\\Phi) instead of \\\\Phi'(u)\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled math: \\Phi'(\\Phi) instead of \\Phi'(u)",
+                "raw": "{\"correct\": false, \"reason\": \"Mangled math: \\\\Phi'(\\\\Phi) instead of \\\\Phi'(u)\"}"
+              }
+            ],
+            "correctVotes": 0,
+            "majorityVerdict": "incorrect",
+            "majorityCorrect": false,
+            "majorityReason": "Mangled math: \\Phi'(\\Phi) instead of \\Phi'(u)"
+          },
+          "classification": "treatment_worse",
+          "shortReason": "Mangled math: \\Phi'(\\Phi) instead of \\Phi'(u)"
+        },
+        {
+          "id": "arxiv-2609.02196-p3",
+          "base": {
+            "repeats": [
+              {
+                "status": "correct",
+                "correct": true,
+                "reason": "Mathematically equivalent; notation differences are acceptable.",
+                "raw": "{\"correct\": true, \"reason\": \"Mathematically equivalent; notation differences are acceptable.\"}"
+              },
+              {
+                "status": "correct",
+                "correct": true,
+                "reason": "Mathematically equivalent; notation differences are acceptable.",
+                "raw": "{\"correct\": true, \"reason\": \"Mathematically equivalent; notation differences are acceptable.\"}"
+              },
+              {
+                "status": "correct",
+                "correct": true,
+                "reason": "Mathematically equivalent; notation differences are acceptable.",
+                "raw": "{\"correct\": true, \"reason\": \"Mathematically equivalent; notation differences are acceptable.\"}"
+              }
+            ],
+            "correctVotes": 3,
+            "majorityVerdict": "correct",
+            "majorityCorrect": true,
+            "majorityReason": "Mathematically equivalent; notation differences are acceptable."
+          },
+          "treatment": {
+            "repeats": [
+              {
+                "status": "correct",
+                "correct": true,
+                "reason": "Mathematically equivalent; notation differences are acceptable.",
+                "raw": "{\"correct\": true, \"reason\": \"Mathematically equivalent; notation differences are acceptable.\"}"
+              },
+              {
+                "status": "correct",
+                "correct": true,
+                "reason": "Mathematically equivalent; notation differences are acceptable.",
+                "raw": "{\"correct\": true, \"reason\": \"Mathematically equivalent; notation differences are acceptable.\"}"
+              },
+              {
+                "status": "correct",
+                "correct": true,
+                "reason": "Mathematically equivalent; notation differences are acceptable.",
+                "raw": "{\"correct\": true, \"reason\": \"Mathematically equivalent; notation differences are acceptable.\"}"
+              }
+            ],
+            "correctVotes": 3,
+            "majorityVerdict": "correct",
+            "majorityCorrect": true,
+            "majorityReason": "Mathematically equivalent; notation differences are acceptable."
+          },
+          "classification": "both_correct",
+          "shortReason": "Mathematically equivalent; notation differences are acceptable."
+        },
+        {
+          "id": "arxiv-2609.01181-p2",
+          "base": {
+            "repeats": [
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Missing L=q and s in order-s",
+                "raw": "{\"correct\": false, \"reason\": \"Missing L=q and s in order-s\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Missing L=q and s in order-s",
+                "raw": "{\"correct\": false, \"reason\": \"Missing L=q and s in order-s\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Missing L=q and s in order-s",
+                "raw": "{\"correct\": false, \"reason\": \"Missing L=q and s in order-s\"}"
+              }
+            ],
+            "correctVotes": 0,
+            "majorityVerdict": "incorrect",
+            "majorityCorrect": false,
+            "majorityReason": "Missing L=q and s in order-s"
+          },
+          "treatment": {
+            "repeats": [
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Missing mathematical variable L=q at the end",
+                "raw": "{\"correct\": false, \"reason\": \"Missing mathematical variable L=q at the end\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Missing mathematical variable L=q at the end",
+                "raw": "{\"correct\": false, \"reason\": \"Missing mathematical variable L=q at the end\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Missing mathematical variable L=q at the end",
+                "raw": "{\"correct\": false, \"reason\": \"Missing mathematical variable L=q at the end\"}"
+              }
+            ],
+            "correctVotes": 0,
+            "majorityVerdict": "incorrect",
+            "majorityCorrect": false,
+            "majorityReason": "Missing mathematical variable L=q at the end"
+          },
+          "classification": "both_wrong",
+          "shortReason": "base: Missing L=q and s in order-s; trt: Missing mathematical variable L=q at the end"
+        },
+        {
+          "id": "arxiv-2609.03713-p2",
+          "base": {
+            "repeats": [
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Candidate failed to convert math symbols to LaTeX",
+                "raw": "{\"correct\": false, \"reason\": \"Candidate failed to convert math symbols to LaTeX\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Candidate failed to convert math symbols to LaTeX",
+                "raw": "{\"correct\": false, \"reason\": \"Candidate failed to convert math symbols to LaTeX\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Candidate failed to convert math symbols to LaTeX",
+                "raw": "{\"correct\": false, \"reason\": \"Candidate failed to convert math symbols to LaTeX\"}"
+              }
+            ],
+            "correctVotes": 0,
+            "majorityVerdict": "incorrect",
+            "majorityCorrect": false,
+            "majorityReason": "Candidate failed to convert math symbols to LaTeX"
+          },
+          "treatment": {
+            "repeats": [
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled set notation and reference labels",
+                "raw": "{\"correct\": false, \"reason\": \"Mangled set notation and reference labels\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled set notation and reference labels",
+                "raw": "{\"correct\": false, \"reason\": \"Mangled set notation and reference labels\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled set notation and reference labels",
+                "raw": "{\"correct\": false, \"reason\": \"Mangled set notation and reference labels\"}"
+              }
+            ],
+            "correctVotes": 0,
+            "majorityVerdict": "incorrect",
+            "majorityCorrect": false,
+            "majorityReason": "Mangled set notation and reference labels"
+          },
+          "classification": "both_wrong",
+          "shortReason": "base: Candidate failed to convert math symbols to LaTeX; trt: Mangled set notation and reference labels"
+        },
+        {
+          "id": "arxiv-2609.03730-p3",
+          "base": {
+            "repeats": [
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Candidate fails to convert math to LaTeX",
+                "raw": "{\"correct\": false, \"reason\": \"Candidate fails to convert math to LaTeX\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Candidate fails to convert math to LaTeX",
+                "raw": "{\"correct\": false, \"reason\": \"Candidate fails to convert math to LaTeX\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Candidate fails to convert math to LaTeX",
+                "raw": "{\"correct\": false, \"reason\": \"Candidate fails to convert math to LaTeX\"}"
+              }
+            ],
+            "correctVotes": 0,
+            "majorityVerdict": "incorrect",
+            "majorityCorrect": false,
+            "majorityReason": "Candidate fails to convert math to LaTeX"
+          },
+          "treatment": {
+            "repeats": [
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Candidate math expressions are completely wrong.",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Candidate math expressions are completely wrong.\"\n}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Candidate math expressions are completely wrong.",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Candidate math expressions are completely wrong.\"\n}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Candidate math expressions are completely wrong.",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Candidate math expressions are completely wrong.\"\n}"
+              }
+            ],
+            "correctVotes": 0,
+            "majorityVerdict": "incorrect",
+            "majorityCorrect": false,
+            "majorityReason": "Candidate math expressions are completely wrong."
+          },
+          "classification": "both_wrong",
+          "shortReason": "base: Candidate fails to convert math to LaTeX; trt: Candidate math expressions are completely wrong."
+        },
+        {
+          "id": "arxiv-2609.04371-p3",
+          "base": {
+            "repeats": [
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled math notation and missing subscripts",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Mangled math notation and missing subscripts\"\n}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled math notation and missing subscripts",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Mangled math notation and missing subscripts\"\n}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled math notation and missing subscripts",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Mangled math notation and missing subscripts\"\n}"
+              }
+            ],
+            "correctVotes": 0,
+            "majorityVerdict": "incorrect",
+            "majorityCorrect": false,
+            "majorityReason": "Mangled math notation and missing subscripts"
+          },
+          "treatment": {
+            "repeats": [
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled integrals and incorrect notation for f_in.",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Mangled integrals and incorrect notation for f_in.\"\n}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled integrals and incorrect notation for f_in.",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Mangled integrals and incorrect notation for f_in.\"\n}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled integrals and incorrect notation for f_in.",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Mangled integrals and incorrect notation for f_in.\"\n}"
+              }
+            ],
+            "correctVotes": 0,
+            "majorityVerdict": "incorrect",
+            "majorityCorrect": false,
+            "majorityReason": "Mangled integrals and incorrect notation for f_in."
+          },
+          "classification": "both_wrong",
+          "shortReason": "base: Mangled math notation and missing subscripts; trt: Mangled integrals and incorrect notation for f_in."
+        },
+        {
+          "id": "arxiv-2609.03854-p3",
+          "base": {
+            "repeats": [
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Candidate mangles the mathematical formula and drops the nu term.",
+                "raw": "{\"correct\": false, \"reason\": \"Candidate mangles the mathematical formula and drops the nu term.\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Candidate mangles the mathematical formula and drops the nu term.",
+                "raw": "{\"correct\": false, \"reason\": \"Candidate mangles the mathematical formula and drops the nu term.\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Candidate mangles the mathematical formula and drops the nu term.",
+                "raw": "{\"correct\": false, \"reason\": \"Candidate mangles the mathematical formula and drops the nu term.\"}"
+              }
+            ],
+            "correctVotes": 0,
+            "majorityVerdict": "incorrect",
+            "majorityCorrect": false,
+            "majorityReason": "Candidate mangles the mathematical formula and drops the nu term."
+          },
+          "treatment": {
+            "repeats": [
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Candidate mangles the mathematical formula and drops the nu term.",
+                "raw": "{\"correct\": false, \"reason\": \"Candidate mangles the mathematical formula and drops the nu term.\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Candidate mangles the mathematical formula and drops the nu term.",
+                "raw": "{\"correct\": false, \"reason\": \"Candidate mangles the mathematical formula and drops the nu term.\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Candidate mangles the mathematical formula and drops the nu term.",
+                "raw": "{\"correct\": false, \"reason\": \"Candidate mangles the mathematical formula and drops the nu term.\"}"
+              }
+            ],
+            "correctVotes": 0,
+            "majorityVerdict": "incorrect",
+            "majorityCorrect": false,
+            "majorityReason": "Candidate mangles the mathematical formula and drops the nu term."
+          },
+          "classification": "both_wrong",
+          "shortReason": "Candidate mangles the mathematical formula and drops the nu term."
+        }
+      ],
+      "totals": {
+        "treatment_worse": 2,
+        "treatment_better": 0,
+        "both_correct": 1,
+        "both_wrong": 8,
+        "discordantPairs": 2,
+        "signTestPValueTwoSided": 0.5,
+        "baseMajorityCorrect": 3,
+        "treatmentMajorityCorrect": 1
+      }
+    },
+    {
+      "file": "/Users/oleh/personal/webnn-workbench-prompt-lookup/bench/results/prompt-lookup-ab-qwen35-4b-arxiv-k5-shipped.json",
+      "label": "qwen35-4b-arxiv-k5-shipped",
+      "modelSlug": "qwen35-4b",
+      "judgedCount": 4,
+      "skippedIdenticalCount": 116,
+      "itemsJudged": [
+        {
+          "id": "arxiv-2609.03869-p1",
+          "base": {
+            "repeats": [
+              {
+                "status": "correct",
+                "correct": true,
+                "reason": "Mathematically equivalent; notation differences are acceptable.",
+                "raw": "{\"correct\": true, \"reason\": \"Mathematically equivalent; notation differences are acceptable.\"}"
+              },
+              {
+                "status": "correct",
+                "correct": true,
+                "reason": "Mathematically equivalent; notation differences are acceptable.",
+                "raw": "{\"correct\": true, \"reason\": \"Mathematically equivalent; notation differences are acceptable.\"}"
+              },
+              {
+                "status": "correct",
+                "correct": true,
+                "reason": "Mathematically equivalent; notation differences are acceptable.",
+                "raw": "{\"correct\": true, \"reason\": \"Mathematically equivalent; notation differences are acceptable.\"}"
+              }
+            ],
+            "correctVotes": 3,
+            "majorityVerdict": "correct",
+            "majorityCorrect": true,
+            "majorityReason": "Mathematically equivalent; notation differences are acceptable."
+          },
+          "treatment": {
+            "repeats": [
+              {
+                "status": "correct",
+                "correct": true,
+                "reason": "Mathematically equivalent; notation differences are acceptable.",
+                "raw": "{\"correct\": true, \"reason\": \"Mathematically equivalent; notation differences are acceptable.\"}"
+              },
+              {
+                "status": "correct",
+                "correct": true,
+                "reason": "Mathematically equivalent; notation differences are acceptable.",
+                "raw": "{\"correct\": true, \"reason\": \"Mathematically equivalent; notation differences are acceptable.\"}"
+              },
+              {
+                "status": "correct",
+                "correct": true,
+                "reason": "Mathematically equivalent; notation differences are acceptable.",
+                "raw": "{\"correct\": true, \"reason\": \"Mathematically equivalent; notation differences are acceptable.\"}"
+              }
+            ],
+            "correctVotes": 3,
+            "majorityVerdict": "correct",
+            "majorityCorrect": true,
+            "majorityReason": "Mathematically equivalent; notation differences are acceptable."
+          },
+          "classification": "both_correct",
+          "shortReason": "Mathematically equivalent; notation differences are acceptable."
+        },
+        {
+          "id": "arxiv-2608.28722-p1",
+          "base": {
+            "repeats": [
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Denominator is 3 instead of 2; missing final equation.",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Denominator is 3 instead of 2; missing final equation.\"\n}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Denominator is 3 instead of 2; missing final equation.",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Denominator is 3 instead of 2; missing final equation.\"\n}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Denominator is 3 instead of 2; missing final equation.",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Denominator is 3 instead of 2; missing final equation.\"\n}"
+              }
+            ],
+            "correctVotes": 0,
+            "majorityVerdict": "incorrect",
+            "majorityCorrect": false,
+            "majorityReason": "Denominator is 3 instead of 2; missing final equation."
+          },
+          "treatment": {
+            "repeats": [
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Denominator is 3 instead of 2; missing final equation.",
+                "raw": "{\"correct\": false, \"reason\": \"Denominator is 3 instead of 2; missing final equation.\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Denominator is 3 instead of 2; missing final equation.",
+                "raw": "{\"correct\": false, \"reason\": \"Denominator is 3 instead of 2; missing final equation.\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Denominator is 3 instead of 2; missing final equation.",
+                "raw": "{\"correct\": false, \"reason\": \"Denominator is 3 instead of 2; missing final equation.\"}"
+              }
+            ],
+            "correctVotes": 0,
+            "majorityVerdict": "incorrect",
+            "majorityCorrect": false,
+            "majorityReason": "Denominator is 3 instead of 2; missing final equation."
+          },
+          "classification": "both_wrong",
+          "shortReason": "Denominator is 3 instead of 2; missing final equation."
+        },
+        {
+          "id": "arxiv-2609.04037-p2",
+          "base": {
+            "repeats": [
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Missing 'fin' superscript and closure bar on U_ex",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Missing 'fin' superscript and closure bar on U_ex\"\n}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Missing 'fin' superscript and closure bar on U_ex",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Missing 'fin' superscript and closure bar on U_ex\"\n}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Missing 'fin' superscript and closure bar on U_ex",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Missing 'fin' superscript and closure bar on U_ex\"\n}"
+              }
+            ],
+            "correctVotes": 0,
+            "majorityVerdict": "incorrect",
+            "majorityCorrect": false,
+            "majorityReason": "Missing 'fin' superscript and closure bar on U_ex"
+          },
+          "treatment": {
+            "repeats": [
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Missing 'fin' superscript and closure bar on U_ex",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Missing 'fin' superscript and closure bar on U_ex\"\n}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Missing 'fin' superscript and closure bar on U_ex",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Missing 'fin' superscript and closure bar on U_ex\"\n}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Missing 'fin' superscript and closure bar on U_ex",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Missing 'fin' superscript and closure bar on U_ex\"\n}"
+              }
+            ],
+            "correctVotes": 0,
+            "majorityVerdict": "incorrect",
+            "majorityCorrect": false,
+            "majorityReason": "Missing 'fin' superscript and closure bar on U_ex"
+          },
+          "classification": "both_wrong",
+          "shortReason": "Missing 'fin' superscript and closure bar on U_ex"
+        },
+        {
+          "id": "arxiv-2609.04430-p1",
+          "base": {
+            "repeats": [
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled math: sqrt applied to set and missing sqrt on K.",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Mangled math: sqrt applied to set and missing sqrt on K.\"\n}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled math: sqrt applied to set and missing sqrt on K.",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Mangled math: sqrt applied to set and missing sqrt on K.\"\n}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled math: sqrt applied to set and missing sqrt on K.",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Mangled math: sqrt applied to set and missing sqrt on K.\"\n}"
+              }
+            ],
+            "correctVotes": 0,
+            "majorityVerdict": "incorrect",
+            "majorityCorrect": false,
+            "majorityReason": "Mangled math: sqrt applied to set and missing sqrt on K."
+          },
+          "treatment": {
+            "repeats": [
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled math: \\sqrt{\\{r_O\\}} and \\kappa(z_0)=K instead of \\sqrt{K}.",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Mangled math: \\\\sqrt{\\\\{r_O\\\\}} and \\\\kappa(z_0)=K instead of \\\\sqrt{K}.\"\n}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled math: \\sqrt{\\{r_O\\}} and \\kappa(z_0)=K instead of \\sqrt{K}.",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Mangled math: \\\\sqrt{\\\\{r_O\\\\}} and \\\\kappa(z_0)=K instead of \\\\sqrt{K}.\"\n}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled math: \\sqrt{\\{r_O\\}} and \\kappa(z_0)=K instead of \\sqrt{K}.",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Mangled math: \\\\sqrt{\\\\{r_O\\\\}} and \\\\kappa(z_0)=K instead of \\\\sqrt{K}.\"\n}"
+              }
+            ],
+            "correctVotes": 0,
+            "majorityVerdict": "incorrect",
+            "majorityCorrect": false,
+            "majorityReason": "Mangled math: \\sqrt{\\{r_O\\}} and \\kappa(z_0)=K instead of \\sqrt{K}."
+          },
+          "classification": "both_wrong",
+          "shortReason": "base: Mangled math: sqrt applied to set and missing sqrt on K.; trt: Mangled math: \\sqrt{\\{r_O\\}} and \\kappa(z_0)=K inst"
+        }
+      ],
+      "totals": {
+        "treatment_worse": 0,
+        "treatment_better": 0,
+        "both_correct": 1,
+        "both_wrong": 3,
+        "discordantPairs": 0,
+        "signTestPValueTwoSided": 1.0,
+        "baseMajorityCorrect": 1,
+        "treatmentMajorityCorrect": 1
+      }
+    },
+    {
+      "file": "/Users/oleh/personal/webnn-workbench-prompt-lookup/bench/results/prompt-lookup-ab-minicpm5-2b-arxiv-k5-shipped.json",
+      "label": "minicpm5-2b-arxiv-k5-shipped",
+      "modelSlug": "minicpm5-2b",
+      "judgedCount": 11,
+      "skippedIdenticalCount": 109,
+      "itemsJudged": [
+        {
+          "id": "arxiv-2609.01131-p2",
+          "base": {
+            "repeats": [
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled math symbols and dropped tilde notation.",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Mangled math symbols and dropped tilde notation.\"\n}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled math symbols and dropped tilde notation.",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Mangled math symbols and dropped tilde notation.\"\n}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled math symbols and dropped tilde notation.",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Mangled math symbols and dropped tilde notation.\"\n}"
+              }
+            ],
+            "correctVotes": 0,
+            "majorityVerdict": "incorrect",
+            "majorityCorrect": false,
+            "majorityReason": "Mangled math symbols and dropped tilde notation."
+          },
+          "treatment": {
+            "repeats": [
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled math symbols and missing LaTeX delimiters",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Mangled math symbols and missing LaTeX delimiters\"\n}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled math symbols and missing LaTeX delimiters",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Mangled math symbols and missing LaTeX delimiters\"\n}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled math symbols and missing LaTeX delimiters",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Mangled math symbols and missing LaTeX delimiters\"\n}"
+              }
+            ],
+            "correctVotes": 0,
+            "majorityVerdict": "incorrect",
+            "majorityCorrect": false,
+            "majorityReason": "Mangled math symbols and missing LaTeX delimiters"
+          },
+          "classification": "both_wrong",
+          "shortReason": "base: Mangled math symbols and dropped tilde notation.; trt: Mangled math symbols and missing LaTeX delimiters"
+        },
+        {
+          "id": "arxiv-2609.04037-p2",
+          "base": {
+            "repeats": [
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Incorrect sup/max subscripts and missing hats on V.",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Incorrect sup/max subscripts and missing hats on V.\"\n}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Incorrect sup/max subscripts and missing hats on V.",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Incorrect sup/max subscripts and missing hats on V.\"\n}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Incorrect sup/max subscripts and missing hats on V.",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Incorrect sup/max subscripts and missing hats on V.\"\n}"
+              }
+            ],
+            "correctVotes": 0,
+            "majorityVerdict": "incorrect",
+            "majorityCorrect": false,
+            "majorityReason": "Incorrect sup/max subscripts and missing hats on V."
+          },
+          "treatment": {
+            "repeats": [
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Incorrect formula structure and missing constraints",
+                "raw": "{\"correct\": false, \"reason\": \"Incorrect formula structure and missing constraints\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Incorrect formula structure and missing constraints",
+                "raw": "{\"correct\": false, \"reason\": \"Incorrect formula structure and missing constraints\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Incorrect formula structure and missing constraints",
+                "raw": "{\"correct\": false, \"reason\": \"Incorrect formula structure and missing constraints\"}"
+              }
+            ],
+            "correctVotes": 0,
+            "majorityVerdict": "incorrect",
+            "majorityCorrect": false,
+            "majorityReason": "Incorrect formula structure and missing constraints"
+          },
+          "classification": "both_wrong",
+          "shortReason": "base: Incorrect sup/max subscripts and missing hats on V.; trt: Incorrect formula structure and missing constraints"
+        },
+        {
+          "id": "arxiv-2609.02987-p2",
+          "base": {
+            "repeats": [
+              {
+                "status": "correct",
+                "correct": true,
+                "reason": "Mathematically equivalent; notation differences are acceptable.",
+                "raw": "{\"correct\": true, \"reason\": \"Mathematically equivalent; notation differences are acceptable.\"}"
+              },
+              {
+                "status": "correct",
+                "correct": true,
+                "reason": "Mathematically equivalent; notation differences are acceptable.",
+                "raw": "{\"correct\": true, \"reason\": \"Mathematically equivalent; notation differences are acceptable.\"}"
+              },
+              {
+                "status": "correct",
+                "correct": true,
+                "reason": "Mathematically equivalent; notation differences are acceptable.",
+                "raw": "{\"correct\": true, \"reason\": \"Mathematically equivalent; notation differences are acceptable.\"}"
+              }
+            ],
+            "correctVotes": 3,
+            "majorityVerdict": "correct",
+            "majorityCorrect": true,
+            "majorityReason": "Mathematically equivalent; notation differences are acceptable."
+          },
+          "treatment": {
+            "repeats": [
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Candidate lacks LaTeX formatting for math variables",
+                "raw": "{\"correct\": false, \"reason\": \"Candidate lacks LaTeX formatting for math variables\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Candidate lacks LaTeX formatting for math variables",
+                "raw": "{\"correct\": false, \"reason\": \"Candidate lacks LaTeX formatting for math variables\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Candidate lacks LaTeX formatting for math variables",
+                "raw": "{\"correct\": false, \"reason\": \"Candidate lacks LaTeX formatting for math variables\"}"
+              }
+            ],
+            "correctVotes": 0,
+            "majorityVerdict": "incorrect",
+            "majorityCorrect": false,
+            "majorityReason": "Candidate lacks LaTeX formatting for math variables"
+          },
+          "classification": "treatment_worse",
+          "shortReason": "Candidate lacks LaTeX formatting for math variables"
+        },
+        {
+          "id": "arxiv-2609.02031-p1",
+          "base": {
+            "repeats": [
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled variable J to T and sentence structure",
+                "raw": "{\"correct\": false, \"reason\": \"Mangled variable J to T and sentence structure\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled variable J to T and sentence structure",
+                "raw": "{\"correct\": false, \"reason\": \"Mangled variable J to T and sentence structure\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled variable J to T and sentence structure",
+                "raw": "{\"correct\": false, \"reason\": \"Mangled variable J to T and sentence structure\"}"
+              }
+            ],
+            "correctVotes": 0,
+            "majorityVerdict": "incorrect",
+            "majorityCorrect": false,
+            "majorityReason": "Mangled variable J to T and sentence structure"
+          },
+          "treatment": {
+            "repeats": [
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled variable J to T and sentence structure",
+                "raw": "{\"correct\": false, \"reason\": \"Mangled variable J to T and sentence structure\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled variable J to T and sentence structure",
+                "raw": "{\"correct\": false, \"reason\": \"Mangled variable J to T and sentence structure\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled variable J to T and sentence structure",
+                "raw": "{\"correct\": false, \"reason\": \"Mangled variable J to T and sentence structure\"}"
+              }
+            ],
+            "correctVotes": 0,
+            "majorityVerdict": "incorrect",
+            "majorityCorrect": false,
+            "majorityReason": "Mangled variable J to T and sentence structure"
+          },
+          "classification": "both_wrong",
+          "shortReason": "Mangled variable J to T and sentence structure"
+        },
+        {
+          "id": "arxiv-2609.02031-p2",
+          "base": {
+            "repeats": [
+              {
+                "status": "correct",
+                "correct": true,
+                "reason": "Mathematically equivalent; notation differences are acceptable.",
+                "raw": "{\"correct\": true, \"reason\": \"Mathematically equivalent; notation differences are acceptable.\"}"
+              },
+              {
+                "status": "correct",
+                "correct": true,
+                "reason": "Mathematically equivalent; notation differences are acceptable.",
+                "raw": "{\"correct\": true, \"reason\": \"Mathematically equivalent; notation differences are acceptable.\"}"
+              },
+              {
+                "status": "correct",
+                "correct": true,
+                "reason": "Mathematically equivalent; notation differences are acceptable.",
+                "raw": "{\"correct\": true, \"reason\": \"Mathematically equivalent; notation differences are acceptable.\"}"
+              }
+            ],
+            "correctVotes": 3,
+            "majorityVerdict": "correct",
+            "majorityCorrect": true,
+            "majorityReason": "Mathematically equivalent; notation differences are acceptable."
+          },
+          "treatment": {
+            "repeats": [
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled math: \\Phi'(\\Phi) instead of \\Phi'(u)",
+                "raw": "{\"correct\": false, \"reason\": \"Mangled math: \\\\Phi'(\\\\Phi) instead of \\\\Phi'(u)\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled math: \\Phi'(\\Phi) instead of \\Phi'(u)",
+                "raw": "{\"correct\": false, \"reason\": \"Mangled math: \\\\Phi'(\\\\Phi) instead of \\\\Phi'(u)\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled math: \\Phi'(\\Phi) instead of \\Phi'(u)",
+                "raw": "{\"correct\": false, \"reason\": \"Mangled math: \\\\Phi'(\\\\Phi) instead of \\\\Phi'(u)\"}"
+              }
+            ],
+            "correctVotes": 0,
+            "majorityVerdict": "incorrect",
+            "majorityCorrect": false,
+            "majorityReason": "Mangled math: \\Phi'(\\Phi) instead of \\Phi'(u)"
+          },
+          "classification": "treatment_worse",
+          "shortReason": "Mangled math: \\Phi'(\\Phi) instead of \\Phi'(u)"
+        },
+        {
+          "id": "arxiv-2609.02196-p3",
+          "base": {
+            "repeats": [
+              {
+                "status": "correct",
+                "correct": true,
+                "reason": "Mathematically equivalent; notation differences are acceptable.",
+                "raw": "{\"correct\": true, \"reason\": \"Mathematically equivalent; notation differences are acceptable.\"}"
+              },
+              {
+                "status": "correct",
+                "correct": true,
+                "reason": "Mathematically equivalent; notation differences are acceptable.",
+                "raw": "{\"correct\": true, \"reason\": \"Mathematically equivalent; notation differences are acceptable.\"}"
+              },
+              {
+                "status": "correct",
+                "correct": true,
+                "reason": "Mathematically equivalent; notation differences are acceptable.",
+                "raw": "{\"correct\": true, \"reason\": \"Mathematically equivalent; notation differences are acceptable.\"}"
+              }
+            ],
+            "correctVotes": 3,
+            "majorityVerdict": "correct",
+            "majorityCorrect": true,
+            "majorityReason": "Mathematically equivalent; notation differences are acceptable."
+          },
+          "treatment": {
+            "repeats": [
+              {
+                "status": "correct",
+                "correct": true,
+                "reason": "Mathematically equivalent; notation differences are acceptable.",
+                "raw": "{\"correct\": true, \"reason\": \"Mathematically equivalent; notation differences are acceptable.\"}"
+              },
+              {
+                "status": "correct",
+                "correct": true,
+                "reason": "Mathematically equivalent; notation differences are acceptable.",
+                "raw": "{\"correct\": true, \"reason\": \"Mathematically equivalent; notation differences are acceptable.\"}"
+              },
+              {
+                "status": "correct",
+                "correct": true,
+                "reason": "Mathematically equivalent; notation differences are acceptable.",
+                "raw": "{\"correct\": true, \"reason\": \"Mathematically equivalent; notation differences are acceptable.\"}"
+              }
+            ],
+            "correctVotes": 3,
+            "majorityVerdict": "correct",
+            "majorityCorrect": true,
+            "majorityReason": "Mathematically equivalent; notation differences are acceptable."
+          },
+          "classification": "both_correct",
+          "shortReason": "Mathematically equivalent; notation differences are acceptable."
+        },
+        {
+          "id": "arxiv-2609.01181-p2",
+          "base": {
+            "repeats": [
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Missing L=q and s in order-s",
+                "raw": "{\"correct\": false, \"reason\": \"Missing L=q and s in order-s\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Missing L=q and s in order-s",
+                "raw": "{\"correct\": false, \"reason\": \"Missing L=q and s in order-s\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Missing L=q and s in order-s",
+                "raw": "{\"correct\": false, \"reason\": \"Missing L=q and s in order-s\"}"
+              }
+            ],
+            "correctVotes": 0,
+            "majorityVerdict": "incorrect",
+            "majorityCorrect": false,
+            "majorityReason": "Missing L=q and s in order-s"
+          },
+          "treatment": {
+            "repeats": [
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Missing mathematical variable L=q at the end",
+                "raw": "{\"correct\": false, \"reason\": \"Missing mathematical variable L=q at the end\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Missing mathematical variable L=q at the end",
+                "raw": "{\"correct\": false, \"reason\": \"Missing mathematical variable L=q at the end\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Missing mathematical variable L=q at the end",
+                "raw": "{\"correct\": false, \"reason\": \"Missing mathematical variable L=q at the end\"}"
+              }
+            ],
+            "correctVotes": 0,
+            "majorityVerdict": "incorrect",
+            "majorityCorrect": false,
+            "majorityReason": "Missing mathematical variable L=q at the end"
+          },
+          "classification": "both_wrong",
+          "shortReason": "base: Missing L=q and s in order-s; trt: Missing mathematical variable L=q at the end"
+        },
+        {
+          "id": "arxiv-2609.03713-p2",
+          "base": {
+            "repeats": [
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Candidate failed to convert math symbols to LaTeX",
+                "raw": "{\"correct\": false, \"reason\": \"Candidate failed to convert math symbols to LaTeX\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Candidate failed to convert math symbols to LaTeX",
+                "raw": "{\"correct\": false, \"reason\": \"Candidate failed to convert math symbols to LaTeX\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Candidate failed to convert math symbols to LaTeX",
+                "raw": "{\"correct\": false, \"reason\": \"Candidate failed to convert math symbols to LaTeX\"}"
+              }
+            ],
+            "correctVotes": 0,
+            "majorityVerdict": "incorrect",
+            "majorityCorrect": false,
+            "majorityReason": "Candidate failed to convert math symbols to LaTeX"
+          },
+          "treatment": {
+            "repeats": [
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled set notation and reference labels",
+                "raw": "{\"correct\": false, \"reason\": \"Mangled set notation and reference labels\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled set notation and reference labels",
+                "raw": "{\"correct\": false, \"reason\": \"Mangled set notation and reference labels\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled set notation and reference labels",
+                "raw": "{\"correct\": false, \"reason\": \"Mangled set notation and reference labels\"}"
+              }
+            ],
+            "correctVotes": 0,
+            "majorityVerdict": "incorrect",
+            "majorityCorrect": false,
+            "majorityReason": "Mangled set notation and reference labels"
+          },
+          "classification": "both_wrong",
+          "shortReason": "base: Candidate failed to convert math symbols to LaTeX; trt: Mangled set notation and reference labels"
+        },
+        {
+          "id": "arxiv-2609.03730-p3",
+          "base": {
+            "repeats": [
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Candidate fails to convert math to LaTeX",
+                "raw": "{\"correct\": false, \"reason\": \"Candidate fails to convert math to LaTeX\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Candidate fails to convert math to LaTeX",
+                "raw": "{\"correct\": false, \"reason\": \"Candidate fails to convert math to LaTeX\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Candidate fails to convert math to LaTeX",
+                "raw": "{\"correct\": false, \"reason\": \"Candidate fails to convert math to LaTeX\"}"
+              }
+            ],
+            "correctVotes": 0,
+            "majorityVerdict": "incorrect",
+            "majorityCorrect": false,
+            "majorityReason": "Candidate fails to convert math to LaTeX"
+          },
+          "treatment": {
+            "repeats": [
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Candidate math expressions are completely wrong.",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Candidate math expressions are completely wrong.\"\n}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Candidate math expressions are completely wrong.",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Candidate math expressions are completely wrong.\"\n}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Candidate math expressions are completely wrong.",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Candidate math expressions are completely wrong.\"\n}"
+              }
+            ],
+            "correctVotes": 0,
+            "majorityVerdict": "incorrect",
+            "majorityCorrect": false,
+            "majorityReason": "Candidate math expressions are completely wrong."
+          },
+          "classification": "both_wrong",
+          "shortReason": "base: Candidate fails to convert math to LaTeX; trt: Candidate math expressions are completely wrong."
+        },
+        {
+          "id": "arxiv-2609.04371-p3",
+          "base": {
+            "repeats": [
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled math notation and missing subscripts",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Mangled math notation and missing subscripts\"\n}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled math notation and missing subscripts",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Mangled math notation and missing subscripts\"\n}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled math notation and missing subscripts",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Mangled math notation and missing subscripts\"\n}"
+              }
+            ],
+            "correctVotes": 0,
+            "majorityVerdict": "incorrect",
+            "majorityCorrect": false,
+            "majorityReason": "Mangled math notation and missing subscripts"
+          },
+          "treatment": {
+            "repeats": [
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled integrals and incorrect notation for f_in.",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Mangled integrals and incorrect notation for f_in.\"\n}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled integrals and incorrect notation for f_in.",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Mangled integrals and incorrect notation for f_in.\"\n}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Mangled integrals and incorrect notation for f_in.",
+                "raw": "{\n\"correct\": false,\n\"reason\": \"Mangled integrals and incorrect notation for f_in.\"\n}"
+              }
+            ],
+            "correctVotes": 0,
+            "majorityVerdict": "incorrect",
+            "majorityCorrect": false,
+            "majorityReason": "Mangled integrals and incorrect notation for f_in."
+          },
+          "classification": "both_wrong",
+          "shortReason": "base: Mangled math notation and missing subscripts; trt: Mangled integrals and incorrect notation for f_in."
+        },
+        {
+          "id": "arxiv-2609.03854-p3",
+          "base": {
+            "repeats": [
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Candidate mangles the mathematical formula and drops the nu term.",
+                "raw": "{\"correct\": false, \"reason\": \"Candidate mangles the mathematical formula and drops the nu term.\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Candidate mangles the mathematical formula and drops the nu term.",
+                "raw": "{\"correct\": false, \"reason\": \"Candidate mangles the mathematical formula and drops the nu term.\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Candidate mangles the mathematical formula and drops the nu term.",
+                "raw": "{\"correct\": false, \"reason\": \"Candidate mangles the mathematical formula and drops the nu term.\"}"
+              }
+            ],
+            "correctVotes": 0,
+            "majorityVerdict": "incorrect",
+            "majorityCorrect": false,
+            "majorityReason": "Candidate mangles the mathematical formula and drops the nu term."
+          },
+          "treatment": {
+            "repeats": [
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Candidate mangles the mathematical formula and drops the nu term.",
+                "raw": "{\"correct\": false, \"reason\": \"Candidate mangles the mathematical formula and drops the nu term.\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Candidate mangles the mathematical formula and drops the nu term.",
+                "raw": "{\"correct\": false, \"reason\": \"Candidate mangles the mathematical formula and drops the nu term.\"}"
+              },
+              {
+                "status": "incorrect",
+                "correct": false,
+                "reason": "Candidate mangles the mathematical formula and drops the nu term.",
+                "raw": "{\"correct\": false, \"reason\": \"Candidate mangles the mathematical formula and drops the nu term.\"}"
+              }
+            ],
+            "correctVotes": 0,
+            "majorityVerdict": "incorrect",
+            "majorityCorrect": false,
+            "majorityReason": "Candidate mangles the mathematical formula and drops the nu term."
+          },
+          "classification": "both_wrong",
+          "shortReason": "Candidate mangles the mathematical formula and drops the nu term."
+        }
+      ],
+      "totals": {
+        "treatment_worse": 2,
+        "treatment_better": 0,
+        "both_correct": 1,
+        "both_wrong": 8,
+        "discordantPairs": 2,
+        "signTestPValueTwoSided": 0.5,
+        "baseMajorityCorrect": 3,
+        "treatmentMajorityCorrect": 1
+      }
+    },
+    {
+      "file": "/Users/oleh/personal/webnn-workbench-prompt-lookup/bench/results/prompt-lookup-ab-qwen35-08b-arxiv-k5-shipped.json",
+      "label": "qwen35-08b-arxiv-k5-shipped",
+      "modelSlug": "qwen35-08b",
+      "judgedCount": 1,
+      "skippedIdenticalCount": 119,
+      "itemsJudged": [
+        {
+          "id": "arxiv-2609.04037-p1",
+          "base": {
+            "repeats": [
+              {
+                "status": "correct",
+                "correct": true,
+                "reason": "Mathematically equivalent notation and correct prose conversion.",
+                "raw": "{\"correct\": true, \"reason\": \"Mathematically equivalent notation and correct prose conversion.\"}"
+              },
+              {
+                "status": "correct",
+                "correct": true,
+                "reason": "Mathematically equivalent notation and correct prose conversion.",
+                "raw": "{\"correct\": true, \"reason\": \"Mathematically equivalent notation and correct prose conversion.\"}"
+              },
+              {
+                "status": "correct",
+                "correct": true,
+                "reason": "Mathematically equivalent notation and correct prose conversion.",
+                "raw": "{\"correct\": true, \"reason\": \"Mathematically equivalent notation and correct prose conversion.\"}"
+              }
+            ],
+            "correctVotes": 3,
+            "majorityVerdict": "correct",
+            "majorityCorrect": true,
+            "majorityReason": "Mathematically equivalent notation and correct prose conversion."
+          },
+          "treatment": {
+            "repeats": [
+              {
+                "status": "correct",
+                "correct": true,
+                "reason": "Mathematically equivalent notation and correct prose conversion.",
+                "raw": "{\"correct\": true, \"reason\": \"Mathematically equivalent notation and correct prose conversion.\"}"
+              },
+              {
+                "status": "correct",
+                "correct": true,
+                "reason": "Mathematically equivalent notation and correct prose conversion.",
+                "raw": "{\"correct\": true, \"reason\": \"Mathematically equivalent notation and correct prose conversion.\"}"
+              },
+              {
+                "status": "correct",
+                "correct": true,
+                "reason": "Mathematically equivalent notation and correct prose conversion.",
+                "raw": "{\"correct\": true, \"reason\": \"Mathematically equivalent notation and correct prose conversion.\"}"
+              }
+            ],
+            "correctVotes": 3,
+            "majorityVerdict": "correct",
+            "majorityCorrect": true,
+            "majorityReason": "Mathematically equivalent notation and correct prose conversion."
+          },
+          "classification": "both_correct",
+          "shortReason": "Mathematically equivalent notation and correct prose conversion."
+        }
+      ],
+      "totals": {
+        "treatment_worse": 0,
+        "treatment_better": 0,
+        "both_correct": 1,
+        "both_wrong": 0,
+        "discordantPairs": 0,
+        "signTestPValueTwoSided": 1.0,
+        "baseMajorityCorrect": 1,
+        "treatmentMajorityCorrect": 1
+      }
+    }
+  ]
+}
