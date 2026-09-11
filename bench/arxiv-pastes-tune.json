@@ -1,0 +1,1122 @@
+[
+ {
+  "id": "arxiv-2609.03856-p1",
+  "tier": "arxiv-paste",
+  "input": "At the endpoint p = ∞, the update is the midrange rule from Lipschitz learning.\nAmir et al. [1] proved an O(n log n D2 ) fixed-tolerance upper bound and constructed\ngraphs attaining the nD2 scale. Our diameter lower bound applies to every connected\ngraph, at the cost of a factor of the maximum degree. Peres, Schramm, Sheffield, and\nWilson connected infinity-harmonic functions to tug-of-war games [19]; Oberman\ndeveloped a convergent scheme for absolutely minimizing Lipschitz extensions [18];\nand Kyng, Rao, Sachdeva, and Spielman developed graph algorithms for Lipschitz\nlearning [14",
+  "reference": "At the endpoint \\( p=\\infty \\) , the update is the midrange rule from Lipschitz\nlearning. Amir et al.\n[ref] proved an \\( O(n\\log n\\,D^2) \\) fixed-tolerance upper bound and constructed graphs attaining\nthe \\( nD^2 \\) scale. Our diameter lower bound applies to every connected graph,\nat the cost of a factor of the maximum degree. Peres, Schramm, Sheffield, and\nWilson connected infinity-harmonic functions to tug-of-war games\n[ref]; Oberman developed a convergent scheme\nfor absolutely minimizing Lipschitz extensions [ref]; and Kyng,\nRao, Sachdeva, and Spielman developed graph algorithms for Lipschitz learning\n[ref].",
+  "source": "https://arxiv.org/abs/2609.03856",
+  "meta": {
+   "paper_id": "2609.03856",
+   "category": "math.PR",
+   "license": "unknown",
+   "extractor": "pdftotext",
+   "two_column": false,
+   "n_inline": 3,
+   "n_display": 0,
+   "chars": 587,
+   "overlap": 1.0,
+   "reference_prose": "At the endpoint , the update is the midrange rule from Lipschitz learning. Amir et al. [ref] proved an fixed-tolerance upper bound and constructed graphs attaining the scale. Our diameter lower bound applies to every connected graph, at the cost of a factor of the maximum degree. Peres, Schramm, Sheffield, and Wilson connected infinity-harmonic functions to tug-of-war games [ref]; Oberman developed a convergent scheme for absolutely minimizing Lipschitz extensions [ref]; and Kyng, Rao, Sachdeva, and Spielman developed graph algorithms for Lipschitz learning [ref].",
+   "has_custom_macros": false
+  }
+ },
+ {
+  "id": "arxiv-2609.03856-p2",
+  "tier": "arxiv-paste",
+  "input": "Both nonlinear profiles have range two and the box has maximum degree at most\n2d. Theorem 5.1, applied to (55) and to (57) when p > 2, gives respectively the\nterms nd1/(p−1",
+  "reference": "Both nonlinear profiles have range two and the box has maximum degree at\nmost \\( 2d \\) .\nTheorem (ref), applied to\n(ref) and to\n(ref) when \\( p>2 \\) , gives respectively the terms \\( nd^{1/(p-1)-1}L^q \\) and \\( nL^2 \\) in (ref).",
+  "source": "https://arxiv.org/abs/2609.03856",
+  "meta": {
+   "paper_id": "2609.03856",
+   "category": "math.PR",
+   "license": "unknown",
+   "extractor": "pdftotext",
+   "two_column": false,
+   "n_inline": 4,
+   "n_display": 0,
+   "chars": 172,
+   "overlap": 1.0,
+   "reference_prose": "Both nonlinear profiles have range two and the box has maximum degree at most . Theorem (ref), applied to (ref) and to (ref) when , gives respectively the terms and in (ref).",
+   "has_custom_macros": false
+  }
+ },
+ {
+  "id": "arxiv-2609.03856-p3",
+  "tier": "arxiv-paste",
+  "input": "Combine the coupon observation in Section 5 with Theorem 7.6. Both profiles\nlie in [0, 1]V , so their lower bounds also apply to the globally defined supremum\nover [−1, 1]V . Use max{a, b} ≥ (a + b)/2 to absorb the two absolute constants.",
+  "reference": "Combine the coupon observation in Section (ref) with\nTheorem (ref). Both profiles lie in \\( [0,1]^V \\) , so their lower\nbounds also apply to the globally defined supremum over \\( [-1,1]^V \\) . Use \\( \\max\\{a,b\\}\\ge(a+b)/2 \\) to absorb the two absolute constants.",
+  "source": "https://arxiv.org/abs/2609.03856",
+  "meta": {
+   "paper_id": "2609.03856",
+   "category": "math.PR",
+   "license": "unknown",
+   "extractor": "pdftotext",
+   "two_column": false,
+   "n_inline": 3,
+   "n_display": 0,
+   "chars": 238,
+   "overlap": 1.0,
+   "reference_prose": "Combine the coupon observation in Section (ref) with Theorem (ref). Both profiles lie in , so their lower bounds also apply to the globally defined supremum over . Use to absorb the two absolute constants.",
+   "has_custom_macros": false
+  }
+ },
+ {
+  "id": "arxiv-2609.01131-p2",
+  "tier": "arxiv-paste",
+  "input": "For the indirect coding problem, pull it back to the raw\nsource alphabet through η:\n\nb Consequently,\nchannels induce the same joint law of (S, C, S).\nthey achieve the same expected matched distortion, and\n\ne\nd(x, c, sb) ≜ dp (η(x, c), sb) = DL (η(x, c)∥b\ns) .\n\nIQ (S; Sb | C) ≤ IW (X; Sb | C).\n\nThus the indirect and direct coding problems below are\nevaluated under the same matched predictive-state criterion\nand differ only in the encoder observation. In particular, de\nis constant on predictive-equivalence classes in its source\nargument.",
+  "reference": "For the indirect coding problem, pull it back to the raw source alphabet through \\( \\eta \\) : \\[ \\widetilde d(x,c,\\widehat s)\n\\triangleq\nd_p\\!\\left(\\eta(x,c),\\widehat s\\right)\n=\nD_L\\!\\left(\\eta(x,c)\\middle\\|\\widehat s\\right). \\] Thus the indirect and direct coding problems below are evaluated under the same matched predictive-state criterion and differ only in the encoder observation. In particular, \\( \\widetilde d \\) is constant on predictive-equivalence classes in its source argument.",
+  "source": "https://arxiv.org/abs/2609.01131",
+  "meta": {
+   "paper_id": "2609.01131",
+   "category": "cs.IT",
+   "license": "unknown",
+   "extractor": "pdftotext",
+   "two_column": true,
+   "n_inline": 2,
+   "n_display": 1,
+   "chars": 541,
+   "overlap": 1.0,
+   "reference_prose": "For the indirect coding problem, pull it back to the raw source alphabet through : Thus the indirect and direct coding problems below are evaluated under the same matched predictive-state criterion and differ only in the encoder observation. In particular, is constant on predictive-equivalence classes in its source argument.",
+   "has_custom_macros": false
+  }
+ },
+ {
+  "id": "arxiv-2609.01131-p1",
+  "tier": "arxiv-paste",
+  "input": "The failure is caused by horizon shift: Wt+k+1 lies outside\n(k)\nthe target defining St but enters the next target. Information\nthat is irrelevant to the current finite horizon can therefore\nbecome relevant one step later. Particular processes may admit\nclosed finite-horizon updates, but such closure does not follow\nfrom predictive sufficiency alone.",
+  "reference": "The failure is caused by horizon shift: \\( W_{t+k+1} \\) lies outside the target defining \\( S_t^{(k)} \\) but enters the next target. Information that is irrelevant to the current finite horizon can therefore become relevant one step later. Particular processes may admit closed finite-horizon updates, but such closure does not follow from predictive sufficiency alone.",
+  "source": "https://arxiv.org/abs/2609.01131",
+  "meta": {
+   "paper_id": "2609.01131",
+   "category": "cs.IT",
+   "license": "unknown",
+   "extractor": "pdftotext",
+   "two_column": true,
+   "n_inline": 2,
+   "n_display": 0,
+   "chars": 351,
+   "overlap": 1.0,
+   "reference_prose": "The failure is caused by horizon shift: lies outside the target defining but enters the next target. Information that is irrelevant to the current finite horizon can therefore become relevant one step later. Particular processes may admit closed finite-horizon updates, but such closure does not follow from predictive sufficiency alone.",
+   "has_custom_macros": false
+  }
+ },
+ {
+  "id": "arxiv-2609.04037-p1",
+  "tier": "arxiv-paste",
+  "input": "Unless otherwise stated, the initial state of the chain al along the paper is chosen to be\nthe Néel state |ψ〉N = |↑ ↓ ↑ ↓ . . . ↑ ↓〉, typically used for MBL dynamics in these systems\n[25, 28]. Indeed, Néel state is a highly excited state at finite energy density and it is a product\nstate in the local spin basis, making it suitable for probing localization and thermalization\ndynamics.",
+  "reference": "Unless otherwise stated, the initial state of the chain al along the paper is chosen to be the Néel state \\( \\ket{\\psi}_N=\\ket{\\uparrow \\downarrow \\uparrow \\downarrow \\dots \\uparrow \\downarrow } \\) , typically used for MBL dynamics in these systems [ref]. Indeed, Néel state is a highly excited state at finite energy density and it is a product state in the local spin basis, making it suitable for probing localization and thermalization dynamics.",
+  "source": "https://arxiv.org/abs/2609.04037",
+  "meta": {
+   "paper_id": "2609.04037",
+   "category": "cond-mat.stat-mech",
+   "license": "unknown",
+   "extractor": "pdftotext",
+   "two_column": false,
+   "n_inline": 1,
+   "n_display": 0,
+   "chars": 386,
+   "overlap": 1.0,
+   "reference_prose": "Unless otherwise stated, the initial state of the chain al along the paper is chosen to be the Néel state , typically used for MBL dynamics in these systems [ref]. Indeed, Néel state is a highly excited state at finite energy density and it is a product state in the local spin basis, making it suitable for probing localization and thermalization dynamics.",
+   "has_custom_macros": false
+  }
+ },
+ {
+  "id": "arxiv-2609.04037-p2",
+  "tier": "arxiv-paste",
+  "input": "At stroboscopic times, the energy is evaluated with respect to the static Hamiltonian HXXZ .\nThe restricted-control ergotropy is then\n\b\n\u0002\n\u0003\n\b\n\u0002\n\u0003\nEex (t) = sup Tr ĤXXZ ρ̂(t) − V̂ ρ̂(t)V̂ † = max Tr ĤXXZ ρ̂(t) − V̂ ρ̂(t)V̂ † ,\nV̂ ∈U ex\n\nfin\nV̂ ∈Uex\n\nwhere the second equality follows from the finite dimensionality of the chains considered here.",
+  "reference": "At stroboscopic times, the energy is evaluated with respect to the static Hamiltonian \\( H_{\\mathrm{XXZ}} \\) . The restricted-control ergotropy is then \\[ \\mathcal E_{\\mathrm{ex}}(t)\n=\n\\sup_{ \\hat{V}\\in\\mathcal U_{\\mathrm{ex}}^{\\mathrm{fin}}}\n\\operatorname{Tr}\n\\left\\{\n\\hat{H}_{\\mathrm{XXZ}}\n\\left[\n\\hat{\\rho}(t)- \\hat{V}\\hat{\\rho}(t) \\hat{V}^\\dagger\n\\right]\n\\right\\}\n\\nonumber\n=\n\\max_{ \\hat{V}\\in\\overline{\\mathcal U}_{\\mathrm{ex}}}\n\\operatorname{Tr}\n\\left\\{\n\\hat{H}_{\\mathrm{XXZ}}\n\\left[\n\\hat{\\rho}(t)- \\hat{V}\\hat{\\rho}(t) \\hat{V}^\\dagger\n\\right]\n\\right\\}, \\] where the second equality follows from the finite dimensionality of the chains considered here.",
+  "source": "https://arxiv.org/abs/2609.04037",
+  "meta": {
+   "paper_id": "2609.04037",
+   "category": "cond-mat.stat-mech",
+   "license": "unknown",
+   "extractor": "pdftotext",
+   "two_column": false,
+   "n_inline": 1,
+   "n_display": 1,
+   "chars": 346,
+   "overlap": 1.0,
+   "reference_prose": "At stroboscopic times, the energy is evaluated with respect to the static Hamiltonian . The restricted-control ergotropy is then where the second equality follows from the finite dimensionality of the chains considered here.",
+   "has_custom_macros": false
+  }
+ },
+ {
+  "id": "arxiv-2609.04037-p3",
+  "tier": "arxiv-paste",
+  "input": "Furthermore, Fig. 8 shows the time evolution of the entanglement entropy for three difmax\nferent chain lengths N , together with the corresponding maximum value Sent\n= N2 log(2)\n(dotted lines) allowed for each finite system size. As can be seen, the maximum value reached\nby the entanglement entropy during the dynamics remains well below S max in all cases. This\nindicates that the observed saturation is not simply caused by the finite-size upper bound on\nthe entropy.",
+  "reference": "Furthermore, Fig. (ref) shows the time evolution of the entanglement entropy for three different chain lengths \\( N \\) , together with the corresponding maximum value \\( S^{max}_{ent}=\\frac{N}{2}\\log(2) \\) (dotted lines) allowed for each finite system size. As can be seen, the maximum value reached by the entanglement entropy during the dynamics remains well below \\( S^{max} \\) in all cases. This indicates that the observed saturation is not simply caused by the finite-size upper bound on the entropy.",
+  "source": "https://arxiv.org/abs/2609.04037",
+  "meta": {
+   "paper_id": "2609.04037",
+   "category": "cond-mat.stat-mech",
+   "license": "unknown",
+   "extractor": "pdftotext",
+   "two_column": false,
+   "n_inline": 3,
+   "n_display": 0,
+   "chars": 470,
+   "overlap": 0.9783,
+   "reference_prose": "Furthermore, Fig. (ref) shows the time evolution of the entanglement entropy for three different chain lengths , together with the corresponding maximum value (dotted lines) allowed for each finite system size. As can be seen, the maximum value reached by the entanglement entropy during the dynamics remains well below in all cases. This indicates that the observed saturation is not simply caused by the finite-size upper bound on the entropy.",
+   "has_custom_macros": false
+  }
+ },
+ {
+  "id": "arxiv-2609.04430-p1",
+  "tier": "arxiv-paste",
+  "input": "Conversely, given a collection\n√ of positive numbers {rO }, one for each non-trivial orbit, formula\n(3) together with κ(z0 ) = K for fixed points defines a weight κ that automatically satisfies\nκ(z)κ(σ(z)) = K and has the prescribed orbit ratios. The correspondence is therefore bijective.",
+  "reference": "Conversely, given a collection of positive numbers \\( \\{r_O\\} \\) , one\nfor each non-trivial orbit, formula (ref) together with \\( \\kappa(z_0)=\\sqrt K \\) for fixed points defines a weight \\( \\kappa \\) that automatically satisfies \\( \\kappa(z)\\kappa(\\sigma(z))=K \\) and has the prescribed orbit ratios.\nThe correspondence is therefore bijective.",
+  "source": "https://arxiv.org/abs/2609.04430",
+  "meta": {
+   "paper_id": "2609.04430",
+   "category": "math.PR",
+   "license": "unknown",
+   "extractor": "pdftotext",
+   "two_column": false,
+   "n_inline": 4,
+   "n_display": 0,
+   "chars": 289,
+   "overlap": 1.0,
+   "reference_prose": "Conversely, given a collection of positive numbers , one for each non-trivial orbit, formula (ref) together with for fixed points defines a weight that automatically satisfies and has the prescribed orbit ratios. The correspondence is therefore bijective.",
+   "has_custom_macros": false
+  }
+ },
+ {
+  "id": "arxiv-2609.04430-p2",
+  "tier": "arxiv-paste",
+  "input": "The pushforward ϕ# is linear as a map between spaces of probability measures, but it\nis not a homomorphism for the Aitchison operation ⊕. Therefore we do not claim that ϕ# respects\nthe coset structure Σ = π ∗ ⊕ H in the group sense. Compatibility of the pushforward with the\ncoset structure, if desired, would require a specific proof not addressed in this section.",
+  "reference": "The pushforward \\( \\phi_\\# \\) is linear as a map between spaces of\nprobability measures, but it is not a homomorphism for the Aitchison\noperation \\( \\oplus \\) . Therefore we do not claim that \\( \\phi_\\# \\) respects the coset structure \\( \\Sigma = \\pi^*\\oplus H \\) in the group\nsense. Compatibility of the pushforward with the coset structure, if\ndesired, would require a specific proof not addressed in this section.",
+  "source": "https://arxiv.org/abs/2609.04430",
+  "meta": {
+   "paper_id": "2609.04430",
+   "category": "math.PR",
+   "license": "unknown",
+   "extractor": "pdftotext",
+   "two_column": false,
+   "n_inline": 4,
+   "n_display": 0,
+   "chars": 365,
+   "overlap": 1.0,
+   "reference_prose": "The pushforward is linear as a map between spaces of probability measures, but it is not a homomorphism for the Aitchison operation . Therefore we do not claim that respects the coset structure in the group sense. Compatibility of the pushforward with the coset structure, if desired, would require a specific proof not addressed in this section.",
+   "has_custom_macros": false
+  }
+ },
+ {
+  "id": "arxiv-2609.02773-p1",
+  "tier": "arxiv-paste",
+  "input": "Consider an equilibrium vector of proposed prices p = (pi )n−1\ni=1 . Each player i > 1\naccepts or rejects all previously proposed price vectors. The realized price vector need\nnot coincide with the proposed one, since any player may have rejected prior proposals.",
+  "reference": "Consider an equilibrium vector of proposed prices \\( p = (p_i)_{i=1}^{n-1} \\) . Each\nplayer \\( i > 1 \\) accepts or rejects all previously proposed price vectors. The\nrealized price vector need not coincide with the proposed one, since any player\nmay have rejected prior proposals.",
+  "source": "https://arxiv.org/abs/2609.02773",
+  "meta": {
+   "paper_id": "2609.02773",
+   "category": "econ.TH",
+   "license": "unknown",
+   "extractor": "pdftotext",
+   "two_column": false,
+   "n_inline": 2,
+   "n_display": 0,
+   "chars": 263,
+   "overlap": 1.0,
+   "reference_prose": "Consider an equilibrium vector of proposed prices . Each player accepts or rejects all previously proposed price vectors. The realized price vector need not coincide with the proposed one, since any player may have rejected prior proposals.",
+   "has_custom_macros": false
+  }
+ },
+ {
+  "id": "arxiv-2609.02773-p2",
+  "tier": "arxiv-paste",
+  "input": "Step 4: In any equilibrium, each player receives her Shapley value. Since\nall Bi = 0 by Step 3, each player must be indifferent among all possible winners. If\nplayer i strictly preferred to win, she could lower her bids slightly to become the unique\nwinner and improve her payoff; if she strictly preferred some player j to win, she could\nslightly increase her bid bji to that effect. Neither occurs in equilibrium, so every player\n\n24\n\n\fis indifferent among",
+  "reference": "Step 4: In any equilibrium, each player receives her Shapley value. Since all \\( B_i = 0 \\) by Step 3, each player must be indifferent among all possible winners. If player \\( i \\) strictly preferred to win, she could lower her bids slightly to become the unique winner and improve her payoff; if she strictly preferred some player \\( j \\) to win, she could slightly increase her bid \\( b_i^j \\) to that effect. Neither occurs in equilibrium, so every player is indifferent among winners.",
+  "source": "https://arxiv.org/abs/2609.02773",
+  "meta": {
+   "paper_id": "2609.02773",
+   "category": "econ.TH",
+   "license": "unknown",
+   "extractor": "pdftotext",
+   "two_column": false,
+   "n_inline": 4,
+   "n_display": 0,
+   "chars": 458,
+   "overlap": 0.9778,
+   "reference_prose": "Step 4: In any equilibrium, each player receives her Shapley value. Since all by Step 3, each player must be indifferent among all possible winners. If player strictly preferred to win, she could lower her bids slightly to become the unique winner and improve her payoff; if she strictly preferred some player to win, she could slightly increase her bid to that effect. Neither occurs in equilibrium, so every player is indifferent among winners.",
+   "has_custom_macros": false
+  }
+ },
+ {
+  "id": "arxiv-2609.04735-p1",
+  "tier": "arxiv-paste",
+  "input": "Our objective is to find a policy that maximizes the expected reward across tasks:\nπ∗ = arg max\nπ\n\nM\n£\n¤\n1 X\nEx∼Di , y∼π(·|x) R i (x, y) .\nM i =1\n\n(5)\n\nFor all tasks here, R i assigns a single reward to the completed rollout y. We do not consider intermediate rewards at\nthe turn level and leave their study to future work.",
+  "reference": "Our objective is to find a policy that maximizes the expected reward across tasks: \\[ \\pi^*\n=\n\\arg\\max_{\\pi}\n\\frac{1}{M}\\sum_{i=1}^{M}\n\\mathbb{E}_{\n\\boldsymbol{x}\\sim\\mathcal{D}_i,\\,\n\\boldsymbol{y}\\sim\\pi(\\cdot\\mid\\boldsymbol{x})\n}\n\\left[\nR_i(\\boldsymbol{x},\\boldsymbol{y})\n\\right]. \\] For all tasks here, \\( R_i \\) assigns a single reward to the completed rollout \\( \\boldsymbol{y} \\) . We do not consider intermediate rewards at the turn level and leave their study to future work.",
+  "source": "https://arxiv.org/abs/2609.04735",
+  "meta": {
+   "paper_id": "2609.04735",
+   "category": "cs.LG",
+   "license": "unknown",
+   "extractor": "pdftotext",
+   "two_column": false,
+   "n_inline": 2,
+   "n_display": 1,
+   "chars": 323,
+   "overlap": 1.0,
+   "reference_prose": "Our objective is to find a policy that maximizes the expected reward across tasks: For all tasks here, assigns a single reward to the completed rollout . We do not consider intermediate rewards at the turn level and leave their study to future work.",
+   "has_custom_macros": false
+  }
+ },
+ {
+  "id": "arxiv-2609.02928-p1",
+  "tier": "arxiv-paste",
+  "input": "We now state the main guarantee for the offline procedure from Section 3. The likelihood-based empirical\ncriterion yields a confidence set with small population prediction loss along the logged mean-field representation paths. This loss controls logged Bellman residuals, and the coefficient κ transfers those residuals to\nvalue errors for a target population policy. Optimistic deviation values and pessimistic self-play values then\nturn these value bounds into a Nash-gap guarantee.",
+  "reference": "We now state the main guarantee for the offline procedure from Section (ref).\nThe likelihood-based empirical criterion yields a confidence set with small population prediction loss along the logged mean-field representation paths.\nThis loss controls logged Bellman residuals, and the coefficient \\( \\kappa \\) transfers those residuals to value errors for a target population policy.\nOptimistic deviation values and pessimistic self-play values then turn these value bounds into a Nash-gap guarantee.",
+  "source": "https://arxiv.org/abs/2609.02928",
+  "meta": {
+   "paper_id": "2609.02928",
+   "category": "stat.ML",
+   "license": "unknown",
+   "extractor": "pdftotext",
+   "two_column": false,
+   "n_inline": 1,
+   "n_display": 0,
+   "chars": 484,
+   "overlap": 1.0,
+   "reference_prose": "We now state the main guarantee for the offline procedure from Section (ref). The likelihood-based empirical criterion yields a confidence set with small population prediction loss along the logged mean-field representation paths. This loss controls logged Bellman residuals, and the coefficient transfers those residuals to value errors for a target population policy. Optimistic deviation values and pessimistic self-play values then turn these value bounds into a Nash-gap guarantee.",
+   "has_custom_macros": false
+  }
+ },
+ {
+  "id": "arxiv-2609.02928-p2",
+  "tier": "arxiv-paste",
+  "input": "The proof is given in App. A.5. This theorem is the main offline equilibrium statement. It says that learning\nsucceeds when two things are true for some low-gap policy η: the data can evaluate its self-play value, and\nthe data can evaluate at least one good approximate response to it. It does not require coverage of every\npossible unilateral deviation.",
+  "reference": "The proof is given in App. (ref).\nThis theorem is the main offline equilibrium statement.\nIt says that learning succeeds when two things are true for some low-gap policy \\( \\eta \\) : the data can evaluate its self-play value, and the data can evaluate at least one good approximate response to it.\nIt does not require coverage of every possible unilateral deviation.",
+  "source": "https://arxiv.org/abs/2609.02928",
+  "meta": {
+   "paper_id": "2609.02928",
+   "category": "stat.ML",
+   "license": "unknown",
+   "extractor": "pdftotext",
+   "two_column": false,
+   "n_inline": 1,
+   "n_display": 0,
+   "chars": 354,
+   "overlap": 1.0,
+   "reference_prose": "The proof is given in App. (ref). This theorem is the main offline equilibrium statement. It says that learning succeeds when two things are true for some low-gap policy : the data can evaluate its self-play value, and the data can evaluate at least one good approximate response to it. It does not require coverage of every possible unilateral deviation.",
+   "has_custom_macros": false
+  }
+ },
+ {
+  "id": "arxiv-2609.02928-p3",
+  "tier": "arxiv-paste",
+  "input": "The theoretical model allows finite horizons, transition learning, finite candidate classes, and planning over\na confidence set. The empirical study isolates the population-representation component. It uses H = 1,\ndeterministic reward labels, continuous neural reward models, and planning in one fitted reward game. It\ntherefore tests whether a task-relevant mean-field representation can be learned from finite offline population\nsnapshots; it is not our aim to implement the confidence-set algorithm or validate the finite-sample bound\nof Section 4.",
+  "reference": "The theoretical model allows finite horizons, transition learning, finite candidate classes, and planning over a confidence set.\nThe empirical study isolates the population-representation component.\nIt uses \\( H=1 \\) , deterministic reward labels, continuous neural reward models, and planning in one fitted reward game.\nIt therefore tests whether a task-relevant mean-field representation can be learned from finite offline population snapshots; it is not our aim to implement the confidence-set algorithm or validate the finite-sample bound of Section (ref).",
+  "source": "https://arxiv.org/abs/2609.02928",
+  "meta": {
+   "paper_id": "2609.02928",
+   "category": "stat.ML",
+   "license": "unknown",
+   "extractor": "pdftotext",
+   "two_column": false,
+   "n_inline": 1,
+   "n_display": 0,
+   "chars": 551,
+   "overlap": 1.0,
+   "reference_prose": "The theoretical model allows finite horizons, transition learning, finite candidate classes, and planning over a confidence set. The empirical study isolates the population-representation component. It uses , deterministic reward labels, continuous neural reward models, and planning in one fitted reward game. It therefore tests whether a task-relevant mean-field representation can be learned from finite offline population snapshots; it is not our aim to implement the confidence-set algorithm or validate the finite-sample bound of Section (ref).",
+   "has_custom_macros": false
+  }
+ },
+ {
+  "id": "arxiv-2609.04580-p1",
+  "tier": "arxiv-paste",
+  "input": "Neither knob is conceptually new [17–19]. Laboratory-frame AJC dynamics with\nsqueezed light were treated in Refs. [5, 6, 20]; those papers did not scan a Kerr com-\npensator or a Dicke ladder. Related AJC studies map the unsqueezed model onto JC\nby a duality or supersymmetry transformation [3, 4]; they do not treat the squeezed\noperator K in the laboratory frame. The question here is narrower: in the laboratory\nframe, with a squeezed vacuum on the ladder, how much contrast is recovered by Kerr\ncompensation and by collective coupling, and is the r > 0 dynamics just an incoherent\naverage over Fock blocks? The answers are numerical.",
+  "reference": "Neither knob is conceptually new [ref].\nLaboratory-frame AJC dynamics with squeezed light were treated in\nRefs. [ref]; those papers did not\nscan a Kerr compensator or a Dicke ladder. Related AJC studies map the\nunsqueezed model onto JC by a duality or supersymmetry\ntransformation [ref]; they do not\ntreat the squeezed operator \\( K \\) in the laboratory frame. The question\nhere is narrower: in the laboratory frame, with a squeezed vacuum on\nthe ladder, how much contrast is recovered by Kerr compensation and by\ncollective coupling, and is the \\( r>0 \\) dynamics just an incoherent\naverage over Fock blocks? The answers are numerical.",
+  "source": "https://arxiv.org/abs/2609.04580",
+  "meta": {
+   "paper_id": "2609.04580",
+   "category": "quant-ph",
+   "license": "unknown",
+   "extractor": "pdftotext -layout",
+   "two_column": false,
+   "n_inline": 2,
+   "n_display": 0,
+   "chars": 636,
+   "overlap": 0.9828,
+   "reference_prose": "Neither knob is conceptually new [ref]. Laboratory-frame AJC dynamics with squeezed light were treated in Refs. [ref]; those papers did not scan a Kerr compensator or a Dicke ladder. Related AJC studies map the unsqueezed model onto JC by a duality or supersymmetry transformation [ref]; they do not treat the squeezed operator in the laboratory frame. The question here is narrower: in the laboratory frame, with a squeezed vacuum on the ladder, how much contrast is recovered by Kerr compensation and by collective coupling, and is the dynamics just an incoherent average over Fock blocks? The answers are numerical.",
+   "has_custom_macros": false
+  }
+ },
+ {
+  "id": "arxiv-2609.04580-p2",
+  "tier": "arxiv-paste",
+  "input": "Figure 6 is the definition of Eq. (5). The bottom-right panel is vacuum AJC at f = 1:\na clean oscillation of amplitude 0.200, matching 1/(1 + 4). The other three panels are\nsqueezed packets. Later collapse–revival structure [23] is not used.",
+  "reference": "Figure (ref) is the definition of Eq. (ref). The\nbottom-right panel is vacuum AJC at \\( f=1 \\) : a clean oscillation of\namplitude \\( 0.200 \\) , matching \\( 1/(1+4) \\) . The other three panels are\nsqueezed packets. Later collapse–revival structure [ref]\nis not used.",
+  "source": "https://arxiv.org/abs/2609.04580",
+  "meta": {
+   "paper_id": "2609.04580",
+   "category": "quant-ph",
+   "license": "unknown",
+   "extractor": "pdftotext",
+   "two_column": false,
+   "n_inline": 3,
+   "n_display": 0,
+   "chars": 241,
+   "overlap": 1.0,
+   "reference_prose": "Figure (ref) is the definition of Eq. (ref). The bottom-right panel is vacuum AJC at : a clean oscillation of amplitude , matching . The other three panels are squeezed packets. Later collapse–revival structure [ref] is not used.",
+   "has_custom_macros": false
+  }
+ },
+ {
+  "id": "arxiv-2609.04580-p3",
+  "tier": "arxiv-paste",
+  "input": "A squeezed vacuum on the laboratory-frame AJC ladder cannot be detuningcompensated by one Kerr strength. The r = 0 cancellation χ = −2f λ is exact for\nthe vacuum block and fails once the packet occupies several even Fock components.\nThe same dynamics is not an incoherent sum over those blocks: at χ = 0 the exact\nr = 1 contrast differs from both versions of Eq. (7) by several tenths. Full truncated\ndiagonalization is required.",
+  "reference": "A squeezed vacuum on the laboratory-frame AJC ladder cannot be\ndetuning-compensated by one Kerr strength. The \\( r=0 \\) cancellation \\( \\chi=-2f\\lambda \\) is exact for the vacuum block and fails once the\npacket occupies several even Fock components. The same dynamics is\nnot an incoherent sum over those blocks: at \\( \\chi=0 \\) the exact \\( r=1 \\) contrast differs from both versions of\nEq. (ref) by several tenths. Full truncated\ndiagonalization is required.",
+  "source": "https://arxiv.org/abs/2609.04580",
+  "meta": {
+   "paper_id": "2609.04580",
+   "category": "quant-ph",
+   "license": "unknown",
+   "extractor": "pdftotext",
+   "two_column": false,
+   "n_inline": 4,
+   "n_display": 0,
+   "chars": 429,
+   "overlap": 0.95,
+   "reference_prose": "A squeezed vacuum on the laboratory-frame AJC ladder cannot be detuning-compensated by one Kerr strength. The cancellation is exact for the vacuum block and fails once the packet occupies several even Fock components. The same dynamics is not an incoherent sum over those blocks: at the exact contrast differs from both versions of Eq. (ref) by several tenths. Full truncated diagonalization is required.",
+   "has_custom_macros": false
+  }
+ },
+ {
+  "id": "arxiv-2609.03634-p1",
+  "tier": "arxiv-paste",
+  "input": "To obtain the joint law of (MT− , MT+ ) the methodology of reducing the path\nto conditional laws on independent path pieces will be used. The reduction\nstarts from the disjoint decomposition\nP{MT− < α, MT+ < β} = P{MT− < α, MT+ < β, HI < HS }+P{MT− < α, MT+ < β, HS < HI }.\n(2.8)\nThe two terms in this sum require different analyses because the lack of positive\njumps in spectrally negative Levy process makes the pre- and post-extremal\nvalues boundary conditions asymmetric.",
+  "reference": "To obtain the joint law of \\( (M_T^-,M_T^+) \\) the methodology of reducing the path to conditional laws on independent path pieces will be used. The reduction starts from the disjoint decomposition \\[ \\mathbb{P}\\{M_T^-<\\alpha,M_T^+<\\beta\\}\n=\n\\mathbb{P}\\{M_T^-<\\alpha,M_T^+<\\beta,H_I<H_S\\}\n+\n\\mathbb{P}\\{M_T^-<\\alpha,M_T^+<\\beta,H_S<H_I\\}. \\] The two terms in this sum require different analyses because the lack of positive jumps in spectrally negative Levy process makes the pre- and post-extremal values boundary conditions asymmetric.",
+  "source": "https://arxiv.org/abs/2609.03634",
+  "meta": {
+   "paper_id": "2609.03634",
+   "category": "math.PR",
+   "license": "unknown",
+   "extractor": "pdftotext",
+   "two_column": false,
+   "n_inline": 1,
+   "n_display": 1,
+   "chars": 475,
+   "overlap": 1.0,
+   "reference_prose": "To obtain the joint law of the methodology of reducing the path to conditional laws on independent path pieces will be used. The reduction starts from the disjoint decomposition The two terms in this sum require different analyses because the lack of positive jumps in spectrally negative Levy process makes the pre- and post-extremal values boundary conditions asymmetric.",
+   "has_custom_macros": false
+  }
+ },
+ {
+  "id": "arxiv-2609.02695-p1",
+  "tier": "arxiv-paste",
+  "input": "We then show that a polynomial kernel of bandwidth N cannot concentrate all of its positive mass\nbelow the spectral scale N −1 . To prove this, we use the following standard L1 -Nikolskii estimate in\na form with an explicit constant.",
+  "reference": "We then show that a polynomial kernel of bandwidth \\( N \\) cannot concentrate\nall of its positive mass below the spectral scale \\( N^{-1} \\) . To prove this, we use the following standard \\( L^1 \\) -Nikolskii estimate in a form with an\nexplicit constant.",
+  "source": "https://arxiv.org/abs/2609.02695",
+  "meta": {
+   "paper_id": "2609.02695",
+   "category": "math.NA",
+   "license": "unknown",
+   "extractor": "pdftotext",
+   "two_column": false,
+   "n_inline": 3,
+   "n_display": 0,
+   "chars": 233,
+   "overlap": 1.0,
+   "reference_prose": "We then show that a polynomial kernel of bandwidth cannot concentrate all of its positive mass below the spectral scale . To prove this, we use the following standard -Nikolskii estimate in a form with an explicit constant.",
+   "has_custom_macros": false
+  }
+ },
+ {
+  "id": "arxiv-2609.02695-p2",
+  "tier": "arxiv-paste",
+  "input": "Hyperinterpolation discretizes the L2 -orthogonal projection by cubature; see [2, 13]. Its uniform\noperator norm, like that of the underlying projection, grows with the polynomial degree. Filtered\nhyperinterpolation replaces the sharp spectral cutoff by a smooth filter, retaining exact low-degree\nreproduction while achieving better localization and uniform stability; see, e.g., [14",
+  "reference": "Hyperinterpolation discretizes the \\( L^2 \\) -orthogonal projection by\ncubature; see [ref]. Its uniform operator\nnorm, like that of the underlying projection, grows with the polynomial\ndegree. Filtered hyperinterpolation replaces the sharp spectral cutoff by\na smooth filter, retaining exact low-degree reproduction while achieving\nbetter localization and uniform stability; see, e.g.,\n[ref].",
+  "source": "https://arxiv.org/abs/2609.02695",
+  "meta": {
+   "paper_id": "2609.02695",
+   "category": "math.NA",
+   "license": "unknown",
+   "extractor": "pdftotext",
+   "two_column": false,
+   "n_inline": 1,
+   "n_display": 0,
+   "chars": 384,
+   "overlap": 1.0,
+   "reference_prose": "Hyperinterpolation discretizes the -orthogonal projection by cubature; see [ref]. Its uniform operator norm, like that of the underlying projection, grows with the polynomial degree. Filtered hyperinterpolation replaces the sharp spectral cutoff by a smooth filter, retaining exact low-degree reproduction while achieving better localization and uniform stability; see, e.g., [ref].",
+   "has_custom_macros": false
+  }
+ },
+ {
+  "id": "arxiv-2609.02031-p1",
+  "tier": "arxiv-paste",
+  "input": "Specializing to odd 𝐽, majority rule, equal costs, and the same Tullock exponent gives KP’s simultaneouselection game. With effort divided equally across battlefields, KP’s per-battlefield campaign effort corresponds\nto 𝑋/𝐽 in our normalized units. KP prove equalization and payoff equivalence, identify the pure candidate\nand threshold and establish a symmetric mixed equilibrium above that threshold with full rent dissipation.\nOur additional contribution in this benchmark is the structure of the mixed-equilibrium correspondence.",
+  "reference": "Specializing to odd \\( J \\) , majority rule, equal costs, and the same Tullock exponent gives KP's simultaneous-election game. With effort divided equally across battlefields, KP's per-battlefield campaign effort corresponds to \\( X/J \\) in our normalized units. KP prove equalization and payoff equivalence, identify the pure candidate and threshold and establish a symmetric mixed equilibrium above that threshold with full rent dissipation. Our additional contribution in this benchmark is the structure of the mixed-equilibrium correspondence.",
+  "source": "https://arxiv.org/abs/2609.02031",
+  "meta": {
+   "paper_id": "2609.02031",
+   "category": "econ.TH",
+   "license": "unknown",
+   "extractor": "pdftotext",
+   "two_column": false,
+   "n_inline": 2,
+   "n_display": 0,
+   "chars": 533,
+   "overlap": 0.9608,
+   "reference_prose": "Specializing to odd , majority rule, equal costs, and the same Tullock exponent gives KP's simultaneous-election game. With effort divided equally across battlefields, KP's per-battlefield campaign effort corresponds to in our normalized units. KP prove equalization and payoff equivalence, identify the pure candidate and threshold and establish a symmetric mixed equilibrium above that threshold with full rent dissipation. Our additional contribution in this benchmark is the structure of the mixed-equilibrium correspondence.",
+   "has_custom_macros": false
+  }
+ },
+ {
+  "id": "arxiv-2609.02031-p2",
+  "tier": "arxiv-paste",
+  "input": "Finally, reward symmetry maps any positive chord endpoint 𝑢 to the reciprocal point 1/𝑢 on the chord-free,\nstrictly concave side and gives Φ′ (1/𝑢) = 𝑢2Φ′ (𝑢). The strict supporting tangent at 1/𝑢 is exactly the\nreciprocal-deviation inequality. This proves the lemma.",
+  "reference": "Finally, reward symmetry maps any positive chord endpoint \\( u \\) to the reciprocal point \\( 1/u \\) on the chord-free, strictly concave side and gives \\( \\Phi'(1/u)=u^2\\Phi'(u) \\) . The strict supporting tangent at \\( 1/u \\) is exactly the reciprocal-deviation inequality. This proves the lemma.",
+  "source": "https://arxiv.org/abs/2609.02031",
+  "meta": {
+   "paper_id": "2609.02031",
+   "category": "econ.TH",
+   "license": "unknown",
+   "extractor": "pdftotext",
+   "two_column": false,
+   "n_inline": 4,
+   "n_display": 0,
+   "chars": 267,
+   "overlap": 1.0,
+   "reference_prose": "Finally, reward symmetry maps any positive chord endpoint to the reciprocal point on the chord-free, strictly concave side and gives . The strict supporting tangent at is exactly the reciprocal-deviation inequality. This proves the lemma.",
+   "has_custom_macros": false
+  }
+ },
+ {
+  "id": "arxiv-2609.03367-p1",
+  "tier": "arxiv-paste",
+  "input": "The chemical composition of the cloud is determined by the dominant species present in the early Universe.\nAtomic hydrogen and helium are the primary constituents, with primordial mass fractions of XH = 0.75 and\nXHe = 0.25, as predicted by Big Bang nucleosynthesis [46, 47]. These remain the main mass components\nthroughout the second phase, as they are not significantly depleted by star formation or supernova feedback on\nthe timescales considered.",
+  "reference": "The chemical composition of the cloud is determined by the dominant species present in the early Universe. Atomic hydrogen and helium are the primary constituents, with primordial mass fractions of \\( X_{\\rm H} = 0.75 \\) and \\( X_{\\rm He} = 0.25 \\) , as predicted by Big Bang nucleosynthesis [ref]. These remain the main mass components throughout the second phase, as they are not significantly depleted by star formation or supernova feedback on the timescales considered.",
+  "source": "https://arxiv.org/abs/2609.03367",
+  "meta": {
+   "paper_id": "2609.03367",
+   "category": "astro-ph.GA",
+   "license": "unknown",
+   "extractor": "pdftotext -layout",
+   "two_column": false,
+   "n_inline": 2,
+   "n_display": 0,
+   "chars": 450,
+   "overlap": 1.0,
+   "reference_prose": "The chemical composition of the cloud is determined by the dominant species present in the early Universe. Atomic hydrogen and helium are the primary constituents, with primordial mass fractions of and , as predicted by Big Bang nucleosynthesis [ref]. These remain the main mass components throughout the second phase, as they are not significantly depleted by star formation or supernova feedback on the timescales considered.",
+   "has_custom_macros": false
+  }
+ },
+ {
+  "id": "arxiv-2609.03367-p2",
+  "tier": "arxiv-paste",
+  "input": "Molecular hydrogen is included as a dynamically important species because it is the dominant coolant at\nlow temperatures T ≲ 104 K. The H2 molecule has a low excitation temperature and can efficiently radiate away\nthermal energy through rotational and vibrational transitions, making it crucial for the thermal evolution of the\ncloud [32, 34]. The H2 fraction evolves according to formation on dust grains, which scales with metallicity,\nand destruction by UV radiation from Pop III stars [44",
+  "reference": "Molecular hydrogen is included as a dynamically important species because it is the dominant coolant at low temperatures \\( T \\lesssim 10^4 \\) K. The H \\( _2 \\) molecule has a low excitation temperature and can efficiently radiate away thermal energy through rotational and vibrational transitions, making it crucial for the thermal evolution of the cloud [ref]. The H \\( _2 \\) fraction evolves according to formation on dust grains, which scales with metallicity, and destruction by UV radiation from Pop III stars [ref].",
+  "source": "https://arxiv.org/abs/2609.03367",
+  "meta": {
+   "paper_id": "2609.03367",
+   "category": "astro-ph.GA",
+   "license": "unknown",
+   "extractor": "pdftotext -layout",
+   "two_column": false,
+   "n_inline": 3,
+   "n_display": 0,
+   "chars": 492,
+   "overlap": 1.0,
+   "reference_prose": "Molecular hydrogen is included as a dynamically important species because it is the dominant coolant at low temperatures K. The H molecule has a low excitation temperature and can efficiently radiate away thermal energy through rotational and vibrational transitions, making it crucial for the thermal evolution of the cloud [ref]. The H fraction evolves according to formation on dust grains, which scales with metallicity, and destruction by UV radiation from Pop III stars [ref].",
+   "has_custom_macros": false
+  }
+ },
+ {
+  "id": "arxiv-2609.03367-p3",
+  "tier": "arxiv-paste",
+  "input": "Metals are included as a single fluid representing the total abundance of elements heavier than helium. The\nprimary cooling mechanism from metals at the temperatures of interest T ≲ 200 K is the [CII] fine-structure line\nat 158 µm, which has an excitation temperature of 91 K and is an efficient coolant [31, 48]. Metals also serve\nas catalysts for H2 formation on dust grain surfaces, with the formation rate scaling linearly with metallicity\n[32, 45]. At the low metallicities of this phase Z < 10−3 Z⊙ , treating metals as a single fluid is a reasonable\napproximation because the cooling is dominated by a few species, and detailed individual abundances are not\nrequired.",
+  "reference": "Metals are included as a single fluid representing the total abundance of elements heavier than helium. The primary cooling mechanism from metals at the temperatures of interest \\( T \\lesssim 200 \\) K is the [CII] fine-structure line at 158 \\( \\mu \\) m, which has an excitation temperature of 91 K and is an efficient coolant [ref]. Metals also serve as catalysts for H \\( _2 \\) formation on dust grain surfaces, with the formation rate scaling linearly with metallicity [ref]. At the low metallicities of this phase \\( Z < 10^{-3} Z_\\odot \\) , treating metals as a single fluid is a reasonable approximation because the cooling is dominated by a few species, and detailed individual abundances are not required.",
+  "source": "https://arxiv.org/abs/2609.03367",
+  "meta": {
+   "paper_id": "2609.03367",
+   "category": "astro-ph.GA",
+   "license": "unknown",
+   "extractor": "pdftotext -layout",
+   "two_column": false,
+   "n_inline": 4,
+   "n_display": 0,
+   "chars": 674,
+   "overlap": 1.0,
+   "reference_prose": "Metals are included as a single fluid representing the total abundance of elements heavier than helium. The primary cooling mechanism from metals at the temperatures of interest K is the [CII] fine-structure line at 158 m, which has an excitation temperature of 91 K and is an efficient coolant [ref]. Metals also serve as catalysts for H formation on dust grain surfaces, with the formation rate scaling linearly with metallicity [ref]. At the low metallicities of this phase , treating metals as a single fluid is a reasonable approximation because the cooling is dominated by a few species, and detailed individual abundances are not required.",
+   "has_custom_macros": false
+  }
+ },
+ {
+  "id": "arxiv-2609.02196-p1",
+  "tier": "arxiv-paste",
+  "input": "The RCCBM ablations isolate endpoint calibration, conditional-noise resampling, terminal replay,\nlocal-scale refinement, distribution refinement, spectral conditioning, and calibrated initial-state\nsampling. The SO(3) experiments use 2,048 generated test samples and the U (4) experiments\nuse 1,024. All variants are evaluated with the fixed production feature map and validation protocol.",
+  "reference": "The RCCBM ablations isolate endpoint calibration, conditional-noise resampling, terminal replay, local-scale refinement, distribution refinement, spectral conditioning, and calibrated initial-state sampling. The \\( SO(3) \\) experiments use 2,048 generated test samples and the \\( U(4) \\) experiments use 1,024. All variants are evaluated with the fixed production feature map and validation protocol.",
+  "source": "https://arxiv.org/abs/2609.02196",
+  "meta": {
+   "paper_id": "2609.02196",
+   "category": "stat.ML",
+   "license": "unknown",
+   "extractor": "pdftotext",
+   "two_column": false,
+   "n_inline": 2,
+   "n_display": 0,
+   "chars": 389,
+   "overlap": 1.0,
+   "reference_prose": "The RCCBM ablations isolate endpoint calibration, conditional-noise resampling, terminal replay, local-scale refinement, distribution refinement, spectral conditioning, and calibrated initial-state sampling. The experiments use 2,048 generated test samples and the experiments use 1,024. All variants are evaluated with the fixed production feature map and validation protocol.",
+   "has_custom_macros": false
+  }
+ },
+ {
+  "id": "arxiv-2609.02196-p2",
+  "tier": "arxiv-paste",
+  "input": "For positive numerical factors (f0,N , gT,N ), the same reverse-KL argument applies to the corresponding numerical bridge and yields the path-space decomposition in Eq. (B.18). Under the approximation conditions in section A.1, its numerical-bridge term tends to zero as the lattice, quadrature, Sinkhorn, interpolation, and initial-law approximations are refined, while its regression term\nvanishes with bridge-weighted risk consistency.",
+  "reference": "For positive numerical factors \\( (f_{0,N},g_{T,N}) \\) , the same reverse-KL argument applies to the corresponding numerical bridge and yields the path-space decomposition in Eq. (ref). Under the approximation conditions in (ref), its numerical-bridge term tends to zero as the lattice, quadrature, Sinkhorn, interpolation, and initial-law approximations are refined, while its regression term vanishes with bridge-weighted risk consistency.",
+  "source": "https://arxiv.org/abs/2609.02196",
+  "meta": {
+   "paper_id": "2609.02196",
+   "category": "stat.ML",
+   "license": "unknown",
+   "extractor": "pdftotext",
+   "two_column": false,
+   "n_inline": 1,
+   "n_display": 0,
+   "chars": 438,
+   "overlap": 1.0,
+   "reference_prose": "For positive numerical factors , the same reverse-KL argument applies to the corresponding numerical bridge and yields the path-space decomposition in Eq. (ref). Under the approximation conditions in (ref), its numerical-bridge term tends to zero as the lattice, quadrature, Sinkhorn, interpolation, and initial-law approximations are refined, while its regression term vanishes with bridge-weighted risk consistency.",
+   "has_custom_macros": false
+  }
+ },
+ {
+  "id": "arxiv-2609.02196-p3",
+  "tier": "arxiv-paste",
+  "input": "The CondSOC terminal kernel uses the reported concentration parameters 600 on SO(3) and 800\non U (n). The normalized control-energy coefficient in Eq. (B.9) is fixed at 1/2, and the empirical\nsmoothness coefficient is λSE = 0.5 in all reported RCCBM runs. Independent noise is used during\noptimization and for the held-out teacher rollout, with antithetic sampling when configured. The\nfinal checkpoint is chosen by the fixed validation distribution objective. Final validation MSE,\nrelative MSE, and cosine are recomputed after distribution refinement.",
+  "reference": "The CondSOC terminal kernel uses the reported concentration parameters 600 on \\( SO(3) \\) and 800 on \\( U(n) \\) . The normalized control-energy coefficient in Eq. (ref) is fixed at \\( 1/2 \\) , and the empirical smoothness coefficient is \\( \\lambda_{\\rm SE}=0.5 \\) in all reported RCCBM runs. Independent noise is used during optimization and for the held-out teacher rollout, with antithetic sampling when configured. The final checkpoint is chosen by the fixed validation distribution objective. Final validation MSE, relative MSE, and cosine are recomputed after distribution refinement.",
+  "source": "https://arxiv.org/abs/2609.02196",
+  "meta": {
+   "paper_id": "2609.02196",
+   "category": "stat.ML",
+   "license": "unknown",
+   "extractor": "pdftotext -layout",
+   "two_column": false,
+   "n_inline": 4,
+   "n_display": 0,
+   "chars": 553,
+   "overlap": 1.0,
+   "reference_prose": "The CondSOC terminal kernel uses the reported concentration parameters 600 on and 800 on . The normalized control-energy coefficient in Eq. (ref) is fixed at , and the empirical smoothness coefficient is in all reported RCCBM runs. Independent noise is used during optimization and for the held-out teacher rollout, with antithetic sampling when configured. The final checkpoint is chosen by the fixed validation distribution objective. Final validation MSE, relative MSE, and cosine are recomputed after distribution refinement.",
+   "has_custom_macros": false
+  }
+ },
+ {
+  "id": "arxiv-2609.03750-p1",
+  "tier": "arxiv-paste",
+  "input": "The analysis uses the existing well-posedness theorem for H-valued initial data having finite fourth\nmoments of the state and its vertical derivative. Accordingly, the transition family acts on the admissible\nlaw class P4,z (H), whose elements are supported on H and satisfy the corresponding fourth-moment condition. This class provides the integrability needed to restart the equation, while compactness, attraction,\nand upper semicontinuity are considered in the ambient weak topology of the Polish space",
+  "reference": "The analysis uses the existing well-posedness theorem for \\( \\mathcal H \\) -valued initial data having finite fourth moments of the state and its vertical derivative. Accordingly, the transition family acts on the admissible law class \\( \\mathcal P_{4,z}(H) \\) , whose elements are supported on \\( \\mathcal H \\) and satisfy the corresponding fourth-moment condition. This class provides the integrability needed to restart the equation, while compactness, attraction, and upper semicontinuity are considered in the ambient weak topology of the Polish space \\( \\mathcal P(H) \\) .",
+  "source": "https://arxiv.org/abs/2609.03750",
+  "meta": {
+   "paper_id": "2609.03750",
+   "category": "math.PR",
+   "license": "unknown",
+   "extractor": "pdftotext",
+   "two_column": false,
+   "n_inline": 4,
+   "n_display": 0,
+   "chars": 507,
+   "overlap": 1.0,
+   "reference_prose": "The analysis uses the existing well-posedness theorem for -valued initial data having finite fourth moments of the state and its vertical derivative. Accordingly, the transition family acts on the admissible law class , whose elements are supported on and satisfy the corresponding fourth-moment condition. This class provides the integrability needed to restart the equation, while compactness, attraction, and upper semicontinuity are considered in the ambient weak topology of the Polish space .",
+   "has_custom_macros": false
+  }
+ },
+ {
+  "id": "arxiv-2609.03750-p2",
+  "tier": "arxiv-paste",
+  "input": "Following the standard definition of a D-pullback measure attractor in [27, Definition 2.6], we use\nthe following adapted formulation. The evolution is defined on the admissible class P4,z (H), whereas\ncompactness and attraction are understood in the ambient weak topology of",
+  "reference": "Following the standard definition of a \\( \\mathfrak D \\) -pullback\nmeasure attractor in [ref],\nwe use the following adapted formulation. The evolution is defined\non the admissible class \\( \\mathcal P_{4,z}(H) \\) , whereas compactness\nand attraction are understood in the ambient weak topology of \\( \\mathcal P(H) \\) .",
+  "source": "https://arxiv.org/abs/2609.03750",
+  "meta": {
+   "paper_id": "2609.03750",
+   "category": "math.PR",
+   "license": "unknown",
+   "extractor": "pdftotext -layout",
+   "two_column": false,
+   "n_inline": 3,
+   "n_display": 0,
+   "chars": 275,
+   "overlap": 1.0,
+   "reference_prose": "Following the standard definition of a -pullback measure attractor in [ref], we use the following adapted formulation. The evolution is defined on the admissible class , whereas compactness and attraction are understood in the ambient weak topology of .",
+   "has_custom_macros": false
+  }
+ },
+ {
+  "id": "arxiv-2609.03750-p3",
+  "tier": "arxiv-paste",
+  "input": "The estimates in Lemmas 3.4, 3.5, and 3.6 remain valid for ϵ = 0 after deleting the\nstochastic terms, with the same constants. Hence K = {K (τ ) : τ ∈ R} is a common closed D-pullback\nabsorbing family for all ϵ ∈ [0, ϵ0 ). This uniformity is used in Section 4.",
+  "reference": "The estimates in Lemmas (ref), (ref), and (ref) remain valid for \\( \\epsilon=0 \\) after deleting the stochastic terms, with the same constants. Hence \\( \\mathscr K=\\{\\mathscr K(\\tau):\\tau\\in\\mathbb R\\} \\) is a common closed \\( \\mathfrak D \\) -pullback absorbing family for all \\( \\epsilon\\in[0,\\epsilon_0) \\) . This uniformity is used in Section (ref).",
+  "source": "https://arxiv.org/abs/2609.03750",
+  "meta": {
+   "paper_id": "2609.03750",
+   "category": "math.PR",
+   "license": "unknown",
+   "extractor": "pdftotext",
+   "two_column": false,
+   "n_inline": 4,
+   "n_display": 0,
+   "chars": 260,
+   "overlap": 1.0,
+   "reference_prose": "The estimates in Lemmas (ref), (ref), and (ref) remain valid for after deleting the stochastic terms, with the same constants. Hence is a common closed -pullback absorbing family for all . This uniformity is used in Section (ref).",
+   "has_custom_macros": false
+  }
+ },
+ {
+  "id": "arxiv-2609.04140-p1",
+  "tier": "arxiv-paste",
+  "input": "Let us now give a brief outline of the proof of Lemma 5.1. Condition (i) in the statement of\nLemma 5.1 will follow from the following lemma, which states that the probability of having more\nthan four crossings of A made by loops in Γ is sufficiently small. Its proof will be given in Section A.",
+  "reference": "Let us now give a brief outline of the proof of (ref). Condition (ref) in the statement of (ref) will follow from the following lemma, which states that the probability of having more than four crossings of \\( A \\) made by loops in \\( \\overline{\\Gamma} \\) is sufficiently small. Its proof will be given in Section (ref).",
+  "source": "https://arxiv.org/abs/2609.04140",
+  "meta": {
+   "paper_id": "2609.04140",
+   "category": "math.PR",
+   "license": "unknown",
+   "extractor": "pdftotext -layout",
+   "two_column": false,
+   "n_inline": 2,
+   "n_display": 0,
+   "chars": 294,
+   "overlap": 1.0,
+   "reference_prose": "Let us now give a brief outline of the proof of (ref). Condition (ref) in the statement of (ref) will follow from the following lemma, which states that the probability of having more than four crossings of made by loops in is sufficiently small. Its proof will be given in Section (ref).",
+   "has_custom_macros": false
+  }
+ },
+ {
+  "id": "arxiv-2609.04140-p2",
+  "tier": "arxiv-paste",
+  "input": "We are also going to prove the following estimate for the probability of the event that there are at\nleast six crossings of Cε made by loops in Γ; recall that the number of such crossings is necessarily\neven. This is the second main input in the proof of Lemma 5.",
+  "reference": "We are also going to prove the following estimate for the probability of the event that there are at least six crossings of \\( C_\\varepsilon \\) made by loops in \\( \\overline{\\Gamma} \\) ; recall that the number of such crossings is necessarily even. This is the second main input in the proof of Lemma (ref).",
+  "source": "https://arxiv.org/abs/2609.04140",
+  "meta": {
+   "paper_id": "2609.04140",
+   "category": "math.PR",
+   "license": "unknown",
+   "extractor": "pdftotext -layout",
+   "two_column": false,
+   "n_inline": 2,
+   "n_display": 0,
+   "chars": 263,
+   "overlap": 1.0,
+   "reference_prose": "We are also going to prove the following estimate for the probability of the event that there are at least six crossings of made by loops in ; recall that the number of such crossings is necessarily even. This is the second main input in the proof of Lemma (ref).",
+   "has_custom_macros": false
+  }
+ },
+ {
+  "id": "arxiv-2609.04140-p3",
+  "tier": "arxiv-paste",
+  "input": "One difficulty in applying Proposition A.4 is that the boundary conditions of the field Ψ̃1 are not\nconsistent with the boundary conditions of the field appearing in the statement of Proposition A.4.\nHowever, we will show that Proposition A.4 can be applied to a random field whose boundary\nconditions agree with those of Ψ̃1 outside of small neighborhoods around the points y1 , y2 , y3 , y4 ,\nand that the laws of the two fields, restricted to the complement of those neighborhoods, have\nRadon–Nikodym derivatives with all moments close to 1. This is the content of the following\nlemma.",
+  "reference": "One difficulty in applying Proposition (ref) is that the boundary conditions of the field \\( \\tilde{\\Psi}_1 \\) are not consistent with the boundary conditions of the field appearing in the statement of Proposition (ref). However, we will show that Proposition (ref) can be applied to a random field whose boundary conditions agree with those of \\( \\tilde{\\Psi}_1 \\) outside of small neighborhoods around the points \\( y_1,y_2,y_3,y_4 \\) , and that the laws of the two fields, restricted to the complement of those neighborhoods, have Radon–Nikodym derivatives with all moments close to \\( 1 \\) . This is the content of the following lemma.",
+  "source": "https://arxiv.org/abs/2609.04140",
+  "meta": {
+   "paper_id": "2609.04140",
+   "category": "math.PR",
+   "license": "unknown",
+   "extractor": "pdftotext",
+   "two_column": false,
+   "n_inline": 4,
+   "n_display": 0,
+   "chars": 588,
+   "overlap": 1.0,
+   "reference_prose": "One difficulty in applying Proposition (ref) is that the boundary conditions of the field are not consistent with the boundary conditions of the field appearing in the statement of Proposition (ref). However, we will show that Proposition (ref) can be applied to a random field whose boundary conditions agree with those of outside of small neighborhoods around the points , and that the laws of the two fields, restricted to the complement of those neighborhoods, have Radon–Nikodym derivatives with all moments close to . This is the content of the following lemma.",
+   "has_custom_macros": false
+  }
+ },
+ {
+  "id": "arxiv-2609.01181-p1",
+  "tier": "arxiv-paste",
+  "input": "A family of CSS codes is quantum low-density parity-check\n                                                                    (qLDPC) if the row and column weights of HX and HZ remain\nA. Quantum Stabilizer and CSS Codes                                 bounded as the quantum blocklength grows. In particular,\n                                                                    bounded row weight corresponds to bounded stabilizer weight.",
+  "reference": "A family of CSS codes is quantum low-density parity-check (qLDPC) if the\nrow and column weights of \\( H_X \\) and \\( H_Z \\) remain bounded as the quantum\nblocklength grows. In particular, bounded row weight corresponds to\nbounded stabilizer weight.",
+  "source": "https://arxiv.org/abs/2609.01181",
+  "meta": {
+   "paper_id": "2609.01181",
+   "category": "cs.IT",
+   "license": "unknown",
+   "extractor": "pdftotext -layout",
+   "two_column": false,
+   "n_inline": 2,
+   "n_display": 0,
+   "chars": 437,
+   "overlap": 1.0,
+   "reference_prose": "A family of CSS codes is quantum low-density parity-check (qLDPC) if the row and column weights of and remain bounded as the quantum blocklength grows. In particular, bounded row weight corresponds to bounded stabilizer weight.",
+   "has_custom_macros": false
+  }
+ },
+ {
+  "id": "arxiv-2609.01181-p2",
+  "tier": "arxiv-paste",
+  "input": "A quantum FDPC\n(qFDPC) code is a CSS code obtained through the symmetric\nhypergraph-product construction using an L-sparsified orders FDPC code as both classical components. The original\nunsparsified FDPC construction is included as the special case",
+  "reference": "A quantum FDPC (qFDPC) code is a CSS code obtained through the\nsymmetric hypergraph-product construction using an \\( L \\) -sparsified\norder- \\( s \\) FDPC code as both classical components. The original\nunsparsified FDPC construction is included as the special case \\( L=q \\) .",
+  "source": "https://arxiv.org/abs/2609.01181",
+  "meta": {
+   "paper_id": "2609.01181",
+   "category": "cs.IT",
+   "license": "unknown",
+   "extractor": "pdftotext",
+   "two_column": true,
+   "n_inline": 3,
+   "n_display": 0,
+   "chars": 249,
+   "overlap": 0.9615,
+   "reference_prose": "A quantum FDPC (qFDPC) code is a CSS code obtained through the symmetric hypergraph-product construction using an -sparsified order- FDPC code as both classical components. The original unsparsified FDPC construction is included as the special case .",
+   "has_custom_macros": false
+  }
+ },
+ {
+  "id": "arxiv-2609.01181-p3",
+  "tier": "arxiv-paste",
+  "input": "The higher-weight terms can also be important when the\ncertified quantum distance of an FD–Rep qLDPC code is\ndetermined by the repetition component, i.e., when r < dcert\nA .\nIn this case, the repetition term determines the leading power\nof p, while the accumulation of higher-weight FDPC line\nlogicals can become significant at larger erasure probabilities.\nConsequently, the complete FDPC weight distribution provides\nfinite-length information beyond the certified distance and its\nleading multiplicity.",
+  "reference": "The higher-weight terms can also be important when the certified quantum\ndistance of an FD–Rep qLDPC code is determined by the repetition component,\ni.e., when \\( r<d_A^{\\rm cert} \\) . In this case, the repetition term determines\nthe leading power of \\( p \\) , while the accumulation of higher-weight FDPC\nline logicals can become significant at larger erasure probabilities.\nConsequently, the complete FDPC weight distribution provides finite-length\ninformation beyond the certified distance and its leading multiplicity.",
+  "source": "https://arxiv.org/abs/2609.01181",
+  "meta": {
+   "paper_id": "2609.01181",
+   "category": "cs.IT",
+   "license": "unknown",
+   "extractor": "pdftotext",
+   "two_column": true,
+   "n_inline": 2,
+   "n_display": 0,
+   "chars": 504,
+   "overlap": 1.0,
+   "reference_prose": "The higher-weight terms can also be important when the certified quantum distance of an FD–Rep qLDPC code is determined by the repetition component, i.e., when . In this case, the repetition term determines the leading power of , while the accumulation of higher-weight FDPC line logicals can become significant at larger erasure probabilities. Consequently, the complete FDPC weight distribution provides finite-length information beyond the certified distance and its leading multiplicity.",
+   "has_custom_macros": false
+  }
+ },
+ {
+  "id": "arxiv-2609.03713-p1",
+  "tier": "arxiv-paste",
+  "input": "The main purpose of this work is to exploit the variational structure of (1.2) in\norder to identify precisely the critical mass threshold Mc > 0 separating boundedness\nand unboundedness of radially symmetric global solutions in a ball. In fact, as\nwe shall see below, Mc > 0 coincides with the critical mass for the quasilinear\nPatlak–Keller–Segel model identified in [6]. Moreover, owing to the availability of\nan energy functional associated with (1.2), we show that any solution with initial\nmass ∥u0 ∥1 > Mc and sufficiently negative energy exhibits infinite time blowup.",
+  "reference": "The main purpose of this work is to exploit the variational structure of (ref) in order to identify precisely the critical mass threshold \\( M_c>0 \\) separating boundedness and unboundedness of radially symmetric global solutions in a ball. In fact, as we shall see below, \\( M_c>0 \\) coincides with the critical mass for the quasilinear Patlak–Keller–Segel model identified in [ref]. Moreover, owing to the availability of an energy functional associated with (ref), we show that any solution with initial mass \\( \\|u^0\\|_1>M_c \\) and sufficiently negative energy exhibits infinite time blowup.",
+  "source": "https://arxiv.org/abs/2609.03713",
+  "meta": {
+   "paper_id": "2609.03713",
+   "category": "math.AP",
+   "license": "unknown",
+   "extractor": "pdftotext",
+   "two_column": false,
+   "n_inline": 3,
+   "n_display": 0,
+   "chars": 575,
+   "overlap": 1.0,
+   "reference_prose": "The main purpose of this work is to exploit the variational structure of (ref) in order to identify precisely the critical mass threshold separating boundedness and unboundedness of radially symmetric global solutions in a ball. In fact, as we shall see below, coincides with the critical mass for the quasilinear Patlak–Keller–Segel model identified in [ref]. Moreover, owing to the availability of an energy functional associated with (ref), we show that any solution with initial mass and sufficiently negative energy exhibits infinite time blowup.",
+   "has_custom_macros": false
+  }
+ },
+ {
+  "id": "arxiv-2609.03713-p2",
+  "tier": "arxiv-paste",
+  "input": "We next turn to lower bounds on L on the set IM,M̄ ,rad (BR ) according to the\nrange of (M, M̄ ). To this end, we take advantage of radial symmetry, which guar-\nantees that the solution v to (1.2b) supplemented with the homogeneous Neumann\nboundary conditions (1.2d) is also a solution to (1.2b) supplemented with nonho-\nmogeneous constant Dirichlet boundary conditions. In this direction, we first report\nthe following estimate.",
+  "reference": "We next turn to lower bounds on \\( \\mathcal{L} \\) on the set \\( \\mathcal{I}_{M,\\bar{M},rad}(\\mathbb{B}_R) \\) according to the range of \\( (M,\\bar{M}) \\) . To this end, we take advantage of radial symmetry, which guarantees that the solution \\( v \\) to (ref) supplemented with the homogeneous Neumann boundary conditions (ref) is also a solution to (ref) supplemented with nonhomogeneous constant Dirichlet boundary conditions. In this direction, we first report the following estimate.",
+  "source": "https://arxiv.org/abs/2609.03713",
+  "meta": {
+   "paper_id": "2609.03713",
+   "category": "math.AP",
+   "license": "unknown",
+   "extractor": "pdftotext -layout",
+   "two_column": false,
+   "n_inline": 4,
+   "n_display": 0,
+   "chars": 429,
+   "overlap": 0.9444,
+   "reference_prose": "We next turn to lower bounds on on the set according to the range of . To this end, we take advantage of radial symmetry, which guarantees that the solution to (ref) supplemented with the homogeneous Neumann boundary conditions (ref) is also a solution to (ref) supplemented with nonhomogeneous constant Dirichlet boundary conditions. In this direction, we first report the following estimate.",
+   "has_custom_macros": false
+  }
+ },
+ {
+  "id": "arxiv-2609.03713-p3",
+  "tier": "arxiv-paste",
+  "input": "We are now in a position to show that the energy functional L is unbounded from\nbelow on the set of stationary solutions SM,rad only in the case M = Mc with Mc\ngiven in (2.13a). This provides the last piece of information required for the proof\nof Theorem 2.3",
+  "reference": "We are now in a position to show that the energy functional \\( \\mathcal{L} \\) is unbounded from below on the set of stationary solutions \\( \\mathcal{S}_{M,rad} \\) only in the case \\( M=M_c \\) with \\( M_c \\) given in (ref). This provides the last piece of information required for the proof of Theorem (ref) (II).",
+  "source": "https://arxiv.org/abs/2609.03713",
+  "meta": {
+   "paper_id": "2609.03713",
+   "category": "math.AP",
+   "license": "unknown",
+   "extractor": "pdftotext",
+   "two_column": false,
+   "n_inline": 4,
+   "n_display": 0,
+   "chars": 259,
+   "overlap": 1.0,
+   "reference_prose": "We are now in a position to show that the energy functional is unbounded from below on the set of stationary solutions only in the case with given in (ref). This provides the last piece of information required for the proof of Theorem (ref) (II).",
+   "has_custom_macros": false
+  }
+ },
+ {
+  "id": "arxiv-2609.03152-p1",
+  "tier": "arxiv-paste",
+  "input": "Both the K-theoretic edge and vertex weight have been implemented as part of the\nSageMath package boxcounting by Henry Liu [Liu25]. All numerical experiments\nwith Pandharipande–Thomas invariants presented in this paper will rely on this code.\nBefore showcasing a concrete example, let us explain how Theorem 1.11 must be modified\nin order to allow for a Nekrasov–Okounkov insertion coming from non-trivial ambient\n\n\f18\n\nD. HOLMES AND Y. SCHULER\n\nline bundles L4 and L5 . It turns out, such an insertion only leads to a shift in 𝑞 at each\nvertex and a minor modification of the edge weights.",
+  "reference": "Both the K-theoretic edge and vertex weight have been implemented as part of the SageMath package boxcounting by Henry Liu [ref]. All numerical experiments with Pandharipande–Thomas invariants presented in this paper will rely on this code. Before showcasing a concrete example, let us explain how (ref) must be modified in order to allow for a Nekrasov–Okounkov insertion coming from non-trivial ambient line bundles \\( \\cL_4 \\) and \\( \\cL_5 \\) . It turns out, such an insertion only leads to a shift in \\( q \\) at each vertex and a minor modification of the edge weights.",
+  "source": "https://arxiv.org/abs/2609.03152",
+  "meta": {
+   "paper_id": "2609.03152",
+   "category": "hep-th",
+   "license": "unknown",
+   "extractor": "pdftotext",
+   "two_column": false,
+   "n_inline": 3,
+   "n_display": 0,
+   "chars": 590,
+   "overlap": 1.0,
+   "reference_prose": "Both the K-theoretic edge and vertex weight have been implemented as part of the SageMath package boxcounting by Henry Liu [ref]. All numerical experiments with Pandharipande–Thomas invariants presented in this paper will rely on this code. Before showcasing a concrete example, let us explain how (ref) must be modified in order to allow for a Nekrasov–Okounkov insertion coming from non-trivial ambient line bundles and . It turns out, such an insertion only leads to a shift in at each vertex and a minor modification of the edge weights.",
+   "has_custom_macros": false
+  }
+ },
+ {
+  "id": "arxiv-2608.27996-p1",
+  "tier": "arxiv-paste",
+  "input": "To summarize, the problem formulation in terms of\nhypotheses (10)–(11) rests on a stronger assumption\nthan the original direct test (6)–(7): when synthetic data\nare not helpful, the paired loss difference δ in (8) is\nsymmetric around its zero mean. Rejecting the null H0syn\n\n\f5\n\nin (10)–(11) does not entail a rejection of the original\nnull H0 in (6)–(7), although it provides a strong signal\nfor the usefulness of synthetic data when this assumption\nis approximately valid.",
+  "reference": "To summarize, the problem formulation in terms of hypotheses (ref)–(ref) rests on a stronger assumption than the original direct test (ref)–(ref): when synthetic data are not helpful, the paired loss difference \\( \\delta \\) in (ref) is symmetric around its zero mean. Rejecting the null \\( H_0^{\\mathrm{syn}} \\) in (ref)–(ref) does not entail a rejection of the original null \\( H_0 \\) in (ref)–(ref), although it provides a strong signal for the usefulness of synthetic data when this assumption is approximately valid.",
+  "source": "https://arxiv.org/abs/2608.27996",
+  "meta": {
+   "paper_id": "2608.27996",
+   "category": "cs.IT",
+   "license": "unknown",
+   "extractor": "pdftotext",
+   "two_column": true,
+   "n_inline": 3,
+   "n_display": 0,
+   "chars": 474,
+   "overlap": 1.0,
+   "reference_prose": "To summarize, the problem formulation in terms of hypotheses (ref)–(ref) rests on a stronger assumption than the original direct test (ref)–(ref): when synthetic data are not helpful, the paired loss difference in (ref) is symmetric around its zero mean. Rejecting the null in (ref)–(ref) does not entail a rejection of the original null in (ref)–(ref), although it provides a strong signal for the usefulness of synthetic data when this assumption is approximately valid.",
+   "has_custom_macros": false
+  }
+ },
+ {
+  "id": "arxiv-2608.27996-p2",
+  "tier": "arxiv-paste",
+  "input": "In practice, the main bottleneck for the test is the\namount of test data required, since the test dataset Dtest\nmust follow, by assumption, the ground-truth distribution\nP , while eSFT cannot address this issue. Specifically,\nthrough the betting analogy, eSFT can be regarded as a\nsingle casino with a fixed data pool of size M , where the\ngambler must keep betting until the wealth reaches 1/α.\nIn this analogy, a casino is a test-data batch, the stake is\nthe current wealth, and a bet is one sign-flip round. With\nthe data budget fixed in advance, eSFT can neither draw\nmore data to gather additional evidence for a difficult\ntest, nor save data through adaptive design when fewer\nsamples would already suffice.",
+  "reference": "In practice, the main bottleneck for the test is the amount of test data required, since the test dataset \\( \\mathcal{D}^{\\mathrm{test}} \\) must follow, by assumption, the ground-truth distribution \\( P \\) , while eSFT cannot address this issue. Specifically, through the betting analogy, eSFT can be regarded as a single casino with a fixed data pool of size \\( M \\) , where the gambler must keep betting until the wealth reaches \\( 1/\\alpha \\) . In this analogy, a casino is a test-data batch, the stake is the current wealth, and a bet is one sign-flip round. With the data budget fixed in advance, eSFT can neither draw more data to gather additional evidence for a difficult test, nor save data through adaptive design when fewer samples would already suffice.",
+  "source": "https://arxiv.org/abs/2608.27996",
+  "meta": {
+   "paper_id": "2608.27996",
+   "category": "cs.IT",
+   "license": "unknown",
+   "extractor": "pdftotext",
+   "two_column": true,
+   "n_inline": 4,
+   "n_display": 0,
+   "chars": 713,
+   "overlap": 1.0,
+   "reference_prose": "In practice, the main bottleneck for the test is the amount of test data required, since the test dataset must follow, by assumption, the ground-truth distribution , while eSFT cannot address this issue. Specifically, through the betting analogy, eSFT can be regarded as a single casino with a fixed data pool of size , where the gambler must keep betting until the wealth reaches . In this analogy, a casino is a test-data batch, the stake is the current wealth, and a bet is one sign-flip round. With the data budget fixed in advance, eSFT can neither draw more data to gather additional evidence for a difficult test, nor save data through adaptive design when fewer samples would already suffice.",
+   "has_custom_macros": false
+  }
+ },
+ {
+  "id": "arxiv-2608.27996-p3",
+  "tier": "arxiv-paste",
+  "input": "Results. Fig. 11 plots the empirical CDF of the stopping\ntime mstop under the alternative hypothesis H1 (synthetic data are useful) for each method in the packetscheduling task. The figure shows that both adaptive\nschemes can terminate before exhausting all the episodes\non easier test instances. aeSFT allows much smaller\nstopping times than aMT, while eSFT and the t-test make\ndecisions only at their prespecified fixed sample size.",
+  "reference": "Results. Fig. (ref) plots the empirical CDF of the stopping time \\( m_{\\mathrm{stop}} \\) under the alternative hypothesis \\( H_1 \\) (synthetic data are useful) for each method in the packet-scheduling task. The figure shows that both adaptive schemes can terminate before exhausting all the episodes on easier test instances. aeSFT allows much smaller stopping times than aMT, while eSFT and the \\( t \\) -test make decisions only at their prespecified fixed sample size.",
+  "source": "https://arxiv.org/abs/2608.27996",
+  "meta": {
+   "paper_id": "2608.27996",
+   "category": "cs.IT",
+   "license": "unknown",
+   "extractor": "pdftotext",
+   "two_column": true,
+   "n_inline": 3,
+   "n_display": 0,
+   "chars": 434,
+   "overlap": 0.9574,
+   "reference_prose": "Results. Fig. (ref) plots the empirical CDF of the stopping time under the alternative hypothesis (synthetic data are useful) for each method in the packet-scheduling task. The figure shows that both adaptive schemes can terminate before exhausting all the episodes on easier test instances. aeSFT allows much smaller stopping times than aMT, while eSFT and the -test make decisions only at their prespecified fixed sample size.",
+   "has_custom_macros": false
+  }
+ },
+ {
+  "id": "arxiv-2609.04507-p2",
+  "tier": "arxiv-paste",
+  "input": "Draw an arrow after each selected row, upward in the source and downward\nin the target, with the first source arrow pointing northeast and the last target\narrow southwest. Launch each arrow toward the next selected row. A hit in\na selected source row replaces the entry by 1; a hit in a selected target row\nreplaces it by −1. Other arrows have no effect. Let bηλ be the product of the\nresulting entries.",
+  "reference": "Draw an arrow after each selected row, upward in the source and downward in the\ntarget, with the first source arrow pointing northeast and the last target\narrow southwest. Launch each arrow toward the next selected row. A hit in a\nselected source row replaces the entry by \\( 1 \\) ; a hit in a selected target row\nreplaces it by \\( -1 \\) . Other arrows have no effect. Let \\( b_{\\eta\\lambda} \\) be\nthe product of the resulting entries.",
+  "source": "https://arxiv.org/abs/2609.04507",
+  "meta": {
+   "paper_id": "2609.04507",
+   "category": "math.CO",
+   "license": "unknown",
+   "extractor": "pdftotext",
+   "two_column": false,
+   "n_inline": 3,
+   "n_display": 0,
+   "chars": 403,
+   "overlap": 1.0,
+   "reference_prose": "Draw an arrow after each selected row, upward in the source and downward in the target, with the first source arrow pointing northeast and the last target arrow southwest. Launch each arrow toward the next selected row. A hit in a selected source row replaces the entry by ; a hit in a selected target row replaces it by . Other arrows have no effect. Let be the product of the resulting entries.",
+   "has_custom_macros": false
+  }
+ },
+ {
+  "id": "arxiv-2609.03730-p1",
+  "tier": "arxiv-paste",
+  "input": "The key lower bound on supply in my analysis (Equation 3.4) is based on the\nobservation of Açıkgöz (2018) and Walsh and Young (2026) that, when there is a\ndisaster individual income state and the return on saving is low, agent consumption/saving decisions are driven by worry about the disaster state. The key upper\nbound I establish (Proposition 4.2) is more technical and relies on the Coleman (1990)\noperator approach of Açıkgöz (2018) and Li and Stachurski (2014). The new bounds\nI construct apply when the return on saving is negative: 1 + r − δ < 1 or, equivalently,\nr < δ. I conjecture that negative returns are necessary for multiplicity in the Aiyagari\n(1994) model, but I do not attempt to prove that here.",
+  "reference": "The key lower bound on supply in my analysis (Equation (ref)) is based on the observation of [ref] and [ref] that, when there is a disaster individual income state and the return on saving is low, agent consumption/saving decisions are driven by worry about the disaster state. The key upper bound I establish (Proposition (ref)) is more technical and relies on the [ref] operator approach of [ref] and [ref]. The new bounds I construct apply when the return on saving is negative: \\( 1 + r - \\delta <1 \\) or, equivalently, \\( r<\\delta \\) . I conjecture that negative returns are necessary for multiplicity in the [ref] model, but I do not attempt to prove that here.",
+  "source": "https://arxiv.org/abs/2609.03730",
+  "meta": {
+   "paper_id": "2609.03730",
+   "category": "econ.TH",
+   "license": "unknown",
+   "extractor": "pdftotext",
+   "two_column": false,
+   "n_inline": 2,
+   "n_display": 0,
+   "chars": 720,
+   "overlap": 1.0,
+   "reference_prose": "The key lower bound on supply in my analysis (Equation (ref)) is based on the observation of [ref] and [ref] that, when there is a disaster individual income state and the return on saving is low, agent consumption/saving decisions are driven by worry about the disaster state. The key upper bound I establish (Proposition (ref)) is more technical and relies on the [ref] operator approach of [ref] and [ref]. The new bounds I construct apply when the return on saving is negative: or, equivalently, . I conjecture that negative returns are necessary for multiplicity in the [ref] model, but I do not attempt to prove that here.",
+   "has_custom_macros": false
+  }
+ },
+ {
+  "id": "arxiv-2609.03730-p2",
+  "tier": "arxiv-paste",
+  "input": "A representative firm hires labor and rents capital to solve\n\n                                      max k α ℓ1−α − rk − wℓ,\n                                    k≥0,ℓ≥0\n\n\nwhere α ∈ (0, 1) is the capital share. Firm optimization requires\n                                                           1\n                                                   \u0010 α \u0011 1−α\n                                     k = K(r, ℓ) ≡           ℓ                                    (2.3)\n                                                      r\n                                                        α\n                                                 \u0010 α \u0011 1−α\n                                     w = (1 − α)           .                                      (2.4)\n                                                   r\n\nThis setup is the canonical Aiyagari (1994) model, and it satisfies Assumptions 1–5\nof Açıkgöz (2018), which he uses to establish all of his results I use below.",
+  "reference": "A representative firm hires labor and rents capital to solve \\[ \\max_{k \\geq 0,\\ell \\geq 0} k^\\alpha \\ell^{1-\\alpha} - rk - w\\ell, \\] where \\( \\alpha \\in (0,1) \\) is the capital share. Firm optimization requires \\[ k & = K(r,\\ell) \\equiv \\left( \\frac{\\alpha}{r} \\right)^{\\frac{1}{1-\\alpha}} \\ell \\\\\nw & = (1-\\alpha) \\left( \\frac{\\alpha}{r} \\right)^{\\frac{\\alpha}{1-\\alpha}}. \\] This setup is the canonical [ref] model, and it satisfies Assumptions 1–5 of [ref], which he uses to establish all of his results I use below.",
+  "source": "https://arxiv.org/abs/2609.03730",
+  "meta": {
+   "paper_id": "2609.03730",
+   "category": "econ.TH",
+   "license": "unknown",
+   "extractor": "pdftotext -layout",
+   "two_column": false,
+   "n_inline": 1,
+   "n_display": 2,
+   "chars": 956,
+   "overlap": 1.0,
+   "reference_prose": "A representative firm hires labor and rents capital to solve where is the capital share. Firm optimization requires This setup is the canonical [ref] model, and it satisfies Assumptions 1–5 of [ref], which he uses to establish all of his results I use below.",
+   "has_custom_macros": false
+  }
+ },
+ {
+  "id": "arxiv-2609.03730-p3",
+  "tier": "arxiv-paste",
+  "input": "We can simplify the search for steady states by further exploiting the CRRA and\nCobb-Douglas forms. As Açıkgöz (2018) shows, CRRA implies that the stationary\ncapital supply is homogeneous of degree one in the wage. Using the firm FOC (2.4),\nwe can rewrite the steady state condition A(R, w) = K(R − 1 + δ, L) as\nA(R, 1) =\n\nK(R − 1 + δ, L)\nα ,\n\u0001 1−α\nα\n(1 − α) R−1+δ\n\nand the RHS simplifies to\nD(R) ≡\n\nα\nL\n.\n1−αR−1+δ\n\nThat is, it is without loss of generality to study the model with the wage normalized\nto one and firm capital demand appropriately adjusted.",
+  "reference": "We can simplify the search for steady states by further exploiting the CRRA and Cobb-Douglas forms. As [ref] shows, CRRA implies that the stationary capital supply is homogeneous of degree one in the wage. Using the firm FOC (ref), we can rewrite the steady state condition \\( A(R,w) = K(R-1 + \\delta,L) \\) as \\[ A(R,1) = \\frac{K(R-1 + \\delta,L)}{ (1-\\alpha) \\left( \\frac{\\alpha}{R-1+\\delta} \\right)^{\\frac{\\alpha}{1-\\alpha}}}, \\] and the RHS simplifies to \\[ D(R) \\equiv \\frac{\\alpha}{1-\\alpha} \\frac{L}{R -1 + \\delta}. \\] That is, it is without loss of generality to study the model with the wage normalized to one and firm capital demand appropriately adjusted.",
+  "source": "https://arxiv.org/abs/2609.03730",
+  "meta": {
+   "paper_id": "2609.03730",
+   "category": "econ.TH",
+   "license": "unknown",
+   "extractor": "pdftotext",
+   "two_column": false,
+   "n_inline": 1,
+   "n_display": 2,
+   "chars": 558,
+   "overlap": 1.0,
+   "reference_prose": "We can simplify the search for steady states by further exploiting the CRRA and Cobb-Douglas forms. As [ref] shows, CRRA implies that the stationary capital supply is homogeneous of degree one in the wage. Using the firm FOC (ref), we can rewrite the steady state condition as and the RHS simplifies to That is, it is without loss of generality to study the model with the wage normalized to one and firm capital demand appropriately adjusted.",
+   "has_custom_macros": false
+  }
+ },
+ {
+  "id": "arxiv-2609.04068-p1",
+  "tier": "arxiv-paste",
+  "input": "As the difference in random shocks becomes more dispersed (captured by a higher σ), perfor-\nmance evaluation becomes noisier, so the manager has weaker incentives to invest effort when the\nhead start favors her (h ≥ 0). A noisier performance evaluation also makes the manager less con-\ncerned about competing with a higher-ability agent, leading her to hire a higher-ability candidate.\nThe variance affects the new hire’s effort through two channels: on the one hand, it discourages\n  16\n    The necessary and sufﬁcient condition is that the head start is not too unfavorable to the manager, i.e., h > −2e∗m .\n  17\n    The more precise condition for each statement in (iv) and (v) is that the manager is more (less) likely to win,\nwhich is necessary and sufﬁcient for strictly unimodal g(x).\n\n\n                                                          11\n\feffort by making performance evaluation noisier; on the other, it results in a higher-ability new\nhire, which in turn increases his effort. Overall, the net effect on the new hire’s effort is positive.",
+  "reference": "As the difference in random shocks becomes more dispersed (captured by a higher \\( \\sigma \\) ), performance evaluation becomes noisier, so the manager has weaker incentives to invest effort when the head start favors her ( \\( h\\geq0 \\) ).\nA noisier performance evaluation also makes the manager less concerned about competing with a higher-ability agent, leading her to hire a higher-ability candidate. The variance affects the new hire’s effort through two channels: on the one hand, it discourages effort by making performance evaluation noisier; on the other, it results in a higher-ability new hire, which in turn increases his effort. Overall, the net effect on the new hire’s effort is positive.",
+  "source": "https://arxiv.org/abs/2609.04068",
+  "meta": {
+   "paper_id": "2609.04068",
+   "category": "econ.TH",
+   "license": "unknown",
+   "extractor": "pdftotext -layout",
+   "two_column": false,
+   "n_inline": 2,
+   "n_display": 0,
+   "chars": 1057,
+   "overlap": 0.9701,
+   "reference_prose": "As the difference in random shocks becomes more dispersed (captured by a higher ), performance evaluation becomes noisier, so the manager has weaker incentives to invest effort when the head start favors her ( ). A noisier performance evaluation also makes the manager less concerned about competing with a higher-ability agent, leading her to hire a higher-ability candidate. The variance affects the new hire’s effort through two channels: on the one hand, it discourages effort by making performance evaluation noisier; on the other, it results in a higher-ability new hire, which in turn increases his effort. Overall, the net effect on the new hire’s effort is positive.",
+   "has_custom_macros": false
+  }
+ },
+ {
+  "id": "arxiv-2609.04068-p2",
+  "tier": "arxiv-paste",
+  "input": "In equilibrium, the principal offers a head start to the manager that ensures the highest-ability\nagent is hired. As the noise in performance evaluation increases, the noise begins to take over\nperformance attribution. As a result, the manager becomes less fearful of competing against a\nhigher-ability candidate. Thus, the manager has a lower incentive to sabotage, which allows the\nprincipal to reduce the optimal head start",
+  "reference": "In equilibrium, the principal offers a head start to the manager that ensures the highest-ability agent is hired.\nAs the noise in performance evaluation increases, the noise begins to take over performance attribution. As a result, the manager becomes less fearful of competing against a higher-ability candidate.\nThus, the manager has a lower incentive to sabotage, which allows the principal to reduce the optimal head start \\( h^* \\) .",
+  "source": "https://arxiv.org/abs/2609.04068",
+  "meta": {
+   "paper_id": "2609.04068",
+   "category": "econ.TH",
+   "license": "unknown",
+   "extractor": "pdftotext",
+   "two_column": false,
+   "n_inline": 1,
+   "n_display": 0,
+   "chars": 426,
+   "overlap": 1.0,
+   "reference_prose": "In equilibrium, the principal offers a head start to the manager that ensures the highest-ability agent is hired. As the noise in performance evaluation increases, the noise begins to take over performance attribution. As a result, the manager becomes less fearful of competing against a higher-ability candidate. Thus, the manager has a lower incentive to sabotage, which allows the principal to reduce the optimal head start .",
+   "has_custom_macros": false
+  }
+ },
+ {
+  "id": "arxiv-2609.04068-p3",
+  "tier": "arxiv-paste",
+  "input": "Now we show that the payoff function of each player is strictly concave in their own effort. For\ni ∈ {m, n}, when the winning probability is interior, we have\n∂ 2 ui\n2α∗\n1\n=\n− < 0.\n2\n∂ei\nM\nθi\n2\n\nWhen the winning probability is equal to one, we have ∂∂eu2i = − θ1i < 0. At the boundary between\ni\nthese regions, the marginal payoff decreases because additional effort does not increase the winning\nprobability. Hence, against the displayed opponent effort, each player’s payoff is strictly concave\nover the entire domain",
+  "reference": "Now we show that the payoff function of each player is strictly concave in their own effort.\nFor \\( i\\in\\{m,n\\} \\) , when the winning probability is interior, we have \\[ \\frac{\\partial^2 u_i}{\\partial e_i^2} = \\frac{2\\alpha^*}{M}-\\frac{1}{\\theta_i}<0. \\] When the winning probability is equal to one, we have \\( \\frac{\\partial^2 u_i}{\\partial e_i^2} =-\\frac{1}{\\theta_i}<0 \\) .\nAt the\nboundary between these regions, the marginal payoff decreases because\nadditional effort does not increase the winning probability. Hence,\nagainst the displayed opponent effort, each player's payoff is\nstrictly concave over the entire domain \\( e_i\\geq0 \\) .",
+  "source": "https://arxiv.org/abs/2609.04068",
+  "meta": {
+   "paper_id": "2609.04068",
+   "category": "econ.TH",
+   "license": "unknown",
+   "extractor": "pdftotext",
+   "two_column": false,
+   "n_inline": 3,
+   "n_display": 1,
+   "chars": 518,
+   "overlap": 1.0,
+   "reference_prose": "Now we show that the payoff function of each player is strictly concave in their own effort. For , when the winning probability is interior, we have When the winning probability is equal to one, we have . At the boundary between these regions, the marginal payoff decreases because additional effort does not increase the winning probability. Hence, against the displayed opponent effort, each player's payoff is strictly concave over the entire domain .",
+   "has_custom_macros": false
+  }
+ },
+ {
+  "id": "arxiv-2609.03589-p1",
+  "tier": "arxiv-paste",
+  "input": "Interestingly, the boundedness of σ is used only to show that Fk maps a suitable\nball into itself. More precisely, it enters the proof only through the four estimates (15), (16), (20),\nand (25). By contrast, the contraction property of Fk does not rely on the boundedness of",
+  "reference": "Interestingly, the boundedness of \\( \\sigma \\) is used only to show that \\( F_k \\) maps a suitable ball into itself. More precisely, it enters the proof only\nthrough the four estimates\n(ref), (ref),\n(ref), and (ref).\nBy contrast, the contraction property of \\( F_k \\) does not rely on the\nboundedness of \\( \\sigma \\) .",
+  "source": "https://arxiv.org/abs/2609.03589",
+  "meta": {
+   "paper_id": "2609.03589",
+   "category": "math.PR",
+   "license": "unknown",
+   "extractor": "pdftotext -layout",
+   "two_column": false,
+   "n_inline": 4,
+   "n_display": 0,
+   "chars": 274,
+   "overlap": 1.0,
+   "reference_prose": "Interestingly, the boundedness of is used only to show that maps a suitable ball into itself. More precisely, it enters the proof only through the four estimates (ref), (ref), (ref), and (ref). By contrast, the contraction property of does not rely on the boundedness of .",
+   "has_custom_macros": false
+  }
+ },
+ {
+  "id": "arxiv-2609.03669-p1",
+  "tier": "arxiv-paste",
+  "input": "To this end, in Section 2, we first establish the asymptotic properties of the transition density p\n                                          and its spatial derivative ∂x p, which appear in the kernel (0.1). In Section 3, we then differentiate\n                                          both sides of the resulting formula with respect to x and take the limit x → y + , as before. Upon\n                                          observing that one of the terms forms an approximation to the identity, this immediately yields\n                                          the desired equation. Finally, in Section 4, we provide an example illustrating the applications of\n                                          the new equation.",
+  "reference": "To this end, in Section (ref), we first establish the asymptotic properties of the transition density \\( p \\) and its spatial derivative \\( \\partial_x p \\) , which appear in the kernel (ref). In Section (ref), we then differentiate both sides of the resulting formula with respect to \\( x \\) and take the limit \\( x \\to y^+ \\) , as before. Upon observing that one of the terms forms an approximation to the identity, this immediately yields the desired equation. Finally, in Section (ref), we provide an example illustrating the applications of the new equation.",
+  "source": "https://arxiv.org/abs/2609.03669",
+  "meta": {
+   "paper_id": "2609.03669",
+   "category": "math.PR",
+   "license": "unknown",
+   "extractor": "pdftotext -layout",
+   "two_column": false,
+   "n_inline": 4,
+   "n_display": 0,
+   "chars": 725,
+   "overlap": 1.0,
+   "reference_prose": "To this end, in Section (ref), we first establish the asymptotic properties of the transition density and its spatial derivative , which appear in the kernel (ref). In Section (ref), we then differentiate both sides of the resulting formula with respect to and take the limit , as before. Upon observing that one of the terms forms an approximation to the identity, this immediately yields the desired equation. Finally, in Section (ref), we provide an example illustrating the applications of the new equation.",
+   "has_custom_macros": false
+  }
+ },
+ {
+  "id": "arxiv-2609.02357-p1",
+  "tier": "arxiv-paste",
+  "input": "Total Communicability (Matrix Exponential). Based on diffusion interpretations, this measure assigns weights that decay factorially, ak = β k /k!, so the series\nconverges for any adjacency matrix. The resulting centrality is given by the row sums\nof the matrix exponential:\nb(A) = eβA 1.\nThis specification is standard in the network literature, and is closely related to other\nmatrix-function based measures; see Estrada",
+  "reference": "Total Communicability (Matrix Exponential). Based on diffusion interpretations, this measure assigns weights that decay factorially, \\( a_k=\\beta^k/k! \\) , so the series converges for any adjacency matrix. The resulting centrality is given by the row sums of the matrix exponential: \\[ b(A)=e^{\\beta A}\\mathbf{1}. \\] This specification is standard in the network literature, and is closely related to other matrix-function based measures; see [ref].",
+  "source": "https://arxiv.org/abs/2609.02357",
+  "meta": {
+   "paper_id": "2609.02357",
+   "category": "econ.TH",
+   "license": "unknown",
+   "extractor": "pdftotext",
+   "two_column": false,
+   "n_inline": 1,
+   "n_display": 1,
+   "chars": 421,
+   "overlap": 1.0,
+   "reference_prose": "Total Communicability (Matrix Exponential). Based on diffusion interpretations, this measure assigns weights that decay factorially, , so the series converges for any adjacency matrix. The resulting centrality is given by the row sums of the matrix exponential: This specification is standard in the network literature, and is closely related to other matrix-function based measures; see [ref].",
+   "has_custom_macros": false
+  }
+ }
+]
