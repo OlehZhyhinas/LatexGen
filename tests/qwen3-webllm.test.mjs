@@ -404,3 +404,54 @@ maybeTest("planEngine leaves a non-recurrent model's lookahead variant alone", a
   assert.deepEqual(plan.tuning, variant.tuning);
   assert.equal(plan.workerUrl.searchParams.get("lookahead"), "1");
 });
+
+// --- prompt-lookup drafting (issue #27, Avenue B) -------------------------
+
+test("prompt-lookup variants carry the spec string and recurrent models carry :fork", () => {
+  for (const [modelId, model] of Object.entries(catalog.models)) {
+    for (const [variantId, variant] of Object.entries(model.variants)) {
+      const spec = variant.tuning.promptLookup;
+      if (spec === undefined) continue;
+      assert.match(spec, /^[1-9]\d*(?::[1-9]\d*){0,2}(?::fork)?$/, `${modelId}/${variantId}: bad promptLookup spec`);
+      if (model.recurrentState) assert.ok(spec.endsWith(":fork"), `${modelId}/${variantId}: a recurrent state needs the fork strategy`);
+      assert.ok(catalog.runtimes[variant.runtime].hooks.includes("promptLookup"), `${modelId}/${variantId}: runtime lacks the promptLookup hook`);
+    }
+  }
+});
+
+test("every Qwen3.5 rung is flagged recurrentState", () => {
+  // All Qwen3.5 sizes interleave GatedDeltaNet layers with attention
+  // (full_attention_interval 4 in every mlc-chat-config), the 0.8B included.
+  for (const id of Object.keys(catalog.models).filter((m) => m.startsWith("Qwen3.5-"))) {
+    assert.equal(catalog.models[id].recurrentState, true, `${id} has an RNN state`);
+  }
+});
+
+maybeTest("parsePromptLookup reads the harness spec string", () => {
+  assert.deepEqual(mod.parsePromptLookup("5:3:2:fork"), { k: 5, nMax: 3, nMin: 2, hybrid: "fork" });
+  assert.deepEqual(mod.parsePromptLookup("5"), { k: 5, nMax: 3, nMin: 2 });
+  assert.deepEqual(mod.parsePromptLookup("8:4:4"), { k: 8, nMax: 4, nMin: 4 });
+  assert.deepEqual(mod.parsePromptLookup("8:2:3"), { k: 8, nMax: 2, nMin: 2 });
+  for (const bad of ["0", "5:x", "5:3:2:pop", "", undefined, 5]) assert.equal(mod.parsePromptLookup(bad), null);
+});
+
+maybeTest("safeTuning appends :fork to prompt-lookup on recurrent models and leaves it otherwise", () => {
+  const tuning = { greedyArgmax: true, batchPass: true, flushEvery: 32, promptLookup: "5:3:2" };
+  assert.equal(mod.safeTuning({ recurrentState: true }, tuning).promptLookup, "5:3:2:fork");
+  assert.equal(mod.safeTuning({ recurrentState: true }, { promptLookup: "5:3:2:fork" }).promptLookup, "5:3:2:fork");
+  assert.equal(mod.safeTuning({}, tuning).promptLookup, "5:3:2");
+});
+
+maybeTest("the prompt-lookup spec survives the worker query string and lands as the runtime object", () => {
+  const tuning = { greedyArgmax: true, batchPass: true, flushEvery: 32, promptLookup: "5:3:2:fork" };
+  const url = mod.workerUrl({ kind: "catalog", runtime: { file: "web-llm-0.2.84-qwen-m5-prompt-lookup.js" }, tuning }, "http://localhost/public/qwen3-webllm.js");
+  assert.equal(url.searchParams.get("promptLookup"), "5:3:2:fork");
+  const parsed = mod.tuningFromSearch(url.search);
+  assert.equal(parsed.promptLookup, "5:3:2:fork");
+  const target = mod.applyTuning({}, parsed);
+  assert.deepEqual(target.__webllmPromptLookup, { k: 5, nMax: 3, nMin: 2, hybrid: "fork" });
+  assert.equal(target.__tvmjsWebGPUFlushEvery, 32);
+  // a malformed spec is dropped rather than forwarded
+  const bad = mod.workerUrl({ kind: "catalog", runtime: { file: "web-llm-0.2.84-qwen-m5-prompt-lookup.js" }, tuning: { promptLookup: "nope" } }, "http://localhost/public/qwen3-webllm.js");
+  assert.equal(bad.searchParams.has("promptLookup"), false);
+});

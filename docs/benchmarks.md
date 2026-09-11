@@ -185,10 +185,53 @@ flagged `recurrentState`, so a hand-picked variant row or a forced
 `?webllm=catalog:<variant>` cannot reintroduce the abort. The pop-free knobs
 (`batchPass`, `flushEvery`, `bindGroupCache`) are untouched.
 
-MiniCPM5 2B and Qwen3.5 0.8B are not recurrent and keep their variants. The
-0.8B number above says its shipped `burst5` default may be leaving a lot on the
-table, but that is one paste against a workbench figure measured differently
-(190.8 vs 108.9 tok/s), so it is not settled here.
+MiniCPM5 2B is not recurrent and keeps its variant. Qwen3.5 0.8B *is*: its
+`mlc-chat-config.json` interleaves GatedDeltaNet layers with attention at
+`full_attention_interval: 4` like the 4B and 9B, and its model lib exports
+`create_rnn_state`; the earlier reading of it as non-recurrent was wrong. It is
+now flagged `recurrentState` as well, which retires its `burst5` variant — the
+0.8B number above already said that variant was leaving speed on the table.
+
+### Prompt-lookup drafting (issue #27, Avenue B)
+
+LatexGen's output is copy-dominated — the prose passes through and only the
+maths is rewritten — so the input itself is a draft: match the last few tokens
+against the prompt and the text generated so far, propose the continuation,
+verify the whole draft in one `batch_verify` forward, commit the accepted
+prefix plus the model's own next token. Every shipped model lib already
+exports `batch_verify`, so no lib was recompiled; the runtime bundle
+`web-llm-0.2.84-qwen-m5-prompt-lookup.js` adds the drafting loop behind the
+`promptLookup` knob (`k[:nMax[:nMin[:fork]]]`). On the Qwen3.5 rungs the
+draft cannot be popped back — a multi-token forward leaves the RNN state with
+no history at any `max_history_size` — so `:fork` forks the sequence before
+the verify pass and re-runs the accepted prefix on the fork when a draft is
+partly rejected.
+
+Measured paired, within one session, on the 120 real arXiv pastes
+(`webnn-workbench` `bench/results/prompt-lookup-ab-*.json`), each item once
+with drafting off and once with it on, order alternating, both sides on the
+catalog's own knobs. Ratio is treatment/baseline time per output character:
+
+| Model | ms/char ratio, median [IQR] | tok/s ratio | byte-identical | judged worse |
+|---|---|---|---|---|
+| Qwen3.5 0.8B | **0.818** [0.740–0.907] | 1.22x | 119/120 | 0 |
+| Qwen3.5 4B | **0.863** [0.790–0.954] | 1.16x | 116/120 | 0 |
+| Qwen3.5 9B | 0.938 [0.870–1.0005] — rejected, IQR touches parity | 1.07x | 120/120 | 0 |
+| MiniCPM5 2B | 0.741 [0.651–0.831] | 1.35x | 109/120 | 2 (p = 0.5) |
+
+Two things the arithmetic assumed do not hold on this stack. Output is not
+byte-identical: `batch_verify` runs the prefill GEMM kernels and the baseline
+runs the decode GEMV kernels, their logits differ in the low bits, and near-tie
+argmaxes flip — the same mechanism that undid the vocabulary-pruning
+exactness claim. Divergent items were judged with `qwen-local`, three repeats
+each: no Qwen3.5 item got worse, MiniCPM5 2B had two, so MiniCPM5 does not get
+the knob. And verification is not free: a 6-token verify costs 2.3–2.8 decode
+steps and an 11-token one about 4 (≈7 ms per verified token on the 4B), which
+is why `k = 10` is a wash and `k = 5` ships. On the 9B the verify pass is
+dearer still (3.0 steps) and the paired ratio's upper quartile sits at parity,
+so it keeps `sg32-burst1-flush32`. The 0.8B and 4B default to
+`sg32-burst1-flush32-pl5`. Method, cost curves and reproduction:
+`bench/README-prompt-lookup.md`.
 
 ## Loading: getting the weights into the browser
 

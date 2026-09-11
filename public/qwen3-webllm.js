@@ -6,6 +6,7 @@ const DEFAULT_HOOKS = {
   flushEvery: "__tvmjsWebGPUFlushEvery",
   bindGroupCache: "__tvmjsWebGPUBindGroupCache",
   lookahead: "__webllmBurstLookahead",
+  promptLookup: "__webllmPromptLookup",
 };
 
 const BOOL_TUNING = new Set([
@@ -19,6 +20,23 @@ const INT_TUNING = new Set([
   "flushEvery",
   "lookahead",
 ]);
+// Prompt-lookup drafting travels as the bench harness's spec string,
+// k[:nMax[:nMin[:fork]]], and becomes the runtime's object at the hook.
+const SPEC_TUNING = new Set(["promptLookup"]);
+const PROMPT_LOOKUP_RE = /^[1-9]\d*(?::[1-9]\d*){0,2}(?::fork)?$/;
+
+// "5:3:2:fork" -> { k: 5, nMax: 3, nMin: 2, hybrid: "fork" }; anything the
+// runtime would reject (k < 1, malformed) becomes null, which disables it.
+export function parsePromptLookup(spec) {
+  if (typeof spec !== "string" || !PROMPT_LOOKUP_RE.test(spec)) return null;
+  const parts = spec.split(":");
+  const fork = parts[parts.length - 1] === "fork";
+  const nums = (fork ? parts.slice(0, -1) : parts).map((n) => Number.parseInt(n, 10));
+  const [k, nMax = 3, nMin = 2] = nums;
+  const config = { k, nMax, nMin: Math.min(nMin, nMax) };
+  if (fork) config.hybrid = "fork";
+  return config;
+}
 
 const PROBE_NONE = {};
 const probeMemo = new WeakMap();
@@ -175,12 +193,19 @@ export function parseForce(search = "") {
 // than trusting the catalog, so a hand-picked variant row or a forced
 // ?webllm=catalog:<variant> cannot reintroduce it. The pop-free knobs
 // (batchPass, flushEvery, bindGroupCache) are left alone.
+// Prompt-lookup verifies a whole draft in one multi-token forward, after
+// which a recurrent state has no history to pop either, so on those models
+// the runtime must fork the sequence before the pass: the spec carries :fork,
+// or the runtime silently declines to draft.
 export function safeTuning(model, tuning) {
   if (!tuning) return {};
   if (!model?.recurrentState) return tuning;
   const safe = { ...tuning };
   if (typeof safe.greedyBurst === "number" && safe.greedyBurst > 1) safe.greedyBurst = 1;
   delete safe.lookahead;
+  if (typeof safe.promptLookup === "string" && parsePromptLookup(safe.promptLookup) && !safe.promptLookup.endsWith(":fork")) {
+    safe.promptLookup = `${safe.promptLookup}:fork`;
+  }
   return safe;
 }
 
@@ -228,6 +253,7 @@ export function workerUrl(plan, base = import.meta.url) {
     const value = plan.tuning[key];
     if (typeof value === "boolean") params.set(key, value ? "1" : "0");
     else if (Number.isInteger(value)) params.set(key, String(value));
+    else if (SPEC_TUNING.has(key) && parsePromptLookup(value)) params.set(key, value);
   }
   return url;
 }
@@ -244,6 +270,8 @@ export function tuningFromSearch(search) {
     } else if (INT_TUNING.has(key)) {
       const n = Number.parseInt(value, 10);
       if (Number.isFinite(n)) tuning[key] = n;
+    } else if (SPEC_TUNING.has(key)) {
+      if (parsePromptLookup(value)) tuning[key] = value;
     }
   }
   return tuning;
@@ -253,7 +281,7 @@ export function applyTuning(target, tuning, hooks = DEFAULT_HOOKS) {
   if (!target || !tuning) return target;
   for (const [key, hook] of Object.entries(hooks)) {
     if (!(key in tuning)) continue;
-    target[hook] = tuning[key];
+    target[hook] = SPEC_TUNING.has(key) ? parsePromptLookup(tuning[key]) : tuning[key];
   }
   return target;
 }

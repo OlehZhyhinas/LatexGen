@@ -1,11 +1,11 @@
 {
  "family": "qwen3-webllm",
  "title": "Qwen3, Qwen3.5 and MiniCPM5 q4f16_1 through the graph catalog's WebGPU runtime",
- "summary": "A patched WebLLM 0.2.84 (device-resident greedy argmax, K-token decode bursts, batched command encoding with periodic flushes, optional lookahead) plus a per-model TVM model lib compiled with chunked argmax and (Qwen3/Qwen3.5) subgroup-32 kernels and GEMV TR. Weights are the stock mlc-ai q4f16_1 shards; only the runtime bundle and the model_lib differ from stock WebLLM. The fast path only engages at temperature 0. Models flagged recurrentState have space-state layers and must not over-fill the decode queue: greedyBurst > 1 and lookahead > 0 roll surplus positions back with kv_state_popn, which has no per-token history to pop and aborts the WASM runtime. planEngine clamps those two knobs for such models; the pop-free knobs (batchPass, flushEvery, bindGroupCache) are unaffected. Output matches stock on most items but is not byte-identical: the subgroup model libs produce slightly different logits, which flips near-tie tokens (see docs/benchmarks.md).",
+ "summary": "A patched WebLLM 0.2.84 (device-resident greedy argmax, K-token decode bursts, batched command encoding with periodic flushes, optional lookahead, prompt-lookup drafting) plus a per-model TVM model lib compiled with chunked argmax and (Qwen3/Qwen3.5) subgroup-32 kernels and GEMV TR. Weights are the stock mlc-ai q4f16_1 shards; only the runtime bundle and the model_lib differ from stock WebLLM. The fast path only engages at temperature 0. Models flagged recurrentState have space-state layers and must not over-fill the decode queue: greedyBurst > 1 and lookahead > 0 roll surplus positions back with kv_state_popn, which has no per-token history to pop and aborts the WASM runtime. planEngine clamps those two knobs for such models; the pop-free knobs (batchPass, flushEvery, bindGroupCache) are unaffected. Output matches stock on most items but is not byte-identical: the subgroup model libs produce slightly different logits, which flips near-tie tokens (see docs/benchmarks.md). Prompt-lookup drafting (promptLookup: k[:nMax[:nMin[:fork]]]) proposes the continuation from an n-gram match over the prompt and verifies it in one batch_verify forward; :fork is required on recurrentState models, whose state cannot be popped after a multi-token forward. Its output is not byte-identical either: the verify kernels flip near-tie tokens on a few percent of items (judged not worse, see bench/README-prompt-lookup.md).",
  "source": {
   "dataset": "ozhyhinas/webnn-catalog",
   "base": "https://huggingface.co/datasets/ozhyhinas/webnn-catalog/resolve/main",
-  "fork": "OlehZhyhinas/web-llm-qwen@b9e2b01d3d3f4b5e1fad005da159e31430c65130",
+  "fork": "OlehZhyhinas/web-llm-qwen@ff2ed7c61f5fd01b5fca8618cc2baa08c2866ad4",
   "webllmVersion": "0.2.84",
   "reports": [
    "webnn-workbench/docs/qwen-m5-webgpu-report.md",
@@ -14,7 +14,8 @@
    "webnn-workbench/docs/qwen35-08-m5-webgpu-report.md",
    "webnn-workbench/docs/qwen35-4b-m5-webgpu-report.md",
    "webnn-workbench/docs/qwen35-9b-m5-webgpu-report.md",
-   "webnn-workbench/docs/minicpm5-2b-m5-webgpu-report.md"
+   "webnn-workbench/docs/minicpm5-2b-m5-webgpu-report.md",
+   "LatexGen/bench/README-prompt-lookup.md"
   ]
  },
  "target": {
@@ -38,7 +39,8 @@
   "batchPass": "__tvmjsWebGPUBatchPass",
   "flushEvery": "__tvmjsWebGPUFlushEvery",
   "bindGroupCache": "__tvmjsWebGPUBindGroupCache",
-  "lookahead": "__webllmBurstLookahead"
+  "lookahead": "__webllmBurstLookahead",
+  "promptLookup": "__webllmPromptLookup"
  },
  "runtimes": {
   "m5": {
@@ -79,6 +81,22 @@
     "flushEvery",
     "bindGroupCache",
     "lookahead"
+   ]
+  },
+  "m5-prompt-lookup": {
+   "file": "web-llm-0.2.84-qwen-m5-prompt-lookup.js",
+   "bytes": 6619637,
+   "sha256": "6f529d9b66c1326bdafaf78b3a8b040d02f06ba7720d5fd7e06b06d5a700dae4",
+   "url": "https://huggingface.co/datasets/ozhyhinas/webnn-catalog/resolve/main/qwen3.5-4b-q4f16-1/v1/webgpu-apple-m5-pro-macos26-chrome152-sg32-burst1-flush32-pl5/web-llm-0.2.84-qwen-m5-prompt-lookup.js",
+   "hooks": [
+    "greedyArgmax",
+    "greedyBurst",
+    "deferDecodeCleanup",
+    "batchPass",
+    "flushEvery",
+    "bindGroupCache",
+    "lookahead",
+    "promptLookup"
    ]
   }
  },
@@ -205,20 +223,33 @@
     "sha256": "aea2152ea7783c0e80c5e1cf9004e69e70a8365acdfc1aea1a2eb7715b013987",
     "url": "https://huggingface.co/datasets/ozhyhinas/webnn-catalog/resolve/main/qwen3.5-0.8b-q4f16-1/v1/webgpu-apple-m5-pro-macos26-chrome152-sg32-burst5-flush32/qwen3.5-0.8b-argmax-chunk256-sg32.wasm"
    },
-   "default": "sg32-burst5-flush32",
+   "default": "sg32-burst1-flush32-pl5",
    "variants": {
-    "sg32-burst5-flush32": {
+    "sg32-burst1-flush32-pl5": {
+     "runtime": "m5-prompt-lookup",
+     "tuning": {
+      "greedyArgmax": true,
+      "greedyBurst": 1,
+      "batchPass": true,
+      "flushEvery": 32,
+      "promptLookup": "5:3:2:fork"
+     },
+     "entry": "qwen3.5-0.8b-q4f16-1/v1/webgpu-apple-m5-pro-macos26-chrome152-sg32-burst1-flush32-pl5",
+     "issue": 27,
+     "expected": "0.818x time per output character vs the previous burst5-flush32 variant (median of paired per-item ratios, IQR 0.740-0.907, 120 arXiv pastes, 2026-09-10); 119/120 outputs byte-identical, the one divergent item judged correct on both sides. Replaces sg32-burst5-flush32: the 0.8B has recurrent layers like its siblings (full_attention_interval 4), so a burst of 5 pops a state with no history."
+    },
+    "sg32-burst1-flush32": {
      "runtime": "m5-overlap",
      "tuning": {
       "greedyArgmax": true,
-      "greedyBurst": 5,
+      "greedyBurst": 1,
       "batchPass": true,
       "flushEvery": 32
      },
-     "entry": "qwen3.5-0.8b-q4f16-1/v1/webgpu-apple-m5-pro-macos26-chrome152-sg32-burst5-flush32",
-     "expected": "1.74x decode vs published sg32 (190.8 vs 108.9 tok/s), 8/8 byte-identical"
+     "expected": "Pop-free fallback without drafting; 113.8 tok/s against 41.2 stock in bench-webllm 2026-09-09."
     }
-   }
+   },
+   "recurrentState": true
   },
   "Qwen3.5-4B-q4f16_1-MLC": {
    "modelLib": {
@@ -228,7 +259,7 @@
     "url": "https://huggingface.co/datasets/ozhyhinas/webnn-catalog/resolve/main/qwen3.5-4b-q4f16-1/v1/webgpu-apple-m5-pro-macos26-chrome152-sg32-burst1-lookahead1/qwen35-4b-argmax-chunk256-sg32-tr32.wasm"
    },
    "recurrentState": true,
-   "default": "sg32-burst1-flush32",
+   "default": "sg32-burst1-flush32-pl5",
    "variants": {
     "sg32-burst1-flush32": {
      "runtime": "m5-overlap",
@@ -239,6 +270,19 @@
       "flushEvery": 32
      },
      "expected": "2.30x decode vs the stock model lib (64.2 vs 27.9 tok/s, warm, M5 Pro / Chrome 152, measured in bench-webllm 2026-09-09). Replaces sg32-burst1-lookahead1, which emitted correct tokens and then aborted the WASM runtime in RNNStateImpObj::PopN."
+    },
+    "sg32-burst1-flush32-pl5": {
+     "runtime": "m5-prompt-lookup",
+     "tuning": {
+      "greedyArgmax": true,
+      "greedyBurst": 1,
+      "batchPass": true,
+      "flushEvery": 32,
+      "promptLookup": "5:3:2:fork"
+     },
+     "entry": "qwen3.5-4b-q4f16-1/v1/webgpu-apple-m5-pro-macos26-chrome152-sg32-burst1-flush32-pl5",
+     "issue": 27,
+     "expected": "0.863x time per output character vs sg32-burst1-flush32 (median of paired per-item ratios, IQR 0.790-0.954, 120 arXiv pastes, 2026-09-10); 116/120 outputs byte-identical, no divergent item judged worse. Neutral on maths-only input; the win is the copied prose."
     }
    }
   },
