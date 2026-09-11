@@ -12,3 +12,9 @@ public/models/*/compressed.json
 # the workbench IR dir: node scripts/vendor-texify-webnn.mjs --link-bins
 public/models/texify-webnn/*.bin
 public/models/intellitex-webnn/*.bin
+
+# Local-only: per-machine instructions and arxiv bench datasets
+/CLAUDE.md
+/bench/arxiv-pastes-*.json
+/bench/judged-arxiv-*.json
+/bench/results-arxiv-*.json
