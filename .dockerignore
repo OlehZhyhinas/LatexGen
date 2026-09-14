@@ -4,6 +4,7 @@ tests
 bench
 deploy
 scripts
+!scripts/build-static.mjs
 public/bench*.html
 public/bench*.js
 public/bench-images
@@ -12,3 +13,7 @@ public/bench-data.json
 *.md
 .gitattributes
 .gitignore
+public/models/*/onnx
+public/models/**/*.bin
+public/models/**/*.gz
+dist
