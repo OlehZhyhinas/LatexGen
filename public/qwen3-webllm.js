@@ -143,6 +143,16 @@ export function rememberedRuntime(modelId, storage = globalThis.localStorage, no
   return "stock";
 }
 
+// A failed catalog load is remembered as "stock" for a week so a broken
+// runtime does not get retried on every visit. That is only right when the
+// runtime itself failed: a download or storage error (offline, a CDN hiccup,
+// the Cache API refusing an oversized shard) says nothing about the runtime,
+// and pinning stock on it costs a week of slower decoding (issue #70).
+export function isTransportError(err) {
+  const msg = String(err?.message ?? err ?? "");
+  return /\bfetch\b|Cannot fetch|Failed to execute '(add|put)' on 'Cache'|OPFS|QuotaExceeded|NetworkError|HTTP \d{3}|received status \d{3}|Load failed|ERR_/i.test(msg);
+}
+
 export function rememberRuntime(modelId, value, why, storage = globalThis.localStorage, now = Date.now()) {
   const state = readRuntimeState(storage);
   state[modelId] = { value, at: now, why };
