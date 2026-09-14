@@ -331,11 +331,9 @@ kbd { font: inherit; font-size: 11px; padding: 0 4px; border: 1px solid var(--bo
 .modal { background: var(--surface); border-radius: var(--r-lg); padding: 28px; max-width: 560px; width: 100%; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 24px 64px rgba(0,0,0,0.3); }
 .modal h2 { margin: 0; font-size: 20px; }
 .modal p { margin: 0; font-size: 14px; }
-.consent-options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.consent-opt { display: flex; flex-direction: column; gap: 6px; text-align: left; padding: 14px; border-radius: var(--r-md); border: 1px solid var(--border); background: var(--surface-2); font-size: 13px; color: var(--text); }
-.consent-opt span { color: var(--muted); font-size: 12px; }
-.consent-opt.primary { border-color: var(--accent); background: var(--accent-soft); }
-.consent-opt:hover { border-color: var(--accent); }
+.notice { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding: 10px 14px; border: 1px solid var(--border); border-radius: var(--r-md); background: var(--surface-2); font-size: 13px; color: var(--text); line-height: 1.45; }
+.notice > span { flex: 1 1 240px; }
+.notice .btn { padding: 6px 12px; font-size: 13px; }
 .flag-list { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 8px; font-size: 13px; }
 .flag-list code { display: block; font-family: var(--mono); font-size: 12px; color: var(--muted); }
 .webnn-paste { background: var(--surface-2); padding: 10px 12px; border-radius: var(--r-md); font-size: 13px; }
@@ -352,7 +350,7 @@ table.compare { width: 100%; border-collapse: collapse; font-size: 14px; }
 table.compare th, table.compare td { text-align: left; padding: 10px 12px; border-top: 1px solid var(--border); vertical-align: top; }
 table.compare thead th { border-top: 0; color: var(--muted); font-weight: 500; font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; }
 table.compare td:nth-child(2) { font-weight: 600; }
-@media (max-width: 900px) { .consent-options { grid-template-columns: 1fr; } .menu { min-width: 260px; } }
+@media (max-width: 900px) { .menu { min-width: 260px; } }
 
 /* ---- PWA / visual editor / check-latex mode ---- */
 .panel-action { position: absolute; top: 6px; right: 8px; }

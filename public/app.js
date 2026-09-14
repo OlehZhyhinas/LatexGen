@@ -204,6 +204,7 @@ convertBtn.addEventListener("click", async () => {
       onDraft: (latex, v) => { outputCode.textContent = latex; renderPreview(latex); showChecks(v, "(draft from the specialist — improving…)"); },
     });
     presentResult(text, r, `${(r.ms / 1000).toFixed(1)}s · ${r.model}${r.escalated ? " (escalated)" : ""}`);
+    settleFirstRun(); maybeOfferWebnn(r.ms);
     if (r.peer) window.dispatchEvent(new CustomEvent("latexgen:converted", { detail: { peer: r.peer, summary: text.slice(0, 60), model: r.model, ms: r.ms } }));
     if (strictMode() && r.validation.ok && !r.batch) backgroundJudge(text, r.latex);
   } catch (err) {
@@ -243,6 +244,7 @@ async function convertImage(fileOrBlob, forceModel = null) {
     });
     lastImageModel = r.used;
     presentResult("(image)", r, `${(r.ms / 1000).toFixed(1)}s · ${r.model}`);
+    settleFirstRun(); maybeOfferWebnn(r.ms);
     const other = r.used === "texo" ? "texify" : "texo";
     altBtn.textContent = `looks wrong? read image with ${IMAGE_MODELS[other].name} instead`;
     altBtn.hidden = false;
@@ -759,14 +761,18 @@ $("input").addEventListener("keydown", (e) => { if ((e.metaKey || e.ctrlKey) && 
   });
 }
 
-// ---- first-visit consent + settings toggles ----
+// ---- first-run notice + settings toggles ----
+const maybeStartLadder = () => { if (llmEnabled() && !engine) { const best = modelRows.find((r) => r.preferred && r.canRun); if (best) { loadBtn.hidden = true; startModelLadder(best); } } };
+// The notice has done its job once a conversion has happened; call this after presentResult.
+function settleFirstRun() {
+  if (!prefs().consent) setPref("consent", "quick");
+  $("first-run").hidden = true;
+}
 {
-  const consent = $("consent");
-  if (!prefs().consent) consent.hidden = false;
-  const maybeStartLadder = () => { if (llmEnabled() && !engine) { const best = modelRows.find((r) => r.preferred && r.canRun); if (best) { loadBtn.hidden = true; startModelLadder(best); } } };
-  for (const btn of consent.querySelectorAll(".consent-opt")) {
-    btn.addEventListener("click", () => { setPref("consent", btn.dataset.consent); consent.hidden = true; $("llm-enabled").checked = llmEnabled(); maybeStartLadder(); maybeShowWebnnPrompt(); });
-  }
+  const firstRun = $("first-run");
+  if (!prefs().consent) firstRun.hidden = false;
+  $("first-run-full").addEventListener("click", () => { setPref("consent", "full"); firstRun.hidden = true; $("llm-enabled").checked = true; maybeStartLadder(); });
+  $("first-run-dismiss").addEventListener("click", () => { setPref("consent", "quick"); firstRun.hidden = true; });
   const llmBox = $("llm-enabled");
   llmBox.checked = llmEnabled();
   llmBox.addEventListener("change", () => { setPref("consent", llmBox.checked ? "full" : "quick"); maybeStartLadder(); });
@@ -776,6 +782,7 @@ $("input").addEventListener("keydown", (e) => { if ((e.metaKey || e.ctrlKey) && 
 }
 
 // ---- WebNN flags prompt (Chrome/Edge on Mac; navigator.ml is off for most users) ----
+// Offered after the first successful conversion, not on load — see maybeOfferWebnn below.
 function webnnAvailableNow() {
   return typeof navigator !== "undefined" && !!navigator.ml && typeof navigator.ml.createContext === "function";
 }
@@ -815,17 +822,26 @@ function showWebnnPrompt() {
   modal.hidden = false;
   open.focus();
 }
-function maybeShowWebnnPrompt() {
-  const settings = $("webnn-settings");
-  if (settings) settings.hidden = !webnnPromptEligible();
-  if (!webnnPromptEligible() || (prefs().webnnPrompt === "dismissed" && !webnnPromptForced())) return;
-  if (!$("consent").hidden) return;
-  showWebnnPrompt();
+function syncWebnnSettings() {
+  const s = $("webnn-settings");
+  if (s) s.hidden = !webnnPromptEligible();
+}
+// Shown once, after the first conversion actually took long enough to matter.
+function maybeOfferWebnn(ms) {
+  if (!webnnPromptEligible() || prefs().webnnPrompt === "dismissed") return;
+  const bar = $("webnn-bar");
+  if (!bar || !bar.hidden) return;
+  const secs = ms >= 1000 ? `${(ms / 1000).toFixed(1)} s` : `${Math.round(ms)} ms`;
+  $("webnn-bar-text").textContent = `That took ${secs}. On this Mac, Chrome can run it several times faster on Apple’s neural engine.`;
+  bar.hidden = false;
 }
 {
   const modal = $("webnn-prompt");
-  $("webnn-dismiss")?.addEventListener("click", () => { setPref("webnnPrompt", "dismissed"); modal.hidden = true; });
+  const bar = $("webnn-bar");
+  $("webnn-dismiss")?.addEventListener("click", () => { setPref("webnnPrompt", "dismissed"); modal.hidden = true; bar.hidden = true; });
   $("webnn-settings-open")?.addEventListener("click", () => showWebnnPrompt());
+  $("webnn-bar-open")?.addEventListener("click", () => showWebnnPrompt());
+  $("webnn-bar-dismiss")?.addEventListener("click", () => { setPref("webnnPrompt", "dismissed"); bar.hidden = true; });
   $("webnn-open")?.addEventListener("click", async () => {
     // Pages cannot navigate to chrome:// or edge://. Copy the URL and show it
     // so the click still lands them on the flags page with the WebNN search.
@@ -835,13 +851,15 @@ function maybeShowWebnnPrompt() {
     $("webnn-flags-url").textContent = url;
     toast("Paste the copied address into the bar, then set those flags to Enabled.");
   });
-  modal?.addEventListener("click", (e) => { if (e.target === modal) { setPref("webnnPrompt", "dismissed"); modal.hidden = true; } });
+  modal?.addEventListener("click", (e) => { if (e.target === modal) { setPref("webnnPrompt", "dismissed"); modal.hidden = true; bar.hidden = true; } });
   document.addEventListener("keydown", (e) => {
     if (e.key !== "Escape" || !modal || modal.hidden) return;
     setPref("webnnPrompt", "dismissed");
     modal.hidden = true;
+    bar.hidden = true;
   });
-  maybeShowWebnnPrompt();
+  syncWebnnSettings();
+  if (webnnPromptForced()) showWebnnPrompt();
 }
 
 // ---- history and favorites (this browser only) ----
