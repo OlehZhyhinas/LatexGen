@@ -120,6 +120,11 @@
   <main class="column">
     <div class="workspace">
     <div class="workspace-main">
+    <div id="first-run" class="notice" hidden role="status">
+      <span><strong>Runs on your device.</strong> About 200 MB of models download once and stay cached; nothing you type or paste is uploaded. For complex or multi-line input, turn on the on-device language model (1.4–6 GB).</span>
+      <button id="first-run-full" class="btn secondary" type="button">Turn it on</button>
+      <button id="first-run-dismiss" class="btn ghost" type="button">Got it</button>
+    </div>
     <section class="card" id="input-card" data-mode="text">
       <div class="row between">
         <div class="segmented" role="tablist">
@@ -182,6 +187,11 @@
           <button id="ocr-alt-btn" class="btn ghost" hidden>read image with other model</button>
         </div>
       </div>
+      <div id="webnn-bar" class="notice" hidden role="status">
+        <span id="webnn-bar-text"></span>
+        <button id="webnn-bar-open" class="btn secondary" type="button">How to enable</button>
+        <button id="webnn-bar-dismiss" class="btn ghost" type="button">Not now</button>
+      </div>
     </section>
     </div>
 
@@ -235,17 +245,6 @@
     </section>
   </main>
 
-  <div id="consent" class="modal-backdrop" hidden>
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="consent-title">
-      <h2 id="consent-title">Runs on your device</h2>
-      <p>LatexGen converts math with AI models that run inside this browser tab. Nothing you type or paste is uploaded. Choose how much to download (one time, then cached):</p>
-      <div class="consent-options">
-        <button class="consent-opt" data-consent="quick"><strong>Quick</strong><span>Specialist models only · ~200 MB · works on any device · single equations and screenshots</span></button>
-        <button class="consent-opt primary" data-consent="full"><strong>Full</strong><span>Adds an on-device language model for complex and multi-line input · 1.4–6 GB depending on your device · downloads in the background</span></button>
-      </div>
-      <p class="hint">Change this any time in settings (⚙).</p>
-    </div>
-  </div>
   <div id="webnn-prompt" class="modal-backdrop" hidden>
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="webnn-title" aria-describedby="webnn-desc">
       <h2 id="webnn-title">For the best experience, enable WebNN</h2>
