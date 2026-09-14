@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>LatexGen — About</title>
+<meta name="description" content="How LatexGen converts plain-English math and equation screenshots to LaTeX inside your browser, why it is free, and which models it uses." />
+<link rel="stylesheet" href="vendor/fonts/geist/geist.css" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="./"><span class="logo-mark" aria-hidden="true">Σ</span><span class="wordmark">LatexGen</span></a>
+  <nav class="nav"><a href="./">Converter</a><a href="benchmarks.html">Benchmarks</a><a href="https://github.com/OlehZhyhinas/LatexGen" target="_blank" rel="noopener">GitHub</a></nav>
+</header>
+<main class="column">
+  <section class="card prose" id="how">
+    <h1>About LatexGen</h1>
+    <h2>How it works</h2>
+    <p>LatexGen converts plain-English math and equation screenshots into LaTeX <strong>inside your browser</strong>. There is no upload step: the models are downloaded once, cached, and run on your own device. That is why it is free without limits, and why it keeps working offline.</p>
+    <ol>
+      <li><strong>A specialist model answers first.</strong> A 220M-parameter model fine-tuned only for text-to-LaTeX handles single equations in well under a second, on any device, no GPU needed.</li>
+      <li><strong>Every result is checked.</strong> The LaTeX must parse, and the numbers and concepts you typed must actually appear in it. Failures trigger up to five self-repair attempts with the exact error fed back to the model.</li>
+      <li><strong>Harder input climbs a ladder.</strong> Prose passages and multi-line input go to an on-device language model when your machine can run one, or to an optional server model. Screenshots use two on-device OCR models chosen by benchmark.</li>
+    </ol>
+    <h2>Why it is free</h2>
+    <p>Paid converters forward your text to a rented cloud model and meter it: typically <strong>$9–19 a month for a few hundred conversions</strong>, with 10 free ones to hook you. Your laptop already has the compute. LatexGen just uses it, so there is nothing to meter and nothing to charge for.</p>
+    <div class="wrap-x"><table class="compare">
+      <thead><tr><th></th><th>LatexGen</th><th>Typical paid converter</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Price</th><td>Free, unlimited</td><td>$9–19 / month, 200–750 credits</td></tr>
+        <tr><th scope="row">Where your math goes</th><td>Stays on your device</td><td>Uploaded to a third-party API</td></tr>
+        <tr><th scope="row">Output checking</th><td>Parsed and matched against your input, self-repairing</td><td>None</td></tr>
+        <tr><th scope="row">Screenshot to LaTeX</th><td>On-device OCR, image never leaves the tab</td><td>Uploaded, 3 credits each</td></tr>
+        <tr><th scope="row">Works offline</th><td>Yes, after the first load</td><td>No</td></tr>
+        <tr><th scope="row">Source</th><td><a href="https://github.com/OlehZhyhinas/LatexGen">Open, with published benchmarks</a></td><td>Closed</td></tr>
+      </tbody>
+    </table></div>
+    <h2>Questions</h2>
+    <p><strong>Does it really not upload anything?</strong> Text and images are processed in the tab. Open your browser's network panel while converting: the only requests are for model files. The one exception is the optional server model, which is off by default and clearly labelled when it is used.</p>
+    <p><strong>Which models?</strong> IntelliTeX for text, Texo and Texify for images, Qwen3 models via WebLLM for complex input. The <a href="benchmarks.html">benchmarks page</a> shows how each was chosen.</p>
+  </section>
+</main>
+<footer class="foot"><span>Free, unlimited, and private: your text and images are processed on this device. Nothing is uploaded.</span></footer>
+</body>
+</html>
