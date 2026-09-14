@@ -455,3 +455,18 @@ maybeTest("the prompt-lookup spec survives the worker query string and lands as 
   const bad = mod.workerUrl({ kind: "catalog", runtime: { file: "web-llm-0.2.84-qwen-m5-prompt-lookup.js" }, tuning: { promptLookup: "nope" } }, "http://localhost/public/qwen3-webllm.js");
   assert.equal(bad.searchParams.has("promptLookup"), false);
 });
+
+test("isTransportError separates download/storage failures from runtime failures", () => {
+  for (const msg of [
+    "UnknownError: Failed to execute 'add' on 'Cache': Unexpected internal error.",
+    "Error: Cannot fetch https://huggingface.co/x/params_shard_0.bin err= TypeError: Failed to fetch",
+    "ArtifactOPFSCache: Unable to fetch https://x/y, received status 503",
+    "TypeError: NetworkError when attempting to fetch resource.",
+    "QuotaExceededError: The quota has been exceeded.",
+  ]) assert.equal(mod.isTransportError(new Error(msg)), true, msg);
+  for (const msg of [
+    "RuntimeError: Aborted(). Build with -sASSERTIONS for more info.",
+    "TVMError: Check failed: kv_state_popn",
+    "Error: Device lost: validation error",
+  ]) assert.equal(mod.isTransportError(new Error(msg)), false, msg);
+});

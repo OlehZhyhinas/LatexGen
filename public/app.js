@@ -5,7 +5,7 @@ import * as webllm from "./vendor/webllm/index.js";
 import { validateLatex, checkSyntax } from "./validator.js";
 import { loadModel, onProgress as onModelProgress, runtimeUsed } from "./models.js";
 import { createPipeline, streamServerChat, toFormat, IMAGE_MODELS, MAX_REPAIR_ATTEMPTS, specialistEligible } from "./pipeline.js";
-import { loadCatalog, parseForce, planEngine, probeTarget, rememberRuntime } from "./qwen3-webllm.js";
+import { isTransportError, loadCatalog, parseForce, planEngine, probeTarget, rememberRuntime } from "./qwen3-webllm.js";
 import { STATIC_BUILD } from "./config.js";
 
 window.__validate = validateLatex; // debugging hook
@@ -568,7 +568,7 @@ async function loadEngine(row, onProgress, { explicit = false } = {}) {
       plan = await withCacheBackend(modelId, plan);
       eng = await createEngineForPlan(modelId, plan, onProgress);
     } catch (err) {
-      rememberRuntime(modelId, "stock", String(err));
+      if (!isTransportError(err)) rememberRuntime(modelId, "stock", String(err)); // a download or storage failure is not the runtime's fault
       console.warn(`webllm catalog runtime failed for ${modelId}, falling back to stock`, err);
       onProgress?.({ progress: 0, text: "catalog runtime failed — loading stock WebLLM…" });
       plan = await planEngine(modelId, catalog, { force: "stock", stockRecord });
