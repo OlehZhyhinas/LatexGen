@@ -6,6 +6,7 @@ import { validateLatex, checkSyntax } from "./validator.js";
 import { loadModel, onProgress as onModelProgress, runtimeUsed } from "./models.js";
 import { createPipeline, streamServerChat, toFormat, IMAGE_MODELS, MAX_REPAIR_ATTEMPTS, specialistEligible } from "./pipeline.js";
 import { isTransportError, loadCatalog, parseForce, planEngine, probeTarget, rememberRuntime } from "./qwen3-webllm.js";
+import { prefetchModel } from "./webllm-store.js";
 import { STATIC_BUILD } from "./config.js";
 
 window.__validate = validateLatex; // debugging hook
@@ -524,6 +525,23 @@ async function withCacheBackend(modelId, plan) {
     : "cache";
   return { ...plan, appConfig: { ...base, cacheBackend: backend } };
 }
+// WebLLM downloads a model's shards as four contiguous quarters of the list,
+// one connection each, so the oversized first shard makes one connection the
+// long pole while the other three idle out (issue #71). When the weights are
+// headed for OPFS, webllm-store.js fills the store first with a balanced 8-way
+// pool, largest shard first; WebLLM then finds every key present and skips its
+// own fetch. A failure here is only logged: WebLLM's loader fetches whatever
+// is still missing.
+async function prefetchWeights(modelId, plan, onProgress) {
+  if (plan.appConfig?.cacheBackend !== "opfs") return;
+  const record = plan.appConfig.model_list?.find((m) => m.model_id === modelId);
+  if (!record?.model) return;
+  const mb = (b) => (b / 2 ** 20).toFixed(0);
+  try {
+    const r = await prefetchModel(record, { concurrency: 8, onProgress: (p) => onProgress?.({ progress: p.total ? p.loaded / p.total : 0, text: `Downloading weights: ${mb(p.loaded)} / ${mb(p.total)} MB (${p.done}/${p.count} files)` }) });
+    if (r.downloaded) console.info(`webllm prefetch ${modelId}: ${r.downloaded} shards, ${mb(r.bytes)} MB in ${(r.ms / 1000).toFixed(1)} s`);
+  } catch (err) { console.warn(`webllm prefetch ${modelId} failed; WebLLM's loader fetches the rest`, err); }
+}
 async function createEngineForPlan(modelId, plan, onProgress) {
   const worker = new Worker(plan.workerUrl, { type: "module" });
   try {
@@ -566,6 +584,7 @@ async function loadEngine(row, onProgress, { explicit = false } = {}) {
   if (plan.kind === "catalog") {
     try {
       plan = await withCacheBackend(modelId, plan);
+      await prefetchWeights(modelId, plan, onProgress);
       eng = await createEngineForPlan(modelId, plan, onProgress);
     } catch (err) {
       if (!isTransportError(err)) rememberRuntime(modelId, "stock", String(err)); // a download or storage failure is not the runtime's fault
@@ -573,12 +592,14 @@ async function loadEngine(row, onProgress, { explicit = false } = {}) {
       onProgress?.({ progress: 0, text: "catalog runtime failed — loading stock WebLLM…" });
       plan = await planEngine(modelId, catalog, { force: "stock", stockRecord });
       plan = await withCacheBackend(modelId, plan);
+      await prefetchWeights(modelId, plan, onProgress);
       eng = await createEngineForPlan(modelId, plan, onProgress);
     }
   } else {
     // Stock WebLLM only knows its prebuilt list; our published models travel in the app config.
     if (PUBLISHED.some((m) => m.model_id === modelId)) plan = { ...plan, appConfig: { model_list: [stockRecord] } };
     plan = await withCacheBackend(modelId, plan);
+    await prefetchWeights(modelId, plan, onProgress);
     eng = await createEngineForPlan(modelId, plan, onProgress);
   }
   eng.latexgenPlan = plan;
