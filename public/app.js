@@ -44,8 +44,7 @@ let loadSeq = 0; // bumped by loadDefaultModel/loadPicked so a superseded load c
 const PREFS_KEY = "latexgen.prefs";
 function prefs() { try { return JSON.parse(localStorage.getItem(PREFS_KEY) || "{}"); } catch { return {}; } }
 function setPref(k, v) { const p = prefs(); p[k] = v; try { localStorage.setItem(PREFS_KEY, JSON.stringify(p)); } catch {} }
-function llmEnabled() { return prefs().consent !== "quick"; } // on unless switched off in settings (#79)
-function strictMode() { return !!prefs().strict; }
+function strictMode() { return prefs().strict !== false; } // on unless switched off in settings
 function engineChoice() { return document.querySelector('input[name="engine"]:checked')?.value ?? "browser"; }
 
 function toast(msg, ms = 1800) {
@@ -484,12 +483,7 @@ async function buildModelPicker() {
   const best = auto.find((r) => r.canRun);
   if (best) {
     selectRow(best);
-    if (llmEnabled()) loadDefaultModel(best);
-    else {
-      loadBtn.hidden = false;
-      loadStatus.textContent = "On-device language model is off (specialist only). Turn it on in settings.";
-      $("model-status").textContent = "On-device model: specialist only";
-    }
+    loadDefaultModel(best); // the language model is always on; the picker only changes which one
   } else {
     // Nothing is inside the estimated budget. Storage permitting, still let the
     // smallest model be chosen by hand instead of dead-ending the picker.
@@ -695,7 +689,7 @@ async function loadPicked(row) {
     loadStatus.textContent = `load failed: ${err}`; loadBtn.hidden = false; logEvent({ kind: "error", title: "On-device language model failed to load", raw: String(err) });
   }
 }
-loadBtn.addEventListener("click", () => { const row = modelRows.find((r) => r.key === selectedKey); if (!row) return; setPref("consent", "full"); $("llm-enabled").checked = true; loadPicked(row); }); // a manual load is a choice: keep it across refreshes
+loadBtn.addEventListener("click", () => { const row = modelRows.find((r) => r.key === selectedKey); if (row) loadPicked(row); });
 ddBtn.addEventListener("click", () => { ddMenu.hidden = !ddMenu.hidden; });
 document.addEventListener("click", (e) => { if (!$("model-dd").contains(e.target)) ddMenu.hidden = true; });
 specialistReady.then((ok) => {
@@ -788,12 +782,8 @@ $("input").addEventListener("keydown", (e) => { if ((e.metaKey || e.ctrlKey) && 
   });
 }
 
-// ---- settings toggles (the on-device language model is off until the checkbox is ticked) ----
-const maybeLoadDefault = () => { if (llmEnabled() && !engine) { const best = modelRows.find((r) => r.preferred && !r.manual && r.canRun); if (best) { loadBtn.hidden = true; loadDefaultModel(best); } } };
+// ---- settings toggles ----
 {
-  const llmBox = $("llm-enabled");
-  llmBox.checked = llmEnabled();
-  llmBox.addEventListener("change", () => { setPref("consent", llmBox.checked ? "full" : "quick"); maybeLoadDefault(); });
   const strictBox = $("strict-mode");
   strictBox.checked = strictMode();
   strictBox.addEventListener("change", () => setPref("strict", strictBox.checked));
