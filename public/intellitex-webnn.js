@@ -81,10 +81,30 @@ export function padIds(ids, L, padId = 0, maskValue = -1e4) {
  * manifest key. release() deliberately makes this eager-build-only: a future
  * lazy bucket must create a new resolver (and therefore refetch after release).
  */
-export function createSharedConstantSource(baseUrl, fetchImpl = fetch, sharedKeys = null) {
+export function createSharedConstantSource(baseUrl, fetchImpl = fetch, sharedKeys = null, onBytes = null) {
   const base = baseUrl.replace(/\/$/, "");
   const sources = new Map();
-  const makeSource = (record) => {
+  // Stream a whole blob into one preallocated buffer, reporting bytes as they
+  // land. The loader only learns about constants once fetchRange returns, so
+  // without this the first 285 MB blob downloads in silence and the activity
+  // panel sits on "Idle" for the whole of it (issue #83).
+  const readWithProgress = async (response, key, record) => {
+    const total = Number(response.headers.get("content-length")) || record.bytes;
+    const out = new Uint8Array(total);
+    const reader = response.body.getReader();
+    let loaded = 0, lastReport = 0;
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      if (loaded + value.byteLength > out.byteLength) throw new Error(`${record.file}: body longer than ${total} bytes`);
+      out.set(value, loaded);
+      loaded += value.byteLength;
+      if (loaded - lastReport >= 4 * 2 ** 20) { lastReport = loaded; onBytes(key, record, loaded, total); }
+    }
+    onBytes(key, record, loaded, total);
+    return loaded === total ? out.buffer : out.buffer.slice(0, loaded);
+  };
+  const makeSource = (key, record) => {
     const url = record.url ?? `${base}/${record.file}`;
     let bufferPromise = null;
     return {
@@ -94,7 +114,7 @@ export function createSharedConstantSource(baseUrl, fetchImpl = fetch, sharedKey
       async fetchRange(byteOffset, byteLength) {
         bufferPromise ??= fetchImpl(url).then((response) => {
           if (!response.ok) throw new Error(`${url} -> HTTP ${response.status}`);
-          return response.arrayBuffer();
+          return onBytes && response.body ? readWithProgress(response, key, record) : response.arrayBuffer();
         });
         return new Uint8Array(await bufferPromise).subarray(byteOffset, byteOffset + byteLength);
       },
@@ -102,8 +122,8 @@ export function createSharedConstantSource(baseUrl, fetchImpl = fetch, sharedKey
     };
   };
   const resolve = (key, record) => {
-    if (sharedKeys && !sharedKeys.has(key)) return makeSource(record);
-    if (!sources.has(key)) sources.set(key, makeSource(record));
+    if (sharedKeys && !sharedKeys.has(key)) return makeSource(key, record);
+    if (!sources.has(key)) sources.set(key, makeSource(key, record));
     return sources.get(key);
   };
   resolve.release = () => {
@@ -220,7 +240,11 @@ export async function createIntelliTeXWebNN({
     return counts;
   }, new Map());
   const sharedKeys = new Set([...keyUses].filter(([, uses]) => uses > 1).map(([key]) => key));
-  const constants = shareConstants ? createSharedConstantSource(baseUrl, fetch, sharedKeys) : baseUrl.replace(/\/$/, "");
+  // Which bucket a constants blob belongs to (the shared decode blob reports
+  // under the first bucket that names it), so streamed progress carries it.
+  const keyBucket = (key) => Number(Object.entries(family.contract.chaining.buckets).find(([, g]) => entry.graphs[g.encoder]?.constants === key || entry.graphs[g.decode]?.constants === key)?.[0]);
+  const onBytes = onProgress ? (key, record, loaded, total) => onProgress({ file: record.file, loaded, total, bucket: keyBucket(key) }) : null;
+  const constants = shareConstants ? createSharedConstantSource(baseUrl, fetch, sharedKeys, onBytes) : baseUrl.replace(/\/$/, "");
   // Every bucket's decode graph reads decode32's blob through this source, so
   // it must survive until the last bucket has built -- see createLazyBuckets'
   // `build` wrapper below, and close().

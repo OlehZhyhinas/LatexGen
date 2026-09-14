@@ -129,6 +129,9 @@ const pipe = createPipeline({
   mesh: meshHooks,
 });
 window.__repairLoop = pipe.repairLoop; // debugging hook
+// Say so the moment the download starts: the first progress event can be
+// tens of seconds away on the WebNN path, and until then the panel read "Idle".
+logEvent({ kind: "step", title: "Loading the specialist", detail: "IntelliTeX weights, and a one-time compile if WebNN is on.", raw: "starting the download…", live: "load-intellitex" });
 const specialistReady = pipe.ensureSpecialist(); // start the ~190MB specialist download immediately
 {
   const mb = (n) => `${(Number(n) / 2 ** 20).toFixed(1)} MB`;
