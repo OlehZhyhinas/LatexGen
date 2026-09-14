@@ -37,6 +37,7 @@ let selectedKey = null;   // rows are (model, decode path), so the id alone is a
 let loadedKey = null;     // set from the plan that actually loaded, not the one picked
 let modelRows = [];
 let renderMenu = () => {}; // assigned by buildModelPicker; activate() re-renders to move the tick
+let loadSeq = 0; // bumped by loadDefaultModel/loadPicked so a superseded load can bail instead of clobbering the one that won
 
 // ---- settings persisted in localStorage ----
 const PREFS_KEY = "latexgen.prefs";
@@ -509,6 +510,20 @@ async function warmUp(eng) {
     browserTokPerSec = Math.round((r.usage?.completion_tokens ?? 40) / ((performance.now() - t0) / 1000));
   } catch { /* best-effort */ }
 }
+// Every shipped model has one single-tensor shard that WebLLM's default Cache
+// API backend cannot split (Qwen 3.5 4B's params_shard_0.bin is 303 MB, the 9B
+// ships two at 485 MB each), and in at least one Chromium build `cache.add` of
+// a body over ~250 MB fails outright (`UnknownError: Unexpected internal
+// error`), aborting the whole load — see issue #70. New downloads go through
+// WebLLM's OPFS backend instead; a model whose shards are already complete
+// under the Cache API keeps using it, so existing users never re-download.
+async function withCacheBackend(modelId, plan) {
+  const base = plan.appConfig ?? webllm.prebuiltAppConfig;
+  const backend = (typeof navigator.storage?.getDirectory === "function")
+    ? ((await webllm.hasModelInCache(modelId, base).catch(() => false)) ? "cache" : "opfs")
+    : "cache";
+  return { ...plan, appConfig: { ...base, cacheBackend: backend } };
+}
 async function createEngineForPlan(modelId, plan, onProgress) {
   const worker = new Worker(plan.workerUrl, { type: "module" });
   try {
@@ -550,20 +565,24 @@ async function loadEngine(row, onProgress, { explicit = false } = {}) {
   let eng;
   if (plan.kind === "catalog") {
     try {
+      plan = await withCacheBackend(modelId, plan);
       eng = await createEngineForPlan(modelId, plan, onProgress);
     } catch (err) {
       rememberRuntime(modelId, "stock", String(err));
       console.warn(`webllm catalog runtime failed for ${modelId}, falling back to stock`, err);
       onProgress?.({ progress: 0, text: "catalog runtime failed — loading stock WebLLM…" });
       plan = await planEngine(modelId, catalog, { force: "stock", stockRecord });
+      plan = await withCacheBackend(modelId, plan);
       eng = await createEngineForPlan(modelId, plan, onProgress);
     }
   } else {
     // Stock WebLLM only knows its prebuilt list; our published models travel in the app config.
     if (PUBLISHED.some((m) => m.model_id === modelId)) plan = { ...plan, appConfig: { model_list: [stockRecord] } };
+    plan = await withCacheBackend(modelId, plan);
     eng = await createEngineForPlan(modelId, plan, onProgress);
   }
   eng.latexgenPlan = plan;
+  eng.latexgenCacheBackend = plan.appConfig.cacheBackend;
   await warmUp(eng);
   return eng;
 }
@@ -591,12 +610,19 @@ function logLoadProgress(title, detail, live, p) {
 async function loadDefaultModel(best) {
   loadBtn.hidden = true;
   const t0 = performance.now();
+  const seq = ++loadSeq; // a manual pick made after this call must win, not whichever finishes last
   try {
     const eng = await loadEngine(best, (p) => { loadStatus.textContent = p.text ?? "loading…"; progressFill.style.width = `${Math.round((p.progress ?? 0) * 100)}%`; logLoadProgress(`Loading ${best.name}`, "On-device language model. Downloaded once, then cached.", `load-webllm-${best.id}`, p); });
+    if (seq !== loadSeq) {
+      await releaseEngine(eng);
+      logEvent({ kind: "step", title: `${best.name} load superseded`, detail: "A different model was picked while it was loading; the download stays cached." });
+      return;
+    }
     activate(eng, best.id, `loaded: ${best.name}`);
     progressFill.style.width = "100%";
-    logEvent({ kind: "done", title: `${best.name} is ready`, detail: eng?.latexgenPlan?.label ?? "stock WebLLM", live: `load-webllm-${best.id}`, ms: performance.now() - t0 });
+    logEvent({ kind: "done", title: `${best.name} is ready`, detail: `${eng?.latexgenPlan?.label ?? "stock WebLLM"} · ${eng?.latexgenCacheBackend ?? "cache"} cache`, live: `load-webllm-${best.id}`, ms: performance.now() - t0 });
   } catch (err) {
+    if (seq !== loadSeq) return; // superseded; the winning load owns loadStatus/loadBtn now
     loadStatus.textContent = `load failed: ${err}`;
     loadBtn.hidden = false;
     logEvent({ kind: "error", title: "On-device language model failed to load", raw: String(err) });
@@ -605,6 +631,7 @@ async function loadDefaultModel(best) {
 async function loadPicked(row) {
   loadBtn.hidden = true;
   const t0 = performance.now();
+  const seq = ++loadSeq; // a manual pick made after this call must win, not whichever finishes last
   try {
     // Release the current model before pulling the next one in. Holding both
     // doubles peak memory, which is exactly what fails on a device that only
@@ -618,9 +645,17 @@ async function loadPicked(row) {
       await releaseEngine(previous);
     }
     const eng = await loadEngine(row, (p) => { loadStatus.textContent = p.text ?? "loading…"; progressFill.style.width = `${Math.round((p.progress ?? 0) * 100)}%`; logLoadProgress(`Loading ${row.name} (${row.sub})`, "On-device language model. Downloaded once, then cached.", `load-webllm-${row.key}`, p); }, { explicit: true });
+    if (seq !== loadSeq) {
+      await releaseEngine(eng);
+      logEvent({ kind: "step", title: `${row.name} load superseded`, detail: "A different model was picked while it was loading; the download stays cached." });
+      return;
+    }
     activate(eng, row.id, `loaded: ${row.name}`); progressFill.style.width = "100%";
-    logEvent({ kind: "done", title: `${row.name} is ready`, detail: eng?.latexgenPlan?.label ?? "stock WebLLM", live: `load-webllm-${row.key}`, ms: performance.now() - t0 });
-  } catch (err) { loadStatus.textContent = `load failed: ${err}`; loadBtn.hidden = false; logEvent({ kind: "error", title: "On-device language model failed to load", raw: String(err) }); }
+    logEvent({ kind: "done", title: `${row.name} is ready`, detail: `${eng?.latexgenPlan?.label ?? "stock WebLLM"} · ${eng?.latexgenCacheBackend ?? "cache"} cache`, live: `load-webllm-${row.key}`, ms: performance.now() - t0 });
+  } catch (err) {
+    if (seq !== loadSeq) return; // superseded; the winning load owns loadStatus/loadBtn now
+    loadStatus.textContent = `load failed: ${err}`; loadBtn.hidden = false; logEvent({ kind: "error", title: "On-device language model failed to load", raw: String(err) });
+  }
 }
 loadBtn.addEventListener("click", () => { const row = modelRows.find((r) => r.key === selectedKey); if (row) loadPicked(row); });
 ddBtn.addEventListener("click", () => { ddMenu.hidden = !ddMenu.hidden; });
