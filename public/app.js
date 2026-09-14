@@ -3,7 +3,7 @@
 // calls the same pipeline without touching the UI.
 import * as webllm from "./vendor/webllm/index.js";
 import { validateLatex, checkSyntax } from "./validator.js";
-import { loadModel, onProgress as onModelProgress, runtimeUsed } from "./models.js";
+import { loadModel, onProgress as onModelProgress, runtimeUsed, weightsFetched } from "./models.js";
 import { createPipeline, streamServerChat, toFormat, IMAGE_MODELS, MAX_REPAIR_ATTEMPTS, specialistEligible } from "./pipeline.js";
 import { isTransportError, loadCatalog, parseForce, planEngine, probeTarget, rememberRuntime } from "./qwen3-webllm.js";
 import { prefetchModel } from "./webllm-store.js";
@@ -623,8 +623,8 @@ function activate(eng, modelId, statusText) {
   if (old && old !== eng) releaseEngine(old);
   window.dispatchEvent(new CustomEvent("latexgen:caps-changed"));
 }
-// The default model loads directly once picked: the IntelliTeX specialist
-// already covers single equations in the meantime.
+// The default model's download waits for the specialist's weights (#76,
+// below); the IntelliTeX specialist covers single equations in the meantime.
 function logLoadProgress(title, detail, live, p) {
   logEvent({ kind: "step", title, detail, raw: p.text ?? `${Math.round((p.progress ?? 0) * 100)}%`, live });
 }
@@ -633,6 +633,17 @@ async function loadDefaultModel(best) {
   const t0 = performance.now();
   const seq = ++loadSeq; // a manual pick made after this call must win, not whichever finishes last
   try {
+    // The specialist's download comes first: it is what the first result
+    // depends on, and the 8-way prefetch below would starve it. Its compile
+    // (CPU) and the LLM download (network into OPFS) then overlap. The wait is
+    // bounded so a stuck specialist never blocks the language model (#76).
+    loadStatus.textContent = "waiting for the specialist's download to finish…";
+    const waitStart = performance.now();
+    await Promise.race([weightsFetched("intellitex"), new Promise((r) => setTimeout(r, 90_000))]);
+    if (seq !== loadSeq) return; // a manual pick happened while waiting
+    if (performance.now() - waitStart > 500) {
+      logEvent({ kind: "step", title: "Specialist weights arrived — starting the language model download", detail: "It had priority on the connection; the language model now downloads at full width.", live: `load-webllm-${best.id}` });
+    }
     const eng = await loadEngine(best, (p) => { loadStatus.textContent = p.text ?? "loading…"; progressFill.style.width = `${Math.round((p.progress ?? 0) * 100)}%`; logLoadProgress(`Loading ${best.name}`, "On-device language model. Downloaded once, then cached.", `load-webllm-${best.id}`, p); });
     if (seq !== loadSeq) {
       await releaseEngine(eng);
@@ -684,8 +695,12 @@ document.addEventListener("click", (e) => { if (!$("model-dd").contains(e.target
 specialistReady.then((ok) => {
   const rt = runtimeUsed.intellitex;
   logEvent({ kind: ok ? "done" : "error", title: ok ? "Specialist is ready" : "Specialist failed to load", detail: rt ? `${rt.device ?? "cpu"}${rt.dtype ? ` · ${rt.dtype}` : ""}` : "", raw: rt ? JSON.stringify(rt) : "", live: "load-intellitex" });
-  return buildModelPicker();
-}, () => { logEvent({ kind: "error", title: "Specialist failed to load", live: "load-intellitex" }); return buildModelPicker(); });
+}, () => logEvent({ kind: "error", title: "Specialist failed to load", live: "load-intellitex" }));
+// The picker used to wait for the whole specialist load, compile included,
+// before even starting the language model. It now builds at once; the default
+// load itself waits only for the specialist's *weights* (loadDefaultModel), so
+// the language model downloads while the specialist compiles (#76).
+buildModelPicker();
 
 // ---- WebGPU availability ----
 if (!navigator.gpu) {
