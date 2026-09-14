@@ -35,7 +35,10 @@ REPO_URI=$(aws ecr describe-repositories --repository-names "$APP" --region "$RE
   || aws ecr create-repository --repository-name "$APP" --region "$REGION" --image-scanning-configuration scanOnPush=true --query 'repository.repositoryUri' --output text)
 aws ecr get-login-password --region "$REGION" | docker login --username AWS --password-stdin "${REPO_URI%%/*}" >/dev/null
 TAG="$(git -C "$DIR" rev-parse --short HEAD 2>/dev/null || date +%s)"
-docker build --platform linux/amd64 -t "$REPO_URI:$TAG" -t "$REPO_URI:latest" "$DIR"
+# One plain single-platform manifest: BuildKit's default provenance/SBOM
+# attestations turn the tag into an OCI image index, which App Runner cannot
+# pull (CREATE_FAILED with nothing in the service log the deployer can read).
+docker build --platform linux/amd64 --provenance=false --sbom=false -t "$REPO_URI:$TAG" -t "$REPO_URI:latest" "$DIR"
 docker push "$REPO_URI:$TAG" >/dev/null && docker push "$REPO_URI:latest" >/dev/null
 echo "pushed $REPO_URI:$TAG"
 
@@ -76,7 +79,13 @@ true
 HEALTH='{"Protocol":"HTTP","Path":"/api/health","Interval":10,"Timeout":5,"HealthyThreshold":1,"UnhealthyThreshold":5}'
 
 echo "==> App Runner service"
-SVC_ARN=$(aws apprunner list-services --region "$REGION" --query "ServiceSummaryList[?ServiceName=='$APP'].ServiceArn | [0]" --output text)
+# A service that failed to create cannot be updated; remove it and start over.
+for failed in $(aws apprunner list-services --region "$REGION" --query "ServiceSummaryList[?ServiceName=='$APP' && Status=='CREATE_FAILED'].ServiceArn" --output text); do
+  echo "deleting failed service $failed"
+  aws apprunner delete-service --region "$REGION" --service-arn "$failed" >/dev/null
+  until [[ "$(aws apprunner describe-service --region "$REGION" --service-arn "$failed" --query Service.Status --output text 2>/dev/null)" =~ ^(DELETED|)$ ]]; do sleep 10; done
+done
+SVC_ARN=$(aws apprunner list-services --region "$REGION" --query "ServiceSummaryList[?ServiceName=='$APP' && Status!='DELETED' && Status!='CREATE_FAILED'].ServiceArn | [0]" --output text)
 if [[ "$SVC_ARN" == "None" || -z "$SVC_ARN" ]]; then
   SVC_ARN=$(aws apprunner create-service --region "$REGION" --service-name "$APP" \
     --source-configuration "$SRC" --instance-configuration "$INSTANCE_CFG" --health-check-configuration "$HEALTH" \
