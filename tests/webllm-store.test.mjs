@@ -15,6 +15,7 @@ import {
   openScopeDir,
   hasEntry,
   writeEntry,
+  sidecarNames,
   prefetchModel,
   OPFS_ROOT,
   MODEL_SCOPE,
@@ -150,6 +151,9 @@ function makeFakeDir() {
           return {
             size: entry.bytes.byteLength,
             async text() { return new TextDecoder().decode(entry.bytes); },
+            async arrayBuffer() {
+              return entry.bytes.buffer.slice(entry.bytes.byteOffset, entry.bytes.byteOffset + entry.bytes.byteLength);
+            },
           };
         },
       };
@@ -166,7 +170,7 @@ function makeFakeDir() {
 
 // ---- hasEntry / writeEntry -------------------------------------------------
 
-test("writeEntry stores the body and metadata the way hasEntry expects to find them", async () => {
+test("writeEntry stores the body and both sidecars the way hasEntry expects to find them", async () => {
   const dir = makeFakeDir();
   const url = "https://huggingface.co/mlc-ai/X/resolve/main/params_shard_0.bin";
   const key = await shardKey(url);
@@ -175,17 +179,88 @@ test("writeEntry stores the body and metadata the way hasEntry expects to find t
 
   let bytesSeen = 0;
   const response = new Response(new Uint8Array(1000), { headers: { "content-type": "application/octet-stream" } });
-  await writeEntry(dir, url, response, (n) => { bytesSeen += n; });
+  const nbytes = await writeEntry(dir, url, response, (n) => { bytesSeen += n; });
 
   assert.equal(await hasEntry(dir, url), true);
   assert.equal(bytesSeen, 1000);
+  assert.equal(nbytes, 1000);
 
   const dataFile = await (await dir.getFileHandle(`${key}.bin`)).getFile();
   assert.equal(dataFile.size, 1000);
 
   const metaFile = await (await dir.getFileHandle(`${key}.meta.json`)).getFile();
   assert.deepEqual(JSON.parse(await metaFile.text()), { url, contentType: "application/octet-stream" });
+
+  const recordFile = await (await dir.getFileHandle(`${key}.record.json`)).getFile();
+  assert.deepEqual(JSON.parse(await recordFile.text()), { url, nbytes: 1000, contentType: "application/octet-stream" });
 });
+
+// ---- hasEntry: size check and cross-bundle sidecar repair ----------------
+
+test("hasEntry returns false when .bin exists but its size doesn't match the given nbytes", async () => {
+  const dir = makeFakeDir();
+  const url = "https://huggingface.co/mlc-ai/X/resolve/main/params_shard_0.bin";
+  await writeEntry(dir, url, new Response(new Uint8Array(1000)), () => {});
+
+  assert.equal(await hasEntry(dir, url, 1000), true);
+  assert.equal(await hasEntry(dir, url, 999), false);
+});
+
+test("hasEntry repairs a .meta.json-only entry (stock bundle) by adding .record.json", async () => {
+  const dir = makeFakeDir();
+  const url = "https://huggingface.co/mlc-ai/X/resolve/main/params_shard_0.bin";
+  const key = await shardKey(url);
+  const { meta, record } = sidecarNames(key);
+
+  // Write only .bin + .meta.json, as the stock OPFSStore does.
+  const dataHandle = await dir.getFileHandle(`${key}.bin`, { create: true });
+  const writable = await dataHandle.createWritable();
+  await writable.write(new Uint8Array(1000));
+  await writable.close();
+  const metaHandle = await dir.getFileHandle(meta, { create: true });
+  const metaWritable = await metaHandle.createWritable();
+  await metaWritable.write(JSON.stringify({ url, contentType: "application/octet-stream" }));
+  await metaWritable.close();
+
+  assert.equal(await fileExistsInFakeDir(dir, record), false);
+  assert.equal(await hasEntry(dir, url, 1000), true);
+
+  const recordFile = await (await dir.getFileHandle(record)).getFile();
+  assert.deepEqual(JSON.parse(await recordFile.text()), { url, nbytes: 1000, contentType: "application/octet-stream" });
+});
+
+test("hasEntry repairs a .record.json-only entry (catalog bundle) by adding .meta.json", async () => {
+  const dir = makeFakeDir();
+  const url = "https://huggingface.co/mlc-ai/X/resolve/main/params_shard_0.bin";
+  const key = await shardKey(url);
+  const { meta, record } = sidecarNames(key);
+
+  // Write only .bin + .record.json, as the tuned catalog bundles' OPFSStore does.
+  const dataHandle = await dir.getFileHandle(`${key}.bin`, { create: true });
+  const writable = await dataHandle.createWritable();
+  await writable.write(new Uint8Array(1000));
+  await writable.close();
+  const recordHandle = await dir.getFileHandle(record, { create: true });
+  const recordWritable = await recordHandle.createWritable();
+  await recordWritable.write(JSON.stringify({ url, nbytes: 1000, contentType: "application/octet-stream" }));
+  await recordWritable.close();
+
+  assert.equal(await fileExistsInFakeDir(dir, meta), false);
+  assert.equal(await hasEntry(dir, url), true);
+
+  const metaFile = await (await dir.getFileHandle(meta)).getFile();
+  assert.deepEqual(JSON.parse(await metaFile.text()), { url, contentType: "application/octet-stream" });
+});
+
+async function fileExistsInFakeDir(dir, name) {
+  try {
+    await dir.getFileHandle(name);
+    return true;
+  } catch (err) {
+    if (err?.name === "NotFoundError") return false;
+    throw err;
+  }
+}
 
 // ---- openScopeDir -------------------------------------------------------------
 
@@ -248,4 +323,15 @@ test("prefetchModel fetches only the missing shards, largest first, and reports 
 
   // The manifest itself is now in the store too.
   assert.equal(await hasEntry(dir, new URL("tensor-cache.json", base).href), true);
+
+  // The pre-seeded "already present" shard and both freshly fetched shards
+  // all end up with both sidecar formats, so either OPFSStore bundle sees
+  // them as cached.
+  for (const dataPath of ["a.bin", "b.bin", "c.bin"]) {
+    const shardUrl = new URL(dataPath, base).href;
+    const key = await shardKey(shardUrl);
+    const { meta, record } = sidecarNames(key);
+    assert.equal(await fileExistsInFakeDir(dir, meta), true, `${dataPath} missing .meta.json`);
+    assert.equal(await fileExistsInFakeDir(dir, record), true, `${dataPath} missing .record.json`);
+  }
 });

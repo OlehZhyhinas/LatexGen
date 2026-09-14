@@ -13,13 +13,20 @@
 // caller pick concurrency independent of shard count. Issue #71.
 //
 // Every shard this module writes is written exactly where WebLLM's own
-// `class OPFSStore` (public/vendor/webllm/index.js) would write it — same
-// root directory, same scope path, same per-key SHA-256 naming, same
-// .bin/.meta.json pair — so WebLLM's own cache lookups see the shard as
-// already present and skip fetching it. That layout is private to WebLLM
-// 0.2.84 and is not a stable API; if the vendored bundle is ever upgraded
-// (scripts/vendor-qwen3-webllm.mjs pins the version), re-check OPFSStore in
-// the new bundle before assuming this still matches.
+// `class OPFSStore` would write it — same root directory, same scope path,
+// same per-key SHA-256 naming. Two different OPFSStore implementations read
+// that layout, though, and this module writes sidecars for both:
+//   - the stock bundle (public/vendor/webllm/index.js) wants
+//     `${key}.bin` + `${key}.meta.json` = { url, contentType }
+//   - the tuned catalog bundles (public/vendor/webllm/web-llm-0.2.84-qwen-m5*.js,
+//     the default load path) want `${key}.bin` + `${key}.record.json` =
+//     { url, nbytes, contentType }, and require the .bin size to equal
+//     `nbytes`
+// so whichever bundle wrote a shard, the other bundle's own cache lookup
+// still sees it as present and skips fetching it. That layout is private to
+// WebLLM 0.2.84 and is not a stable API; if the vendored bundles are ever
+// upgraded (scripts/vendor-qwen3-webllm.mjs pins the version), re-check
+// OPFSStore in the new bundles before assuming this still matches.
 
 export const OPFS_ROOT = "tvmjs-opfs-store";
 export const MODEL_SCOPE = "webllm/model";
@@ -99,12 +106,15 @@ export async function openScopeDir(scope = MODEL_SCOPE, storage = navigator.stor
   return dir;
 }
 
-// Whether a shard for `url` is already stored: WebLLM only requires the
-// .bin to exist to treat a key as cached.
-export async function hasEntry(dir, url) {
-  const key = await shardKey(url);
+// The two sidecar file names for a shard key — .meta.json (stock bundle) and
+// .record.json (tuned catalog bundles). See the header comment above.
+export function sidecarNames(key) {
+  return { meta: `${key}.meta.json`, record: `${key}.record.json` };
+}
+
+async function fileExists(dir, name) {
   try {
-    await dir.getFileHandle(`${key}.bin`);
+    await dir.getFileHandle(name);
     return true;
   } catch (err) {
     if (err?.name === "NotFoundError") return false;
@@ -112,17 +122,70 @@ export async function hasEntry(dir, url) {
   }
 }
 
-// Writes one shard's body and metadata in OPFSStore's own format: the body
-// streamed straight from `response` into `${key}.bin` (counting bytes as
-// they pass through so the caller can report progress without buffering the
-// whole shard), then `${key}.meta.json` alongside it.
+// Whether a shard for `url` is present and usable by both bundles' OPFSStore
+// implementations. `${key}.bin` must exist and, when `nbytes` is given,
+// match it exactly — a partial or stale payload doesn't count. If the
+// payload checks out but one sidecar is missing (the shard was written by
+// the *other* bundle), this repairs the gap by writing the missing sidecar
+// from what's known — url, the .bin's actual size, and contentType taken
+// from whichever sidecar exists, or a generic default — so neither bundle
+// ever re-downloads a shard the other one already fetched.
+export async function hasEntry(dir, url, nbytes) {
+  const key = await shardKey(url);
+  const { meta, record } = sidecarNames(key);
+
+  let binHandle;
+  try {
+    binHandle = await dir.getFileHandle(`${key}.bin`);
+  } catch (err) {
+    if (err?.name === "NotFoundError") return false;
+    throw err;
+  }
+  const size = (await binHandle.getFile()).size;
+  if (typeof nbytes === "number" && size !== nbytes) return false;
+
+  const [hasMeta, hasRecord] = await Promise.all([fileExists(dir, meta), fileExists(dir, record)]);
+  if (hasMeta && hasRecord) return true;
+
+  let contentType = "application/octet-stream";
+  if (hasMeta) {
+    const metaFile = await (await dir.getFileHandle(meta)).getFile();
+    contentType = JSON.parse(await metaFile.text()).contentType ?? contentType;
+  } else if (hasRecord) {
+    const recordFile = await (await dir.getFileHandle(record)).getFile();
+    contentType = JSON.parse(await recordFile.text()).contentType ?? contentType;
+  }
+
+  if (!hasMeta) {
+    const metaHandle = await dir.getFileHandle(meta, { create: true });
+    const metaWritable = await metaHandle.createWritable();
+    await metaWritable.write(JSON.stringify({ url, contentType }));
+    await metaWritable.close();
+  }
+  if (!hasRecord) {
+    const recordHandle = await dir.getFileHandle(record, { create: true });
+    const recordWritable = await recordHandle.createWritable();
+    await recordWritable.write(JSON.stringify({ url, nbytes: size, contentType }));
+    await recordWritable.close();
+  }
+  return true;
+}
+
+// Writes one shard's body and both sidecar formats: the body streamed
+// straight from `response` into `${key}.bin` (counting bytes as they pass
+// through so the caller can report progress without buffering the whole
+// shard), then `${key}.meta.json` and `${key}.record.json` alongside it.
+// Returns the number of bytes written.
 export async function writeEntry(dir, url, response, onBytes) {
   const key = await shardKey(url);
   const dataHandle = await dir.getFileHandle(`${key}.bin`, { create: true });
   const writable = await dataHandle.createWritable();
+  let nbytes = 0;
   const counter = new TransformStream({
     transform(chunk, controller) {
-      onBytes?.(chunk.byteLength ?? chunk.length ?? 0);
+      const n = chunk.byteLength ?? chunk.length ?? 0;
+      nbytes += n;
+      onBytes?.(n);
       controller.enqueue(chunk);
     },
   });
@@ -130,15 +193,26 @@ export async function writeEntry(dir, url, response, onBytes) {
     await response.body.pipeThrough(counter).pipeTo(writable);
   } else {
     const buf = await response.arrayBuffer();
+    nbytes = buf.byteLength;
     onBytes?.(buf.byteLength);
     await writable.write(buf);
     await writable.close();
   }
-  const metaHandle = await dir.getFileHandle(`${key}.meta.json`, { create: true });
-  const metaWritable = await metaHandle.createWritable();
+
   const contentType = response.headers.get("content-type") ?? undefined;
+  const { meta, record } = sidecarNames(key);
+
+  const metaHandle = await dir.getFileHandle(meta, { create: true });
+  const metaWritable = await metaHandle.createWritable();
   await metaWritable.write(JSON.stringify({ url, contentType }));
   await metaWritable.close();
+
+  const recordHandle = await dir.getFileHandle(record, { create: true });
+  const recordWritable = await recordHandle.createWritable();
+  await recordWritable.write(JSON.stringify({ url, nbytes, contentType }));
+  await recordWritable.close();
+
+  return nbytes;
 }
 
 // Downloads every shard of `record` (a WebLLM model_list entry; `record.model`
@@ -170,7 +244,7 @@ export async function prefetchModel(
   // concurrency than the downloads themselves.
   const presentFlags = await runPool(records, 16, async (r) => {
     const url = new URL(r.dataPath, base).href;
-    return (await hasEntry(dir, url)) ? r.dataPath : null;
+    return (await hasEntry(dir, url, r.nbytes)) ? r.dataPath : null;
   });
   const presentKeys = new Set(presentFlags.filter(Boolean));
   const { missing, totalBytes, missingBytes } = planShards(records, presentKeys);
