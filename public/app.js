@@ -37,7 +37,6 @@ let selectedKey = null;   // rows are (model, decode path), so the id alone is a
 let loadedKey = null;     // set from the plan that actually loaded, not the one picked
 let modelRows = [];
 let renderMenu = () => {}; // assigned by buildModelPicker; activate() re-renders to move the tick
-let vramBudgetMB = 0; // set by buildModelPicker; the ladder needs it too
 
 // ---- settings persisted in localStorage ----
 const PREFS_KEY = "latexgen.prefs";
@@ -337,31 +336,18 @@ async function backgroundJudge(text, latex) {
 }
 
 // ---- curated model picker ----
-// Ranked by the tier-matched text benchmark of 2026-09-07 (bench/judged-text-
-// tiers-2026-09-07.json, 105 items: single equations, prose passages, PDF
-// pastes, prose-with-math). Within each size class Qwen3.5 beat the Qwen3 it
-// replaces on prose and PDF pastes (4B: 64% vs 59% overall, 15/30 vs 10/30 on
-// PDF pastes; 1B: 34% vs 10%) at the cost of a few easy
-// single-equation items, which the specialist answers before the LLM is asked.
-// The 2B rung is MiniCPM5 2B (52% vs 13% for Qwen3 1.7B and 26% for Qwen3.5
-// 2B), quantized and compiled by this project (see PUBLISHED above).
-// Only 4B-class and up score on prose passages (`multiline`). The graph
-// catalog's tuned decode libs (qwen3-webllm.js) now cover every rung above,
-// Qwen3 and Qwen3.5 alike, plus MiniCPM5 2B.
+// One tuned model per size class, ranked by the tier-matched text benchmark
+// of 2026-09-07 (bench/judged-text-tiers-2026-09-07.json, 105 items: single
+// equations, prose passages, PDF pastes, prose-with-math). Qwen 3.5 4B (64%)
+// is the default: it fits an 8 GB laptop, and only the 4B class and up score
+// on prose passages (`multiline`). MiniCPM5 2B (52%, quantized and compiled
+// by this project — see PUBLISHED below) is picked automatically only where
+// 4B is over the device's GPU budget. Qwen 3.5 9B is a manual pick, not
+// auto-selected by size.
 const CURATED = [
-  // Percentages are judge-correct over all 105 items of the 2026-09-07 tier
-  // benchmark (bench/judged-text-tiers-2026-09-07.json). The 8B and 9B were not
-  // run locally; they are ranked above the 4B class on size. Order is the
-  // auto-selection order: the ladder takes the highest-scoring row that fits,
-  // so a device that cannot hold Qwen3.5 4B falls to Qwen3 4B rather than to 2B.
-  { id: "Qwen3.5-9B-q4f16_1-MLC", name: "Qwen 3.5 \u00b7 9B", score: 5, multiline: true },
-  { id: "Qwen3-8B-q4f16_1-MLC", name: "Qwen 3 \u00b7 8B", score: 5, multiline: true },
+  { id: "Qwen3.5-9B-q4f16_1-MLC", name: "Qwen 3.5 \u00b7 9B", score: 5, multiline: true, manual: true },
   { id: "Qwen3.5-4B-q4f16_1-MLC", name: "Qwen 3.5 \u00b7 4B", score: 4, multiline: true },   // 64%
-  { id: "Qwen3-4B-q4f16_1-MLC", name: "Qwen 3 \u00b7 4B", score: 4, multiline: true },       // 59%
   { id: "MiniCPM5-2B-q4f16_1-MLC", name: "MiniCPM5 \u00b7 2B", score: 3 },                   // 52%
-  { id: "Qwen3.5-0.8B-q4f16_1-MLC", name: "Qwen 3.5 \u00b7 0.8B", score: 2 },                // 34%
-  { id: "Qwen3-1.7B-q4f16_1-MLC", name: "Qwen 3 \u00b7 1.7B", score: 1 },                    // 13%
-  { id: "Qwen3-0.6B-q4f16_1-MLC", name: "Qwen 3 \u00b7 0.6B", score: 1 },                    // 10%
 ];
 const gb = (mb) => `${(mb / 1024).toFixed(1)} GB`;
 const stars = (n) => "★".repeat(n) + "☆".repeat(5 - n);
@@ -387,8 +373,11 @@ async function detectVramBudgetMB() {
   try {
     const adapter = await navigator.gpu.requestAdapter();
     if (!adapter) return 0;
+    // Chrome caps deviceMemory at 8, so 8 is also what a 32 GB machine reports;
+    // half of that admits the 3.8 GB default on any 8 GB laptop, and a device
+    // reporting 4 GB falls to the 2B rung.
     const deviceGB = navigator.deviceMemory ?? 8; // Safari exposes nothing; assume 8GB+
-    return deviceGB * 1024 * 0.45;
+    return deviceGB * 1024 * 0.5;
   } catch { return 0; }
 }
 const el = (tag, cls, text) => { const n = document.createElement(tag); n.className = cls; n.textContent = text; return n; };
@@ -401,14 +390,14 @@ function selectRow(r) {
   );
 }
 async function buildModelPicker() {
-  const budget = vramBudgetMB = await detectVramBudgetMB();
+  const budget = await detectVramBudgetMB();
   let storageFreeMB = Infinity;
   try { const est = await navigator.storage.estimate(); if (est.quota) storageFreeMB = (est.quota - (est.usage ?? 0)) / (1024 * 1024); } catch {}
   // Two different questions. Browser storage is a hard blocker: without the
   // quota the weights cannot land at all. The GPU budget is a heuristic from
   // `navigator.deviceMemory`, which is coarse and often conservative, so a
-  // model above it stays pickable by hand and is only kept out of the
-  // automatic ladder. `canRun` gates auto-selection, `selectable` gates clicks.
+  // model above it stays pickable by hand and is only kept out of automatic
+  // selection. `canRun` gates auto-selection, `selectable` gates clicks.
   // Whether a model decodes through the graph catalog's tuned runtime is a
   // property of the model *and* this device: the probe wants an Apple GPU
   // exposing subgroups behind a recent Chromium. Everywhere else, and for any
@@ -421,17 +410,13 @@ async function buildModelPicker() {
     if (probe.ok) catalogModels = catalog?.models ?? {};
   } catch (err) { /* no catalog reachable: every model runs the stock path */ }
 
-  // A row is a model *and* the path it decodes through, because those are two
-  // separate choices. Every rung keeps a stock WebLLM row, and each catalog
-  // variant the target supports gets its own row: the variants are not
-  // interchangeable tunings of one knob. 1.7B's `lookahead1` trades decode
-  // throughput for per-token streaming against `burst4-flush32`, and 0.6B's
-  // `flush64` only differs under load, so the catalog's measured expectation
-  // rides along on each row instead of being collapsed into `model.default`.
-  // Every curated model lists, always. A model with no WebLLM record cannot be
-  // loaded — it has no weights entry to point the runtime at — but dropping it
-  // from the menu turned that into an invisible gap, so it lists as disabled
-  // with the reason instead.
+  // One row per curated model: the catalog's tuned runtime when this device's
+  // target probe passes and the catalog carries the model, WebLLM's stock path
+  // otherwise. `?webllm=stock` and `?webllm=catalog:<variant>` remain the
+  // benchmarking overrides used to force a path by hand. A model with no
+  // WebLLM record cannot be loaded — it has no weights entry to point the
+  // runtime at — but dropping it from the menu turned that into an invisible
+  // gap, so it lists as disabled with the reason instead.
   modelRows = [];
   for (const c of CURATED) {
     const record = prebuilt.get(c.id);
@@ -445,27 +430,24 @@ async function buildModelPicker() {
     if (!record) {
       // No stock record means no catalog row either: a catalog plan still needs
       // the weights entry to graft its model_lib onto.
-      modelRows.push({ ...c, ...fit, kind: "stock", variant: null, sub: "no WebLLM record", key: `${c.id}#stock`, force: "stock", preferred: true, note: "" });
+      modelRows.push({ ...c, ...fit, kind: "stock", variant: null, sub: "no WebLLM record", key: `${c.id}#stock`, force: "stock", preferred: true, manual: !!c.manual, note: "" });
       continue;
     }
     const model = catalogModels[c.id];
-    // Default variant first, then the rest in catalog order.
-    const variants = Object.entries(model?.variants ?? {})
-      .sort((a, b) => (b[0] === model.default) - (a[0] === model.default));
-    for (const [variant, v] of variants) {
+    if (model) {
+      const variant = model.default;
       modelRows.push({
-        ...c, ...fit, kind: "catalog", variant, sub: variant, key: `${c.id}#${variant}`,
-        force: { variant }, preferred: variant === model.default, note: v.expected ?? "",
+        ...c, ...fit, kind: "catalog", variant, sub: "tuned runtime", key: `${c.id}#${variant}`,
+        force: { variant }, preferred: true, manual: !!c.manual, note: model.variants?.[variant]?.expected ?? "",
+      });
+    } else {
+      modelRows.push({
+        ...c, ...fit, kind: "stock", variant: null, sub: "stock WebLLM", key: `${c.id}#stock`,
+        force: "stock", preferred: true, manual: !!c.manual, note: "",
       });
     }
-    modelRows.push({
-      ...c, ...fit, kind: "stock", variant: null, sub: "stock WebLLM", key: `${c.id}#stock`,
-      force: "stock", preferred: !variants.length, note: "",
-    });
   }
-  // The automatic ladder only ever considers one row per model: the catalog's
-  // own default where it applies, stock otherwise. Everything else is by hand.
-  const auto = modelRows.filter((r) => r.preferred);
+  const auto = modelRows.filter((r) => r.preferred && !r.manual);
 
   const renderRow = (r) => {
     const row = document.createElement("div");
@@ -482,30 +464,19 @@ async function buildModelPicker() {
     ddMenu.appendChild(row);
   };
 
-  // Always label the group, even when there is only one. The rows look alike
-  // whichever path they load, so an unlabelled list gave no way to tell that
-  // the tuned runtime had been ruled out — and no way to see why.
+  // Flat list: three models, one row each. A note up top stands in for the
+  // group header this used to need, only when no row here decodes through the
+  // catalog's tuned runtime.
   renderMenu = () => {
     ddMenu.replaceChildren();
-    const catalogRows = modelRows.filter((r) => r.kind === "catalog");
-    const stockRows = modelRows.filter((r) => r.kind === "stock");
-    const groups = catalogRows.length
-      ? [["Catalog runtime", catalogRows, "Decodes through the graph catalog's runtime: device-resident greedy argmax and batched command encoding. Hover a row for its measured effect.", null],
-         ["Stock WebLLM", stockRows, "Runs WebLLM's stock decoding path.", null]]
-      : [["Stock WebLLM", stockRows, "Runs WebLLM's stock decoding path.", `No tuned catalog runtime on this device: ${catalogWhy}.`]];
-    for (const [label, rows, hint, note] of groups) {
-      const head = el("div", "dd-group", label);
-      if (hint) head.title = hint;
-      ddMenu.appendChild(head);
-      if (note) ddMenu.appendChild(el("div", "dd-note", note));
-      rows.forEach(renderRow);
-    }
+    if (!modelRows.some((r) => r.kind === "catalog")) ddMenu.appendChild(el("div", "dd-note", `Stock WebLLM runtime on this device: ${catalogWhy}.`));
+    modelRows.forEach(renderRow);
   };
   renderMenu();
   const best = auto.find((r) => r.canRun);
   if (best) {
     selectRow(best);
-    if (llmEnabled()) startModelLadder(best);
+    if (llmEnabled()) loadDefaultModel(best);
     else {
       loadBtn.hidden = false;
       loadStatus.textContent = "On-device language model is off (specialist only). Turn it on in settings.";
@@ -571,9 +542,9 @@ async function loadEngine(row, onProgress, { explicit = false } = {}) {
   try { catalog = await loadCatalog(); } catch { catalog = null; }
   // `?webllm=` stays the debugging override. Below it, a pick from the menu is
   // taken literally — a stock row stays stock, and a catalog row is loaded even
-  // if an earlier failure had this model remembered as stock. The automatic
-  // ladder passes no force at all, so there the remembered fallback and the
-  // catalog's own default still decide.
+  // if an earlier failure had this model remembered as stock. The default load
+  // passes no force at all, so there the remembered fallback and the catalog's
+  // own default still decide.
   const force = parseForce(location.search) ?? (explicit ? row.force : undefined);
   let plan = await planEngine(modelId, catalog, { force, stockRecord });
   let eng;
@@ -612,41 +583,21 @@ function activate(eng, modelId, statusText) {
   if (old && old !== eng) releaseEngine(old);
   window.dispatchEvent(new CustomEvent("latexgen:caps-changed"));
 }
-// Progressive ladder: quick model first, best-for-device model swapped in later.
+// The default model loads directly once picked: the IntelliTeX specialist
+// already covers single equations in the meantime.
 function logLoadProgress(title, detail, live, p) {
   logEvent({ kind: "step", title, detail, raw: p.text ?? `${Math.round((p.progress ?? 0) * 100)}%`, live });
 }
-async function startModelLadder(best) {
-  const smallest = [...modelRows].filter((r) => r.preferred).reverse().find((r) => r.canRun);
-  // The quick model only earns its download if it can keep serving while the
-  // upgrade arrives, and that means both being resident at once. Where that
-  // would push past the same budget the picker enforces for a single model,
-  // skip it and load the best model directly: the IntelliTeX specialist still
-  // covers single equations in the meantime, and the machine is not asked to
-  // hold two language models at a size it cannot afford.
-  const starter = smallest && smallest.id !== best.id
-    && smallest.vram + best.vram <= vramBudgetMB ? smallest : null;
+async function loadDefaultModel(best) {
   loadBtn.hidden = true;
+  const t0 = performance.now();
   try {
-    if (starter) {
-      loadStatus.textContent = `loading quick model (${starter.name})…`;
-      const tQuick = performance.now();
-      logEvent({ kind: "step", title: `Loading ${starter.name}`, detail: "A smaller on-device language model first, so conversions can start while the larger one downloads.", live: `load-webllm-${starter.id}` });
-      const quick = await loadEngine(starter, (p) => { progressFill.style.width = `${Math.round((p.progress ?? 0) * 100)}%`; logLoadProgress(`Loading ${starter.name}`, "On-device language model. Downloaded once, then cached.", `load-webllm-${starter.id}`, p); });
-      activate(quick, starter.id, `ready on ${starter.name} — downloading ${best.name} in background…`);
-      logEvent({ kind: "done", title: `${starter.name} is ready`, detail: "Conversions can use this while the larger model loads.", live: `load-webllm-${starter.id}`, ms: performance.now() - tQuick });
-    }
-    const tBig = performance.now();
-    const bigStatus = engine
-      ? (p) => { progressFill.style.width = `${Math.round((p.progress ?? 0) * 100)}%`; loadStatus.textContent = `ready on ${modelRows.find((r) => r.id === loadedModel)?.name} — ${p.text ?? "downloading upgrade…"}`; logLoadProgress(`Loading ${best.name}`, "Larger on-device language model, in the background.", `load-webllm-${best.id}`, p); }
-      : (p) => { loadStatus.textContent = p.text ?? "loading…"; progressFill.style.width = `${Math.round((p.progress ?? 0) * 100)}%`; logLoadProgress(`Loading ${best.name}`, "On-device language model. Downloaded once, then cached.", `load-webllm-${best.id}`, p); };
-    const bigEngine = await loadEngine(best, bigStatus);
-    activate(bigEngine, best.id, `loaded: ${best.name}`);
+    const eng = await loadEngine(best, (p) => { loadStatus.textContent = p.text ?? "loading…"; progressFill.style.width = `${Math.round((p.progress ?? 0) * 100)}%`; logLoadProgress(`Loading ${best.name}`, "On-device language model. Downloaded once, then cached.", `load-webllm-${best.id}`, p); });
+    activate(eng, best.id, `loaded: ${best.name}`);
     progressFill.style.width = "100%";
-    logEvent({ kind: "done", title: `${best.name} is ready`, detail: engine?.latexgenPlan?.label ?? "stock WebLLM", live: `load-webllm-${best.id}`, ms: performance.now() - tBig });
+    logEvent({ kind: "done", title: `${best.name} is ready`, detail: eng?.latexgenPlan?.label ?? "stock WebLLM", live: `load-webllm-${best.id}`, ms: performance.now() - t0 });
   } catch (err) {
-    const current = modelRows.find((r) => r.id === loadedModel);
-    loadStatus.textContent = engine && current ? `upgrade failed (${String(err).slice(0, 60)}…) — continuing on ${current.name}` : `load failed: ${err}`;
+    loadStatus.textContent = `load failed: ${err}`;
     loadBtn.hidden = false;
     logEvent({ kind: "error", title: "On-device language model failed to load", raw: String(err) });
   }
@@ -657,8 +608,7 @@ async function loadPicked(row) {
   try {
     // Release the current model before pulling the next one in. Holding both
     // doubles peak memory, which is exactly what fails on a device that only
-    // just fits one; the ladder still overlaps, because there the point is to
-    // keep answering while a bigger model downloads.
+    // just fits one.
     if (engine) {
       const previous = engine;
       engine = null; loadedModel = null;
@@ -762,7 +712,7 @@ $("input").addEventListener("keydown", (e) => { if ((e.metaKey || e.ctrlKey) && 
 }
 
 // ---- first-run notice + settings toggles ----
-const maybeStartLadder = () => { if (llmEnabled() && !engine) { const best = modelRows.find((r) => r.preferred && r.canRun); if (best) { loadBtn.hidden = true; startModelLadder(best); } } };
+const maybeLoadDefault = () => { if (llmEnabled() && !engine) { const best = modelRows.find((r) => r.preferred && !r.manual && r.canRun); if (best) { loadBtn.hidden = true; loadDefaultModel(best); } } };
 // The notice has done its job once a conversion has happened; call this after presentResult.
 function settleFirstRun() {
   if (!prefs().consent) setPref("consent", "quick");
@@ -771,11 +721,11 @@ function settleFirstRun() {
 {
   const firstRun = $("first-run");
   if (!prefs().consent) firstRun.hidden = false;
-  $("first-run-full").addEventListener("click", () => { setPref("consent", "full"); firstRun.hidden = true; $("llm-enabled").checked = true; maybeStartLadder(); });
+  $("first-run-full").addEventListener("click", () => { setPref("consent", "full"); firstRun.hidden = true; $("llm-enabled").checked = true; maybeLoadDefault(); });
   $("first-run-dismiss").addEventListener("click", () => { setPref("consent", "quick"); firstRun.hidden = true; });
   const llmBox = $("llm-enabled");
   llmBox.checked = llmEnabled();
-  llmBox.addEventListener("change", () => { setPref("consent", llmBox.checked ? "full" : "quick"); maybeStartLadder(); });
+  llmBox.addEventListener("change", () => { setPref("consent", llmBox.checked ? "full" : "quick"); maybeLoadDefault(); });
   const strictBox = $("strict-mode");
   strictBox.checked = strictMode();
   strictBox.addEventListener("change", () => setPref("strict", strictBox.checked));
