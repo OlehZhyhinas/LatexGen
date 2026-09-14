@@ -205,7 +205,7 @@ convertBtn.addEventListener("click", async () => {
       onDraft: (latex, v) => { outputCode.textContent = latex; renderPreview(latex); showChecks(v, "(draft from the specialist — improving…)"); },
     });
     presentResult(text, r, `${(r.ms / 1000).toFixed(1)}s · ${r.model}${r.escalated ? " (escalated)" : ""}`);
-    settleFirstRun(); maybeOfferWebnn(r.ms);
+    maybeOfferWebnn(r.ms);
     if (r.peer) window.dispatchEvent(new CustomEvent("latexgen:converted", { detail: { peer: r.peer, summary: text.slice(0, 60), model: r.model, ms: r.ms } }));
     if (strictMode() && r.validation.ok && !r.batch) backgroundJudge(text, r.latex);
   } catch (err) {
@@ -245,7 +245,7 @@ async function convertImage(fileOrBlob, forceModel = null) {
     });
     lastImageModel = r.used;
     presentResult("(image)", r, `${(r.ms / 1000).toFixed(1)}s · ${r.model}`);
-    settleFirstRun(); maybeOfferWebnn(r.ms);
+    maybeOfferWebnn(r.ms);
     const other = r.used === "texo" ? "texify" : "texo";
     altBtn.textContent = `looks wrong? read image with ${IMAGE_MODELS[other].name} instead`;
     altBtn.hidden = false;
@@ -767,18 +767,9 @@ $("input").addEventListener("keydown", (e) => { if ((e.metaKey || e.ctrlKey) && 
   });
 }
 
-// ---- first-run notice + settings toggles ----
+// ---- settings toggles (the on-device language model is off until the checkbox is ticked) ----
 const maybeLoadDefault = () => { if (llmEnabled() && !engine) { const best = modelRows.find((r) => r.preferred && !r.manual && r.canRun); if (best) { loadBtn.hidden = true; loadDefaultModel(best); } } };
-// The notice has done its job once a conversion has happened; call this after presentResult.
-function settleFirstRun() {
-  if (!prefs().consent) setPref("consent", "quick");
-  $("first-run").hidden = true;
-}
 {
-  const firstRun = $("first-run");
-  if (!prefs().consent) firstRun.hidden = false;
-  $("first-run-full").addEventListener("click", () => { setPref("consent", "full"); firstRun.hidden = true; $("llm-enabled").checked = true; maybeLoadDefault(); });
-  $("first-run-dismiss").addEventListener("click", () => { setPref("consent", "quick"); firstRun.hidden = true; });
   const llmBox = $("llm-enabled");
   llmBox.checked = llmEnabled();
   llmBox.addEventListener("change", () => { setPref("consent", llmBox.checked ? "full" : "quick"); maybeLoadDefault(); });
