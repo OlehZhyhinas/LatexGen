@@ -287,6 +287,7 @@ export async function createIntelliTeXWebNN({
     loaded[L] = result;
     Object.assign(graphStats, result.rig.stats);
     if (buckets.every((b) => loaded[b])) releaseConstants();
+    onProgress?.({ phase: "built", bucket: L, remaining: buckets.filter((b) => !loaded[b]).length });
     if (closed) destroyBucket(result); // built after close(): never handed out, just torn down
     return result;
   };
