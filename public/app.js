@@ -695,8 +695,12 @@ document.addEventListener("click", (e) => { if (!$("model-dd").contains(e.target
 specialistReady.then((ok) => {
   const rt = runtimeUsed.intellitex;
   logEvent({ kind: ok ? "done" : "error", title: ok ? "Specialist is ready" : "Specialist failed to load", detail: rt ? `${rt.device ?? "cpu"}${rt.dtype ? ` · ${rt.dtype}` : ""}` : "", raw: rt ? JSON.stringify(rt) : "", live: "load-intellitex" });
-  return buildModelPicker();
-}, () => { logEvent({ kind: "error", title: "Specialist failed to load", live: "load-intellitex" }); return buildModelPicker(); });
+}, () => logEvent({ kind: "error", title: "Specialist failed to load", live: "load-intellitex" }));
+// The picker used to wait for the whole specialist load, compile included,
+// before even starting the language model. It now builds at once; the default
+// load itself waits only for the specialist's *weights* (loadDefaultModel), so
+// the language model downloads while the specialist compiles (#76).
+buildModelPicker();
 
 // ---- WebGPU availability ----
 if (!navigator.gpu) {
