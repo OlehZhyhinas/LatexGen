@@ -239,6 +239,7 @@ async function convertImage(fileOrBlob, forceModel = null) {
     const r = await pipe.convertImage(fileOrBlob, {
       ocr: forceModel ?? "auto", onProgress: prog.onProgress, onDelta: onDeltaUI, onEvent: logEvent,
       onStatus: (s, extra) => { label.textContent = s; if (extra?.issues) showChecks({ ok: false, issues: extra.issues }, ""); },
+      onDraft: (latex, why) => { currentInput = "(image)"; outputCode.textContent = latex; renderPreview(latex); const issues = checkSyntax(latex); showChecks({ ok: issues.length === 0, issues }, `(first reading from Texo — ${why}, loading Texify for a better one…)`); convertStatus.textContent = "draft from Texo · Texify loading…"; },
     });
     lastImageModel = r.used;
     presentResult("(image)", r, `${(r.ms / 1000).toFixed(1)}s · ${r.model}`);
