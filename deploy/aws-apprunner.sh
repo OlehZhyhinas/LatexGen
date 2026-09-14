@@ -19,8 +19,15 @@ APP="latexgen"
 DIR="$(cd "$(dirname "$0")/.." && pwd)"
 ACCOUNT=$(aws sts get-caller-identity --query Account --output text)
 [[ "$ACCOUNT" == "$EXPECTED_ACCOUNT" ]] || { echo "REFUSING: account $ACCOUNT != $EXPECTED_ACCOUNT" >&2; exit 1; }
-: "${OPENAI_BASE_URL:?set OPENAI_BASE_URL (e.g. https://openrouter.ai/api/v1)}"
-: "${OPENAI_MODEL:?set OPENAI_MODEL}"
+# OPENAI_DISABLED=1 deploys with the server model off (no provider or key yet):
+# /api/health reports no backend, so clients never escalate to the proxy.
+if [[ "${OPENAI_DISABLED:-0}" == "1" ]]; then
+  OPENAI_BASE_URL="${OPENAI_BASE_URL:-https://openrouter.ai/api/v1}"
+  OPENAI_MODEL="${OPENAI_MODEL:-none}"
+else
+  : "${OPENAI_BASE_URL:?set OPENAI_BASE_URL (e.g. https://openrouter.ai/api/v1), or OPENAI_DISABLED=1}"
+  : "${OPENAI_MODEL:?set OPENAI_MODEL, or OPENAI_DISABLED=1}"
+fi
 OPENAI_REFINE_MODEL="${OPENAI_REFINE_MODEL:-$OPENAI_MODEL}"
 
 echo "==> ECR"
@@ -51,7 +58,7 @@ if [[ -n "${OPENAI_API_KEY_SECRET_ARN:-}" ]]; then
   INSTANCE_ROLE_ARN=$(aws iam get-role --role-name "$IROLE" --query Role.Arn --output text)
 fi
 
-ENV_JSON="{\"NODE_ENV\":\"production\",\"TRUST_PROXY\":\"1\",\"HSTS\":\"1\",\"OLLAMA_DISABLED\":\"1\",\"OPENAI_BASE_URL\":\"$OPENAI_BASE_URL\",\"OPENAI_MODEL\":\"$OPENAI_MODEL\",\"OPENAI_REFINE_MODEL\":\"$OPENAI_REFINE_MODEL\",\"PORT\":\"8000\"}"
+ENV_JSON="{\"NODE_ENV\":\"production\",\"TRUST_PROXY\":\"1\",\"HSTS\":\"1\",\"OLLAMA_DISABLED\":\"1\",\"OPENAI_DISABLED\":\"${OPENAI_DISABLED:-0}\",\"OPENAI_BASE_URL\":\"$OPENAI_BASE_URL\",\"OPENAI_MODEL\":\"$OPENAI_MODEL\",\"OPENAI_REFINE_MODEL\":\"$OPENAI_REFINE_MODEL\",\"PORT\":\"8000\"}"
 SECRETS_JSON="{}"; [[ -n "${OPENAI_API_KEY_SECRET_ARN:-}" ]] && SECRETS_JSON="{\"OPENAI_API_KEY\":\"$OPENAI_API_KEY_SECRET_ARN\"}"
 SRC=$(cat <<JSON
 {"ImageRepository":{"ImageIdentifier":"$REPO_URI:$TAG","ImageRepositoryType":"ECR",

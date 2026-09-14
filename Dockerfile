@@ -1,9 +1,17 @@
 # LatexGen: static frontend + relay + server-model proxy. Zero npm dependencies.
+# The frontend is the server build of scripts/build-static.mjs: model weights
+# stream from the CDN, so the image carries the app, not 2.2 GB of weights.
+FROM node:22-alpine AS build
+WORKDIR /src
+COPY scripts/build-static.mjs scripts/
+COPY public ./public
+RUN SERVER_BUILD=1 node scripts/build-static.mjs
+
 FROM node:22-alpine
 ENV NODE_ENV=production PORT=8000
 WORKDIR /app
 COPY --chown=node:node server.js ./
-COPY --chown=node:node public ./public
+COPY --from=build --chown=node:node /src/dist ./public
 USER node
 EXPOSE 8000
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
