@@ -67,7 +67,12 @@ SRC=$(cat <<JSON
  "AuthenticationConfiguration":{"AccessRoleArn":"$ROLE_ARN"}}
 JSON
 )
-INSTANCE_CFG="{\"Cpu\":\"0.25 vCPU\",\"Memory\":\"0.5 GB\"$([[ -n "$INSTANCE_ROLE_ARN" ]] && echo ",\"InstanceRoleArn\":\"$INSTANCE_ROLE_ARN\"")}"
+# Built without a command substitution on purpose: under `set -e` a failing
+# `$([[ … ]] && …)` inside an assignment aborts the script, silently, exactly
+# when there is no instance role (no secret configured).
+INSTANCE_CFG="{\"Cpu\":\"0.25 vCPU\",\"Memory\":\"0.5 GB\"}"
+[[ -n "$INSTANCE_ROLE_ARN" ]] && INSTANCE_CFG="{\"Cpu\":\"0.25 vCPU\",\"Memory\":\"0.5 GB\",\"InstanceRoleArn\":\"$INSTANCE_ROLE_ARN\"}"
+true
 HEALTH='{"Protocol":"HTTP","Path":"/api/health","Interval":10,"Timeout":5,"HealthyThreshold":1,"UnhealthyThreshold":5}'
 
 echo "==> App Runner service"
