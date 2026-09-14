@@ -44,7 +44,7 @@ let loadSeq = 0; // bumped by loadDefaultModel/loadPicked so a superseded load c
 const PREFS_KEY = "latexgen.prefs";
 function prefs() { try { return JSON.parse(localStorage.getItem(PREFS_KEY) || "{}"); } catch { return {}; } }
 function setPref(k, v) { const p = prefs(); p[k] = v; try { localStorage.setItem(PREFS_KEY, JSON.stringify(p)); } catch {} }
-function llmEnabled() { return prefs().consent === "full"; }
+function llmEnabled() { return prefs().consent !== "quick"; } // on unless switched off in settings (#79)
 function strictMode() { return !!prefs().strict; }
 function engineChoice() { return document.querySelector('input[name="engine"]:checked')?.value ?? "browser"; }
 
@@ -695,7 +695,7 @@ async function loadPicked(row) {
     loadStatus.textContent = `load failed: ${err}`; loadBtn.hidden = false; logEvent({ kind: "error", title: "On-device language model failed to load", raw: String(err) });
   }
 }
-loadBtn.addEventListener("click", () => { const row = modelRows.find((r) => r.key === selectedKey); if (row) loadPicked(row); });
+loadBtn.addEventListener("click", () => { const row = modelRows.find((r) => r.key === selectedKey); if (!row) return; setPref("consent", "full"); $("llm-enabled").checked = true; loadPicked(row); }); // a manual load is a choice: keep it across refreshes
 ddBtn.addEventListener("click", () => { ddMenu.hidden = !ddMenu.hidden; });
 document.addEventListener("click", (e) => { if (!$("model-dd").contains(e.target)) ddMenu.hidden = true; });
 specialistReady.then((ok) => {
