@@ -118,6 +118,21 @@ test("shared constants resolver returns one source for a repeated manifest key",
   assert.notEqual(sourceFor("decode32", record), first);
 });
 
+test("shared constants source streams a blob and reports bytes as they land", async () => {
+  const chunks = [Uint8Array.from([1, 2, 3]), Uint8Array.from([4, 5])];
+  const body = new ReadableStream({ start(c) { for (const ch of chunks) c.enqueue(ch); c.close(); } });
+  const reports = [];
+  const sourceFor = createSharedConstantSource("https://example.test/catalog", async () => ({
+    ok: true, body, headers: new Headers({ "content-length": "5" }), arrayBuffer: async () => { throw new Error("should stream, not buffer"); },
+  }), null, (key, record, loaded, total) => reports.push({ key, file: record.file, loaded, total }));
+  const record = { file: "enc.bin", bytes: 5, url: null };
+  const src = sourceFor("encoder32", record);
+  assert.deepEqual([...await src.fetchRange(0, 5)], [1, 2, 3, 4, 5]);
+  assert.deepEqual([...await src.fetchRange(3, 2)], [4, 5]);
+  assert.deepEqual(reports.at(-1), { key: "encoder32", file: "enc.bin", loaded: 5, total: 5 });
+  assert.ok(reports.length >= 1);
+});
+
 test("pickRuntime prefers WebNN for intellitex when navigator.ml exists", () => {
   delete store["latexgen.runtime"];
   nav.ml = { createContext() {} };
