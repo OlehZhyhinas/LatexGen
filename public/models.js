@@ -40,8 +40,17 @@ const worker = new Worker(new URL("onnx-worker.js", import.meta.url), { type: "m
 const pending = new Map();
 const progressListeners = new Map(); // key -> Set<fn>
 let seq = 0;
+function deferred() { const d = {}; d.promise = new Promise((res) => { d.resolve = res; }); return d; }
+// Resolves when a model's weights have arrived (before graph build / shader
+// compile), or when its load settles either way, so a waiter never hangs.
+const fetched = {}; // key -> { promise, resolve }
+export function weightsFetched(key) { fetched[key] ??= deferred(); return fetched[key].promise; }
 worker.onmessage = ({ data }) => {
-  if (data.type === "progress") { for (const fn of progressListeners.get(data.key) ?? []) fn(data); return; }
+  if (data.type === "progress") {
+    if (data.phase === "fetched") { fetched[data.key] ??= deferred(); fetched[data.key].resolve(); return; } // a marker, not a byte count: keep it away from progress bars
+    for (const fn of progressListeners.get(data.key) ?? []) fn(data);
+    return;
+  }
   const p = pending.get(data.id); if (!p) return;
   pending.delete(data.id);
   if (data.type === "error") p.reject(new Error(data.error)); else p.resolve(data);
@@ -62,7 +71,9 @@ export function loadModel(key, onProgress) {
       await call({ type: "load", key, cfg });
       if (cfg.device === "webgpu" || cfg.device === "webnn") rememberRuntime(key, cfg.device, true);
       runtimeUsed[key] = cfg; loaded[key] = true;
+      fetched[key] ??= deferred(); fetched[key].resolve();
     } catch (err) {
+      fetched[key] ??= deferred(); fetched[key].resolve(); // never hang a waiter on a failed load
       if (cfg.device === "webnn") {
         const toGpu = key === "texify" || key === "intellitex";
         rememberRuntime(key, toGpu ? "webgpu" : "wasm", toGpu);

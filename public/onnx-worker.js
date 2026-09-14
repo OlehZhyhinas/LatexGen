@@ -77,6 +77,10 @@ async function texoPreprocess(blob) {
 async function load(key, cfg, reqId) {
   const progress_callback = (p) => {
     if (p.status === "progress" && p.total) self.postMessage({ type: "progress", key, file: p.file, loaded: p.loaded, total: p.total });
+    // pipeline() posts status "ready" right before returning (confirmed in the
+    // vendored build); from_pretrained() alone (texo) never does, so that
+    // branch posts its own marker below instead.
+    else if (p.status === "ready") self.postMessage({ type: "progress", key, phase: "fetched" });
   };
   if (key === "intellitex" && cfg?.device === "webnn") {
     // Hand-built WebNN graphs from the graph catalog (intellitex-webnn.js):
@@ -86,7 +90,7 @@ async function load(key, cfg, reqId) {
     // the ONNX Runtime path below.
     const { createIntelliTeXWebNN } = await import("./intellitex-webnn.js");
     const specialist = await createIntelliTeXWebNN({
-      onProgress: (p) => self.postMessage({ type: "progress", key, file: p.file, loaded: p.loaded, total: p.total }),
+      onProgress: (p) => self.postMessage({ type: "progress", key, file: p.file, loaded: p.loaded, total: p.total, phase: p.phase, bucket: p.bucket }),
     });
     models.intellitex = (text) => specialist.run(text);
     lastRunOf.intellitex = () => specialist.lastRun();
@@ -106,7 +110,7 @@ async function load(key, cfg, reqId) {
     // the ONNX Runtime path below.
     const { createTexifyWebNN } = await import("./texify-webnn.js");
     const texify = await createTexifyWebNN({
-      onProgress: (p) => self.postMessage({ type: "progress", key, file: p.file, loaded: p.loaded, total: p.total }),
+      onProgress: (p) => self.postMessage({ type: "progress", key, file: p.file, loaded: p.loaded, total: p.total, phase: p.phase, bucket: p.bucket }),
     });
     models.texify = (blob) => texify.run(blob);
     lastRunOf.texify = () => texify.lastRun();
@@ -124,13 +128,14 @@ async function load(key, cfg, reqId) {
     // remembers that and the next load takes the ONNX Runtime path below.
     const { createTexoWebNN } = await import("./texo-webnn.js");
     const texo = await createTexoWebNN({
-      onProgress: (p) => self.postMessage({ type: "progress", key, file: p.file, loaded: p.loaded, total: p.total }),
+      onProgress: (p) => self.postMessage({ type: "progress", key, file: p.file, loaded: p.loaded, total: p.total, phase: p.phase, bucket: p.bucket }),
     });
     models.texo = async (blob) => texo.run(await texoPreprocess(blob));
     lastRunOf.texo = () => texo.lastRun();
   } else if (key === "texo") {
     const model = await VisionEncoderDecoderModel.from_pretrained("texo", { dtype: "fp32", progress_callback });
     const tokenizer = await PreTrainedTokenizer.from_pretrained("texo");
+    self.postMessage({ type: "progress", key, phase: "fetched" }); // from_pretrained() never posts status "ready"
     models.texo = async (blob) => {
       const arr = await texoPreprocess(blob);
       const t = new Tensor("float32", arr, [1, 1, TEXO_SIZE, TEXO_SIZE]);
@@ -148,6 +153,7 @@ self.onmessage = async ({ data }) => {
     if (type === "load") {
       loading[key] ??= load(key, data.cfg, id);
       await loading[key];
+      self.postMessage({ type: "progress", key, phase: "fetched" }); // harmless if a branch above already posted it
       self.postMessage({ type: "loaded", id, key });
     } else if (type === "run") {
       if (!models[key]) throw new Error(`${key} not loaded`);
