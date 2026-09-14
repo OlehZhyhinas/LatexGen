@@ -424,15 +424,17 @@ export function createPipeline(ctx) {
   }
 
   // ---- image -> LaTeX ----
+  // onDraft(latex, why): fired once, only when escalating from Texo to Texify, with Texo's
+  // reading so the caller can show it as a placeholder while the (much larger) Texify loads.
   async function convertImage(blob, opts = {}) {
-    const { ocr = "auto", onStatus = () => {}, onDelta = () => {}, onProgress, onEvent } = opts;
+    const { ocr = "auto", onStatus = () => {}, onDelta = () => {}, onDraft = () => {}, onProgress, onEvent } = opts;
     const started = performance.now();
     emit(onEvent, "run", "Reading an image", { detail: "OCR runs on this device. The image is never uploaded.", raw: `ocr=${ocr}` });
     const syntaxOnly = (l) => validateLatex("(image)", l).issues.filter((i) => i.startsWith("syntax"));
     let used = ocr === "texify" ? "texify" : "texo", latex = "", escalatedWhy = "";
     if (used === "texo") {
       onStatus("loading image model (Texo)…");
-      emit(onEvent, "step", "Loading Texo", { detail: "A small OCR model for a single equation. Downloaded once, then cached.", live: "load-texo" });
+      emit(onEvent, "step", "Loading Texo", { detail: `A small OCR model for a single equation (about ${IMAGE_MODELS.texo.sizeMB} MB). Downloaded once, then cached.`, live: "load-texo" });
       const tLoad = performance.now();
       const texoWasLoaded = loaded.texo;
       await loadModel("texo", onProgress);
@@ -449,12 +451,16 @@ export function createPipeline(ctx) {
         if (texoProseSignal(raw)) escalatedWhy = "image contains prose";
         else if (!latex || syntaxOnly(latex).length) escalatedWhy = "output failed syntax checks";
         if (escalatedWhy) used = "texify";
+        if (escalatedWhy && latex) {
+          onDraft(latex, escalatedWhy);
+          emit(onEvent, "step", "Showing Texo's reading while Texify loads", { detail: "A first draft from the small model. Texify's result replaces it when it lands.", raw: latex });
+        }
       }
     }
     if (used === "texify") {
       onStatus(escalatedWhy ? `${escalatedWhy} — switching to Texify…` : "loading image model (Texify)…");
       if (escalatedWhy) emit(onEvent, "step", "Switching to Texify", { detail: escalatedWhy === "image contains prose" ? "Texo has no prose mode, so a larger OCR model takes over." : "Texo's LaTeX did not parse, so a larger OCR model takes over." });
-      emit(onEvent, "step", "Loading Texify", { detail: "A larger OCR model. Downloaded once, then cached.", live: "load-texify" });
+      emit(onEvent, "step", "Loading Texify", { detail: `A larger OCR model (about ${IMAGE_MODELS.texify.sizeMB} MB). Downloaded once, then cached.`, live: "load-texify" });
       const tLoad = performance.now();
       const texifyWasLoaded = loaded.texify;
       await loadModel("texify", onProgress);
