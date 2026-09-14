@@ -3,7 +3,7 @@
 // calls the same pipeline without touching the UI.
 import * as webllm from "./vendor/webllm/index.js";
 import { validateLatex, checkSyntax } from "./validator.js";
-import { loadModel, onProgress as onModelProgress, runtimeUsed, weightsFetched } from "./models.js";
+import { loadModel, loaded as modelLoaded, onProgress as onModelProgress, runtimeUsed, weightsFetched } from "./models.js";
 import { createPipeline, streamServerChat, toFormat, IMAGE_MODELS, MAX_REPAIR_ATTEMPTS, specialistEligible } from "./pipeline.js";
 import { isTransportError, loadCatalog, parseForce, planEngine, probeTarget, rememberRuntime } from "./qwen3-webllm.js";
 import { prefetchModel } from "./webllm-store.js";
@@ -134,9 +134,15 @@ const specialistReady = pipe.ensureSpecialist(); // start the ~190MB specialist 
 {
   const mb = (n) => `${(Number(n) / 2 ** 20).toFixed(1)} MB`;
   const watch = (key, title, detail) => onModelProgress(key, (p) => {
+    // Progress after the model is already in use is the WebNN specialist
+    // building its longer length buckets in the background: its own entry,
+    // so it does not overwrite "is ready", closed when the last bucket lands.
+    const later = modelLoaded[key];
+    if (p.phase === "built") { if (later && p.remaining === 0) logEvent({ kind: "done", title: "Specialist ready for longer inputs", detail: "Every length bucket is built.", live: `load-${key}-more` }); return; }
     const file = p.file ?? key;
     const raw = p.total ? `${file}\n${mb(p.loaded ?? 0)} / ${mb(p.total)}` : (p.text ?? file);
-    logEvent({ kind: "step", title, detail, raw, live: `load-${key}` });
+    if (later) logEvent({ kind: "step", title: "Preparing the specialist for longer inputs", detail: "Extra length buckets download and compile in the background; short inputs already work.", raw, live: `load-${key}-more` });
+    else logEvent({ kind: "step", title, detail, raw, live: `load-${key}` });
   });
   watch("intellitex", "Loading the specialist", "IntelliTeX weights, and a one-time compile if WebNN is on.");
   watch("texo", "Loading Texo", "Small equation OCR. Downloaded once, then cached.");

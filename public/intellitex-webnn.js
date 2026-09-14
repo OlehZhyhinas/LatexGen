@@ -7,6 +7,12 @@
 // generic loader. Compiling three decode graphs in one MLContext kills Chrome,
 // so each length bucket gets its own context.
 //
+// Only the bucket the first input needs (almost always 32) is built before
+// createIntelliTeXWebNN() returns; the rest build lazily -- in the background
+// by default, or strictly on demand -- through the createLazyBuckets
+// scheduler below, so the first result never waits on graphs it does not use.
+// A prompt that lands in a not-yet-built bucket waits for that bucket alone.
+//
 // Only the Core ML backend is accepted. Chromium silently falls back to a
 // TFLite CPU path for off-the-record profiles, about 50x slower;
 // assertCoreMLFingerprint() turns that into a thrown error, which models.js
@@ -120,12 +126,75 @@ function pointTokenizerAtOrigin() {
 }
 
 /**
- * Build the IntelliTeX graphs once (one Core ML context per length bucket).
- * Resolves to {run, stats, close}:
+ * Builds length buckets on demand and, once the first is ready, the rest in
+ * the background, so the first result never waits for graphs it does not use.
+ *
+ * `build(L)` is called at most once per bucket while it keeps succeeding; a
+ * rejection clears that bucket's memo so the next demand (on-demand ensure()
+ * or a later startBackground() pass) retries it from scratch.
+ */
+export function createLazyBuckets(buckets, build) {
+  const memo = new Map(); // L -> in-flight/settled build promise
+  const built = new Set();
+  const inFlight = new Set();
+
+  function ensure(L) {
+    const existing = memo.get(L);
+    if (existing) return existing;
+    inFlight.add(L);
+    const p = Promise.resolve()
+      .then(() => build(L))
+      .then((result) => {
+        inFlight.delete(L);
+        built.add(L);
+        return result;
+      })
+      .catch((err) => {
+        inFlight.delete(L);
+        memo.delete(L); // let the next demand retry
+        throw err;
+      });
+    memo.set(L, p);
+    return p;
+  }
+
+  let backgroundP = null;
+  function startBackground() {
+    backgroundP ??= (async () => {
+      for (const L of buckets) {
+        if (built.has(L)) continue;
+        try {
+          await ensure(L);
+        } catch (err) {
+          console.warn(`createLazyBuckets: bucket ${L} failed to build in the background`, err);
+        }
+      }
+    })();
+    return backgroundP;
+  }
+
+  return {
+    ensure,
+    startBackground,
+    built: () => buckets.filter((L) => built.has(L)),
+    pending: () => buckets.filter((L) => !built.has(L) && !inFlight.has(L)),
+    inFlight: () => buckets.filter((L) => inFlight.has(L)),
+  };
+}
+
+/**
+ * Build the IntelliTeX graphs (one Core ML context per length bucket). Only
+ * buckets[0] (almost always 32) is built before this resolves; the rest build
+ * lazily through createLazyBuckets above -- in the background by default, or
+ * strictly on demand with lazyBuckets: "on-demand". Resolves to
+ * {run, stats, close}:
  *   run(text)  plain-English math (no prefix); the specialist prefix is added
  *              here, matching onnx-worker.js. Resolves to decoded LaTeX.
  */
-export async function createIntelliTeXWebNN({ baseUrl = INTELLITEX_WEBNN_BASE, onProgress = null, deviceType = "gpu", skipWarmup = false, preferLocalConstants = false, preserveModelSource = false, shareConstants = true } = {}) {
+export async function createIntelliTeXWebNN({
+  baseUrl = INTELLITEX_WEBNN_BASE, onProgress = null, deviceType = "gpu", skipWarmup = false,
+  preferLocalConstants = false, preserveModelSource = false, shareConstants = true, lazyBuckets = "background",
+} = {}) {
   if (!webnnAvailable()) throw new Error("WebNN is not available (navigator.ml missing)");
   if (!preserveModelSource) pointTokenizerAtOrigin();
   const t0 = performance.now();
@@ -144,6 +213,7 @@ export async function createIntelliTeXWebNN({ baseUrl = INTELLITEX_WEBNN_BASE, o
   const loaded = {};
   const graphStats = {};
   let fp = null;
+  let closed = false;
   const keyUses = graphNames.reduce((counts, name) => {
     const key = entry.graphs[name].constants;
     counts.set(key, (counts.get(key) ?? 0) + 1);
@@ -151,46 +221,83 @@ export async function createIntelliTeXWebNN({ baseUrl = INTELLITEX_WEBNN_BASE, o
   }, new Map());
   const sharedKeys = new Set([...keyUses].filter(([, uses]) => uses > 1).map(([key]) => key));
   const constants = shareConstants ? createSharedConstantSource(baseUrl, fetch, sharedKeys) : baseUrl.replace(/\/$/, "");
+  // Every bucket's decode graph reads decode32's blob through this source, so
+  // it must survive until the last bucket has built -- see createLazyBuckets'
+  // `build` wrapper below, and close().
+  const releaseConstants = () => { if (typeof constants === "function") constants.release(); };
+
+  const destroyBucket = (b) => {
+    for (const g of Object.values(b.rig.graphs)) g.graph.destroy?.();
+    for (const t of Object.values(b.tensors.tensors)) t.destroy?.();
+    b.ctx.destroy?.();
+  };
+
+  async function buildBucket(L) {
+    const names = [family.contract.chaining.buckets[String(L)].encoder, family.contract.chaining.buckets[String(L)].decode];
+    const ctx = await navigator.ml.createContext({ deviceType });
+    const bfp = assertCoreMLFingerprint(ctx);
+    fp ??= bfp;
+    if (L === buckets[0]) {
+      for (const g of graphNames) {
+        const s = checkOpSupport(recipes[g], ctx);
+        if (s.missing.length) throw new Error(`WebNN in this browser lacks ${s.missing.join(", ")} (needed by the ${g} recipe)`);
+      }
+    }
+
+    // Fires onProgress({phase:"fetched", bucket}) once both this bucket's
+    // graphs have cleared the constants phase, so a caller (the LLM
+    // prefetcher) can start its own download while these graphs compile.
+    const finishedConstants = new Set();
+    let emittedFetched = false;
+    const rig = await loadEntry(entry, constants, ctx, {
+      baseUrl: baseUrl.replace(/\/$/, ""),
+      manifest,
+      recipes,
+      only: names,
+      onProgress: onProgress
+        ? (p) => {
+          if (p.phase === "constants") {
+            const rec = manifest.constants[entry.graphs[p.graph].constants];
+            onProgress({ file: rec.file, loaded: p.bytesRead, total: totals[entry.graphs[p.graph].constants], bucket: L });
+            if (p.bytesRead === p.totalBytes) finishedConstants.add(p.graph);
+          } else {
+            finishedConstants.add(p.graph);
+          }
+          if (!emittedFetched && names.every((n) => finishedConstants.has(n))) {
+            emittedFetched = true;
+            onProgress({ phase: "fetched", bucket: L });
+          }
+        }
+        : undefined,
+    });
+    rig.chain = rig.chain.filter((l) => rig.graphs[l.from.graph] && rig.graphs[l.to.graph]);
+    const tensors = await createEntryTensors(ctx, rig);
+    const spec = { ...ar, graph: names[1] };
+    const encoderName = names[0];
+    const idsT = tensors.get(encoderName, "input_ids");
+    const encPad = tensors.get(encoderName, "pad_bias");
+    const decPad = tensors.get(spec.graph, "pad_bias");
+    const encIn = tensors.inputsFor(encoderName), encOut = tensors.outputsFor(encoderName);
+    const tokensView = new Int32Array(rig.graphs[spec.graph].outputs[spec.tokensOutput].shape.reduce((a, b) => a * b, 1));
+    return { ctx, rig, tensors, spec, idsT, encPad, decPad, encIn, encOut, encoderName, tokensView };
+  }
+
+  const build = async (L) => {
+    const result = await buildBucket(L);
+    loaded[L] = result;
+    Object.assign(graphStats, result.rig.stats);
+    if (buckets.every((b) => loaded[b])) releaseConstants();
+    onProgress?.({ phase: "built", bucket: L, remaining: buckets.filter((b) => !loaded[b]).length });
+    if (closed) destroyBucket(result); // built after close(): never handed out, just torn down
+    return result;
+  };
+  const lazy = createLazyBuckets(buckets, build);
 
   try {
-    for (const L of buckets) {
-      const names = [family.contract.chaining.buckets[String(L)].encoder, family.contract.chaining.buckets[String(L)].decode];
-      const ctx = await navigator.ml.createContext({ deviceType });
-      fp = assertCoreMLFingerprint(ctx);
-      if (L === buckets[0]) {
-        for (const g of graphNames) {
-          const s = checkOpSupport(recipes[g], ctx);
-          if (s.missing.length) throw new Error(`WebNN in this browser lacks ${s.missing.join(", ")} (needed by the ${g} recipe)`);
-        }
-      }
-      const rig = await loadEntry(entry, constants, ctx, {
-        baseUrl: baseUrl.replace(/\/$/, ""),
-        manifest,
-        recipes,
-        only: names,
-        onProgress: onProgress
-          ? (p) => {
-            if (p.phase === "constants") {
-              const rec = manifest.constants[entry.graphs[p.graph].constants];
-              onProgress({ file: rec.file, loaded: p.bytesRead, total: totals[entry.graphs[p.graph].constants] });
-            }
-          }
-          : undefined,
-      });
-      rig.chain = rig.chain.filter((l) => rig.graphs[l.from.graph] && rig.graphs[l.to.graph]);
-      const tensors = await createEntryTensors(ctx, rig);
-      const spec = { ...ar, graph: names[1] };
-      const encoderName = names[0];
-      const idsT = tensors.get(encoderName, "input_ids");
-      const encPad = tensors.get(encoderName, "pad_bias");
-      const decPad = tensors.get(spec.graph, "pad_bias");
-      const encIn = tensors.inputsFor(encoderName), encOut = tensors.outputsFor(encoderName);
-      const tokensView = new Int32Array(rig.graphs[spec.graph].outputs[spec.tokensOutput].shape.reduce((a, b) => a * b, 1));
-      Object.assign(graphStats, rig.stats);
-      loaded[L] = { ctx, rig, tensors, spec, idsT, encPad, decPad, encIn, encOut, encoderName, tokensView };
-    }
-  } finally {
-    if (typeof constants === "function") constants.release();
+    await lazy.ensure(buckets[0]);
+  } catch (err) {
+    releaseConstants();
+    throw err;
   }
 
   const tokenizer = await tokenizerP;
@@ -207,7 +314,7 @@ export async function createIntelliTeXWebNN({ baseUrl = INTELLITEX_WEBNN_BASE, o
 
   const runIds = async (ids) => {
     const L = bucketFor(ids.length, buckets);
-    const b = loaded[L];
+    const b = loaded[L] ?? await lazy.ensure(L);
     const padded = padIds(ids, L);
     const t = performance.now();
     b.ctx.writeTensor(b.idsT, padded.ids);
@@ -223,22 +330,24 @@ export async function createIntelliTeXWebNN({ baseUrl = INTELLITEX_WEBNN_BASE, o
 
   if (!skipWarmup) await run("x squared");
 
+  if (lazyBuckets !== "on-demand") lazy.startBackground();
+
   return {
     run,
     encode,
     lastRun: () => last,
+    ensureBucket: lazy.ensure,
     stats: {
       backend: fp.backend, preferredInputLayout: fp.preferredInputLayout,
       graphs: graphStats, entry: `${entry.family}/${entry.id}`,
       loaderVersion: entry.producedBy?.workbench ?? null,
       buildMs: +(performance.now() - t0).toFixed(1),
+      buckets: () => ({ built: lazy.built(), pending: lazy.pending(), inFlight: lazy.inFlight() }),
     },
     close: () => {
-      for (const b of Object.values(loaded)) {
-        for (const g of Object.values(b.rig.graphs)) g.graph.destroy?.();
-        for (const t of Object.values(b.tensors.tensors)) t.destroy?.();
-        b.ctx.destroy?.();
-      }
+      closed = true;
+      releaseConstants();
+      for (const b of Object.values(loaded)) destroyBucket(b);
     },
   };
 }
