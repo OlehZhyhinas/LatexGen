@@ -22,7 +22,13 @@ const nav = { ml: { createContext() {} }, gpu: {}, userAgent: "Node.js", vendor:
 Object.defineProperty(globalThis, "navigator", { configurable: true, get: () => nav, set: () => {} });
 
 const { pickRuntime, webnnAvailable } = await import("../public/models.js");
-const { toFloat16, bucketFor, padIds, createSharedConstantSource } = await import("../public/intellitex-webnn.js");
+const { toFloat16, bucketFor, padIds, createSharedConstantSource, createLazyBuckets } = await import("../public/intellitex-webnn.js");
+
+function deferred() {
+  let resolve, reject;
+  const promise = new Promise((res, rej) => { resolve = res; reject = rej; });
+  return { promise, resolve, reject };
+}
 
 const family = read("family.json");
 const entry = read("entry.json");
@@ -160,6 +166,79 @@ test("toFloat16 round-trips a few values", () => {
   const src = new Float32Array([0, 1, -1, 0.5]);
   const half = toFloat16(src);
   assert.equal(half.length, src.length);
+});
+
+test("createLazyBuckets: ensure memoises repeated calls for the same bucket", async () => {
+  let calls = 0;
+  const lazy = createLazyBuckets([32, 64, 128], async (L) => { calls++; return `built-${L}`; });
+  const a = await lazy.ensure(64);
+  const b = await lazy.ensure(64);
+  const [c, d] = await Promise.all([lazy.ensure(64), lazy.ensure(64)]);
+  assert.equal(a, "built-64");
+  assert.equal(b, "built-64");
+  assert.equal(c, "built-64");
+  assert.equal(d, "built-64");
+  assert.equal(calls, 1);
+});
+
+test("createLazyBuckets: a failed build clears the memo so the next demand retries", async () => {
+  let attempt = 0;
+  const lazy = createLazyBuckets([32, 64, 128], async (L) => {
+    attempt++;
+    if (attempt === 1) throw new Error("boom");
+    return `built-${L}`;
+  });
+  await assert.rejects(lazy.ensure(32), /boom/);
+  assert.deepEqual(lazy.built(), []);
+  const result = await lazy.ensure(32);
+  assert.equal(result, "built-32");
+  assert.deepEqual(lazy.built(), [32]);
+  assert.equal(attempt, 2);
+});
+
+test("createLazyBuckets: startBackground builds remaining buckets in ascending order, skips built ones, survives a failure, and is idempotent", async () => {
+  const order = [];
+  const lazy = createLazyBuckets([32, 64, 128], async (L) => {
+    order.push(L);
+    if (L === 64) throw new Error("64 failed");
+    return `built-${L}`;
+  });
+  await lazy.ensure(32); // pre-built; startBackground below should skip it
+  order.length = 0;
+
+  const warnCalls = [];
+  const originalWarn = console.warn;
+  console.warn = (...args) => warnCalls.push(args);
+  try {
+    await lazy.startBackground();
+  } finally {
+    console.warn = originalWarn;
+  }
+
+  assert.deepEqual(order, [64, 128]);
+  assert.deepEqual(lazy.built(), [32, 128]);
+  assert.equal(warnCalls.length, 1);
+
+  order.length = 0;
+  await lazy.startBackground(); // idempotent: no rebuild, not even a retry of 64
+  assert.deepEqual(order, []);
+});
+
+test("createLazyBuckets: inFlight()/pending() report correctly mid-build", async () => {
+  const gate = deferred();
+  const lazy = createLazyBuckets([32, 64, 128], async (L) => {
+    if (L === 64) await gate.promise;
+    return `built-${L}`;
+  });
+  const p = lazy.ensure(64);
+  assert.deepEqual(lazy.inFlight(), [64]);
+  assert.deepEqual(lazy.pending(), [32, 128]);
+  assert.deepEqual(lazy.built(), []);
+  gate.resolve();
+  await p;
+  assert.deepEqual(lazy.inFlight(), []);
+  assert.deepEqual(lazy.built(), [64]);
+  assert.deepEqual(lazy.pending(), [32, 128]);
 });
 
 test("recipes are present; constants blobs are optional in git", () => {
